@@ -225,44 +225,50 @@ This template includes GitHub Actions workflows for automated building and relea
 - **Note**: Regular pushes to main only build and test - no release is created
 
 #### Release Workflow
-- **Triggers**: Every push to main branch (automatic)
+- **Triggers**: Manual trigger from GitHub Actions interface or git tags
 - **Features**: 
   - Cross-platform builds
-  - Automatic GitHub releases
+  - Manual GitHub releases
   - Release notes generation
-  - Timestamped versions
+  - Custom or timestamped versions
 
-#### Automatic Releases
+#### Manual Releases
 
-The workflow automatically creates releases on every push to the main branch:
+The workflow supports manual release creation through GitHub Actions interface:
 
-1. **Simply push your changes**:
+1. **Create a manual release**:
+   - Go to **Actions** tab in your GitHub repository
+   - Select **"Build and Release"** workflow
+   - Click **"Run workflow"** button
+   - Choose options:
+     - ✅ **Create a release**: Check this box
+     - 📝 **Release tag**: Enter custom tag (e.g., `v1.0.0`) or leave empty for auto-generated
+
+2. **Alternative: Git tag releases**:
    ```bash
-   # Make your changes and commit
-   git add .
-   git commit -m "feat: add new feature"
-   git push origin main
-   # → This automatically triggers build and release
+   # Create and push a version tag for automatic release
+   git tag v1.0.0
+   git push origin v1.0.0
+   # → This triggers build and release automatically
    ```
 
-2. **GitHub Actions will automatically**:
+3. **GitHub Actions will**:
    - Build for all platforms (Windows, macOS, Linux)
    - Create distributable packages (.exe, .dmg, .deb, .rpm, .zip)
-   - Generate a release tag using package.json version + timestamp
    - Create a GitHub release with all artifacts
    - Generate release notes from commits
 
-3. **Release naming convention**:
-   - **Tag**: `v1.0.0-20241103-183045` (version + timestamp)
-   - **Name**: `Release v1.0.0 (20241103-183045)`
-   - **Automatic**: No manual tagging required
+4. **Release naming options**:
+   - **Custom tag**: `v1.0.0` (if specified in manual trigger)
+   - **Git tag**: Uses the pushed tag name
+   - **Auto-generated**: `v1.0.0-20241103-183045` (version + timestamp)
 
-4. **Release artifacts include**:
+5. **Release artifacts include**:
    - **Windows**: `.exe` installer and `.zip` portable
    - **macOS**: `.dmg` installer and `.zip` portable  
    - **Linux**: `.deb` and `.rpm` packages, plus `.zip` portable
 
-**No manual steps needed** - just push to main and get a release!
+**Manual control** - create releases when you're ready!
 
 #### Code Signing Setup (Optional)
 

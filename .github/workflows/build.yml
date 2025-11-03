@@ -6,6 +6,18 @@ on:
     tags: [ 'v*' ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      create_release:
+        description: 'Create a release'
+        required: true
+        default: false
+        type: boolean
+      release_tag:
+        description: 'Release tag (e.g., v1.0.0)'
+        required: false
+        default: ''
+        type: string
 
 permissions:
   contents: write
@@ -81,7 +93,9 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: |
+      (github.event_name == 'workflow_dispatch' && inputs.create_release == true) ||
+      startsWith(github.ref, 'refs/tags/v')
     
     steps:
     - name: Checkout code
@@ -95,14 +109,28 @@ jobs:
       id: timestamp
       run: echo "timestamp=$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_OUTPUT
       
+    - name: Determine release tag
+      id: release-tag
+      run: |
+        if [[ "${{ github.event_name }}" == "workflow_dispatch" && -n "${{ inputs.release_tag }}" ]]; then
+          echo "tag=${{ inputs.release_tag }}" >> $GITHUB_OUTPUT
+          echo "name=Release ${{ inputs.release_tag }}" >> $GITHUB_OUTPUT
+        elif [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == refs/tags/* ]]; then
+          echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          echo "name=Release ${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+        else
+          echo "tag=v${{ steps.package-version.outputs.version }}-${{ steps.timestamp.outputs.timestamp }}" >> $GITHUB_OUTPUT
+          echo "name=Release v${{ steps.package-version.outputs.version }} (${{ steps.timestamp.outputs.timestamp }})" >> $GITHUB_OUTPUT
+        fi
+      
     - name: Download all artifacts
       uses: actions/download-artifact@v4
       
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: v${{ steps.package-version.outputs.version }}-${{ steps.timestamp.outputs.timestamp }}
-        name: Release v${{ steps.package-version.outputs.version }} (${{ steps.timestamp.outputs.timestamp }})
+        tag_name: ${{ steps.release-tag.outputs.tag }}
+        name: ${{ steps.release-tag.outputs.name }}
         files: |
           electron-app-windows/**/*
           electron-app-macos/**/*
@@ -111,13 +139,14 @@ jobs:
         prerelease: false
         generate_release_notes: true
         body: |
-          🚀 **Automatic Release**
+          🚀 **Manual Release**
           
           **Version:** ${{ steps.package-version.outputs.version }}
           **Build Date:** ${{ steps.timestamp.outputs.timestamp }}
           **Commit:** ${{ github.sha }}
+          **Trigger:** ${{ github.event_name }}
           
-          This release was automatically generated from the latest commit to the main branch.
+          This release was manually triggered from the GitHub Actions interface.
           
           ## 📦 Downloads
           - **Windows**: `.exe` installer and `.zip` portable
