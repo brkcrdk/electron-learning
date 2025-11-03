@@ -161,19 +161,69 @@ export default defineConfig({
 
 ## 📱 Building for Production
 
-### Package the App
+### Local Build
+
+#### Package the App
 
 ```bash
 npm run package
 ```
 
-### Create Distributables
+#### Create Distributables
 
 ```bash
 npm run make
 ```
 
 This will create platform-specific distributables in the `out/` directory.
+
+### Automated Builds (GitHub Actions)
+
+This template includes GitHub Actions workflows for automated building and releasing:
+
+#### Build Workflow
+- **Triggers**: Push to main, pull requests, and tags
+- **Platforms**: Windows, macOS, and Linux
+- **Outputs**: Executable files for all platforms
+- **Artifacts**: Automatically uploaded and stored for 30 days
+
+#### Release Workflow
+- **Triggers**: Git tags starting with `v` (e.g., `v1.0.0`)
+- **Features**: 
+  - Cross-platform builds
+  - Code signing support (macOS and Windows)
+  - Automatic GitHub releases
+  - Release notes generation
+
+#### Creating a Release
+
+1. **Tag your release**:
+   ```bash
+   git tag v1.0.0
+   git push origin v1.0.0
+   ```
+
+2. **GitHub Actions will automatically**:
+   - Build for all platforms
+   - Create distributable packages
+   - Create a GitHub release
+   - Upload all build artifacts
+
+#### Code Signing Setup (Optional)
+
+For production releases, you can set up code signing by adding these secrets to your GitHub repository:
+
+**macOS Code Signing:**
+- `APPLE_CERTIFICATE` - Base64 encoded .p12 certificate
+- `APPLE_CERTIFICATE_PASSWORD` - Certificate password
+- `APPLE_ID` - Apple ID for notarization
+- `APPLE_APP_SPECIFIC_PASSWORD` - App-specific password
+- `APPLE_TEAM_ID` - Apple Developer Team ID
+- `KEYCHAIN_PASSWORD` - Keychain password
+
+**Windows Code Signing:**
+- `WINDOWS_CERTIFICATE` - Base64 encoded certificate
+- `WINDOWS_CERTIFICATE_PASSWORD` - Certificate password
 
 ## 🛠️ Development Tips
 
@@ -193,15 +243,31 @@ This will create platform-specific distributables in the `out/` directory.
 
 ## 🤝 Contributing
 
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for detailed information on:
+
+- How to report issues and suggest features
+- Development setup and workflow
+- Code style guidelines and best practices
+- Pull request process and review guidelines
+
+### Quick Start for Contributors
+
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+3. Follow our [coding standards](CONTRIBUTING.md#code-style-guidelines)
+4. Commit your changes using [conventional commits](CONTRIBUTING.md#commit-guidelines)
+5. Push to the branch (`git push origin feature/amazing-feature`)
+6. Open a Pull Request with a clear description
+
+Please read our [Code of Conduct](CONTRIBUTING.md#code-of-conduct) to ensure a welcoming environment for all contributors.
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📋 Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for a detailed history of changes, new features, and improvements.
 
 ## 🙏 Acknowledgments
 
