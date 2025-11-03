@@ -17,12 +17,13 @@ export default function About() {
             This is a modern Electron application built with:
           </p>
           <ul className="text-sm space-y-1 text-center">
-            <li>⚛️ React 19</li>
-            <li>🚀 Electron</li>
-            <li>🎨 shadcn/ui</li>
-            <li>🎯 Tailwind CSS</li>
-            <li>🛣️ React Router v7</li>
-            <li>⚡ Vite</li>
+            <li>⚛️ React 19.2</li>
+            <li>🚀 Electron 39.0</li>
+            <li>🎨 shadcn/ui + Radix UI</li>
+            <li>🎯 Tailwind CSS 3.4</li>
+            <li>🛣️ React Router v7.9</li>
+            <li>⚡ Vite 5.4</li>
+            <li>🔷 TypeScript 5.3</li>
           </ul>
           <div className="flex gap-2 justify-center">
             <Button asChild>

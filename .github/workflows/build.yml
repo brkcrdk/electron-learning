@@ -37,14 +37,18 @@ jobs:
     - name: Build application
       run: npm run make
       
+    - name: List build output
+      run: |
+        echo "Build output structure:"
+        find out -type f -name "*" 2>/dev/null || echo "No out directory found"
+        ls -la out/ 2>/dev/null || echo "No out directory"
+      
     - name: Upload artifacts (Windows)
       if: matrix.os == 'windows-latest'
       uses: actions/upload-artifact@v4
       with:
         name: electron-app-windows
-        path: |
-          out/make/squirrel.windows/**/*.exe
-          out/make/zip/win32/**/*.zip
+        path: out/make/**/*
         retention-days: 30
         
     - name: Upload artifacts (macOS)
@@ -52,9 +56,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: electron-app-macos
-        path: |
-          out/make/zip/darwin/**/*.zip
-          out/make/**/*.dmg
+        path: out/make/**/*
         retention-days: 30
         
     - name: Upload artifacts (Linux)
@@ -62,10 +64,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: electron-app-linux
-        path: |
-          out/make/deb/**/*.deb
-          out/make/rpm/**/*.rpm
-          out/make/zip/linux/**/*.zip
+        path: out/make/**/*
         retention-days: 30
 
   release:

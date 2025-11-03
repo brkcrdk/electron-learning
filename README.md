@@ -10,15 +10,18 @@ A modern Electron application template built with React, TypeScript, Vite, and s
 
 ## ✨ Features
 
-- **⚡ Electron** - Cross-platform desktop app framework
-- **⚛️ React 19** - Modern React with latest features
-- **🔷 TypeScript** - Type-safe development
-- **⚡ Vite** - Fast build tool and dev server
-- **🎨 shadcn/ui** - Beautiful, accessible UI components
-- **🎭 Tailwind CSS** - Utility-first CSS framework
-- **🌙 Theme Support** - Light, dark, and system theme modes
-- **🧭 React Router v7** - Client-side routing
-- **📱 Responsive Design** - Mobile-first approach
+- **⚡ Electron 39.0** - Cross-platform desktop app framework
+- **⚛️ React 19.2** - Modern React with latest features
+- **🔷 TypeScript 5.3** - Type-safe development
+- **⚡ Vite 5.4** - Fast build tool and dev server
+- **🎨 shadcn/ui** - Beautiful, accessible UI components built on Radix UI
+- **🎭 Tailwind CSS 3.4** - Utility-first CSS framework
+- **🌙 Theme Support** - Light, dark, and system theme modes with persistence
+- **🧭 React Router v7.9** - Client-side routing with modern patterns
+- **📱 Responsive Design** - Mobile-first approach with Tailwind breakpoints
+- **🔧 Electron Forge 7.10** - Complete build and packaging toolchain
+- **📦 Modern Tooling** - ESLint 8.57, PostCSS 8.5, Autoprefixer 10.4
+- **🎯 Developer Experience** - Hot reload, TypeScript path mapping, and comprehensive linting
 
 ## 🚀 Quick Start
 
