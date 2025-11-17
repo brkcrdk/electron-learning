@@ -4,14 +4,9 @@
   "version": "1.0.1",
   "description": "electron study project",
   "main": ".vite/build/main.js",
-  "scripts": {
-   
-  },
-  "devDependencies": {
-    
-  },
+  "scripts": {},
   "dependencies": {
-   
+    "electron": "^39.2.1"
   },
   "overrides": {
     "vite": "npm:rolldown-vite@latest"
