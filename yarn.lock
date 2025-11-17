@@ -2351,10 +2351,6 @@ eslint-import-resolver-node@^0.3.9:
     is-core-module "^2.13.0"
     resolve "^1.22.4"
 
-eslint-js@eslint/js:
-  version "1.0.0"
-  resolved "https://codeload.github.com/eslint/js/tar.gz/6d0d02dbf7ed5050d7b13d49ae0a783ce69333b2"
-
 eslint-module-utils@^2.12.1:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/eslint-module-utils/-/eslint-module-utils-2.12.1.tgz#f76d3220bfb83c057651359295ab5854eaad75ff"
