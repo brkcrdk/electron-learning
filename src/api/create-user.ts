@@ -5,7 +5,7 @@ export interface CreateUserData {
   name: string;
 }
 
-export type CreateUserEventType = (data: string) => void;
+export type CreateUserEventType = (data: CreateUserData) => void;
 
 export function createUserHandler() {
   ipcMain.on('create-user', (event: IpcMainEvent, data: CreateUserData) => {
@@ -13,7 +13,7 @@ export function createUserHandler() {
   });
 }
 
-export const createUserEvent: CreateUserEventType = (data: string) => {
+export const createUserEvent: CreateUserEventType = data => {
   return ipcRenderer.send('create-user', data);
 };
 // export function createUser(message: string) {
