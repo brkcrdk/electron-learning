@@ -8,7 +8,7 @@ function RouteComponent() {
   const handleButtonClick = () => {
     // window.electronAPI preload script'ten expose edilen API
     if (window.electronAPI) {
-      window.electronAPI.sendMessage('Butona tıklandıxxx!');
+      window.electronAPI.createUserEvent('test');
       console.log('IPC mesajı gönderildi');
     } else {
       console.error('electronAPI bulunamadı');
