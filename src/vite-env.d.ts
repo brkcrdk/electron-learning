@@ -8,3 +8,14 @@
  */
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string;
 declare const MAIN_WINDOW_VITE_NAME: string;
+
+// Electron API type definitions
+interface ElectronAPI {
+  sendMessage: (message: string) => void;
+}
+
+declare global {
+  interface Window {
+    electronAPI: ElectronAPI;
+  }
+}
