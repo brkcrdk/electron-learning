@@ -8,4 +8,3 @@ export default {
     url: './database.db', // Development için, production'da app.getPath('userData') kullanılacak
   },
 } satisfies Config;
-
