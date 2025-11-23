@@ -1,4 +1,8 @@
-import { createUserEvent } from './events';
+import { createUserHandler, createUserEvent } from './create-user';
+
+export function registerApiHandlers() {
+  createUserHandler();
+}
 
 /**
  * Burada tanımlanan api functionları `renderer` tarafına `preload.ts` ile expose edilir.

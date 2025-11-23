@@ -3,7 +3,7 @@ import path from 'node:path';
 import { app, BrowserWindow } from 'electron';
 import started from 'electron-squirrel-startup';
 
-import { registerApiHandlers } from './api/handlers';
+import { registerApiHandlers } from './api';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
