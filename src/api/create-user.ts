@@ -1,24 +1,18 @@
-import { ipcMain, ipcRenderer, type IpcMainEvent } from 'electron';
+import { ipcMain, type IpcMainEvent } from 'electron';
 
-import { db, users } from '../db';
+import { createUser } from '../db';
 
 export interface CreateUserData {
   email: string;
   name: string;
 }
 
-export type CreateUserEventType = (data: CreateUserData) => void;
-
 export function createUserHandler() {
-  ipcMain.on('create-user', (event: IpcMainEvent, data: CreateUserData) => {
+  ipcMain.on('create-user', (_event: IpcMainEvent, data: CreateUserData) => {
     // console.log('createUser', data);
-    db.insert(users).values(data);
+    createUser({
+      email: data.email,
+      name: data.name,
+    });
   });
 }
-
-export const createUserEvent: CreateUserEventType = data => {
-  return ipcRenderer.send('create-user', data);
-};
-// export function createUser(message: string) {
-//   return ipcRenderer.send('create-user', message);
-// }
