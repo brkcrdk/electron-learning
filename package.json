@@ -11,7 +11,12 @@
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx .",
     "packages:check": "npx npm-check-updates",
-    "packages:update": "npx npm-check-updates -u && pnpm install"
+    "packages:update": "npx npm-check-updates -u && pnpm install",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:setup": "yarn db:generate && yarn db:migrate"
   },
   "keywords": [],
   "author": {

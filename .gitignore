@@ -90,3 +90,10 @@ typings/
 
 # Electron-Forge
 out/
+
+# Database files
+database.db
+*.db
+
+# Drizzle
+drizzle/
