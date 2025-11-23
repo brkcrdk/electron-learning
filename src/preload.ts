@@ -1,7 +1,5 @@
-import { contextBridge } from 'electron';
-
-import { apiExposerHandlers } from './api';
+import { contextBridge, ipcRenderer } from 'electron';
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  ...apiExposerHandlers,
+  createUserEvent: (data: string) => ipcRenderer.send('create-user', data),
 });
