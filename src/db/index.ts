@@ -23,5 +23,4 @@ const sqlite = new Database(getDatabasePath());
 export const db = drizzle(sqlite, { schema });
 
 // Schema export
-export { schema };
 export * from './schema';
