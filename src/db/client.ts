@@ -3,7 +3,7 @@ import { drizzle } from 'drizzle-orm/libsql';
 
 import * as schema from './schema';
 
-const DATABASE_URL = 'file:./sqlite/app.db';
+const DATABASE_URL = 'file:./app.db';
 
 const client = createClient({
   url: DATABASE_URL,
