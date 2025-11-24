@@ -12,7 +12,10 @@
     "lint": "eslint --ext .ts,.tsx .",
     "packages:check": "npx npm-check-updates",
     "packages:update": "npx npm-check-updates -u && pnpm install",
-    "postinstall": "electron-rebuild -f -w better-sqlite3"
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
   },
   "keywords": [],
   "author": {
@@ -34,7 +37,6 @@
     "@eslint/js": "^9.39.1",
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/router-plugin": "^1.139.3",
-    "@types/better-sqlite3": "^7.6.13",
     "@types/electron-squirrel-startup": "^1.0.2",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.6",
@@ -43,6 +45,7 @@
     "@typescript-eslint/parser": "^8.47.0",
     "@vitejs/plugin-react": "^5.1.1",
     "babel-plugin-react-compiler": "^1.0.0",
+    "drizzle-kit": "^0.31.7",
     "electron": "39.2.3",
     "eslint": "^9.39.1",
     "eslint-plugin-import": "^2.32.0",
@@ -52,11 +55,11 @@
     "vite": "^7.2.4"
   },
   "dependencies": {
+    "@libsql/client": "^0.15.15",
     "@tanstack/react-router": "^1.139.3",
     "@tanstack/react-router-devtools": "^1.139.3",
-    "better-sqlite3": "^12.4.6",
+    "drizzle-orm": "^0.44.7",
     "electron-squirrel-startup": "^1.0.1",
-    "kysely": "^0.28.8",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   }

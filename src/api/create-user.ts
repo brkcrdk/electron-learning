@@ -1,6 +1,7 @@
 import { ipcMain, type IpcMainEvent } from 'electron';
 
-import { db } from '../db';
+import { db } from '../db/client';
+import { users } from '../db/schema';
 
 export interface CreateUserData {
   email: string;
@@ -11,19 +12,21 @@ export type CreateUserEventType = (data: CreateUserData) => void;
 
 export function createUserHandler() {
   ipcMain.on('create-user', async (event: IpcMainEvent, data: CreateUserData) => {
-    // console.log('createUser', data);
-    await db
-      .insertInto('users')
-      .values({
-        name: data.name,
-        email: data.email,
-        created_at: new Date().toISOString(),
-        id: crypto.randomUUID(),
-      })
-      .returningAll()
-      .executeTakeFirstOrThrow();
+    try {
+      const [user] = await db
+        .insert(users)
+        .values({
+          email: data.email,
+          name: data.name,
+        })
+        .returning();
 
-    const users = await db.selectFrom('users').selectAll().execute();
-    console.log('User Data:', users, data);
+      event.reply('create-user:success', user);
+    } catch (error) {
+      console.error('Failed to create user', error);
+      event.reply('create-user:error', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+      });
+    }
   });
 }
