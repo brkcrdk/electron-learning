@@ -8,8 +8,6 @@ export interface CreateUserData {
   name: string;
 }
 
-export type CreateUserEventType = (data: CreateUserData) => void;
-
 export function createUserHandler() {
   ipcMain.on('create-user', async (event: IpcMainEvent, data: CreateUserData) => {
     try {
