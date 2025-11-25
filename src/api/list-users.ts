@@ -5,7 +5,7 @@ import { db } from '../db/client';
 import { users } from '../db/schema';
 
 export function listUsersHandler() {
-  ipcMain.handle('list-users', async () => {
+  ipcMain.handle('get-list-users', async () => {
     try {
       return await db.select().from(users).orderBy(desc(users.createdAt));
     } catch (error) {

@@ -8,10 +8,20 @@ function RouteComponent() {
   const handleButtonClick = () => {
     // window.electronAPI preload script'ten expose edilen API
     if (window.electronAPI) {
-      window.electronAPI.createUserEvent({
-        email: 'test@test.com',
+      window.electronAPI.createUser({
+        email: 'test@test.comx',
         name: 'Test User',
       });
+      console.log('IPC mesajı gönderildi');
+    } else {
+      console.error('electronAPI bulunamadı');
+    }
+  };
+
+  const handleGetUserList = async () => {
+    if (window.electronAPI) {
+      const userList = await window.electronAPI.getUserList();
+      console.log(userList);
       console.log('IPC mesajı gönderildi');
     } else {
       console.error('electronAPI bulunamadı');
@@ -33,8 +43,9 @@ function RouteComponent() {
           borderRadius: '5px',
         }}
       >
-        IPC Mesajı Gönder
+        Kullanıcı Oluştur
       </button>
+      <button onClick={handleGetUserList}>Kullanıcı Listesini Getir</button>
     </div>
   );
 }

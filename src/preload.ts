@@ -4,7 +4,8 @@ import { ipcRenderer } from 'electron';
 import type { CreateUserData } from './api/create-user';
 
 const apiEventList = {
-  createUserEvent: (data: CreateUserData) => ipcRenderer.send('create-user', data),
+  createUser: (data: CreateUserData) => ipcRenderer.send('create-user', data),
+  getUserList: () => ipcRenderer.invoke('get-list-users'),
 } as const;
 
 contextBridge.exposeInMainWorld('electronAPI', apiEventList);
