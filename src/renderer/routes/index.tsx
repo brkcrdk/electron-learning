@@ -22,7 +22,6 @@ function RouteComponent() {
     if (window.electronAPI) {
       const userList = await window.electronAPI.getUserList();
       console.log(userList);
-      console.log('IPC mesajı gönderildi');
     } else {
       console.error('electronAPI bulunamadı');
     }
