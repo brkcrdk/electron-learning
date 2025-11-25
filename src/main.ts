@@ -19,6 +19,10 @@ const createWindow = () => {
     minHeight: 600,
     title: 'Electron Learning',
     center: true,
+    titleBarStyle: 'hidden',
+    ...(process.platform !== 'darwin' && {
+      titleBarOverlay: true,
+    }),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
