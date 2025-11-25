@@ -1,5 +1,5 @@
 import { cx } from 'class-variance-authority';
-import { ClassNameValue, extendTailwindMerge } from 'tailwind-merge';
+import { type ClassNameValue, extendTailwindMerge } from 'tailwind-merge';
 
 /**
  * NOTE: TwMerge stillendirmeleri mergelerken sadece sadece tw stillendirmelerini dikkate alıyor.
