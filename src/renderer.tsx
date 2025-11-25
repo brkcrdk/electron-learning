@@ -28,7 +28,7 @@
 
 import { createRoot } from 'react-dom/client';
 
-import App from './app';
+import App from '../app';
 
 console.log('👋 This message is being logged by "renderer.tsx", included via Vite');
 

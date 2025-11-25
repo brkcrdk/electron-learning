@@ -8,10 +8,10 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './renderer/routes/__root'
-import { Route as LogoutRouteImport } from './renderer/routes/logout'
-import { Route as LoginRouteImport } from './renderer/routes/login'
-import { Route as IndexRouteImport } from './renderer/routes/index'
+import { Route as rootRouteImport } from './../app/routes/__root'
+import { Route as LogoutRouteImport } from './../app/routes/logout'
+import { Route as LoginRouteImport } from './../app/routes/login'
+import { Route as IndexRouteImport } from './../app/routes/index'
 
 const LogoutRoute = LogoutRouteImport.update({
   id: '/logout',
