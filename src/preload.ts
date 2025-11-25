@@ -1,7 +1,7 @@
 import { contextBridge } from 'electron';
 import { ipcRenderer } from 'electron';
 
-import type { CreateUserData } from './api/create-user';
+import type { CreateUserData } from '../api/create-user';
 
 const apiEventList = {
   createUser: (data: CreateUserData) => ipcRenderer.send('create-user', data),
