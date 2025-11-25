@@ -1,4 +1,5 @@
 import eslint from '@eslint/js';
+import pluginQuery from '@tanstack/eslint-plugin-query';
 import importPlugin from 'eslint-plugin-import';
 import prettierPlugin from 'eslint-plugin-prettier';
 import tseslint from 'typescript-eslint';
@@ -6,6 +7,7 @@ import tseslint from 'typescript-eslint';
 export default [
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
+  ...pluginQuery.configs['flat/recommended'],
   {
     plugins: {
       prettier: prettierPlugin,
