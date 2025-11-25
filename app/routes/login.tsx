@@ -1,5 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
+import PasswordInput from '../components/ui/password-input';
+
 export const Route = createFileRoute('/login')({
   component: RouteComponent,
 });
@@ -18,11 +20,8 @@ function RouteComponent() {
         />
 
         <label className="label">Password</label>
-        <input
-          type="password"
-          className="input"
-          placeholder="********"
-        />
+
+        <PasswordInput inputProps={{ placeholder: '********' }} />
 
         <button className="btn btn-neutral mt-4">Login</button>
       </fieldset>
