@@ -30,7 +30,7 @@ function RouteComponent() {
   return (
     <div style={{ padding: '20px' }}>
       <h1>Hello "/"!</h1>
-      <button
+      {/* <button
         onClick={handleButtonClick}
         style={{
           padding: '10px 20px',
@@ -43,8 +43,14 @@ function RouteComponent() {
         }}
       >
         Kullanıcı Oluştur
-      </button>
-      <button onClick={handleGetUserList}>Kullanıcı Listesini Getir</button>
+      </button> */}
+      <button className="btn btn-primary">x</button>
+      {/* <button
+        className="btn-warning"
+        onClick={handleGetUserList}
+      >
+        Kullanıcı Listesini Getir
+      </button> */}
     </div>
   );
 }
