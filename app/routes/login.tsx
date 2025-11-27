@@ -1,9 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import PasswordInput from '../components/ui/password-input';
+import { router } from '../router';
 
 export const Route = createFileRoute('/login')({
   component: RouteComponent,
+  beforeLoad: async () => {
+    const response = await window.electronAPI.checkSuperAdmin();
+    console.log({ response });
+
+    if (!response.success) {
+      router.navigate({ to: '/welcome' });
+    }
+  },
 });
 
 function RouteComponent() {
