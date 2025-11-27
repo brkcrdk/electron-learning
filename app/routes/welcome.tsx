@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/logout')({
+export const Route = createFileRoute('/welcome')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return <div>Hello "/logosadut"!</div>;
+  return <div>Hello "/welcome"!</div>;
 }
