@@ -19,10 +19,6 @@ const createWindow = () => {
     minHeight: 600,
     title: 'Electron Learning',
     center: true,
-    titleBarStyle: 'hidden',
-    ...(process.platform !== 'darwin' && {
-      titleBarOverlay: true,
-    }),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -37,6 +33,7 @@ const createWindow = () => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools({ mode: 'detach' });
+  mainWindow.setBackgroundColor('#faf7f5');
 };
 
 // This method will be called when Electron has finished

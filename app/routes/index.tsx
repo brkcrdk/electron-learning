@@ -1,56 +1,39 @@
 import { createFileRoute } from '@tanstack/react-router';
 
+import PasswordInput from '../components/ui/password-input';
+import { router } from '../router';
+
 export const Route = createFileRoute('/')({
   component: RouteComponent,
+  beforeLoad: async () => {
+    const response = await window.electronAPI.checkSuperAdmin();
+    console.log({ response });
+
+    if (!response.success) {
+      router.navigate({ to: '/welcome' });
+    }
+  },
 });
 
 function RouteComponent() {
-  const handleButtonClick = () => {
-    // window.electronAPI preload script'ten expose edilen API
-    if (window.electronAPI) {
-      window.electronAPI.createUser({
-        email: 'test@test.comx',
-        name: 'Test User',
-      });
-      console.log('IPC mesajı gönderildi');
-    } else {
-      console.error('electronAPI bulunamadı');
-    }
-  };
-
-  const handleGetUserList = async () => {
-    if (window.electronAPI) {
-      const userList = await window.electronAPI.getUserList();
-      console.log(userList);
-    } else {
-      console.error('electronAPI bulunamadı');
-    }
-  };
-
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Hello "/"!</h1>
-      {/* <button
-        onClick={handleButtonClick}
-        style={{
-          padding: '10px 20px',
-          fontSize: '16px',
-          cursor: 'pointer',
-          backgroundColor: '#007bff',
-          color: 'white',
-          border: 'none',
-          borderRadius: '5px',
-        }}
-      >
-        Kullanıcı Oluştur
-      </button> */}
-      <button className="btn btn-primary">x</button>
-      {/* <button
-        className="btn-warning"
-        onClick={handleGetUserList}
-      >
-        Kullanıcı Listesini Getir
-      </button> */}
-    </div>
+    <section className="flex h-screen w-screen items-center justify-center">
+      <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+        <legend className="fieldset-legend">Giriş Yap</legend>
+
+        <label className="label">E-posta</label>
+        <input
+          type="email"
+          className="input"
+          placeholder="example@example.com"
+        />
+
+        <label className="label">Şifre</label>
+
+        <PasswordInput inputProps={{ placeholder: '********' }} />
+
+        <button className="btn btn-neutral mt-4">Giriş Yap</button>
+      </fieldset>
+    </section>
   );
 }
