@@ -12,7 +12,7 @@ function PasswordInput({ inputProps }: Props) {
       <div className="relative flex items-center gap-2">
         <PasswordToggleField.Input
           {...inputProps}
-          className="input"
+          className="input w-full"
         />
         <PasswordToggleField.Toggle className="btn btn-ghost btn-xs absolute right-2 z-10">
           <PasswordToggleField.Icon
