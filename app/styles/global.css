@@ -5,6 +5,12 @@
   themes: light --default, dark --prefersdark, cupcake;
 }
 
+@plugin "daisyui/theme" {
+  name: "cupcake";
+  default: true;
+  --radius-field: 0.5rem;
+}
+
 @theme {
   --font-poppins: "Poppins", sans-serif;
 }
