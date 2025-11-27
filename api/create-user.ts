@@ -8,7 +8,7 @@ export interface CreateUserData {
   name: string;
 }
 
-export function createUserHandler() {
+function createUserHandler() {
   ipcMain.on('create-user', async (event: IpcMainEvent, data: CreateUserData) => {
     try {
       const [user] = await db
@@ -28,3 +28,5 @@ export function createUserHandler() {
     }
   });
 }
+
+export default createUserHandler;

@@ -4,7 +4,7 @@ import { ipcMain } from 'electron';
 import { db } from '../db/client';
 import { users } from '../db/schema';
 
-export function listUsersHandler() {
+function listUsersHandler() {
   ipcMain.handle('get-list-users', async () => {
     try {
       return await db.select().from(users).orderBy(desc(users.createdAt));
@@ -14,3 +14,4 @@ export function listUsersHandler() {
     }
   });
 }
+export default listUsersHandler;
