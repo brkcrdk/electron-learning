@@ -7,7 +7,6 @@ export const Route = createFileRoute('/')({
   component: RouteComponent,
   beforeLoad: async () => {
     const response = await window.electronAPI.checkSuperAdmin();
-    console.log({ response });
 
     if (!response.success) {
       router.navigate({ to: '/welcome' });
