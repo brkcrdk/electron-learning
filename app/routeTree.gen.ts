@@ -11,9 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as MainRouteImport } from './routes/_main'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SignupIndexRouteImport } from './routes/signup/index'
-import { Route as MainIndexRouteImport } from './routes/main/index'
+import { Route as MainRouteCRouteImport } from './routes/_main/route-c'
 
 const LogoutRoute = LogoutRouteImport.update({
   id: '/logout',
@@ -23,6 +24,10 @@ const LogoutRoute = LogoutRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MainRoute = MainRouteImport.update({
+  id: '/_main',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -35,47 +40,55 @@ const SignupIndexRoute = SignupIndexRouteImport.update({
   path: '/signup/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MainIndexRoute = MainIndexRouteImport.update({
-  id: '/main/',
-  path: '/main/',
-  getParentRoute: () => rootRouteImport,
+const MainRouteCRoute = MainRouteCRouteImport.update({
+  id: '/route-c',
+  path: '/route-c',
+  getParentRoute: () => MainRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
-  '/main': typeof MainIndexRoute
+  '/route-c': typeof MainRouteCRoute
   '/signup': typeof SignupIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
-  '/main': typeof MainIndexRoute
+  '/route-c': typeof MainRouteCRoute
   '/signup': typeof SignupIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_main': typeof MainRouteWithChildren
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
-  '/main/': typeof MainIndexRoute
+  '/_main/route-c': typeof MainRouteCRoute
   '/signup/': typeof SignupIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/logout' | '/main' | '/signup'
+  fullPaths: '/' | '/login' | '/logout' | '/route-c' | '/signup'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/logout' | '/main' | '/signup'
-  id: '__root__' | '/' | '/login' | '/logout' | '/main/' | '/signup/'
+  to: '/' | '/login' | '/logout' | '/route-c' | '/signup'
+  id:
+    | '__root__'
+    | '/'
+    | '/_main'
+    | '/login'
+    | '/logout'
+    | '/_main/route-c'
+    | '/signup/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MainRoute: typeof MainRouteWithChildren
   LoginRoute: typeof LoginRoute
   LogoutRoute: typeof LogoutRoute
-  MainIndexRoute: typeof MainIndexRoute
   SignupIndexRoute: typeof SignupIndexRoute
 }
 
@@ -95,6 +108,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_main': {
+      id: '/_main'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof MainRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -109,21 +129,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/main/': {
-      id: '/main/'
-      path: '/main'
-      fullPath: '/main'
-      preLoaderRoute: typeof MainIndexRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_main/route-c': {
+      id: '/_main/route-c'
+      path: '/route-c'
+      fullPath: '/route-c'
+      preLoaderRoute: typeof MainRouteCRouteImport
+      parentRoute: typeof MainRoute
     }
   }
 }
 
+interface MainRouteChildren {
+  MainRouteCRoute: typeof MainRouteCRoute
+}
+
+const MainRouteChildren: MainRouteChildren = {
+  MainRouteCRoute: MainRouteCRoute,
+}
+
+const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MainRoute: MainRouteWithChildren,
   LoginRoute: LoginRoute,
   LogoutRoute: LogoutRoute,
-  MainIndexRoute: MainIndexRoute,
   SignupIndexRoute: SignupIndexRoute,
 }
 export const routeTree = rootRouteImport
