@@ -26,3 +26,4 @@ export const users = sqliteTable(
 );
 
 export type User = typeof users.$inferSelect;
+export type NewUserPayload = typeof users.$inferInsert;

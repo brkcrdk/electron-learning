@@ -1,4 +1,4 @@
-export type ApiResponse<T> =
+type ApiResponseType<T> =
   | {
       success: true;
       data: T;
@@ -7,3 +7,5 @@ export type ApiResponse<T> =
       success: false;
       error: string;
     };
+
+export type ApiResponseProps<T> = Promise<ApiResponseType<T>>;

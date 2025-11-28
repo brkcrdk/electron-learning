@@ -4,10 +4,10 @@ import { ipcMain } from 'electron';
 import { db } from '../db/client';
 import { users } from '../db/schema';
 
-import type { ApiResponse } from '../types/api-response-types';
+import type { ApiResponseProps } from '../types/api-response-types';
 
 function checkSuperAdminHandler() {
-  ipcMain.handle('check-super-admin', async (): Promise<ApiResponse<boolean>> => {
+  ipcMain.handle('check-super-admin', async (): ApiResponseProps<boolean> => {
     try {
       const user = await db.query.users.findFirst({
         where: eq(users.roles, 'super-admin'),
