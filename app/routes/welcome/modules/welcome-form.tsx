@@ -10,7 +10,7 @@ interface NewUserForm {
 }
 
 function WelcomeForm() {
-  const { register, handleSubmit, control } = useForm<NewUserForm>({
+  const { handleSubmit, control } = useForm<NewUserForm>({
     mode: 'onSubmit',
   });
   const passwordValue = useWatch({
@@ -63,12 +63,26 @@ function WelcomeForm() {
         >
           Şifre
         </label>
-        <PasswordInput
-          inputProps={{
-            placeholder: '********',
-            id: 'password',
-            ...register('password'),
+        <Controller
+          control={control}
+          name="password"
+          rules={{
+            required: 'Şifre alanı zorunludur',
+            minLength: {
+              value: 8,
+              message: 'Şifre en az 8 karakter olmalıdır',
+            },
           }}
+          render={({ field, fieldState }) => (
+            <PasswordInput
+              error={fieldState.error?.message}
+              inputProps={{
+                placeholder: '********',
+                id: 'password',
+                ...field,
+              }}
+            />
+          )}
         />
       </div>
 
@@ -83,15 +97,16 @@ function WelcomeForm() {
           control={control}
           name="confirmPassword"
           rules={{
-            minLength: {
-              value: 8,
-              message: 'Şifre en az 8 karakter olmalıdır',
-            },
+            required: 'Şifre tekrar alanı zorunludur',
             validate: value => {
               if (value !== passwordValue) {
                 return 'Şifreler eşleşmiyor!';
               }
               return true;
+            },
+            minLength: {
+              value: 8,
+              message: 'Şifre en az 8 karakter olmalıdır',
             },
           }}
           render={({ field, fieldState }) => (
