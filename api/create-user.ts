@@ -1,7 +1,9 @@
-import { ipcMain, type IpcMainEvent } from 'electron';
+import { ipcMain } from 'electron';
 
 import { db } from '../db/client';
-import { users } from '../db/schema';
+import { users, type NewUserPayload } from '../db/schema';
+
+import type { ApiResponseProps } from '../types/api-response-types';
 
 export interface CreateUserData {
   email: string;
@@ -9,22 +11,20 @@ export interface CreateUserData {
 }
 
 function createUserHandler() {
-  ipcMain.on('create-user', async (event: IpcMainEvent, data: CreateUserData) => {
+  ipcMain.handle('create-user', async (_, data: NewUserPayload): ApiResponseProps<string> => {
     try {
-      const [user] = await db
-        .insert(users)
-        .values({
-          email: data.email,
-          name: data.name,
-        })
-        .returning();
+      await db.insert(users).values(data);
 
-      event.reply('create-user:success', user);
+      return {
+        success: true,
+        data: 'Kullanıcı oluşturuldu.',
+      };
     } catch (error) {
-      console.error('Failed to create user', error);
-      event.reply('create-user:error', {
-        message: error instanceof Error ? error.message : 'Unknown error',
-      });
+      console.error(error);
+      return {
+        success: false,
+        error: 'Kullanıcı oluşturulurken bir hata gerçekleşti.',
+      };
     }
   });
 }
