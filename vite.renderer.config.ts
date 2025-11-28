@@ -11,7 +11,7 @@ export default defineConfig({
       generatedRouteTree: 'app/routeTree.gen.ts',
       target: 'react',
       autoCodeSplitting: true,
-      routeFileIgnorePattern: 'components|hooks|utils',
+      routeFileIgnorePattern: 'modules|hooks|utils',
     }),
     react({
       babel: {

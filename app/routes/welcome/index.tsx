@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import WelcomeHeader from './components/welcom-header';
-import WelcomeForm from './components/welcome-form';
+import WelcomeHeader from './modules/welcom-header';
+import WelcomeForm from './modules/welcome-form';
 
 export const Route = createFileRoute('/welcome/')({
   component: RouteComponent,
