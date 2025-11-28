@@ -49,71 +49,57 @@ function WelcomeForm() {
         )}
       />
 
-      <div className="space-y-2">
-        <label
-          className="label label-text font-medium"
-          htmlFor="password"
-        >
-          Şifre
-        </label>
-        <Controller
-          control={control}
-          name="password"
-          rules={{
-            required: 'Şifre alanı zorunludur',
-            minLength: {
-              value: 8,
-              message: 'Şifre en az 8 karakter olmalıdır',
-            },
-          }}
-          render={({ field, fieldState }) => (
-            <PasswordInput
-              error={fieldState.error?.message}
-              inputProps={{
-                placeholder: '********',
-                id: 'password',
-                ...field,
-              }}
-            />
-          )}
-        />
-      </div>
+      <Controller
+        control={control}
+        name="password"
+        rules={{
+          required: 'Şifre alanı zorunludur',
+          minLength: {
+            value: 8,
+            message: 'Şifre en az 8 karakter olmalıdır',
+          },
+        }}
+        render={({ field, fieldState }) => (
+          <PasswordInput
+            error={fieldState.error?.message}
+            label="Şifre"
+            inputProps={{
+              placeholder: '********',
+              id: 'password',
+              ...field,
+            }}
+          />
+        )}
+      />
 
-      <div className="space-y-2">
-        <label
-          className="label label-text font-medium"
-          htmlFor="confirmPassword"
-        >
-          Şifre (Tekrar)
-        </label>
-        <Controller
-          control={control}
-          name="confirmPassword"
-          rules={{
-            required: 'Şifre tekrar alanı zorunludur',
-            validate: value => {
-              if (value !== passwordValue) {
-                return 'Şifreler eşleşmiyor!';
-              }
-              return true;
-            },
-            minLength: {
-              value: 8,
-              message: 'Şifre en az 8 karakter olmalıdır',
-            },
-          }}
-          render={({ field, fieldState }) => (
-            <PasswordInput
-              error={fieldState.error?.message}
-              inputProps={{
-                placeholder: '********',
-                id: 'confirmPassword',
-                ...field,
-              }}
-            />
-          )}
-        />
-      </div>
+      <Controller
+        control={control}
+        name="confirmPassword"
+        rules={{
+          required: 'Şifre tekrar alanı zorunludur',
+          validate: value => {
+            if (value !== passwordValue) {
+              return 'Şifreler eşleşmiyor!';
+            }
+            return true;
+          },
+          minLength: {
+            value: 8,
+            message: 'Şifre en az 8 karakter olmalıdır',
+          },
+        }}
+        render={({ field, fieldState }) => (
+          <PasswordInput
+            label="Şifre (Tekrar)"
+            error={fieldState.error?.message}
+            inputProps={{
+              placeholder: '********',
+              id: 'confirmPassword',
+              ...field,
+            }}
+          />
+        )}
+      />
 
       <button
         type="submit"
