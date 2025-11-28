@@ -1,7 +1,7 @@
 import { useForm, Controller, useWatch } from 'react-hook-form';
 
+import Input from '../../../components/ui/input';
 import PasswordInput from '../../../components/ui/password-input';
-import cn from '../../../utils/cn';
 
 interface NewUserForm {
   email: string;
@@ -25,14 +25,15 @@ function WelcomeForm() {
   return (
     <form
       className="space-y-4"
+      name="welcome-form"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="space-y-2">
         <label
-          className="label"
+          className="label label-text font-medium"
           htmlFor="email"
         >
-          <span className="label-text font-medium">E-posta</span>
+          E-posta
         </label>
         <Controller
           control={control}
@@ -45,25 +46,22 @@ function WelcomeForm() {
             },
           }}
           render={({ field, fieldState }) => (
-            <>
-              <input
-                className={cn('input input-bordered w-full', fieldState.error ? 'input-error' : '')}
-                placeholder="example@example.com"
-                id="email"
-                {...field}
-              />
-              {fieldState.error && <span className="label-text-alt text-error mt-1">{fieldState.error.message}</span>}
-            </>
+            <Input
+              error={fieldState.error?.message}
+              id="email"
+              placeholder="example@example.com"
+              {...field}
+            />
           )}
         />
       </div>
 
       <div className="space-y-2">
         <label
-          className="label"
+          className="label label-text font-medium"
           htmlFor="password"
         >
-          <span className="label-text font-medium">Şifre</span>
+          Şifre
         </label>
         <PasswordInput
           inputProps={{
@@ -76,10 +74,10 @@ function WelcomeForm() {
 
       <div className="space-y-2">
         <label
-          className="label"
+          className="label label-text font-medium"
           htmlFor="confirmPassword"
         >
-          <span className="label-text font-medium">Şifre (Tekrar)</span>
+          Şifre (Tekrar)
         </label>
         <Controller
           control={control}
@@ -97,17 +95,14 @@ function WelcomeForm() {
             },
           }}
           render={({ field, fieldState }) => (
-            <>
-              <PasswordInput
-                inputProps={{
-                  placeholder: '********',
-                  id: 'confirmPassword',
-                  className: fieldState.error ? 'input-error' : '',
-                  ...field,
-                }}
-              />
-              {fieldState.error && <span className="label-text-alt text-error mt-1">{fieldState.error.message}</span>}
-            </>
+            <PasswordInput
+              error={fieldState.error?.message}
+              inputProps={{
+                placeholder: '********',
+                id: 'confirmPassword',
+                ...field,
+              }}
+            />
           )}
         />
       </div>
