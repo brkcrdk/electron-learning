@@ -9,15 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as WelcomeIndexRouteImport } from './routes/welcome/index'
 
-const WelcomeRoute = WelcomeRouteImport.update({
-  id: '/welcome',
-  path: '/welcome',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LogoutRoute = LogoutRouteImport.update({
   id: '/logout',
   path: '/logout',
@@ -28,46 +23,44 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WelcomeIndexRoute = WelcomeIndexRouteImport.update({
+  id: '/welcome/',
+  path: '/welcome/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/logout': typeof LogoutRoute
-  '/welcome': typeof WelcomeRoute
+  '/welcome': typeof WelcomeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/logout': typeof LogoutRoute
-  '/welcome': typeof WelcomeRoute
+  '/welcome': typeof WelcomeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/logout': typeof LogoutRoute
-  '/welcome': typeof WelcomeRoute
+  '/welcome/': typeof WelcomeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths: '/' | '/logout' | '/welcome'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/logout' | '/welcome'
-  id: '__root__' | '/' | '/logout' | '/welcome'
+  id: '__root__' | '/' | '/logout' | '/welcome/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LogoutRoute: typeof LogoutRoute
-  WelcomeRoute: typeof WelcomeRoute
+  WelcomeIndexRoute: typeof WelcomeIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/welcome': {
-      id: '/welcome'
-      path: '/welcome'
-      fullPath: '/welcome'
-      preLoaderRoute: typeof WelcomeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/logout': {
       id: '/logout'
       path: '/logout'
@@ -82,13 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/welcome/': {
+      id: '/welcome/'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LogoutRoute: LogoutRoute,
-  WelcomeRoute: WelcomeRoute,
+  WelcomeIndexRoute: WelcomeIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

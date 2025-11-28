@@ -1,6 +1,7 @@
 import { unstable_PasswordToggleField as PasswordToggleField } from 'radix-ui';
 
 import Icon from './icon';
+import cn from '../../utils/cn';
 
 interface Props {
   inputProps?: PasswordToggleField.PasswordToggleFieldInputProps;
@@ -12,7 +13,7 @@ function PasswordInput({ inputProps }: Props) {
       <div className="relative flex items-center gap-2">
         <PasswordToggleField.Input
           {...inputProps}
-          className="input w-full"
+          className={cn('input w-full', inputProps?.className)}
         />
         <PasswordToggleField.Toggle className="btn btn-ghost btn-xs absolute right-2 z-10">
           <PasswordToggleField.Icon
