@@ -1,15 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router';
-
-import { router } from '../router';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/')({
   beforeLoad: async () => {
-    const response = await window.electronAPI.checkSuperAdmin();
+    const response = await window.electronAPI.checkSuperAdminExists();
 
     if (!response.success) {
-      router.navigate({ to: '/signup' });
-    } else {
-      router.navigate({ to: '/login' });
+      throw redirect({ to: '/signup' });
     }
+
+    throw redirect({ to: '/login' });
   },
 });

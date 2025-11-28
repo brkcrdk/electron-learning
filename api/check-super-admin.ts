@@ -7,7 +7,7 @@ import { users } from '../db/schema';
 import type { ApiResponseProps } from '../types/api-response-types';
 
 function checkSuperAdminHandler() {
-  ipcMain.handle('check-super-admin', async (): ApiResponseProps<boolean> => {
+  ipcMain.handle('check-super-admin-exists', async (): ApiResponseProps<boolean> => {
     try {
       const user = await db.query.users.findFirst({
         where: eq(users.roles, 'super-admin'),

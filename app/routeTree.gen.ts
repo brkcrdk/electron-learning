@@ -13,6 +13,7 @@ import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SignupIndexRouteImport } from './routes/signup/index'
+import { Route as MainIndexRouteImport } from './routes/main/index'
 
 const LogoutRoute = LogoutRouteImport.update({
   id: '/logout',
@@ -34,17 +35,24 @@ const SignupIndexRoute = SignupIndexRouteImport.update({
   path: '/signup/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MainIndexRoute = MainIndexRouteImport.update({
+  id: '/main/',
+  path: '/main/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
+  '/main': typeof MainIndexRoute
   '/signup': typeof SignupIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
+  '/main': typeof MainIndexRoute
   '/signup': typeof SignupIndexRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
+  '/main/': typeof MainIndexRoute
   '/signup/': typeof SignupIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/logout' | '/signup'
+  fullPaths: '/' | '/login' | '/logout' | '/main' | '/signup'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/logout' | '/signup'
-  id: '__root__' | '/' | '/login' | '/logout' | '/signup/'
+  to: '/' | '/login' | '/logout' | '/main' | '/signup'
+  id: '__root__' | '/' | '/login' | '/logout' | '/main/' | '/signup/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
   LogoutRoute: typeof LogoutRoute
+  MainIndexRoute: typeof MainIndexRoute
   SignupIndexRoute: typeof SignupIndexRoute
 }
 
@@ -99,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/main/': {
+      id: '/main/'
+      path: '/main'
+      fullPath: '/main'
+      preLoaderRoute: typeof MainIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -106,6 +123,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
   LogoutRoute: LogoutRoute,
+  MainIndexRoute: MainIndexRoute,
   SignupIndexRoute: SignupIndexRoute,
 }
 export const routeTree = rootRouteImport
