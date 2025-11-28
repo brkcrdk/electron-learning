@@ -11,7 +11,7 @@ function WelcomeHeader() {
       </div>
       <h1 className="card-title text-2xl">Hoş Geldiniz</h1>
       <p className="text-base-content/70 text-sm leading-relaxed">
-        Bu uygulamanın ilk kullanımı. Sistem yöneticisi hesabınızı oluşturarak başlayın. Bu hesap ile diğer kullanıcıları yönetebilir, admin rollerini
+        X Uygulamasına Hoş Geldiniz! Sistem yöneticisi hesabınızı oluşturarak başlayın. Bu hesap ile diğer kullanıcıları yönetebilir, admin rollerini
         belirleyebilir ve tüm sistem ayarlarını kontrol edebilirsiniz. Lütfen güvenli bir e-posta adresi ve şifre belirleyin.
       </p>
     </div>

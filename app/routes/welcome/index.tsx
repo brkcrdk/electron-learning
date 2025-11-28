@@ -10,7 +10,7 @@ export const Route = createFileRoute('/welcome/')({
 function RouteComponent() {
   return (
     <section className="bg-base-200 flex h-screen w-screen flex-col items-center justify-center p-4">
-      <div className="card bg-base-100 w-full max-w-md shadow-xl">
+      <div className="card bg-base-100 w-full max-w-lg shadow-xl">
         <div className="card-body space-y-6">
           <WelcomeHeader />
 
