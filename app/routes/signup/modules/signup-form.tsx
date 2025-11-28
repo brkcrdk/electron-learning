@@ -9,7 +9,7 @@ interface NewUserForm {
   confirmPassword: string;
 }
 
-function WelcomeForm() {
+function SignupForm() {
   const { handleSubmit, control } = useForm<NewUserForm>({
     mode: 'onSubmit',
   });
@@ -111,4 +111,4 @@ function WelcomeForm() {
   );
 }
 
-export default WelcomeForm;
+export default SignupForm;

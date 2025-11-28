@@ -1,6 +1,6 @@
 import Icon from '../../../components/ui/icon';
 
-function WelcomeHeader() {
+function SignupHeader() {
   return (
     <div className="flex flex-col items-center gap-3 text-center">
       <div className="bg-accent/20 rounded-full p-4">
@@ -18,4 +18,4 @@ function WelcomeHeader() {
   );
 }
 
-export default WelcomeHeader;
+export default SignupHeader;

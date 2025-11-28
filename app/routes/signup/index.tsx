@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import WelcomeHeader from './modules/welcom-header';
-import WelcomeForm from './modules/welcome-form';
+import SignupForm from './modules/signup-form';
+import SignupHeader from './modules/signup-header';
 
-export const Route = createFileRoute('/welcome/')({
+export const Route = createFileRoute('/signup/')({
   component: RouteComponent,
 });
 
@@ -12,9 +12,9 @@ function RouteComponent() {
     <section className="bg-base-200 flex h-screen w-screen flex-col items-center justify-center p-4">
       <div className="card bg-base-100 w-full max-w-lg shadow-xl">
         <div className="card-body space-y-6">
-          <WelcomeHeader />
+          <SignupHeader />
 
-          <WelcomeForm />
+          <SignupForm />
         </div>
       </div>
     </section>
