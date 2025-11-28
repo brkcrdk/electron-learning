@@ -1,5 +1,7 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 
+import Layout from '../layout';
+
 export const Route = createFileRoute('/_main')({
   component: RouteComponent,
   beforeLoad: async () => {
@@ -10,9 +12,8 @@ export const Route = createFileRoute('/_main')({
 
 function RouteComponent() {
   return (
-    <div className="bg-accent-content p-4">
-      <h1 className="mb-4 text-2xl font-bold">Main Layout</h1>
+    <Layout>
       <Outlet />
-    </div>
+    </Layout>
   );
 }
