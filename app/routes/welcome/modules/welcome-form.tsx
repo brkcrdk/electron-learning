@@ -28,33 +28,26 @@ function WelcomeForm() {
       name="welcome-form"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="space-y-2">
-        <label
-          className="label label-text font-medium"
-          htmlFor="email"
-        >
-          E-posta
-        </label>
-        <Controller
-          control={control}
-          name="email"
-          rules={{
-            required: 'E-posta alanı zorunludur',
-            pattern: {
-              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: 'Geçerli bir e-posta adresi giriniz',
-            },
-          }}
-          render={({ field, fieldState }) => (
-            <Input
-              error={fieldState.error?.message}
-              id="email"
-              placeholder="example@example.com"
-              {...field}
-            />
-          )}
-        />
-      </div>
+      <Controller
+        control={control}
+        name="email"
+        rules={{
+          required: 'E-posta alanı zorunludur',
+          pattern: {
+            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            message: 'Geçerli bir e-posta adresi giriniz',
+          },
+        }}
+        render={({ field, fieldState }) => (
+          <Input
+            error={fieldState.error?.message}
+            label="E-posta"
+            id="email"
+            placeholder="example@example.com"
+            {...field}
+          />
+        )}
+      />
 
       <div className="space-y-2">
         <label
