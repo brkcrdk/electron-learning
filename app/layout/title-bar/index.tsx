@@ -1,3 +1,5 @@
+import ThemeToggle from './theme-toggle';
+
 function TitleBar() {
   return (
     <div className="bg-base-100 webkit-draggable relative flex h-12 w-full items-center justify-between px-4">
@@ -10,7 +12,10 @@ function TitleBar() {
 
         <button className="btn btn-xs">Ara</button>
       </nav>
-      <div className="webkit-no-draggable">avatar area</div>
+      <div className="webkit-no-draggable">
+        <ThemeToggle />
+        avatar area
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 
 import SignupForm from './modules/signup-form';
 import SignupHeader from './modules/signup-header';
@@ -15,6 +15,7 @@ function RouteComponent() {
           <SignupHeader />
           <SignupForm />
         </div>
+        <Link to="/route-c">Hesabın var mı? Giriş yap</Link>
       </div>
     </section>
   );
