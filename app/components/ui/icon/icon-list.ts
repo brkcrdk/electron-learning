@@ -1,10 +1,13 @@
 import { HiShieldCheck } from 'react-icons/hi2';
+import { LuMoon, LuSun } from 'react-icons/lu';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
 
 export const iconList = [
   { label: 'eye-open', icon: RxEyeOpen },
   { label: 'eye-closed', icon: RxEyeClosed },
   { label: 'shield-check', icon: HiShieldCheck },
+  { label: 'moon', icon: LuMoon },
+  { label: 'sun', icon: LuSun },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];

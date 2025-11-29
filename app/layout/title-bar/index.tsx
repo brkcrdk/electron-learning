@@ -12,7 +12,7 @@ function TitleBar() {
 
         <button className="btn btn-xs">Ara</button>
       </nav>
-      <div className="webkit-no-draggable">
+      <div className="webkit-no-draggable flex items-center gap-2">
         <ThemeToggle />
         avatar area
       </div>
