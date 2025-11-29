@@ -22,3 +22,7 @@ html {
 @utility webkit-draggable {
   -webkit-app-region: drag;
 }
+
+@utility webkit-no-drag {
+  -webkit-app-region: no-drag;
+}
