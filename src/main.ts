@@ -22,6 +22,10 @@ const createWindow = () => {
     title: 'Electron Learning',
     center: true,
     titleBarStyle: 'hidden',
+    trafficLightPosition: {
+      x: 18,
+      y: 18,
+    },
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
