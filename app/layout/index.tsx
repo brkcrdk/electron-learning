@@ -6,7 +6,7 @@ function Layout({ children }: PropsWithChildren) {
   return (
     <>
       <TitleBar />
-      <div className="drawer lg:drawer-open">
+      <div className="drawer drawer-open">
         <input
           id="my-drawer-4"
           type="checkbox"
