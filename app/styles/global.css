@@ -18,3 +18,7 @@
 html {
   font-family: var(--font-poppins);
 }
+
+@utility webkit-draggable {
+  -webkit-app-region: drag;
+}

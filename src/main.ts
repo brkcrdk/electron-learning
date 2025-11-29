@@ -19,6 +19,7 @@ const createWindow = () => {
     minHeight: 600,
     title: 'Electron Learning',
     center: true,
+    titleBarStyle: 'hidden',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
