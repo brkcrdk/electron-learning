@@ -13,7 +13,7 @@ function Layout({ children }: PropsWithChildren) {
           className="drawer-toggle"
         />
         <div className="drawer-content bg-base-300">
-          <nav className="navbar bg-base-300 w-full">
+          <nav className="navbar bg-base-300 border-base-200 w-full border-b">
             <label
               htmlFor="my-drawer-4"
               aria-label="open sidebar"
@@ -34,7 +34,6 @@ function Layout({ children }: PropsWithChildren) {
                 <path d="M14 10l2 2l-2 2"></path>
               </svg>
             </label>
-            <div className="px-4">Navbar Title</div>
           </nav>
           <div className="p-4">{children}</div>
         </div>
