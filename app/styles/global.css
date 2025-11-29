@@ -23,6 +23,6 @@ html {
   -webkit-app-region: drag;
 }
 
-@utility webkit-no-drag {
+@utility webkit-no-draggable {
   -webkit-app-region: no-drag;
 }

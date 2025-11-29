@@ -9,8 +9,8 @@ export const Route = createFileRoute('/signup/')({
 
 function RouteComponent() {
   return (
-    <section className="bg-base-200 flex h-screen w-screen flex-col items-center justify-center p-4">
-      <div className="card bg-base-100 w-full max-w-lg shadow-xl">
+    <section className="bg-base-200  webkit-draggable flex h-screen w-screen flex-col items-center justify-center p-4">
+      <div className="card bg-base-100 webkit-no-draggable w-full max-w-lg shadow-xl">
         <div className="card-body space-y-6">
           <SignupHeader />
           <SignupForm />
