@@ -1,9 +1,9 @@
 import { ipcRenderer } from 'electron';
 
-import type { ThemeType } from './theme';
+import type { ThemeSchema, ThemeType } from './theme';
 
 const storeEventList = {
-  setTheme: (theme: ThemeType) => ipcRenderer.invoke('set-theme', theme),
+  setTheme: (theme: ThemeType): Promise<ThemeSchema> => ipcRenderer.invoke('set-theme', theme),
   getTheme: (): Promise<ThemeType> => ipcRenderer.invoke('get-theme'),
 } as const;
 

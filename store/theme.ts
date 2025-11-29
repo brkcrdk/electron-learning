@@ -24,9 +24,10 @@ export const themes: Record<ThemeType, ThemeSchema> = {
 };
 
 export const setTheme = () => {
-  ipcMain.handle('set-theme', (_, theme: ThemeType) => {
+  ipcMain.handle('set-theme', async (_, theme: ThemeType): Promise<ThemeSchema> => {
     const selectedTheme = themes[theme];
     store.set('theme', selectedTheme);
+    return selectedTheme;
   });
 };
 
