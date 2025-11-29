@@ -3,7 +3,9 @@ import path from 'node:path';
 import { app, BrowserWindow } from 'electron';
 import started from 'electron-squirrel-startup';
 
-import { registerApiHandlers } from '../api';
+import registerApiHandlers from '../api';
+import registerStoreHandlers from '../store';
+import { store } from '../store';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -34,7 +36,9 @@ const createWindow = () => {
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools({ mode: 'detach' });
-  mainWindow.setBackgroundColor('#faf7f5');
+
+  // Kaydedilmiş temayı uygula
+  mainWindow.setBackgroundColor(store.get('theme.backgroundColor'));
 };
 
 // This method will be called when Electron has finished
@@ -43,6 +47,7 @@ const createWindow = () => {
 app.on('ready', () => {
   // IPC handler'larını kaydet
   registerApiHandlers();
+  registerStoreHandlers();
 
   // Window'u oluştur
   createWindow();

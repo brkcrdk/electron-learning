@@ -15,6 +15,15 @@ function RouteComponent() {
           <SignupHeader />
 
           <SignupForm />
+          <button
+            onClick={async () => {
+              const theme = await window.store.setTheme('dark');
+              console.log(theme);
+            }}
+          >
+            xx
+          </button>
+          {/* <pre>{JSON.stringify(window.store.getTheme(), null, 4)}</pre> */}
         </div>
       </div>
     </section>

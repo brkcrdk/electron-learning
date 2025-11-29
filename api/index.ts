@@ -3,9 +3,11 @@ import createSuperAdminHandler from './create-super-admin';
 import createUserHandler from './create-user';
 import listUsersHandler from './list-users';
 
-export function registerApiHandlers() {
+function registerApiHandlers() {
   createUserHandler();
   listUsersHandler();
   checkSuperAdminHandler();
   createSuperAdminHandler();
 }
+
+export default registerApiHandlers;
