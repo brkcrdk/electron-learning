@@ -3,6 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="./app/styles/global.css" />
+    <script>
+    (async () => {
+        const theme = await window.store.getTheme();
+        console.log(theme);
+        document.documentElement.setAttribute('data-theme', theme.id);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -19,7 +19,7 @@ export const themes: Record<ThemeType, ThemeSchema> = {
   dark: {
     id: 'dark',
     name: 'Koyu',
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#1d232a',
   },
 };
 
