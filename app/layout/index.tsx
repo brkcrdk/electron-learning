@@ -47,6 +47,35 @@ function Layout({ children }: PropsWithChildren) {
                 title: 'Modal Title',
                 hasCloseIcon: true,
               }}
+              footerProps={{
+                hideFooter: false,
+                footerType: 'defaultFooter',
+                actions: [
+                  {
+                    actionId: 'save',
+                    actionType: 'button',
+                    actionProps: {
+                      children: 'Save',
+                    },
+                  },
+                  {
+                    actionId: 'close',
+                    actionType: 'close',
+                    actionProps: {
+                      children: 'Close',
+                    },
+                  },
+                  {
+                    actionId: 'cancel',
+                    actionType: 'link',
+                    actionProps: {
+                      to: '/',
+                      children: 'Cancel',
+                      className: 'btn btn-error',
+                    },
+                  },
+                ],
+              }}
             >
               <div>Content</div>
             </Modal>
