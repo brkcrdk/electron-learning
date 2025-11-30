@@ -2,6 +2,8 @@ import eslint from '@eslint/js';
 import pluginQuery from '@tanstack/eslint-plugin-query';
 import importPlugin from 'eslint-plugin-import';
 import prettierPlugin from 'eslint-plugin-prettier';
+import reactPlugin from 'eslint-plugin-react';
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import tseslint from 'typescript-eslint';
 
 export default [
@@ -12,6 +14,8 @@ export default [
     plugins: {
       prettier: prettierPlugin,
       import: importPlugin,
+      react: reactPlugin,
+      'react-hooks': reactHooksPlugin,
     },
     rules: {
       'prettier/prettier': 'error',
