@@ -1,3 +1,4 @@
+import Avatar from '../../components/ui/avatar';
 import Dropdown from '../../components/ui/dropdown';
 import Icon from '../../components/ui/icon';
 
@@ -8,11 +9,15 @@ function UserActions() {
         className: 'px-1',
         children: (
           <>
-            <div className="avatar">
-              <div className="size-6 rounded-md">
-                <img src="https://img.daisyui.com/images/profile/demo/batperson@192.webp" />
-              </div>
-            </div>
+            <Avatar
+              name="John Doe"
+              avatarRootProps={{
+                className: 'size-6 rounded-sm',
+              }}
+              avatarImageProps={{
+                src: 'https://imgx.daisyui.com/images/profile/demo/batperson@192.webp',
+              }}
+            />
             <Icon
               name="chevron-down"
               className="size-4"
