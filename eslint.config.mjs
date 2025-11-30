@@ -16,6 +16,14 @@ export default [
     rules: {
       'prettier/prettier': 'error',
       '@typescript-eslint/no-unused-vars': 'warn',
+      'react/react-in-jsx-scope': 'off',
+      'react/display-name': 'off',
+      'react-hooks/exhaustive-deps': 'warn',
+      'react-hooks/rules-of-hooks': 'error',
+      'react/self-closing-comp': 'error',
+      'object-shorthand': 'error',
+      quotes: ['error', 'single', { avoidEscape: true }],
+      'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
       'import/order': [
         'error',
         {
