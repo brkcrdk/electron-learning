@@ -1,8 +1,15 @@
+import { type LinkComponentProps } from '@tanstack/react-router';
 import { Dialog } from 'radix-ui';
-import { type PropsWithChildren } from 'react';
+import { type ButtonHTMLAttributes, type PropsWithChildren } from 'react';
 
+import ModalFooter, { type ModalFooterProps } from './modal-footer';
 import ModalHeader, { type ModalHeaderProps } from './modal-header';
 import cn from '../../../utils/cn';
+
+export type ModalActionProps =
+  | { actionId: string; actionType: 'button'; actionProps: ButtonHTMLAttributes<HTMLButtonElement> }
+  | { actionId: string; actionType: 'close'; actionProps: ButtonHTMLAttributes<HTMLButtonElement> }
+  | { actionId: string; actionType: 'link'; actionProps: LinkComponentProps };
 
 type Props = {
   rootProps?: Dialog.DialogProps;
@@ -20,9 +27,18 @@ type Props = {
    * ```
    */
   headerProps?: ModalHeaderProps;
+  footerProps?: ModalFooterProps;
 } & PropsWithChildren;
 
-function Modal({ children, triggerProps, rootProps, portalProps, contentProps, headerProps = { hideHeader: true } }: Props) {
+function Modal({
+  children,
+  triggerProps,
+  rootProps,
+  portalProps,
+  contentProps,
+  headerProps = { hideHeader: true },
+  footerProps = { hideFooter: true },
+}: Props) {
   return (
     <Dialog.Root {...rootProps}>
       <Dialog.Trigger {...triggerProps} />
@@ -43,25 +59,8 @@ function Modal({ children, triggerProps, rootProps, portalProps, contentProps, h
             <ModalHeader {...headerProps} />
           )}
           {children}
-        </Dialog.Content>
-        {/* <Dialog.Content
-          {...contentProps}
-          className={cn(
-            'z-popover-content fixed inset-0 m-auto flex h-fit max-h-[80vh] w-[90%] flex-col items-start justify-center gap-2 overflow-auto rounded-lg bg-white p-4 md:max-w-[630px] md:gap-3',
-            contentProps?.className
-          )}
-        >
-          {headerProps.hideHeader ? (
-            <>
-              <Dialog.Title className="sr-only">Untitled Modal</Dialog.Title>
-              <Dialog.Description className="sr-only">Untitled Modal</Dialog.Description>
-            </>
-          ) : (
-            <ModalHeader {...headerProps} />
-          )}
-          {children}
           {!footerProps.hideFooter && <ModalFooter {...footerProps} />}
-        </Dialog.Content> */}
+        </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
   );
