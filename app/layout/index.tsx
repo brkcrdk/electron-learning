@@ -1,4 +1,5 @@
 import TitleBar from './title-bar';
+import Modal from '../components/ui/modal';
 
 import type { PropsWithChildren } from 'react';
 
@@ -35,7 +36,21 @@ function Layout({ children }: PropsWithChildren) {
               </svg>
             </label>
           </nav>
-          <div className="p-4">{children}</div>
+          <div className="p-4">
+            {children}
+            <Modal
+              triggerProps={{
+                children: 'open up',
+              }}
+              headerProps={{
+                hideHeader: false,
+                title: 'Modal Title',
+                hasCloseIcon: true,
+              }}
+            >
+              <div>Content</div>
+            </Modal>
+          </div>
         </div>
 
         <div className="drawer-side is-drawer-close:overflow-visible">

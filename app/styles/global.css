@@ -26,3 +26,23 @@ html {
 @utility webkit-no-draggable {
   -webkit-app-region: no-drag;
 }
+
+@utility z-header {
+  z-index: 200;
+}
+
+@utility z-sidebar {
+  z-index: 201;
+}
+
+@utility z-popover-elements {
+  z-index: 202;
+}
+
+@utility z-popover-overlay {
+  z-index: 203;
+}
+
+@utility z-popover-content {
+  z-index: 204;
+}
