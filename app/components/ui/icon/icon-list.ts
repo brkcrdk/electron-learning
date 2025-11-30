@@ -1,5 +1,5 @@
 import { HiShieldCheck } from 'react-icons/hi2';
-import { LuMoon, LuSun, LuArrowLeft, LuArrowRight } from 'react-icons/lu';
+import { LuMoon, LuSun, LuArrowLeft, LuArrowRight, LuChevronDown } from 'react-icons/lu';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
 
 export const iconList = [
@@ -10,6 +10,7 @@ export const iconList = [
   { label: 'sun', icon: LuSun },
   { label: 'arrow-left', icon: LuArrowLeft },
   { label: 'arrow-right', icon: LuArrowRight },
+  { label: 'chevron-down', icon: LuChevronDown },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];
