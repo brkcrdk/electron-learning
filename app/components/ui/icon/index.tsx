@@ -1,4 +1,5 @@
 import { iconList, type IconListProps } from './icon-list';
+import cn from '../../../utils/cn';
 
 import type { IconBaseProps } from 'react-icons';
 
@@ -16,6 +17,7 @@ function Icon({ name, ...props }: IconProps) {
     <IconComponent
       name={name}
       {...props}
+      className={cn('size-5', props.className)}
     />
   );
 }
