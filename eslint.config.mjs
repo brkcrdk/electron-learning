@@ -41,4 +41,7 @@ export default [
       ],
     },
   },
+  {
+    ignores: ['node_modules/**', '.vite/**', 'out/**', 'build/**', 'drizzle/**'],
+  },
 ];
