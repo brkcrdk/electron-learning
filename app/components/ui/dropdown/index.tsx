@@ -17,9 +17,7 @@ function Dropdown({ triggerProps, dropdownItems }: Props) {
       <DropdownMenu.Trigger
         {...triggerProps}
         className={cn('btn btn-sm', triggerProps?.className)}
-      >
-        trigger
-      </DropdownMenu.Trigger>
+      />
       <DropdownMenu.Portal>
         <DropdownMenu.Content
           sideOffset={10}
