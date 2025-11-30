@@ -34,11 +34,14 @@ function ModalHeader(props: ModalHeaderProps) {
 
   return (
     <header className="flex w-full items-center justify-between">
-      <Dialog.Title className="text-lg font-bold">{title}</Dialog.Title>
+      <Dialog.Title className="text-lg font-medium">{title}</Dialog.Title>
       <Dialog.Description className="sr-only">{title}</Dialog.Description>
       {hasCloseIcon && (
-        <Dialog.Close className="cursor-pointer">
-          <Icon name="close" />
+        <Dialog.Close className="btn btn-xs btn-square cursor-pointer">
+          <Icon
+            name="close"
+            className="size-4"
+          />
         </Dialog.Close>
       )}
     </header>
