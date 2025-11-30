@@ -58,7 +58,11 @@ function Avatar({ avatarRootProps, name, avatarImageProps, avatarFallbackProps, 
         {imgError ? (
           <AvatarPrimitive.Fallback
             {...avatarFallbackProps}
-            className={cn('flex size-full items-center justify-center text-sm leading-normal', computedBackgroundColor, avatarFallbackProps?.className)}
+            className={cn(
+              'flex size-full items-center justify-center text-sm leading-normal text-white',
+              computedBackgroundColor,
+              avatarFallbackProps?.className
+            )}
           >
             {firstLetters}
           </AvatarPrimitive.Fallback>
