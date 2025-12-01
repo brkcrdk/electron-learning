@@ -1,7 +1,9 @@
+import { BiHomeAlt } from 'react-icons/bi';
 import { HiShieldCheck } from 'react-icons/hi2';
 import { LuMoon, LuSun, LuArrowLeft, LuArrowRight, LuChevronDown, LuX, LuLogOut, LuUser } from 'react-icons/lu';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
 import { TbLayoutSidebarLeftExpand } from 'react-icons/tb';
+import { VscSettings } from 'react-icons/vsc';
 
 export const iconList = [
   { label: 'eye-open', icon: RxEyeOpen },
@@ -16,6 +18,8 @@ export const iconList = [
   { label: 'sidebar-expand', icon: TbLayoutSidebarLeftExpand },
   { label: 'logout', icon: LuLogOut },
   { label: 'user', icon: LuUser },
+  { label: 'home', icon: BiHomeAlt },
+  { label: 'settings', icon: VscSettings },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];
