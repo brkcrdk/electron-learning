@@ -14,7 +14,10 @@ interface Props {
   isSortable: boolean;
 }
 
-const sharedClassName = 'group-data-centered/th:w-full group-data-centered/th:justify-center relative flex items-center justify-start gap-2 text-sm';
+const sharedClassName = cn(
+  'relative flex items-center justify-start gap-2 text-sm font-normal',
+  'group-data-centered/th:w-full group-data-centered/th:justify-center'
+);
 
 function CellContent({ headerId, content, onSortingChange, columnIsSorted, isSortable }: Props) {
   if (isSortable) {
