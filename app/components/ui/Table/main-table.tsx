@@ -143,7 +143,15 @@ function MainTable<T>({
         searchProps={searchProps}
         tableActions={tableActions}
       />
-      <TableEmptyState />
+      <TableEmptyState
+        onClearFilters={() => {}}
+        newItemProps={{
+          label: 'Yeni Kayıt Ekle',
+          onAddNewItem: () => {
+            console.log('Yeni Kayıt Ekle');
+          },
+        }}
+      />
       {/* 
       {table.getRowModel().rows.length > 0 ? (
         <>

@@ -1,5 +1,6 @@
 import { BiHomeAlt } from 'react-icons/bi';
 import { HiShieldCheck } from 'react-icons/hi2';
+import { IoFolderOpenOutline } from 'react-icons/io5';
 import { LuMoon, LuSun, LuArrowLeft, LuArrowRight, LuChevronDown, LuX, LuLogOut, LuUser, LuSearch } from 'react-icons/lu';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
 import { TbLayoutSidebarLeftExpand } from 'react-icons/tb';
@@ -21,6 +22,7 @@ export const iconList = [
   { label: 'home', icon: BiHomeAlt },
   { label: 'settings', icon: VscSettings },
   { label: 'search', icon: LuSearch },
+  { label: 'folder-open-outline', icon: IoFolderOpenOutline },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];
