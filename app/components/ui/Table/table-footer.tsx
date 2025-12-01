@@ -17,7 +17,7 @@ export interface TablePaginationProps {
 function TableFooter({ page, pageCount, onPaginationChange, limit, onLimitChange }: TablePaginationProps) {
   if (pageCount > 1) {
     return (
-      <footer className="grid grid-cols-2">
+      <footer className="flex items-center justify-between">
         {limit && (
           <Dropdown
             contentProps={{
