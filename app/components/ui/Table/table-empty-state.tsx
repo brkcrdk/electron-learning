@@ -1,7 +1,7 @@
 import Icon from '../icon';
 
-interface TableEmptyStateProps {
-  onClearFilters: () => void;
+export interface TableEmptyStateProps {
+  onClearFilters?: () => void;
   newItemProps?: {
     label: string;
     onAddNewItem: () => void;

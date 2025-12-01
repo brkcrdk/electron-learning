@@ -1,10 +1,5 @@
-import { useMemo, useState } from 'react';
-
-import { ColumnDef, ColumnOrderState, ColumnPinningState } from '@tanstack/react-table';
-
-import Checkbox from '../Checkbox';
-
-import { RowSelectionProps } from './MainTable';
+import type { RowSelectionProps } from './main-table';
+import type { ColumnDef, ColumnPinningState } from '@tanstack/react-table';
 
 interface Props<T> {
   rowSelectionProps: RowSelectionProps<T>;
@@ -13,9 +8,10 @@ interface Props<T> {
 }
 
 function useTableColumns<T>({ rowSelectionProps, columns, pinnedColumns }: Props<T>) {
-  const memoizedColumns = useMemo<ColumnDef<T>[]>(() => {
-    if (rowSelectionProps.enableRowSelection) {
-      return [
+  const { enableRowSelection } = rowSelectionProps;
+
+  const memoizedColumns: ColumnDef<T>[] = enableRowSelection
+    ? [
         {
           accessorKey: 'select',
           id: 'select',
@@ -23,55 +19,32 @@ function useTableColumns<T>({ rowSelectionProps, columns, pinnedColumns }: Props
           size: 30,
           enableResizing: false,
           enablePinning: true,
-          meta: {
-            centeredColumn: true,
-          },
+          meta: { centeredColumn: true },
           header: ({ table }) => (
-            <Checkbox
-              itemType="defaultCheckboxItem"
-              rootProps={{
-                checked: table.getIsAllRowsSelected(),
-                onClick: table.getToggleAllRowsSelectedHandler(),
-              }}
+            <input
+              type="checkbox"
+              defaultChecked={table.getIsAllRowsSelected()}
+              onClick={table.getToggleAllRowsSelectedHandler()}
             />
           ),
           cell: ({ row }) => (
-            <Checkbox
-              itemType="defaultCheckboxItem"
-              rootProps={{
-                checked: row.getIsSelected(),
-                disabled: !row.getCanSelect(),
-                onCheckedChange: row.getToggleSelectedHandler(),
-              }}
+            <input
+              type="checkbox"
+              defaultChecked={row.getIsSelected()}
+              onClick={row.getToggleSelectedHandler()}
             />
           ),
         },
         ...columns,
-      ];
-    } else {
-      return columns;
-    }
-  }, []);
+      ]
+    : columns;
 
-  const computedColumnPinning: ColumnPinningState['left'] = useMemo(() => {
-    if (rowSelectionProps.enableRowSelection) {
-      if (pinnedColumns) {
-        return ['select', ...pinnedColumns];
-      } else {
-        return ['select'];
-      }
-    } else {
-      return pinnedColumns;
-    }
-  }, []);
-
-  const [columnOrder, setColumnOrder] = useState<ColumnOrderState>(memoizedColumns.map(column => String(column.id)));
+  const computedPinnedColumns: string[] = pinnedColumns ? ['select', ...pinnedColumns] : ['select'];
+  const computedColumnPinning: ColumnPinningState['left'] = enableRowSelection ? computedPinnedColumns : pinnedColumns;
 
   return {
     memoizedColumns,
     computedColumnPinning,
-    columnOrder,
-    setColumnOrder,
   };
 }
 

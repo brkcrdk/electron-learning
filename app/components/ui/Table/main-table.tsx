@@ -1,66 +1,58 @@
-// import { ReactNode } from 'react';
+import {
+  getCoreRowModel,
+  useReactTable,
+  type ColumnDef,
+  type OnChangeFn,
+  type RowSelectionState,
+  type SortDirection,
+  type SortingState,
+  type TableOptions,
+} from '@tanstack/react-table';
 
-import {} from // ColumnDef,
-// OnChangeFn,
-// SortingState,
-// getCoreRowModel,
-// useReactTable,
-// RowSelectionState,
-// Row,
-// TableOptions,
-// SortDirection,
-'@tanstack/react-table';
-import TableEmptyState from './table-empty-state';
+import TableEmptyState, { type TableEmptyStateProps } from './table-empty-state';
 import TableHeader from './table-header';
 import { type TableSearchProps } from './table-header/table-search-bar';
+import useTableColumns from './useTableColumns';
 import { type TableActionsProps } from '../table/table-types';
-// import EmptyContent from '../EmptyContent';
 
-// import TableBody from './TableBody';
-// import TableFooter, { TableLimitProps, TablePaginationProps } from './TableFooter';
-// import TableHead from './TableHead';
-// import TableHeader from './TableHeader';
-// import TableRowSortContext from './TableRowSortContext';
-// import useTableColumns from './useTableColumns';
+export type RowSelectionProps<T> =
+  | {
+      enableRowSelection: false;
+    }
+  | {
+      enableRowSelection: true;
+      rowSelection: RowSelectionState;
+      onRowSelectionChange: OnChangeFn<RowSelectionState>;
+      /**
+       * Eğer rowlar seçerken indexine göre değilde bizim belirteceğimiz row indexine göre
+       * seçip ona göre saklarız
+       * * **NOTE**: Bu değer uniq bir değeri ifade etmelidir.
+       */
+      getRowId?: (row: T) => string;
+    };
 
-// export interface SortingChangeStateProps {
-//   id: string;
-//   direction: SortDirection | false;
-// }
+export interface SortingChangeStateProps {
+  id: string;
+  direction: SortDirection | false;
+}
 
-// interface SortingProps {
-//   sorting: SortingState;
-//   onSortingChange: (val: SortingChangeStateProps) => void;
-// }
-
-// export type RowSelectionProps<T> =
-//   | {
-//       enableRowSelection: false;
-//     }
-//   | {
-//       enableRowSelection: true;
-//       rowSelection: RowSelectionState;
-//       onRowSelectionChange: OnChangeFn<RowSelectionState>;
-//       /**
-//        * Eğer rowlar seçerken indexine göre değilde bizim belirteceğimiz row indexine göre
-//        * seçip ona göre saklarız
-//        * * **NOTE**: Bu değer uniq bir değeri ifade etmelidir.
-//        */
-//       getRowId?: (row: T) => string;
-//     };
+interface SortingProps {
+  sorting: SortingState;
+  onSortingChange: (val: SortingChangeStateProps) => void;
+}
 
 export interface TableProps<T> {
   data: T[];
-  // columns: ColumnDef<T>[];
-  // customEmptyState?: ReactNode;
+  columns: ColumnDef<T>[];
   tableTitle?: string;
   searchProps?: TableSearchProps;
   tableActions?: TableActionsProps[];
   // paginationProps?: TablePaginationProps;
   // limitProps?: TableLimitProps;
-  // sortingProps?: SortingProps;
-  // rowSelectionProps?: RowSelectionProps<T>;
-  // pinnedColumns?: string[];
+  sortingProps?: SortingProps;
+  rowSelectionProps?: RowSelectionProps<T>;
+  pinnedColumns?: string[];
+  tableEmptyStateProps?: TableEmptyStateProps;
   isLoading?: boolean;
   isDisabled?: boolean;
   // /**
@@ -70,15 +62,15 @@ export interface TableProps<T> {
   //  * @param rowData mevcut table rowda gelecek olan veriyi ifade eder
   //  */
   // onRowPointerEnter?: (rowData: Row<T>) => void;
-  // /**
-  //  * TableOptions ile default tablo ayarlarını güncelleyebiliriz.
-  //  * @see https://tanstack.com/table/latest/docs/api/core/TableOptions
-  //  */
-  // tableOptions?: TableOptions<T>;
+  /**
+   * TableOptions ile default tablo ayarlarını güncelleyebiliriz.
+   * @see https://tanstack.com/table/latest/docs/api/core/TableOptions
+   */
+  tableOptions?: TableOptions<T>;
 }
 
 function MainTable<T>({
-  // columns,
+  columns,
   data,
   tableTitle,
   searchProps,
@@ -87,51 +79,50 @@ function MainTable<T>({
   // paginationProps,
   // customEmptyState,
   isDisabled,
-  // pinnedColumns,
+  tableEmptyStateProps,
+  pinnedColumns,
   // onRowPointerEnter,
-  // tableOptions,
-  // sortingProps = {
-  //   sorting: [],
-  //   onSortingChange: () => {},
-  // },
-  // rowSelectionProps = {
-  //   enableRowSelection: true,
-  //   rowSelection: {},
-  //   onRowSelectionChange: () => {},
-  // },
+  tableOptions,
+  sortingProps = {
+    sorting: [],
+    onSortingChange: () => {},
+  },
+  rowSelectionProps = {
+    enableRowSelection: true,
+    rowSelection: {},
+    onRowSelectionChange: () => {},
+  },
 }: TableProps<T>) {
-  // const { memoizedColumns, computedColumnPinning, columnOrder, setColumnOrder } = useTableColumns({
-  //   columns,
-  //   pinnedColumns,
-  //   rowSelectionProps,
-  // });
+  const { memoizedColumns, computedColumnPinning } = useTableColumns({
+    columns,
+    pinnedColumns,
+    rowSelectionProps,
+  });
 
-  // const table = useReactTable({
-  //   data,
-  //   columns: memoizedColumns,
-  //   state: {
-  //     columnOrder,
-  //     sorting: sortingProps.sorting,
-  //     rowSelection: rowSelectionProps.enableRowSelection ? rowSelectionProps.rowSelection : {},
-  //     columnPinning: {
-  //       left: computedColumnPinning,
-  //     },
-  //   },
-  //   enableSorting: true,
-  //   enableMultiSort: false,
-  //   manualSorting: true,
-  //   enableRowSelection: rowSelectionProps.enableRowSelection,
-  //   getRowId: rowSelectionProps.enableRowSelection ? rowSelectionProps.getRowId : undefined,
-  //   onRowSelectionChange: rowSelectionProps.enableRowSelection ? rowSelectionProps.onRowSelectionChange : undefined,
-  //   onColumnOrderChange: setColumnOrder,
-  //   getCoreRowModel: getCoreRowModel(),
-  //   enableColumnResizing: true,
-  //   columnResizeMode: 'onChange',
-  //   debugTable: process.env.NODE_ENV === 'development',
-  //   debugHeaders: process.env.NODE_ENV === 'development',
-  //   debugColumns: process.env.NODE_ENV === 'development',
-  //   ...tableOptions,
-  // });
+  const table = useReactTable({
+    data,
+    columns: memoizedColumns,
+    state: {
+      sorting: sortingProps.sorting,
+      rowSelection: rowSelectionProps.enableRowSelection ? rowSelectionProps.rowSelection : {},
+      columnPinning: {
+        left: computedColumnPinning,
+      },
+    },
+    enableSorting: true,
+    enableMultiSort: false,
+    manualSorting: true,
+    enableRowSelection: rowSelectionProps.enableRowSelection,
+    getRowId: rowSelectionProps.enableRowSelection ? rowSelectionProps.getRowId : undefined,
+    onRowSelectionChange: rowSelectionProps.enableRowSelection ? rowSelectionProps.onRowSelectionChange : undefined,
+    getCoreRowModel: getCoreRowModel(),
+    enableColumnResizing: true,
+    columnResizeMode: 'onChange',
+    debugTable: import.meta.env.DEV,
+    debugHeaders: import.meta.env.DEV,
+    debugColumns: import.meta.env.DEV,
+    ...tableOptions,
+  });
 
   return (
     <div
@@ -143,44 +134,34 @@ function MainTable<T>({
         searchProps={searchProps}
         tableActions={tableActions}
       />
-      <TableEmptyState
-        onClearFilters={() => {}}
-        newItemProps={{
-          label: 'Yeni Kayıt Ekle',
-          onAddNewItem: () => {
-            console.log('Yeni Kayıt Ekle');
-          },
-        }}
-      />
-      {/* 
+
       {table.getRowModel().rows.length > 0 ? (
         <>
           <div className="overflow-auto">
             <table className="w-full border-separate border-spacing-0 overflow-auto group-aria-disabled/table:pointer-events-none group-aria-disabled/table:opacity-30">
-              <TableHead
+              {/* <TableHead
                 table={table}
                 onSortingChange={sortingProps.onSortingChange}
-              />
-              <TableBody
-                table={table}
-                onRowPointerEnter={onRowPointerEnter}
-              />
+              /> */}
+              {/* <TableBody table={table} /> */}
             </table>
           </div>
-          <TableFooter
+          {/* <TableFooter
             limitProps={limitProps}
             paginationProps={paginationProps}
-          />
+          /> */}
         </>
       ) : (
         <table className="group-aria-disabled/table:pointer-events-none group-aria-disabled/table:opacity-30">
           <tbody>
             <tr>
-              <td colSpan={memoizedColumns.length}>{customEmptyState ? customEmptyState : <EmptyContent />}</td>
+              <td colSpan={1}>
+                <TableEmptyState {...tableEmptyStateProps} />
+              </td>
             </tr>
           </tbody>
         </table>
-      )} */}
+      )}
     </div>
   );
 }
