@@ -8,10 +8,11 @@ import type { DropdownItemProps } from './dropdown-item-props';
 
 interface Props {
   triggerProps?: DropdownMenu.DropdownMenuTriggerProps;
+  contentProps?: DropdownMenu.DropdownMenuContentProps;
   dropdownItems: DropdownItemProps[];
 }
 
-function Dropdown({ triggerProps, dropdownItems }: Props) {
+function Dropdown({ triggerProps, contentProps, dropdownItems }: Props) {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger
@@ -22,7 +23,12 @@ function Dropdown({ triggerProps, dropdownItems }: Props) {
         <DropdownMenu.Content
           sideOffset={10}
           collisionPadding={8}
-          className="bg-base-100 relative grid max-h-[calc(var(--radix-dropdown-menu-content-available-height)-1rem)] min-w-52 gap-0.5 overflow-auto rounded-sm p-2"
+          {...contentProps}
+          className={cn(
+            'bg-base-100 z-popover-content relative grid min-w-52 gap-0.5 overflow-auto rounded-xl p-2 shadow-lg',
+            'max-h-[calc(var(--radix-dropdown-menu-content-available-height)-1rem)]',
+            contentProps?.className
+          )}
         >
           {dropdownItems.map(item => {
             if (item.itemType === 'separator') {
