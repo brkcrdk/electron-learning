@@ -8,7 +8,7 @@ export interface TableSearchProps {
 
 function TableSearchBar({ value, placeholder, onSearch }: TableSearchProps) {
   return (
-    <label className="input input-ghost flex-1">
+    <label className="input bg-base-200">
       <Icon
         name="search"
         className="opacity-50"

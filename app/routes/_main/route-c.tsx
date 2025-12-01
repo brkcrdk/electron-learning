@@ -9,8 +9,14 @@ export const Route = createFileRoute('/_main/route-c')({
 function RouteComponent() {
   return (
     <div>
-      Hello "/main/route-c"!
       <Table
+        searchProps={{
+          placeholder: 'Search by name',
+          value: '',
+          onSearch: value => {
+            console.log(value);
+          },
+        }}
         data={[
           {
             name: 'John Doe',

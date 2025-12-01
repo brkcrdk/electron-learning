@@ -15,12 +15,12 @@
   --color-accent-content: oklch(88.524% .014 224.389);
 }
 
-@theme {
-  --font-poppins: "Poppins", sans-serif;
+@utility input {
+  outline: 0px !important;
 }
 
-html {
-  font-family: var(--font-poppins);
+@theme {
+  --font-poppins: "Poppins", sans-serif;
 }
 
 @utility webkit-draggable {
@@ -49,4 +49,8 @@ html {
 
 @utility z-popover-content {
   z-index: 204;
+}
+
+html {
+  font-family: var(--font-poppins);
 }
