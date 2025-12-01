@@ -34,10 +34,7 @@ function TableBody<T>({ table }: Props<T>) {
                   left: cell.column.getIsPinned() === 'left' ? cell.column.getStart() : undefined,
                   width: cell.column.getSize(),
                 }}
-                className={cn(
-                  // 'group-hover/tr:bg-primaryLight/30 group-data-selected/tr:bg-primaryLight data-pinned:sticky data-pinned:z-10 data-pinned:opacity-90 border-t border-gray-200 bg-white p-2 text-sm',
-                  meta?.className
-                )}
+                className={cn(meta?.className)}
               >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
