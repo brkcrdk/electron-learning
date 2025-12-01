@@ -25,7 +25,6 @@ function CellContent({ headerId, content, onSortingChange, columnIsSorted, isSor
       <button
         className={cn(sharedClassName, 'cursor-pointer')}
         onClick={() => {
-          console.log('clicked');
           if (onSortingChange) {
             const sortingDirectionOrder = ['asc', 'desc', false];
             const currentIndex = sortingDirectionOrder.indexOf(columnIsSorted);

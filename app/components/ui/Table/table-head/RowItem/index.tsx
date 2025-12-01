@@ -22,16 +22,15 @@ function RowItem<T>({ header, onSortingChange }: Props<T>) {
       // Tablomuzda sadece sola doğru sabitleme yaptığımız için left olup olmadığını kontrol ediyoruz.
       data-pinned={cd(header.column.getIsPinned() === 'left')}
       colSpan={header.colSpan}
+      className="group/th"
     >
-      <div>
-        <CellContent
-          headerId={header.id}
-          content={flexRender(header.column.columnDef.header, header.getContext())}
-          onSortingChange={onSortingChange}
-          columnIsSorted={header.column.getIsSorted()}
-          isSortable={header.column.getCanSort()}
-        />
-      </div>
+      <CellContent
+        headerId={header.id}
+        content={flexRender(header.column.columnDef.header, header.getContext())}
+        onSortingChange={onSortingChange}
+        columnIsSorted={header.column.getIsSorted()}
+        isSortable={header.column.getCanSort()}
+      />
     </th>
   );
 }
