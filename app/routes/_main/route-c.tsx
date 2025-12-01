@@ -41,7 +41,6 @@ function RouteComponent() {
           {
             header: 'Name',
             accessorKey: 'name',
-            meta: { centeredColumn: true },
           },
           {
             header: 'Age',
@@ -58,7 +57,17 @@ function RouteComponent() {
           },
         ]}
         tableTitle="Table Title"
-        // isDisabled
+        paginationProps={{
+          limit: 10,
+          page: 1,
+          pageCount: 10,
+          onPaginationChange: value => {
+            console.log(value);
+          },
+          onLimitChange: value => {
+            console.log(value);
+          },
+        }}
         tableActions={[
           {
             actionId: 'create',
