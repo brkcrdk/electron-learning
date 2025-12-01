@@ -10,7 +10,24 @@ function RouteComponent() {
   return (
     <div>
       Hello "/main/route-c"!
-      <Table data={[]} />
+      <Table
+        data={[]}
+        tableTitle="Table Title"
+        tableActions={[
+          {
+            actionId: 'create',
+            actionType: 'button',
+            actionProps: {
+              children: 'Create',
+            },
+          },
+          {
+            actionId: 'edit',
+            actionType: 'custom',
+            actionElement: <div>Edit</div>,
+          },
+        ]}
+      />
     </div>
   );
 }
