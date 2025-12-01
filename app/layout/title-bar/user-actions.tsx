@@ -27,22 +27,24 @@ function UserActions() {
       }}
       dropdownItems={[
         {
+          itemType: 'default',
+          dropdownItemId: 'default-1',
+          itemProps: {
+            children: 'Profilim',
+            icon: {
+              name: 'user',
+            },
+          },
+        },
+        {
           itemType: 'link',
           dropdownItemId: 'link-1',
           itemProps: {
             to: '/logout',
             children: 'Logout',
             icon: {
-              name: 'shield-check',
+              name: 'logout',
             },
-          },
-        },
-        {
-          itemType: 'default',
-          dropdownItemId: 'default-1',
-          itemProps: {
-            children: 'default xx',
-            isLoading: true,
           },
         },
       ]}

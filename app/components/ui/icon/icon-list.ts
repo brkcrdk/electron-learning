@@ -1,5 +1,5 @@
 import { HiShieldCheck } from 'react-icons/hi2';
-import { LuMoon, LuSun, LuArrowLeft, LuArrowRight, LuChevronDown, LuX } from 'react-icons/lu';
+import { LuMoon, LuSun, LuArrowLeft, LuArrowRight, LuChevronDown, LuX, LuLogOut, LuUser } from 'react-icons/lu';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
 import { TbLayoutSidebarLeftExpand } from 'react-icons/tb';
 
@@ -14,6 +14,8 @@ export const iconList = [
   { label: 'chevron-down', icon: LuChevronDown },
   { label: 'close', icon: LuX },
   { label: 'sidebar-expand', icon: TbLayoutSidebarLeftExpand },
+  { label: 'logout', icon: LuLogOut },
+  { label: 'user', icon: LuUser },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];
