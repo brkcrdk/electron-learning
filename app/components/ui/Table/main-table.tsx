@@ -10,16 +10,15 @@ import {} from // ColumnDef,
 // TableOptions,
 // SortDirection,
 '@tanstack/react-table';
-
-// import { ToolbarActionProps } from '@/types/ToolbarActionProps';
-
+import TableHeader from './table-header';
+import { type TableSearchProps } from './table-header/table-search-bar';
+import { type TableActionsProps } from '../table/table-types';
 // import EmptyContent from '../EmptyContent';
 
 // import TableBody from './TableBody';
 // import TableFooter, { TableLimitProps, TablePaginationProps } from './TableFooter';
 // import TableHead from './TableHead';
 // import TableHeader from './TableHeader';
-// import { TableSearchProps } from './TableHeader/TableSearchBar';
 // import TableRowSortContext from './TableRowSortContext';
 // import useTableColumns from './useTableColumns';
 
@@ -53,15 +52,15 @@ export interface TableProps<T> {
   data: T[];
   // columns: ColumnDef<T>[];
   // customEmptyState?: ReactNode;
-  // tableTitle?: string;
-  // searchProps?: TableSearchProps;
-  // tableActions?: ToolbarActionProps[];
+  tableTitle?: string;
+  searchProps?: TableSearchProps;
+  tableActions?: TableActionsProps[];
   // paginationProps?: TablePaginationProps;
   // limitProps?: TableLimitProps;
   // sortingProps?: SortingProps;
   // rowSelectionProps?: RowSelectionProps<T>;
   // pinnedColumns?: string[];
-  // isLoading?: boolean;
+  isLoading?: boolean;
   isDisabled?: boolean;
   // /**
   //  * Eğer tablo üzerinde yer alan satırlara hover yapıldığı zaman bir event çalıştırmak istersek
@@ -80,9 +79,9 @@ export interface TableProps<T> {
 function MainTable<T>({
   // columns,
   data,
-  // tableTitle,
-  // searchProps,
-  // tableActions,
+  tableTitle,
+  searchProps,
+  tableActions,
   // limitProps,
   // paginationProps,
   // customEmptyState,
@@ -136,8 +135,13 @@ function MainTable<T>({
   return (
     <div
       aria-disabled={isDisabled}
-      className="group/table flex w-full flex-col gap-5 overflow-hidden"
+      className="group/table rounded-box border-base-content/5 bg-base-100 flex w-full flex-col gap-5 overflow-hidden border"
     >
+      <TableHeader
+        tableTitle={tableTitle}
+        searchProps={searchProps}
+        tableActions={tableActions}
+      />
       {/* <TableHeader
         tableTitle={tableTitle}
         searchProps={searchProps}
