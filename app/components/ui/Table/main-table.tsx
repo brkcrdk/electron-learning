@@ -10,6 +10,7 @@ import {
 } from '@tanstack/react-table';
 
 import TableEmptyState, { type TableEmptyStateProps } from './table-empty-state';
+import TableFooter, { type TablePaginationProps } from './table-footer';
 import TableHead from './table-head';
 import TableHeader from './table-header';
 import { type TableSearchProps } from './table-header/table-search-bar';
@@ -48,21 +49,13 @@ export interface TableProps<T> {
   tableTitle?: string;
   searchProps?: TableSearchProps;
   tableActions?: TableActionsProps[];
-  // paginationProps?: TablePaginationProps;
-  // limitProps?: TableLimitProps;
+  paginationProps?: TablePaginationProps;
   sortingProps?: SortingProps;
   rowSelectionProps?: RowSelectionProps<T>;
   pinnedColumns?: string[];
   tableEmptyStateProps?: TableEmptyStateProps;
   isLoading?: boolean;
   isDisabled?: boolean;
-  // /**
-  //  * Eğer tablo üzerinde yer alan satırlara hover yapıldığı zaman bir event çalıştırmak istersek
-  //  * bu aksiyonu prop ile gerçekleştirebiliriz.
-  //  *
-  //  * @param rowData mevcut table rowda gelecek olan veriyi ifade eder
-  //  */
-  // onRowPointerEnter?: (rowData: Row<T>) => void;
   /**
    * TableOptions ile default tablo ayarlarını güncelleyebiliriz.
    * @see https://tanstack.com/table/latest/docs/api/core/TableOptions
@@ -76,13 +69,10 @@ function MainTable<T>({
   tableTitle,
   searchProps,
   tableActions,
-  // limitProps,
-  // paginationProps,
-  // customEmptyState,
+  paginationProps,
   isDisabled,
   tableEmptyStateProps,
   pinnedColumns,
-  // onRowPointerEnter,
   tableOptions,
   sortingProps = {
     sorting: [],
@@ -146,10 +136,7 @@ function MainTable<T>({
               {/* <TableBody table={table} /> */}
             </table>
           </div>
-          {/* <TableFooter
-            limitProps={limitProps}
-            paginationProps={paginationProps}
-          /> */}
+          {paginationProps && <TableFooter {...paginationProps} />}
         </>
       ) : (
         <table className="group-aria-disabled/table:pointer-events-none group-aria-disabled/table:opacity-30">

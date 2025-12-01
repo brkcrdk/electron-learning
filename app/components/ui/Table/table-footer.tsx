@@ -1,38 +1,37 @@
-import Button from '../Button';
-import Dropdown from '../Dropdown';
-import Pagination from '../Pagination';
+// import Button from '../Button';
+// import Dropdown from '../Dropdown';
+// import Pagination from '../Pagination';
+
+import Dropdown from '../dropdown';
 
 export interface TablePaginationProps {
   page: number;
   pageCount: number;
   onPaginationChange: (selectedPage: number) => void;
-}
-
-export interface TableLimitProps {
   limit: number;
-  onItemsPerPageChange: (value: number) => void;
+  onLimitChange: (value: number) => void;
 }
 
-interface Props {
-  paginationProps?: TablePaginationProps;
-  limitProps?: TableLimitProps;
-}
-
-function TableFooter({ limitProps, paginationProps }: Props) {
-  if (paginationProps && paginationProps.pageCount > 1) {
+function TableFooter({ page, pageCount, onPaginationChange, limit, onLimitChange }: TablePaginationProps) {
+  if (pageCount > 1) {
     return (
       <footer className="grid grid-cols-2">
-        {limitProps && (
+        {limit && (
           <Dropdown
+            contentProps={{
+              align: 'start',
+              alignOffset: -20,
+            }}
             triggerProps={{
               asChild: true,
               children: (
-                <Button
-                  styleVariant="secondary-light"
-                  rightIconProps={{ name: 'chevronDown', className: 'text-inherit' }}
-                >
-                  {limitProps.limit}
-                </Button>
+                // <Button
+                //   styleVariant="secondary-light"
+                //   rightIconProps={{ name: 'chevronDown', className: 'text-inherit' }}
+                // >
+                //   {limitProps.limit}
+                // </Button>
+                <button className="btn btn-sm btn-secondary-light">{limit}</button>
               ),
               className: 'justify-self-start',
             }}
@@ -41,19 +40,19 @@ function TableFooter({ limitProps, paginationProps }: Props) {
               itemType: 'default',
               itemProps: {
                 children: limitOption,
-                onClick: () => limitProps.onItemsPerPageChange(limitOption),
+                onClick: () => onLimitChange(limitOption),
               },
             }))}
           />
         )}
-        <Pagination
+        {/* <Pagination
           rootProps={{
             className: 'justify-self-end',
           }}
           totalPages={paginationProps.pageCount}
           currentPage={paginationProps.page}
           onPageChange={selectedPage => paginationProps.onPaginationChange(selectedPage)}
-        />
+        /> */}
       </footer>
     );
   }
