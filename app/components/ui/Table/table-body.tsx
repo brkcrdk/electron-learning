@@ -14,7 +14,7 @@ function TableBody<T>({ table }: Props<T>) {
         <tr
           key={row.id}
           data-selected={cd(row.getIsSelected())}
-          className="group/tr"
+          className="group/tr hover:bg-base-300"
         >
           {row.getVisibleCells().map((cell, index) => {
             const { meta } = table._getColumnDefs()[index];
