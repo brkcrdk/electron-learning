@@ -25,7 +25,7 @@ function TableFooter({ page, pageCount, onPaginationChange, limit, onLimitChange
               alignOffset: -20,
             }}
             triggerProps={{
-              className: 'btn justify-self-start',
+              className: 'btn btn-base text-base justify-self-start',
               children: (
                 <>
                   {limit}

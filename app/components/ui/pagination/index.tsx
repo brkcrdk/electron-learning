@@ -31,7 +31,10 @@ function Pagination({ totalPages, currentPage, maxVisiblePages = 4, onPageChange
           aria-disabled={currentPage === 1 || disabled}
           disabled={disabled}
         >
-          <Icon name="arrow-left" />
+          <Icon
+            name="arrow-left"
+            className="size-4"
+          />
         </button>
       </li>
       {paginationItems.map((item, index) => {
@@ -75,7 +78,10 @@ function Pagination({ totalPages, currentPage, maxVisiblePages = 4, onPageChange
           aria-disabled={currentPage === totalPages || disabled}
           disabled={disabled}
         >
-          <Icon name="arrow-right" />
+          <Icon
+            name="arrow-right"
+            className="size-4"
+          />
         </button>
       </li>
     </ul>
