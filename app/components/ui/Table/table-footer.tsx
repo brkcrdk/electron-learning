@@ -3,6 +3,8 @@
 // import Pagination from '../Pagination';
 
 import Dropdown from '../dropdown';
+import Icon from '../icon';
+import Pagination from '../pagination';
 
 export interface TablePaginationProps {
   page: number;
@@ -23,17 +25,13 @@ function TableFooter({ page, pageCount, onPaginationChange, limit, onLimitChange
               alignOffset: -20,
             }}
             triggerProps={{
-              asChild: true,
+              className: 'btn justify-self-start',
               children: (
-                // <Button
-                //   styleVariant="secondary-light"
-                //   rightIconProps={{ name: 'chevronDown', className: 'text-inherit' }}
-                // >
-                //   {limitProps.limit}
-                // </Button>
-                <button className="btn btn-sm btn-secondary-light">{limit}</button>
+                <>
+                  {limit}
+                  <Icon name="chevron-down" />
+                </>
               ),
-              className: 'justify-self-start',
             }}
             dropdownItems={[10, 20, 50, 100].map(limitOption => ({
               dropdownItemId: String(limitOption),
@@ -45,14 +43,14 @@ function TableFooter({ page, pageCount, onPaginationChange, limit, onLimitChange
             }))}
           />
         )}
-        {/* <Pagination
+        <Pagination
           rootProps={{
             className: 'justify-self-end',
           }}
-          totalPages={paginationProps.pageCount}
-          currentPage={paginationProps.page}
-          onPageChange={selectedPage => paginationProps.onPaginationChange(selectedPage)}
-        /> */}
+          totalPages={pageCount}
+          currentPage={page}
+          onPageChange={selectedPage => onPaginationChange(selectedPage)}
+        />
       </footer>
     );
   }
