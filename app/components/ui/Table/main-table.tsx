@@ -138,7 +138,7 @@ function MainTable<T>({
       {table.getRowModel().rows.length > 0 ? (
         <>
           <div className="overflow-auto">
-            <table className="w-full border-separate border-spacing-0 overflow-auto group-aria-disabled/table:pointer-events-none group-aria-disabled/table:opacity-30">
+            <table className="table group-aria-disabled/table:pointer-events-none group-aria-disabled/table:opacity-30">
               <TableHead
                 table={table}
                 onSortingChange={sortingProps.onSortingChange}

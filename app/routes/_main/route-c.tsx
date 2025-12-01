@@ -35,6 +35,7 @@ function RouteComponent() {
           {
             header: 'Name',
             accessorKey: 'name',
+            meta: { centeredColumn: true },
           },
           {
             header: 'Age',
@@ -43,6 +44,7 @@ function RouteComponent() {
           {
             header: 'Gender',
             accessorKey: 'gender',
+            enableSorting: false,
           },
           {
             header: 'Email',
@@ -50,6 +52,7 @@ function RouteComponent() {
           },
         ]}
         tableTitle="Table Title"
+        // isDisabled
         tableActions={[
           {
             actionId: 'create',

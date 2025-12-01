@@ -19,7 +19,7 @@ function useTableColumns<T>({ rowSelectionProps, columns, pinnedColumns }: Props
           size: 30,
           enableResizing: false,
           enablePinning: true,
-          meta: { centeredColumn: true },
+          meta: { centeredColumn: false },
           header: ({ table }) => (
             <input
               type="checkbox"

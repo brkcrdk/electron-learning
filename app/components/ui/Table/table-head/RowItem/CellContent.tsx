@@ -2,6 +2,7 @@ import { type SortDirection } from '@tanstack/react-table';
 import { type ReactNode } from 'react';
 
 import Content from './Content';
+import cn from '../../../../../utils/cn';
 
 import type { SortingChangeStateProps } from '../../main-table';
 
@@ -13,12 +14,15 @@ interface Props {
   isSortable: boolean;
 }
 
+const sharedClassName = 'group-data-centered/th:w-full group-data-centered/th:justify-center relative flex items-center justify-start gap-2 text-sm';
+
 function CellContent({ headerId, content, onSortingChange, columnIsSorted, isSortable }: Props) {
   if (isSortable) {
     return (
       <button
-        className="group-data-centered/th:w-full group-data-centered/th:justify-center relative flex cursor-pointer items-center justify-start gap-2 text-sm font-bold text-gray-700"
+        className={cn(sharedClassName, 'cursor-pointer')}
         onClick={() => {
+          console.log('clicked');
           if (onSortingChange) {
             const sortingDirectionOrder = ['asc', 'desc', false];
             const currentIndex = sortingDirectionOrder.indexOf(columnIsSorted);
@@ -37,7 +41,7 @@ function CellContent({ headerId, content, onSortingChange, columnIsSorted, isSor
   }
 
   return (
-    <div className="group-data-centered/th:w-full group-data-centered/th:justify-center relative flex items-center justify-start gap-2 text-sm font-bold text-gray-700">
+    <div className={sharedClassName}>
       <Content
         content={content}
         columnIsSorted={columnIsSorted}

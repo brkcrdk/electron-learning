@@ -22,9 +22,8 @@ function RowItem<T>({ header, onSortingChange }: Props<T>) {
       // Tablomuzda sadece sola doğru sabitleme yaptığımız için left olup olmadığını kontrol ediyoruz.
       data-pinned={cd(header.column.getIsPinned() === 'left')}
       colSpan={header.colSpan}
-      className="group/th data-pinned:sticky data-pinned:z-10 data-pinned:opacity-90 relative select-none bg-white p-2"
     >
-      <div className="relative py-4">
+      <div>
         <CellContent
           headerId={header.id}
           content={flexRender(header.column.columnDef.header, header.getContext())}
