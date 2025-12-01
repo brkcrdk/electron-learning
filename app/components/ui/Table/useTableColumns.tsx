@@ -25,6 +25,7 @@ function useTableColumns<T>({ rowSelectionProps, columns, pinnedColumns }: Props
               type="checkbox"
               defaultChecked={table.getIsAllRowsSelected()}
               onClick={table.getToggleAllRowsSelectedHandler()}
+              className="checkbox"
             />
           ),
           cell: ({ row }) => (
@@ -32,6 +33,8 @@ function useTableColumns<T>({ rowSelectionProps, columns, pinnedColumns }: Props
               type="checkbox"
               defaultChecked={row.getIsSelected()}
               onClick={row.getToggleSelectedHandler()}
+              disabled={!row.getCanSelect()}
+              className="checkbox"
             />
           ),
         },
