@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router';
+import { Fragment } from 'react';
 
 import cn from '../../../../utils/cn';
 import Dropdown from '../../dropdown';
@@ -39,7 +40,11 @@ function TableActions({ actions }: Props) {
           );
         }
         if (action.actionType === 'custom') {
-          return action.actionElement;
+          /**
+           * NOTE: Fragment kullanımının sebebi key'in unique olması gerektiği içindir.
+           * Fragment kullanılmadığı zaman log hataları alınıyor.
+           */
+          return <Fragment key={action.actionId}>{action.actionElement}</Fragment>;
         }
       })}
     </div>

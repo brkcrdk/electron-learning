@@ -15,7 +15,7 @@ function UserActions() {
                 className: 'size-6 rounded-sm',
               }}
               avatarImageProps={{
-                src: 'https://imgx.daisyui.com/images/profile/demo/batperson@192.webp',
+                src: 'https://img.daisyui.com/images/profile/demo/batperson@192.webp',
               }}
             />
             <Icon
