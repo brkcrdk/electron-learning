@@ -1,12 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 
 import Table from '../../components/ui/table';
+
+import type { RowSelectionState } from '@tanstack/react-table';
 
 export const Route = createFileRoute('/_main/route-c')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const [selectedRows, setSelectedRows] = useState<RowSelectionState>({});
+
   return (
     <div>
       <Table
@@ -19,19 +24,22 @@ function RouteComponent() {
         }}
         data={[
           {
-            name: 'John Doe',
+            id: '231313fffff213',
+            name: 'John Doex',
             age: 20,
             gender: 'male',
             email: 'john.doe@example.com',
           },
           {
-            name: 'Jane Doe',
+            id: 'qweqadq12313eqasdasd',
+            name: 'Jane Doe1',
             age: 21,
             gender: 'female',
             email: 'jane.doe@example.com',
           },
           {
-            name: 'John Doe',
+            id: 'qwewqeqf1233g3g3gg3g3g3',
+            name: 'John Doe2',
             age: 20,
             gender: 'male',
             email: 'john.doe@example.com',
@@ -57,6 +65,12 @@ function RouteComponent() {
           },
         ]}
         tableTitle="Table Title"
+        rowSelectionProps={{
+          enableRowSelection: true,
+          rowSelection: selectedRows,
+          onRowSelectionChange: setSelectedRows,
+          getRowId: row => row.id,
+        }}
         paginationProps={{
           limit: 10,
           page: 1,
