@@ -9,13 +9,15 @@ import {
   type TableOptions,
 } from '@tanstack/react-table';
 
+import TableBody from './table-body';
 import TableEmptyState, { type TableEmptyStateProps } from './table-empty-state';
 import TableFooter, { type TablePaginationProps } from './table-footer';
 import TableHead from './table-head';
 import TableHeader from './table-header';
 import { type TableSearchProps } from './table-header/table-search-bar';
 import useTableColumns from './useTableColumns';
-import { type TableActionsProps } from '../table/table-types';
+
+import type { TableActionsProps } from './table-types';
 
 export type RowSelectionProps<T> =
   | {
@@ -133,7 +135,7 @@ function MainTable<T>({
                 table={table}
                 onSortingChange={sortingProps.onSortingChange}
               />
-              {/* <TableBody table={table} /> */}
+              <TableBody table={table} />
             </table>
           </div>
           {paginationProps && <TableFooter {...paginationProps} />}
