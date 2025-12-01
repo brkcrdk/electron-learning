@@ -10,6 +10,7 @@ import {} from // ColumnDef,
 // TableOptions,
 // SortDirection,
 '@tanstack/react-table';
+import TableEmptyState from './table-empty-state';
 import TableHeader from './table-header';
 import { type TableSearchProps } from './table-header/table-search-bar';
 import { type TableActionsProps } from '../table/table-types';
@@ -135,18 +136,15 @@ function MainTable<T>({
   return (
     <div
       aria-disabled={isDisabled}
-      className="group/table rounded-box border-base-content/5 bg-base-100 flex w-full flex-col gap-5 overflow-hidden border"
+      className="group/table rounded-box border-base-content/5 bg-base-100 flex w-full flex-col gap-5 overflow-hidden border p-4"
     >
       <TableHeader
         tableTitle={tableTitle}
         searchProps={searchProps}
         tableActions={tableActions}
       />
-      {/* <TableHeader
-        tableTitle={tableTitle}
-        searchProps={searchProps}
-        tableActions={tableActions}
-      />
+      <TableEmptyState />
+      {/* 
       {table.getRowModel().rows.length > 0 ? (
         <>
           <div className="overflow-auto">
