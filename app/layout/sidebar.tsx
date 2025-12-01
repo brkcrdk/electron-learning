@@ -48,7 +48,7 @@ function Sidebar() {
         className="drawer-overlay"
       />
       <div className="bg-base-200 border-base-100 is-drawer-close:w-14 is-drawer-open:w-64 flex min-h-full flex-col items-start">
-        <ul className="menu w-full grow">
+        <ul className="menu w-full grow gap-1">
           {sidebarItems.map(item => (
             <li key={item.itemKey}>
               <Link

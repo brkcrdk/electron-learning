@@ -22,7 +22,7 @@ function Dropdown({ triggerProps, dropdownItems }: Props) {
         <DropdownMenu.Content
           sideOffset={10}
           collisionPadding={8}
-          className="bg-base-100 relative max-h-[calc(var(--radix-dropdown-menu-content-available-height)-1rem)] min-w-52 overflow-auto rounded-sm p-2"
+          className="bg-base-100 relative grid max-h-[calc(var(--radix-dropdown-menu-content-available-height)-1rem)] min-w-52 gap-0.5 overflow-auto rounded-sm p-2"
         >
           {dropdownItems.map(item => {
             if (item.itemType === 'separator') {
