@@ -10,6 +10,7 @@ import {
 } from '@tanstack/react-table';
 
 import TableEmptyState, { type TableEmptyStateProps } from './table-empty-state';
+import TableHead from './table-head';
 import TableHeader from './table-header';
 import { type TableSearchProps } from './table-header/table-search-bar';
 import useTableColumns from './useTableColumns';
@@ -116,7 +117,6 @@ function MainTable<T>({
     getRowId: rowSelectionProps.enableRowSelection ? rowSelectionProps.getRowId : undefined,
     onRowSelectionChange: rowSelectionProps.enableRowSelection ? rowSelectionProps.onRowSelectionChange : undefined,
     getCoreRowModel: getCoreRowModel(),
-    enableColumnResizing: true,
     columnResizeMode: 'onChange',
     debugTable: import.meta.env.DEV,
     debugHeaders: import.meta.env.DEV,
@@ -139,10 +139,10 @@ function MainTable<T>({
         <>
           <div className="overflow-auto">
             <table className="w-full border-separate border-spacing-0 overflow-auto group-aria-disabled/table:pointer-events-none group-aria-disabled/table:opacity-30">
-              {/* <TableHead
+              <TableHead
                 table={table}
                 onSortingChange={sortingProps.onSortingChange}
-              /> */}
+              />
               {/* <TableBody table={table} /> */}
             </table>
           </div>

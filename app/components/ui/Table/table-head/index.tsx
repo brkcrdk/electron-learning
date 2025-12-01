@@ -1,8 +1,8 @@
-import { Table } from '@tanstack/react-table';
-
-import { SortingChangeStateProps } from '../MainTable';
-
+import { type SortingChangeStateProps } from '../main-table';
 import RowItem from './RowItem';
+
+import type { Table } from '@tanstack/react-table';
+
 interface Props<T> {
   table: Table<T>;
   onSortingChange: (val: SortingChangeStateProps) => void;

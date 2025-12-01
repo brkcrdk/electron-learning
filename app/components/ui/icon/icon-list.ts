@@ -1,7 +1,7 @@
 import { BiHomeAlt } from 'react-icons/bi';
 import { HiShieldCheck } from 'react-icons/hi2';
 import { IoFolderOpenOutline } from 'react-icons/io5';
-import { LuMoon, LuSun, LuArrowLeft, LuArrowRight, LuChevronDown, LuX, LuLogOut, LuUser, LuSearch } from 'react-icons/lu';
+import { LuMoon, LuSun, LuArrowLeft, LuArrowRight, LuChevronDown, LuX, LuLogOut, LuUser, LuSearch, LuArrowUp, LuArrowDown } from 'react-icons/lu';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
 import { TbLayoutSidebarLeftExpand } from 'react-icons/tb';
 import { VscSettings } from 'react-icons/vsc';
@@ -14,6 +14,8 @@ export const iconList = [
   { label: 'sun', icon: LuSun },
   { label: 'arrow-left', icon: LuArrowLeft },
   { label: 'arrow-right', icon: LuArrowRight },
+  { label: 'arrow-up', icon: LuArrowUp },
+  { label: 'arrow-down', icon: LuArrowDown },
   { label: 'chevron-down', icon: LuChevronDown },
   { label: 'close', icon: LuX },
   { label: 'sidebar-expand', icon: TbLayoutSidebarLeftExpand },
