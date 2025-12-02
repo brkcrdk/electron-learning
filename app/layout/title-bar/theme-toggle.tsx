@@ -5,7 +5,7 @@ import Icon from '../../components/ui/icon';
 import type { ThemeType } from '../../../store/theme';
 
 function ThemeToggle() {
-  const [theme, setTheme] = useState<ThemeType>('cupcake');
+  const [theme, setTheme] = useState<ThemeType>('wireframe');
 
   useEffect(() => {
     const getTheme = async () => {
@@ -17,14 +17,14 @@ function ThemeToggle() {
   }, []);
 
   const toggleTheme = async () => {
-    if (theme === 'cupcake') {
+    if (theme === 'wireframe') {
       await window.store.setTheme('dark');
       document.documentElement.setAttribute('data-theme', 'dark');
       setTheme('dark');
     } else {
-      await window.store.setTheme('cupcake');
-      document.documentElement.setAttribute('data-theme', 'cupcake');
-      setTheme('cupcake');
+      await window.store.setTheme('wireframe');
+      document.documentElement.setAttribute('data-theme', 'wireframe');
+      setTheme('wireframe');
     }
   };
   return (

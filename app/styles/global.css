@@ -2,21 +2,7 @@
 @import "./font/index.css";
 
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark, cupcake;
-}
-
-@plugin "daisyui/theme" {
-  name: "cupcake";
-  default: true;
-  --radius-field: 0.5rem;
-  --color-primary: oklch(95% 0.038 75.164);
-  --color-primary-content: oklch(40% 0.123 38.172);
-  --color-accent: oklch(42.621% .074 224.389);
-  --color-accent-content: oklch(88.524% .014 224.389);
-}
-
-@utility input {
-  outline: 0;
+  themes: light --default, dark --prefersdark, wireframe;
 }
 
 @theme {

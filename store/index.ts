@@ -11,7 +11,7 @@ export interface StoreSchema {
 
 export const store = new Store<StoreSchema>({
   defaults: {
-    theme: themes.cupcake,
+    theme: themes.wireframe,
     language: 'tr',
   },
 });

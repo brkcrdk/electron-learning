@@ -2,7 +2,7 @@ import { ipcMain } from 'electron';
 
 import { store } from '.';
 
-export type ThemeType = 'cupcake' | 'dark';
+export type ThemeType = 'wireframe' | 'dark';
 
 export interface ThemeSchema {
   id: ThemeType;
@@ -11,8 +11,8 @@ export interface ThemeSchema {
 }
 
 export const themes: Record<ThemeType, ThemeSchema> = {
-  cupcake: {
-    id: 'cupcake',
+  wireframe: {
+    id: 'wireframe',
     name: 'Light',
     backgroundColor: '#faf7f5',
   },
