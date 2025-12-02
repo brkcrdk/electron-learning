@@ -14,6 +14,8 @@ export interface PaginationProps {
   disabled?: boolean;
 }
 
+const sharedButtonClassName = 'btn aria-disabled:btn-disabled btn-square data-selected:btn-neutral';
+
 function Pagination({ totalPages, currentPage, maxVisiblePages = 4, onPageChange, rootProps, disabled = false }: PaginationProps) {
   const paginationItems = getPagination({ totalPages, currentPage, maxVisiblePages });
 
@@ -27,7 +29,7 @@ function Pagination({ totalPages, currentPage, maxVisiblePages = 4, onPageChange
     >
       <li className="contents">
         <button
-          className="btn btn-circle aria-disabled:btn-disabled"
+          className={sharedButtonClassName}
           aria-disabled={currentPage === 1 || disabled}
           disabled={disabled}
         >
@@ -49,7 +51,7 @@ function Pagination({ totalPages, currentPage, maxVisiblePages = 4, onPageChange
                 disabled={disabled}
                 onClick={() => onPageChange(item)}
                 data-selected={cd(currentPage === item)}
-                className="btn btn-circle aria-disabled:btn-disabled data-selected:btn-neutral"
+                className={sharedButtonClassName}
               >
                 {item}
               </button>
@@ -57,7 +59,7 @@ function Pagination({ totalPages, currentPage, maxVisiblePages = 4, onPageChange
               <button
                 disabled={disabled}
                 aria-disabled={disabled}
-                className="btn btn-circle aria-disabled:btn-disabled"
+                className={sharedButtonClassName}
                 onClick={() => {
                   if (item === 'start-boundry') {
                     onPageChange(currentPage - maxVisiblePages);
@@ -74,7 +76,7 @@ function Pagination({ totalPages, currentPage, maxVisiblePages = 4, onPageChange
       })}
       <li className="contents">
         <button
-          className="btn btn-circle aria-disabled:btn-disabled"
+          className={sharedButtonClassName}
           aria-disabled={currentPage === totalPages || disabled}
           disabled={disabled}
         >
