@@ -10,7 +10,7 @@ interface Props<T> {
 function useTableColumns<T>({ rowSelectionProps, columns, pinnedColumns }: Props<T>) {
   const { enableRowSelection } = rowSelectionProps;
 
-  const memoizedColumns: ColumnDef<T>[] = enableRowSelection
+  const computedColumns: ColumnDef<T>[] = enableRowSelection
     ? [
         {
           accessorKey: 'select',
@@ -23,16 +23,16 @@ function useTableColumns<T>({ rowSelectionProps, columns, pinnedColumns }: Props
           header: ({ table }) => (
             <input
               type="checkbox"
-              defaultChecked={table.getIsAllRowsSelected()}
-              onClick={table.getToggleAllRowsSelectedHandler()}
+              checked={table.getIsAllRowsSelected()}
+              onChange={table.getToggleAllRowsSelectedHandler()}
               className="checkbox"
             />
           ),
           cell: ({ row }) => (
             <input
               type="checkbox"
-              defaultChecked={row.getIsSelected()}
-              onClick={row.getToggleSelectedHandler()}
+              checked={row.getIsSelected()}
+              onChange={row.getToggleSelectedHandler()}
               disabled={!row.getCanSelect()}
               className="checkbox"
             />
@@ -46,7 +46,7 @@ function useTableColumns<T>({ rowSelectionProps, columns, pinnedColumns }: Props
   const computedColumnPinning: ColumnPinningState['left'] = enableRowSelection ? computedPinnedColumns : pinnedColumns;
 
   return {
-    memoizedColumns,
+    computedColumns,
     computedColumnPinning,
   };
 }
