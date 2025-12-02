@@ -86,7 +86,7 @@ function MainTable<T>({
     onRowSelectionChange: () => {},
   },
 }: TableProps<T>) {
-  const { memoizedColumns, computedColumnPinning } = useTableColumns({
+  const { computedColumns, computedColumnPinning } = useTableColumns({
     columns,
     pinnedColumns,
     rowSelectionProps,
@@ -94,7 +94,7 @@ function MainTable<T>({
 
   const table = useReactTable({
     data,
-    columns: memoizedColumns,
+    columns: computedColumns,
     state: {
       sorting: sortingProps.sorting,
       rowSelection: rowSelectionProps.enableRowSelection ? rowSelectionProps.rowSelection : {},

@@ -8,6 +8,13 @@ interface Props<T> {
 }
 
 function TableBody<T>({ table }: Props<T>) {
+  /**
+   * NOTE: Table instance'ını react-compiler optimize ettiği için `row selection` işlemlerindeki
+   * güncellemelerde row checkboxları güncellenmiyordu. React-compilerı bu tablo bodysi için optimize
+   * etmekten çıkartıyoruz. Böylece selection işlemlerinden sonra ui istediğimiz tepkiyi verebiliyor.
+   */
+  'use no memo';
+
   return (
     <tbody>
       {table.getRowModel().rows.map(row => (
