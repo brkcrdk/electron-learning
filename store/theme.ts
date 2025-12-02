@@ -14,7 +14,7 @@ export const themes: Record<ThemeType, ThemeSchema> = {
   wireframe: {
     id: 'wireframe',
     name: 'Light',
-    backgroundColor: '#faf7f5',
+    backgroundColor: '#ffffff',
   },
   dark: {
     id: 'dark',
