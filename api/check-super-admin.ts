@@ -22,7 +22,7 @@ function checkSuperAdminHandler() {
 
       return {
         success: false,
-        error: 'İlk giriş olduğu için super admin oluşturulmalı.',
+        error: 'İlk giriş olduğu için super admin oluşturulamalı.',
       };
     } catch (error) {
       console.error('Failed to check super admin', error);
