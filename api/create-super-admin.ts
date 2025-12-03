@@ -9,7 +9,13 @@ import type { ApiResponseProps } from '../types/api-response-types';
 function createSuperAdminHandler() {
   ipcMain.handle('create-super-admin', async (_, data: NewUserPayload): ApiResponseProps<string> => {
     try {
-      await db.insert(users).values(data);
+      await db.insert(users).values({
+        email: data.email,
+        name: data.name,
+        password: data.password,
+        roles: 'super-admin',
+        status: 'active',
+      });
 
       return {
         success: true,
