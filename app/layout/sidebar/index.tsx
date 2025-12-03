@@ -4,7 +4,7 @@ import SidebarRail from './sidebar-rail';
 
 function Sidebar() {
   return (
-    <div className="drawer-side is-drawer-close:overflow-visible">
+    <div className="drawer-side is-drawer-close:overflow-visible relative">
       <label
         htmlFor="my-drawer-4"
         aria-label="close sidebar"
