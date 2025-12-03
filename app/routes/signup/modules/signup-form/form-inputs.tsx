@@ -1,60 +1,20 @@
-import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from '@tanstack/react-router';
-import { useForm, Controller, useWatch } from 'react-hook-form';
-import { toast } from 'sonner';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
-import Input from '../../../components/ui/input';
-import PasswordInput from '../../../components/ui/password-input';
+import Input from '../../../../components/ui/input';
+import PasswordInput from '../../../../components/ui/password-input';
 
-interface NewUserForm {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+import type { NewUserForm } from '.';
 
-function SignupForm() {
-  const navigate = useNavigate();
-  const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (data: NewUserForm) => {
-      console.log(data);
-      await window.electronAPI.createSuperAdmin({
-        email: data.email,
-        password: data.password,
-        name: 'Super Admin',
-      });
-    },
-    onSuccess: () => {
-      navigate({ to: '/route-c' });
-    },
-    onError: () => {
-      toast.error('Kullanıcı oluşturulurken bir hata gerçekleşti');
-    },
-  });
-
-  const { handleSubmit, control } = useForm<NewUserForm>({
-    defaultValues: {
-      email: 'test@test.com',
-      password: '12345678',
-      confirmPassword: '12345678',
-    },
-    mode: 'onSubmit',
-  });
+function FormInputs() {
+  const { control } = useFormContext<NewUserForm>();
 
   const passwordValue = useWatch({
     control,
     name: 'password',
   });
 
-  async function onSubmit(data: NewUserForm) {
-    await mutateAsync(data);
-  }
-
   return (
-    <form
-      className="space-y-4"
-      name="welcome-form"
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <>
       <Controller
         control={control}
         name="email"
@@ -128,16 +88,8 @@ function SignupForm() {
           />
         )}
       />
-
-      <button
-        type="submit"
-        className="btn btn-block mt-6"
-        disabled={isPending}
-      >
-        Kayıt Ol ve Giriş Yap
-      </button>
-    </form>
+    </>
   );
 }
 
-export default SignupForm;
+export default FormInputs;
