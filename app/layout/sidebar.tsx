@@ -48,6 +48,17 @@ function Sidebar() {
         className="drawer-overlay"
       />
       <div className="bg-base-200 border-base-100 is-drawer-close:w-14 is-drawer-open:w-64 flex min-h-full flex-col items-start">
+        <div className="flex items-center gap-2 p-4">
+          <div className="bg-primary rounded-full p-1">
+            <Icon
+              name="shield-check"
+              className="text-primary-content size-5"
+            />
+          </div>
+
+          <span className="is-drawer-close:hidden whitespace-nowrap font-medium">Test Projesi</span>
+        </div>
+
         <ul className="menu w-full grow gap-1">
           {sidebarItems.map(item => (
             <li key={item.itemKey}>
