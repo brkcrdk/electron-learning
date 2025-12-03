@@ -23,7 +23,7 @@ function createSuperAdminHandler() {
       };
     } catch (error) {
       console.error('Failed to create super admin', error);
-      return {
+      throw {
         success: false,
         error: 'Super admin oluşturulamadı.',
       };

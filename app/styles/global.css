@@ -37,6 +37,12 @@
   z-index: 204;
 }
 
+@utility disable-interactions {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 html {
   font-family: var(--font-poppins);
 }

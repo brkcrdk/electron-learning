@@ -13,10 +13,10 @@ export interface NewUserForm {
 
 function SignupForm() {
   const navigate = useNavigate();
+
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (data: NewUserForm) => {
-      console.log(data);
-      await window.electronAPI.createSuperAdmin({
+    mutationFn: (data: NewUserForm) => {
+      return window.electronAPI.createSuperAdmin({
         email: data.email,
         password: data.password,
         name: 'Super Admin',
@@ -26,7 +26,9 @@ function SignupForm() {
       navigate({ to: '/route-c' });
     },
     onError: () => {
-      toast.error('Kullanıcı oluşturulurken bir hata gerçekleşti');
+      toast.error('Kullanıcı oluşturulurken bir hata gerçekleşti', {
+        dismissible: false,
+      });
     },
   });
 
@@ -46,7 +48,8 @@ function SignupForm() {
   return (
     <FormProvider {...form}>
       <form
-        className="space-y-4"
+        aria-disabled={isPending}
+        className="aria-disabled:disable-interactions space-y-4"
         name="welcome-form"
         onSubmit={form.handleSubmit(onSubmit)}
       >
@@ -54,7 +57,6 @@ function SignupForm() {
         <button
           type="submit"
           className="btn btn-block mt-6"
-          disabled={isPending}
         >
           Kayıt Ol ve Giriş Yap
         </button>
