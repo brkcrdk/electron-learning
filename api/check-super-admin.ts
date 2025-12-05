@@ -20,7 +20,7 @@ function checkSuperAdminHandler() {
         };
       }
 
-      throw {
+      return {
         success: false,
         error: 'İlk giriş olduğu için super admin oluşturulamalı.',
       };
