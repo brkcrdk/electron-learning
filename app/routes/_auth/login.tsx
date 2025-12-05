@@ -15,10 +15,10 @@ function RouteComponent() {
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (data: LoginFormInputsProps) => {
-      // return window.electronAPI.login({
-      //   email: data.email,
-      //   password: data.password,
-      // });
+      return window.electronAPI.login({
+        email: data.email,
+        password: data.password,
+      });
     },
     onSuccess: () => {
       navigate({ to: '/' });

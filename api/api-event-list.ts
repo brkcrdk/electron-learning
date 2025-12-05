@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron';
 
 import type { CreateUserData } from './create-user';
+import type { LoginPayload } from './login';
 import type { NewUserPayload, User } from '../db/schema/users';
 import type { ApiResponseProps } from '../types/api-response-types';
 
@@ -16,6 +17,7 @@ const apiEventList = {
   getUserList: () => ipcRenderer.invoke('get-list-users'),
   createSuperAdmin: (data: NewUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-super-admin', data),
   getCurrentUser: (): ApiResponseProps<User> => ipcRenderer.invoke('get-current-user'),
+  login: (data: LoginPayload): ApiResponseProps<User> => ipcRenderer.invoke('login', data),
 } as const;
 
 export default apiEventList;
