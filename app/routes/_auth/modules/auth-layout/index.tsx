@@ -16,8 +16,7 @@ const actionModeTitles = {
   },
   login: {
     title: 'Giriş Yap',
-    description:
-      'X Uygulamasına Hoş Geldiniz! Sistem yöneticisi hesabınızı oluşturarak başlayın. Bu hesap ile diğer kullanıcıları yönetebilir, admin rollerini belirleyebilir ve tüm sistem ayarlarını kontrol edebilirsiniz. Lütfen güvenli bir e-posta adresi ve şifre belirleyin.',
+    description: 'Lütfen giriş yapmak için e-posta adresinizi ve şifrenizi giriniz.',
   },
 };
 

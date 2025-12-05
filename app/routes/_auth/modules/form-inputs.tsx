@@ -5,15 +5,24 @@ import PasswordInput from '../../../components/ui/password-input';
 import { emailValidation } from '../../../utils/form-validations';
 
 import type { AuthLayoutMode } from './auth-layout';
-import type { LoginFormProps } from './login-form';
-import type { NewUserFormProps } from './signup-form';
+
+export interface LoginFormInputsProps {
+  email: string;
+  password: string;
+}
+
+export interface SignupFormInputsProps {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
 interface Props {
   mode: AuthLayoutMode;
 }
 
 function FormInputs({ mode }: Props) {
-  const { control } = useFormContext<NewUserFormProps | LoginFormProps>();
+  const { control } = useFormContext<LoginFormInputsProps | SignupFormInputsProps>();
 
   const passwordValue = useWatch({
     control,
