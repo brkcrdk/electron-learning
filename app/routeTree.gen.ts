@@ -15,6 +15,7 @@ import { Route as MainRouteImport } from './routes/_main'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SignupIndexRouteImport } from './routes/signup/index'
 import { Route as MainRouteCRouteImport } from './routes/_main/route-c'
+import { Route as MainDashboardRouteImport } from './routes/_main/dashboard'
 
 const LogoutRoute = LogoutRouteImport.update({
   id: '/logout',
@@ -45,11 +46,17 @@ const MainRouteCRoute = MainRouteCRouteImport.update({
   path: '/route-c',
   getParentRoute: () => MainRoute,
 } as any)
+const MainDashboardRoute = MainDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => MainRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
+  '/dashboard': typeof MainDashboardRoute
   '/route-c': typeof MainRouteCRoute
   '/signup': typeof SignupIndexRoute
 }
@@ -57,6 +64,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
+  '/dashboard': typeof MainDashboardRoute
   '/route-c': typeof MainRouteCRoute
   '/signup': typeof SignupIndexRoute
 }
@@ -66,20 +74,22 @@ export interface FileRoutesById {
   '/_main': typeof MainRouteWithChildren
   '/login': typeof LoginRoute
   '/logout': typeof LogoutRoute
+  '/_main/dashboard': typeof MainDashboardRoute
   '/_main/route-c': typeof MainRouteCRoute
   '/signup/': typeof SignupIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/logout' | '/route-c' | '/signup'
+  fullPaths: '/' | '/login' | '/logout' | '/dashboard' | '/route-c' | '/signup'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/logout' | '/route-c' | '/signup'
+  to: '/' | '/login' | '/logout' | '/dashboard' | '/route-c' | '/signup'
   id:
     | '__root__'
     | '/'
     | '/_main'
     | '/login'
     | '/logout'
+    | '/_main/dashboard'
     | '/_main/route-c'
     | '/signup/'
   fileRoutesById: FileRoutesById
@@ -136,14 +146,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainRouteCRouteImport
       parentRoute: typeof MainRoute
     }
+    '/_main/dashboard': {
+      id: '/_main/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof MainDashboardRouteImport
+      parentRoute: typeof MainRoute
+    }
   }
 }
 
 interface MainRouteChildren {
+  MainDashboardRoute: typeof MainDashboardRoute
   MainRouteCRoute: typeof MainRouteCRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
+  MainDashboardRoute: MainDashboardRoute,
   MainRouteCRoute: MainRouteCRoute,
 }
 
