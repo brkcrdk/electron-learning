@@ -23,7 +23,7 @@ function SignupForm() {
       });
     },
     onSuccess: () => {
-      navigate({ to: '/route-c' });
+      navigate({ to: '/' });
     },
     onError: () => {
       toast.error('Kullanıcı oluşturulurken bir hata gerçekleşti', {

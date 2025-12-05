@@ -2,6 +2,7 @@ import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import Input from '../../../../components/ui/input';
 import PasswordInput from '../../../../components/ui/password-input';
+import { emailValidation } from '../../../../utils/form-validations';
 
 import type { NewUserForm } from '.';
 
@@ -18,13 +19,7 @@ function FormInputs() {
       <Controller
         control={control}
         name="email"
-        rules={{
-          required: 'E-posta alanı zorunludur',
-          pattern: {
-            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-            message: 'Geçerli bir e-posta adresi giriniz',
-          },
-        }}
+        rules={emailValidation}
         render={({ field, fieldState }) => (
           <Input
             error={fieldState.error?.message}
