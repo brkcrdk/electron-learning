@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, Link, redirect, useNavigate } from '@tanstack/react-router';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -8,6 +8,17 @@ import FormInputs, { type SignupFormInputsProps } from './modules/form-inputs';
 
 export const Route = createFileRoute('/_auth/signup')({
   component: RouteComponent,
+  beforeLoad: async () => {
+    const currentUser = await window.electronAPI.getCurrentUser();
+    if (currentUser.success) {
+      throw redirect({ to: '/' });
+    } else {
+      const response = await window.electronAPI.checkSuperAdminExists();
+      if (response.success) {
+        throw redirect({ to: '/login' });
+      }
+    }
+  },
 });
 
 function RouteComponent() {

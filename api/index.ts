@@ -4,6 +4,7 @@ import createUserHandler from './create-user';
 import getCurrentUserHandler from './get-current-user';
 import listUsersHandler from './list-users';
 import loginHandler from './login';
+import logoutHandler from './logout';
 
 function registerApiHandlers() {
   createUserHandler();
@@ -12,6 +13,7 @@ function registerApiHandlers() {
   createSuperAdminHandler();
   getCurrentUserHandler();
   loginHandler();
+  logoutHandler();
 }
 
 export default registerApiHandlers;

@@ -18,6 +18,7 @@ const apiEventList = {
   createSuperAdmin: (data: NewUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-super-admin', data),
   getCurrentUser: (): ApiResponseProps<User> => ipcRenderer.invoke('get-current-user'),
   login: (data: LoginPayload): ApiResponseProps<User> => ipcRenderer.invoke('login', data),
+  logout: (): ApiResponseProps<string> => ipcRenderer.invoke('logout'),
 } as const;
 
 export default apiEventList;

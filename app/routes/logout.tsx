@@ -1,9 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/logout')({
-  component: RouteComponent,
+  beforeLoad: async () => {
+    await window.electronAPI.logout();
+    throw redirect({ to: '/login' });
+  },
 });
-
-function RouteComponent() {
-  return <div>Hello "/logosadut"!</div>;
-}

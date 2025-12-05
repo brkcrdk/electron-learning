@@ -7,10 +7,6 @@ export const Route = createFileRoute('/')({
     if (currentUser.success) {
       throw redirect({ to: '/dashboard' });
     } else {
-      const response = await window.electronAPI.checkSuperAdminExists();
-      if (!response.success) {
-        throw redirect({ to: '/signup' });
-      }
       throw redirect({ to: '/login' });
     }
   },
