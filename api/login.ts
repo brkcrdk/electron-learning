@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
 import { setCurrentUser } from './user-session';
@@ -33,7 +33,13 @@ function loginHandler() {
         };
       }
 
-      setCurrentUser(user);
+      const [updatedUser] = await db
+        .update(users)
+        .set({ lastLoginAt: sql`CURRENT_TIMESTAMP` })
+        .where(eq(users.id, user.id))
+        .returning();
+
+      setCurrentUser(updatedUser);
 
       return {
         success: true,
