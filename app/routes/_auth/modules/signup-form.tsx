@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 
 import FormInputs from './form-inputs';
 
-export interface NewUserForm {
+export interface NewUserFormProps {
   email: string;
   password: string;
   confirmPassword: string;
@@ -15,7 +15,7 @@ function SignupForm() {
   const navigate = useNavigate();
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: (data: NewUserForm) => {
+    mutationFn: (data: NewUserFormProps) => {
       return window.electronAPI.createSuperAdmin({
         email: data.email,
         password: data.password,
@@ -32,7 +32,7 @@ function SignupForm() {
     },
   });
 
-  const form = useForm<NewUserForm>({
+  const form = useForm<NewUserFormProps>({
     defaultValues: {
       email: 'test@test.com',
       password: '12345678',
@@ -41,7 +41,7 @@ function SignupForm() {
     mode: 'onSubmit',
   });
 
-  async function onSubmit(data: NewUserForm) {
+  async function onSubmit(data: NewUserFormProps) {
     await mutateAsync(data);
   }
 
@@ -53,7 +53,7 @@ function SignupForm() {
         name="welcome-form"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <FormInputs />
+        <FormInputs mode="signup" />
         <button
           type="submit"
           className="btn btn-block mt-6"
