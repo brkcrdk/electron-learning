@@ -15,7 +15,7 @@ function logoutHandler() {
       };
     } catch (error) {
       console.error('Çıkış yapılırken bir hata gerçekleşti', error);
-      return {
+      throw {
         success: false,
         error: 'Çıkış yapılırken bir hata gerçekleşti.',
       };

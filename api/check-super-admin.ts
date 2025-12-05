@@ -20,16 +20,16 @@ function checkSuperAdminHandler() {
         };
       }
 
-      return {
+      throw {
         success: false,
         error: 'İlk giriş olduğu için super admin oluşturulamalı.',
       };
     } catch (error) {
       console.error('Failed to check super admin', error);
 
-      return {
+      throw {
         success: false,
-        error: 'Failed to check super admin',
+        error: 'Super admin kontrolü yapılırken bir hata gerçekleşti.',
       };
     }
   });

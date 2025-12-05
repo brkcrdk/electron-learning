@@ -21,7 +21,7 @@ function createUserHandler() {
       };
     } catch (error) {
       console.error(error);
-      return {
+      throw {
         success: false,
         error: 'Kullanıcı oluşturulurken bir hata gerçekleşti.',
       };

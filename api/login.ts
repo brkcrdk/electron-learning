@@ -1,5 +1,7 @@
+import { eq } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
+import { setCurrentUser } from './user-session';
 import { db } from '../db/client';
 import { type User, users } from '../db/schema';
 
@@ -13,13 +15,36 @@ export interface LoginPayload {
 function loginHandler() {
   ipcMain.handle('login', async (_, data: LoginPayload): ApiResponseProps<User> => {
     try {
+      const user = await db.query.users.findFirst({
+        where: eq(users.email, data.email),
+      });
+
+      if (!user) {
+        return {
+          success: false,
+          error: 'Kullanıcı bulunamadı.',
+        };
+      }
+
+      if (user.password !== data.password) {
+        return {
+          success: false,
+          error: 'Şifre yanlış.',
+        };
+      }
+
+      setCurrentUser(user);
+
       return {
-        success: false,
-        error: 'Giriş yapılırken bir hata gerçekleşti.',
+        success: true,
+        data: user,
       };
     } catch (error) {
-      console.error('Failed to login', error);
-      throw error instanceof Error ? error : new Error('Unknown error');
+      console.error('Giriş yapılırken bir hata gerçekleşti', error);
+      throw {
+        success: false,
+        error: 'Kullanıcı girişi yapılırken bir hata gerçekleşti.',
+      };
     }
   });
 }

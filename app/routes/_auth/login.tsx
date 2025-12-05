@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { createFileRoute, Link, redirect, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -31,11 +31,12 @@ function RouteComponent() {
         password: data.password,
       });
     },
-    onSuccess: () => {
+    onSuccess: data => {
+      console.log(data);
       navigate({ to: '/' });
     },
-    onError: () => {
-      toast.error('Giriş yapılırken bir hata gerçekleşti', {
+    onError: error => {
+      toast.error(error.message, {
         dismissible: false,
       });
     },
@@ -71,7 +72,6 @@ function RouteComponent() {
           </button>
         </form>
       </FormProvider>
-      <Link to="/signup">Kayıt Ol</Link>
     </AuthLayout>
   );
 }

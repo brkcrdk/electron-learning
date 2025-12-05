@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { createFileRoute, Link, redirect, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -65,9 +65,14 @@ function RouteComponent() {
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <FormInputs mode="signup" />
+          <button
+            type="submit"
+            className="btn btn-block mt-6"
+          >
+            Kayıt Ol ve Giriş Yap
+          </button>
         </form>
       </FormProvider>
-      <Link to="/login">Giriş Yap</Link>
     </AuthLayout>
   );
 }

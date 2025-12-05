@@ -11,7 +11,7 @@ function getCurrentUserHandler() {
       const currentUser = getCurrentUser();
 
       if (!currentUser) {
-        return {
+        throw {
           success: false,
           error: 'Giriş yapmış kullanıcı bulunamadı.',
         };
@@ -23,7 +23,7 @@ function getCurrentUserHandler() {
       };
     } catch (error) {
       console.error(error);
-      return {
+      throw {
         success: false,
         error: 'Giriş yapmış kullanıcı bulunamadı.',
       };
