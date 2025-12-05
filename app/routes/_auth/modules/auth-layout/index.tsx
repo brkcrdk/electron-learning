@@ -22,17 +22,20 @@ const actionModeTitles = {
 
 function AuthLayout({ actionMode, children }: Props) {
   return (
-    <section className="bg-base-200 webkit-draggable flex h-screen w-screen flex-col items-center justify-center p-4">
-      <div className="card bg-base-100 webkit-no-draggable w-full max-w-lg shadow-xl">
-        <div className="card-body space-y-6">
-          <Header
-            title={actionModeTitles[actionMode].title}
-            description={actionModeTitles[actionMode].description}
-          />
-          {children}
+    <>
+      <div className="webkit-draggable h-8 w-full" />
+      <section className="bg-base-200 flex h-screen w-screen flex-col items-center justify-center p-4">
+        <div className="card bg-base-100 w-full max-w-lg shadow-xl">
+          <div className="card-body space-y-6">
+            <Header
+              title={actionModeTitles[actionMode].title}
+              description={actionModeTitles[actionMode].description}
+            />
+            {children}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 
