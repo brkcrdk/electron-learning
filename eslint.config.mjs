@@ -31,7 +31,7 @@ export default [
       'import/order': [
         'error',
         {
-          groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index', 'type'],
+          groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index'],
           pathGroups: [
             {
               pattern: '@app/**',
@@ -46,7 +46,7 @@ export default [
               group: 'internal',
             },
           ],
-          pathGroupsExcludedImportTypes: ['builtin'],
+          pathGroupsExcludedImportTypes: [],
           'newlines-between': 'always',
           alphabetize: {
             order: 'asc',

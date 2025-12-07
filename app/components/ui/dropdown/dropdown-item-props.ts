@@ -1,8 +1,8 @@
 import { type LinkComponentProps } from '@tanstack/react-router';
-
-import type Icon from '../icon';
 import type { DropdownMenu } from 'radix-ui';
 import type { ComponentPropsWithoutRef } from 'react';
+
+import type Icon from '../icon';
 
 interface DefaultDropdownItemProps extends DropdownMenu.DropdownMenuItemProps {
   icon?: ComponentPropsWithoutRef<typeof Icon>;
