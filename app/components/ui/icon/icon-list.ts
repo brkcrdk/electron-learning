@@ -1,7 +1,7 @@
 import { BiHomeAlt } from 'react-icons/bi';
 import { HiShieldCheck } from 'react-icons/hi2';
 import { IoFolderOpenOutline } from 'react-icons/io5';
-import { LuMoon, LuSun, LuArrowLeft, LuArrowRight, LuChevronDown, LuX, LuLogOut, LuUser, LuSearch, LuArrowUp, LuArrowDown } from 'react-icons/lu';
+import { LuMoon, LuSun, LuArrowLeft, LuArrowRight, LuChevronDown, LuX, LuLogOut, LuUser, LuSearch, LuArrowUp, LuArrowDown, LuUsers } from 'react-icons/lu';
 import { PiWarningCircleFill } from 'react-icons/pi';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
 import { TbLayoutSidebarLeftExpand } from 'react-icons/tb';
@@ -27,6 +27,7 @@ export const iconList = [
   { label: 'search', icon: LuSearch },
   { label: 'folder-open-outline', icon: IoFolderOpenOutline },
   { label: 'circle-warning-full', icon: PiWarningCircleFill },
+  { label: 'users', icon: LuUsers },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];

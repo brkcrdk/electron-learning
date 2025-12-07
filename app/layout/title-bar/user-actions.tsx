@@ -51,7 +51,7 @@ function UserActions() {
           dropdownItemId: 'link-1',
           itemProps: {
             to: '/logout',
-            children: 'Logout',
+            children: 'Çıkış Yap',
             icon: {
               name: 'logout',
             },
