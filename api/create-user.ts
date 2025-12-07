@@ -20,7 +20,7 @@ function createUserHandler() {
         data: 'Kullanıcı oluşturuldu.',
       };
     } catch (error) {
-      console.error(error);
+      console.error('create user error', error);
       throw {
         success: false,
         error: 'Kullanıcı oluşturulurken bir hata gerçekleşti.',

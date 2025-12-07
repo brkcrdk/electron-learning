@@ -46,7 +46,7 @@ function loginHandler() {
         data: user,
       };
     } catch (error) {
-      console.error('Giriş yapılırken bir hata gerçekleşti', error);
+      console.error('login error', error);
       throw {
         success: false,
         error: 'Kullanıcı girişi yapılırken bir hata gerçekleşti.',

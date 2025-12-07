@@ -30,10 +30,10 @@ function createSuperAdminHandler() {
         data: 'Super admin oluşturuldu.',
       };
     } catch (error) {
-      console.error('Failed to create super admin', error);
+      console.error('create super admin error', error);
       throw {
         success: false,
-        error: 'Super admin oluşturulamadı.',
+        error: 'Super admin oluşturulurken bir hata gerçekleşti.',
       };
     }
   });

@@ -12,12 +12,19 @@ function getUserListHandler() {
     try {
       const currentUser = getCurrentUser();
 
-      // if (currentUser.roles === 'user') {
-      //   throw {
-      //     success: false,
-      //     error: 'Bu işlemi yapmak için yetkiniz yok.',
-      //   };
-      // }
+      if (!currentUser) {
+        return {
+          success: false,
+          error: 'Giriş yapmış kullanıcı bulunamadı.',
+        };
+      }
+
+      if (currentUser.roles === 'super-admin') {
+        return {
+          success: false,
+          error: 'Bu işlemi yapmak için yetkiniz yok.',
+        };
+      }
 
       const userList = await db.select().from(users).orderBy(desc(users.createdAt));
 
@@ -26,8 +33,11 @@ function getUserListHandler() {
         data: userList,
       };
     } catch (error) {
-      console.error('Failed to list users', error);
-      throw error instanceof Error ? error : new Error('Unknown error');
+      console.error('get user list error', error);
+      throw {
+        success: false,
+        error: 'Kullanıcı listesini almaya çalışırken bir hata gerçekleşti.',
+      };
     }
   });
 }

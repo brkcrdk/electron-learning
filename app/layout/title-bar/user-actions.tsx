@@ -1,14 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-
 import Avatar from '../../components/ui/avatar';
 import Dropdown from '../../components/ui/dropdown';
 import Icon from '../../components/ui/icon';
+import useCurrentUserQuery from '../../services/use-current-user-query';
 
 function UserActions() {
-  const { data, isLoading } = useQuery({
-    queryKey: ['currentUser'],
-    queryFn: () => window.electronAPI.getCurrentUser(),
-  });
+  const { data, isLoading } = useCurrentUserQuery();
 
   if (isLoading) {
     return <div className="skeleton size-6 rounded-sm" />;

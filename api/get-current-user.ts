@@ -7,6 +7,7 @@ import type { ApiResponseProps } from '../types/api-response-types';
 
 function getCurrentUserHandler() {
   ipcMain.handle('get-current-user', async (): ApiResponseProps<User> => {
+    console.log('current user requested');
     try {
       const currentUser = getCurrentUser();
 
@@ -22,10 +23,10 @@ function getCurrentUserHandler() {
         data: currentUser,
       };
     } catch (error) {
-      console.error(error);
+      console.error('get current user error', error);
       throw {
         success: false,
-        error: 'Giriş yapmış kullanıcı bulunamadı.',
+        error: 'Aktif kullanıcıyı almaya çalışırken bir hata gerçekleşti.',
       };
     }
   });

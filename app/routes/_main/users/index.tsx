@@ -1,13 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router';
 
+import useUserListQuery from '../../../services/useUserListQuery';
+
 export const Route = createFileRoute('/_main/users/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  // const { data, isLoading, error } = useQuery({
-  //   queryKey: ['user-list'],
-  //   queryFn: () => window.electronAPI.getUserList(),
-  // });
-  return <div>Hello "/_main/user-list/"!</div>;
+  const { data, isError, isLoading, error } = useUserListQuery();
+
+  return (
+    <div>
+      <pre>{JSON.stringify(data, null, 4)}</pre>
+      <pre>{JSON.stringify({ isError, isLoading, error }, null, 4)}</pre>
+    </div>
+  );
 }
