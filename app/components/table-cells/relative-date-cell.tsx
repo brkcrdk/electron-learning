@@ -19,7 +19,7 @@ interface Props {
 function RelativeDateCell({ date }: Props) {
   return (
     <div
-      className="tooltip"
+      className="tooltip whitespace-nowrap"
       data-tip={dayjs(date).format('DD.MM.YYYY HH:mm')}
     >
       {dayjs(date).fromNow()}

@@ -1,7 +1,39 @@
 import type { ColumnDef } from '@tanstack/react-table';
 
 import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
+import cn from '@app/utils/cn';
 import type { User } from '@db/schema';
+
+interface ColumnBadgeProps {
+  label: string;
+  badgeType: string;
+}
+
+const userRoles: Record<User['roles'], ColumnBadgeProps> = {
+  'super-admin': {
+    label: 'Super Admin',
+    badgeType: 'badge-success',
+  },
+  admin: {
+    label: 'Admin',
+    badgeType: 'badge-primary',
+  },
+  user: {
+    label: 'User',
+    badgeType: 'badge-default',
+  },
+};
+
+const userStatus: Record<User['status'], ColumnBadgeProps> = {
+  active: {
+    label: 'Aktif',
+    badgeType: 'badge-success',
+  },
+  passive: {
+    label: 'Pasif',
+    badgeType: 'badge-default',
+  },
+};
 
 function useColumns(): ColumnDef<User>[] {
   return [
@@ -16,10 +48,18 @@ function useColumns(): ColumnDef<User>[] {
     {
       header: 'Rol',
       accessorKey: 'roles',
+      cell: info => info.getValue(),
+      accessorFn: ({ roles }) => {
+        return <span className={cn('badge badge-soft', userRoles[roles].badgeType)}>{userRoles[roles].label}</span>;
+      },
     },
     {
       header: 'Durum',
       accessorKey: 'status',
+      cell: info => info.getValue(),
+      accessorFn: ({ status }) => {
+        return <span className={cn('badge badge-soft', userStatus[status].badgeType)}>{userStatus[status].label}</span>;
+      },
     },
     {
       header: 'Oluşturulma Tarihi',

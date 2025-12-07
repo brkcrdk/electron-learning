@@ -43,6 +43,10 @@
   cursor: not-allowed;
 }
 
+@utility badge{
+  white-space: nowrap;
+}
+
 html {
   font-family: var(--font-poppins);
 }
