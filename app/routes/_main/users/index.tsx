@@ -1,5 +1,6 @@
-import useUserListQuery from '@app/services/use-user-list-query';
 import { createFileRoute } from '@tanstack/react-router';
+
+import useUserListQuery from '@app/services/use-user-list-query';
 
 import useColumns from './hooks/use-columns';
 import Table from '../../../components/ui/table';
