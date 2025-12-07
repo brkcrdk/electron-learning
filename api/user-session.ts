@@ -12,11 +12,7 @@ export function setCurrentUser(user: User) {
 }
 
 export function getCurrentUser() {
-  if (currentUser === null) {
-    throw new Error('Giriş yapmış kullanıcı bulunamadı.');
-  } else {
-    return currentUser;
-  }
+  return currentUser;
 }
 
 export function clearCurrentUser() {

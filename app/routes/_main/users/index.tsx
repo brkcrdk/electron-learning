@@ -5,5 +5,9 @@ export const Route = createFileRoute('/_main/users/')({
 });
 
 function RouteComponent() {
+  // const { data, isLoading, error } = useQuery({
+  //   queryKey: ['user-list'],
+  //   queryFn: () => window.electronAPI.getUserList(),
+  // });
   return <div>Hello "/_main/user-list/"!</div>;
 }

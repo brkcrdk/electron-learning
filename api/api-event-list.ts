@@ -13,12 +13,12 @@ const apiEventList = {
    * NOTE: Super admin veritabnında sadece bir tane olmalıdır.
    */
   checkSuperAdminExists: (): ApiResponseProps<boolean> => ipcRenderer.invoke('check-super-admin-exists'),
-  createUser: (data: CreateUserData) => ipcRenderer.invoke('create-user', data),
-  getUserList: () => ipcRenderer.invoke('get-list-users'),
-  createSuperAdmin: (data: NewUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-super-admin', data),
-  getCurrentUser: (): ApiResponseProps<User> => ipcRenderer.invoke('get-current-user'),
   login: (data: LoginPayload): ApiResponseProps<User> => ipcRenderer.invoke('login', data),
   logout: (): ApiResponseProps<string> => ipcRenderer.invoke('logout'),
+  createUser: (data: CreateUserData) => ipcRenderer.invoke('create-user', data),
+  getUserList: (): ApiResponseProps<User[]> => ipcRenderer.invoke('get-user-list'),
+  createSuperAdmin: (data: NewUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-super-admin', data),
+  getCurrentUser: (): ApiResponseProps<User> => ipcRenderer.invoke('get-current-user'),
 } as const;
 
 export default apiEventList;
