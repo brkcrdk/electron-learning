@@ -39,10 +39,10 @@ function useSidebarItems() {
       label: 'Kullanıcılar',
       itemKey: 'user-list',
       icon: 'users',
-      isActive: pathname.startsWith('/user-list'),
+      isActive: pathname.startsWith('/users'),
       isProtected: false,
       routeProps: {
-        to: '/user-list',
+        to: '/users',
       },
     },
   ];
