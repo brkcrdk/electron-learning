@@ -7,7 +7,7 @@ export const Route = createFileRoute('/')({
     if (currentUser.success) {
       throw redirect({ to: '/dashboard' });
     } else {
-      throw redirect({ to: '/login' });
+      throw redirect({ to: '/login', replace: true });
     }
   },
 });

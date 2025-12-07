@@ -11,11 +11,11 @@ export const Route = createFileRoute('/_auth/login')({
   beforeLoad: async () => {
     const currentUser = await window.electronAPI.getCurrentUser();
     if (currentUser.success) {
-      throw redirect({ to: '/' });
+      throw redirect({ to: '/', replace: true });
     } else {
       const response = await window.electronAPI.checkSuperAdminExists();
       if (!response.success) {
-        throw redirect({ to: '/signup' });
+        throw redirect({ to: '/signup', replace: true });
       }
     }
   },
@@ -33,7 +33,7 @@ function RouteComponent() {
     },
     onSuccess: data => {
       console.log(data);
-      navigate({ to: '/' });
+      navigate({ to: '/', replace: true });
     },
     onError: error => {
       toast.error(error.message, {

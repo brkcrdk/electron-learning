@@ -11,11 +11,11 @@ export const Route = createFileRoute('/_auth/signup')({
   beforeLoad: async () => {
     const currentUser = await window.electronAPI.getCurrentUser();
     if (currentUser.success) {
-      throw redirect({ to: '/' });
+      throw redirect({ to: '/', replace: true });
     } else {
       const response = await window.electronAPI.checkSuperAdminExists();
       if (response.success) {
-        throw redirect({ to: '/login' });
+        throw redirect({ to: '/login', replace: true });
       }
     }
   },
@@ -33,7 +33,7 @@ function RouteComponent() {
       });
     },
     onSuccess: () => {
-      navigate({ to: '/' });
+      navigate({ to: '/', replace: true });
     },
     onError: () => {
       toast.error('Kullanıcı oluşturulurken bir hata gerçekleşti', {
