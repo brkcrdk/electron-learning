@@ -1,9 +1,9 @@
 import { Link } from '@tanstack/react-router';
 import { DropdownMenu } from 'radix-ui';
 
-import cn from '../../../utils/cn';
-import Icon from '../icon';
+import cn from '@app/utils/cn';
 
+import Icon from '../icon';
 import type { DropdownItemProps } from './dropdown-item-props';
 
 interface Props {

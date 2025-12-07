@@ -2,9 +2,10 @@ import { type LinkComponentProps } from '@tanstack/react-router';
 import { Dialog } from 'radix-ui';
 import { type ButtonHTMLAttributes, type PropsWithChildren } from 'react';
 
+import cn from '@app/utils/cn';
+
 import ModalFooter, { type ModalFooterProps } from './modal-footer';
 import ModalHeader, { type ModalHeaderProps } from './modal-header';
-import cn from '../../../utils/cn';
 
 export type ModalActionProps =
   | { actionId: string; actionType: 'button'; actionProps: ButtonHTMLAttributes<HTMLButtonElement> }

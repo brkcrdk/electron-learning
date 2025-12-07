@@ -1,4 +1,4 @@
-import dayjs from '../../utils/dayjs';
+import dayjs from '@app/utils/dayjs';
 
 interface Props {
   date: Date;

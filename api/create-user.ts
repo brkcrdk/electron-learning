@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron';
 
-import { db } from '../db/client';
-import { users, type NewUserPayload } from '../db/schema';
+import { db } from '@db/client';
+import { users, type NewUserPayload } from '@db/schema';
 
 import type { ApiResponseProps } from '../types/api-response-types';
 

@@ -1,7 +1,8 @@
-import { iconList, type IconListProps } from './icon-list';
-import cn from '../../../utils/cn';
-
 import type { IconBaseProps } from 'react-icons';
+
+import cn from '@app/utils/cn';
+
+import { iconList, type IconListProps } from './icon-list';
 
 export interface IconProps extends Omit<IconBaseProps, 'color' | 'size'> {
   name: IconListProps;

@@ -1,7 +1,3 @@
-// import Button from '../Button';
-// import Dropdown from '../Dropdown';
-// import Pagination from '../Pagination';
-
 import Dropdown from '../dropdown';
 import Icon from '../icon';
 import Pagination from '../pagination';

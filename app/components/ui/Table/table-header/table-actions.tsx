@@ -1,10 +1,11 @@
 import { Link } from '@tanstack/react-router';
 import { Fragment } from 'react';
 
-import cn from '../../../../utils/cn';
-import Dropdown from '../../dropdown';
+import cn from '@app/utils/cn';
 
+import Dropdown from '../../dropdown';
 import type { TableActionsProps } from '../table-types';
+
 interface Props {
   actions: TableActionsProps[];
 }

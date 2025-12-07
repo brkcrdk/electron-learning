@@ -1,8 +1,8 @@
 import { type Header, flexRender } from '@tanstack/react-table';
 
-import CellContent from './CellContent';
-import cd from '../../../../../utils/cd';
+import cd from '@app/utils/cd';
 
+import CellContent from './CellContent';
 import type { SortingChangeStateProps } from '../../main-table';
 
 interface Props<T> {

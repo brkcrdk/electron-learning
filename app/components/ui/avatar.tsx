@@ -1,7 +1,7 @@
 import { Avatar as AvatarPrimitive } from 'radix-ui';
 import { type HTMLAttributes, type ImgHTMLAttributes, useState } from 'react';
 
-import cn from '../../utils/cn';
+import cn from '@app/utils/cn';
 
 /**
  * Avatarda verilen `name` propuna ait değeri avatarın yanında render edip etmek istediğimizi

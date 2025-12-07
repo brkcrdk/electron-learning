@@ -1,5 +1,6 @@
-import type { RowSelectionProps } from './main-table';
 import type { ColumnDef, ColumnPinningState } from '@tanstack/react-table';
+
+import type { RowSelectionProps } from './main-table';
 
 interface Props<T> {
   rowSelectionProps: RowSelectionProps<T>;

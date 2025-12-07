@@ -1,8 +1,8 @@
 import { eq } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
-import { db } from '../db/client';
-import { users } from '../db/schema';
+import { db } from '@db/client';
+import { users } from '@db/schema';
 
 import type { ApiResponseProps } from '../types/api-response-types';
 

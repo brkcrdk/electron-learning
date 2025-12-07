@@ -1,10 +1,10 @@
 import { Link } from '@tanstack/react-router';
 import { Dialog } from 'radix-ui';
+import type { ReactNode } from 'react';
 
-import cn from '../../../utils/cn';
+import cn from '@app/utils/cn';
 
 import type { ModalActionProps } from '.';
-import type { ReactNode } from 'react';
 
 type FooterContentType =
   | {

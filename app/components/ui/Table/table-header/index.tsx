@@ -1,6 +1,5 @@
 import TableActions from './table-actions';
 import TableSearchBar, { type TableSearchProps } from './table-search-bar';
-
 import type { TableActionsProps } from '../table-types';
 
 interface TableHeaderProps {

@@ -1,6 +1,6 @@
-import cn from '../../utils/cn';
-
 import type { InputHTMLAttributes } from 'react';
+
+import cn from '@app/utils/cn';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label: string;

@@ -1,7 +1,8 @@
 import { unstable_PasswordToggleField as PasswordToggleField } from 'radix-ui';
 
+import cn from '@app/utils/cn';
+
 import Icon from './icon';
-import cn from '../../utils/cn';
 
 interface Props {
   inputProps?: PasswordToggleField.PasswordToggleFieldInputProps;

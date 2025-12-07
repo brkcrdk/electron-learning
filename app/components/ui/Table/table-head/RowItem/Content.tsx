@@ -1,9 +1,8 @@
 import { type SortDirection } from '@tanstack/react-table';
-
-import Icon from '../../../icon';
-
-import type { IconListProps } from '../../../icon/icon-list';
 import type { ReactNode } from 'react';
+
+import Icon from '@app/components/ui/icon';
+import type { IconListProps } from '@app/components/ui/icon/icon-list';
 
 const sortIconName: Record<string, IconListProps> = {
   asc: 'arrow-up',

@@ -1,6 +1,7 @@
-import type Dropdown from '../dropdown';
 import type { LinkComponentProps } from '@tanstack/react-router';
 import type { ButtonHTMLAttributes, ComponentPropsWithoutRef, ReactNode } from 'react';
+
+import type Dropdown from '../dropdown';
 
 export type TableActionsProps =
   | { actionId: string; actionType: 'button'; actionProps: ButtonHTMLAttributes<HTMLButtonElement> }

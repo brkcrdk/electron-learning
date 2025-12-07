@@ -1,9 +1,9 @@
 import { type SortDirection } from '@tanstack/react-table';
 import { type ReactNode } from 'react';
 
-import Content from './Content';
-import cn from '../../../../../utils/cn';
+import cn from '@app/utils/cn';
 
+import Content from './Content';
 import type { SortingChangeStateProps } from '../../main-table';
 
 interface Props {

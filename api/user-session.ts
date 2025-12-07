@@ -1,4 +1,4 @@
-import { type User } from '../db/schema';
+import { type User } from '@db/schema';
 
 /**
  * Sadece uygulama açıkken saklanılması gereken bir oturum olduğu için `store` ile saklamak

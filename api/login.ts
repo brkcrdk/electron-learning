@@ -1,9 +1,10 @@
 import { eq, sql } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
+import { db } from '@db/client';
+import { users, type User } from '@db/schema';
+
 import { setCurrentUser } from './user-session';
-import { db } from '../db/client';
-import { type User, users } from '../db/schema';
 
 import type { ApiResponseProps } from '../types/api-response-types';
 

@@ -15,9 +15,8 @@ import TableFooter, { type TablePaginationProps } from './table-footer';
 import TableHead from './table-head';
 import TableHeader from './table-header';
 import { type TableSearchProps } from './table-header/table-search-bar';
-import useTableColumns from './useTableColumns';
-
 import type { TableActionsProps } from './table-types';
+import useTableColumns from './useTableColumns';
 
 export type RowSelectionProps<T> =
   | {

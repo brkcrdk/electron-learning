@@ -1,9 +1,10 @@
-import getPagination from './get-pagination';
-import cd from '../../../utils/cd';
-import cn from '../../../utils/cn';
-import Icon from '../icon';
-
 import type { HTMLAttributes } from 'react';
+
+import cd from '@app/utils/cd';
+import cn from '@app/utils/cn';
+
+import getPagination from './get-pagination';
+import Icon from '../icon';
 
 export interface PaginationProps {
   currentPage: number;
