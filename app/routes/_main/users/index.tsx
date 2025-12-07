@@ -1,5 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
+import useColumns from './hooks/use-columns';
+import Table from '../../../components/ui/table';
 import useUserListQuery from '../../../services/use-user-list-query';
 
 export const Route = createFileRoute('/_main/users/')({
@@ -7,12 +9,15 @@ export const Route = createFileRoute('/_main/users/')({
 });
 
 function RouteComponent() {
-  const { data, isError, isLoading, error } = useUserListQuery();
+  const { data, isLoading } = useUserListQuery();
+
+  const columns = useColumns();
 
   return (
-    <div>
-      <pre>{JSON.stringify(data, null, 4)}</pre>
-      <pre>{JSON.stringify({ isError, isLoading, error }, null, 4)}</pre>
-    </div>
+    <Table
+      columns={columns}
+      data={data ? data : []}
+      isLoading={isLoading}
+    />
   );
 }

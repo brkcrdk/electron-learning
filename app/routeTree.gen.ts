@@ -17,8 +17,6 @@ import { Route as MainDashboardRouteImport } from './routes/_main/dashboard'
 import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as MainUsersIndexRouteImport } from './routes/_main/users/index'
-import { Route as MainUsersNewUserRouteImport } from './routes/_main/users/new-user'
-import { Route as MainUsersEditUserRouteImport } from './routes/_main/users/edit-user'
 
 const LogoutRoute = LogoutRouteImport.update({
   id: '/logout',
@@ -59,16 +57,6 @@ const MainUsersIndexRoute = MainUsersIndexRouteImport.update({
   path: '/users/',
   getParentRoute: () => MainRoute,
 } as any)
-const MainUsersNewUserRoute = MainUsersNewUserRouteImport.update({
-  id: '/users/new-user',
-  path: '/users/new-user',
-  getParentRoute: () => MainRoute,
-} as any)
-const MainUsersEditUserRoute = MainUsersEditUserRouteImport.update({
-  id: '/users/edit-user',
-  path: '/users/edit-user',
-  getParentRoute: () => MainRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -77,8 +65,6 @@ export interface FileRoutesByFullPath {
   '/signup': typeof AuthSignupRoute
   '/dashboard': typeof MainDashboardRoute
   '/route-c': typeof MainRouteCRoute
-  '/users/edit-user': typeof MainUsersEditUserRoute
-  '/users/new-user': typeof MainUsersNewUserRoute
   '/users': typeof MainUsersIndexRoute
 }
 export interface FileRoutesByTo {
@@ -88,8 +74,6 @@ export interface FileRoutesByTo {
   '/signup': typeof AuthSignupRoute
   '/dashboard': typeof MainDashboardRoute
   '/route-c': typeof MainRouteCRoute
-  '/users/edit-user': typeof MainUsersEditUserRoute
-  '/users/new-user': typeof MainUsersNewUserRoute
   '/users': typeof MainUsersIndexRoute
 }
 export interface FileRoutesById {
@@ -101,8 +85,6 @@ export interface FileRoutesById {
   '/_auth/signup': typeof AuthSignupRoute
   '/_main/dashboard': typeof MainDashboardRoute
   '/_main/route-c': typeof MainRouteCRoute
-  '/_main/users/edit-user': typeof MainUsersEditUserRoute
-  '/_main/users/new-user': typeof MainUsersNewUserRoute
   '/_main/users/': typeof MainUsersIndexRoute
 }
 export interface FileRouteTypes {
@@ -114,8 +96,6 @@ export interface FileRouteTypes {
     | '/signup'
     | '/dashboard'
     | '/route-c'
-    | '/users/edit-user'
-    | '/users/new-user'
     | '/users'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -125,8 +105,6 @@ export interface FileRouteTypes {
     | '/signup'
     | '/dashboard'
     | '/route-c'
-    | '/users/edit-user'
-    | '/users/new-user'
     | '/users'
   id:
     | '__root__'
@@ -137,8 +115,6 @@ export interface FileRouteTypes {
     | '/_auth/signup'
     | '/_main/dashboard'
     | '/_main/route-c'
-    | '/_main/users/edit-user'
-    | '/_main/users/new-user'
     | '/_main/users/'
   fileRoutesById: FileRoutesById
 }
@@ -208,36 +184,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainUsersIndexRouteImport
       parentRoute: typeof MainRoute
     }
-    '/_main/users/new-user': {
-      id: '/_main/users/new-user'
-      path: '/users/new-user'
-      fullPath: '/users/new-user'
-      preLoaderRoute: typeof MainUsersNewUserRouteImport
-      parentRoute: typeof MainRoute
-    }
-    '/_main/users/edit-user': {
-      id: '/_main/users/edit-user'
-      path: '/users/edit-user'
-      fullPath: '/users/edit-user'
-      preLoaderRoute: typeof MainUsersEditUserRouteImport
-      parentRoute: typeof MainRoute
-    }
   }
 }
 
 interface MainRouteChildren {
   MainDashboardRoute: typeof MainDashboardRoute
   MainRouteCRoute: typeof MainRouteCRoute
-  MainUsersEditUserRoute: typeof MainUsersEditUserRoute
-  MainUsersNewUserRoute: typeof MainUsersNewUserRoute
   MainUsersIndexRoute: typeof MainUsersIndexRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
   MainDashboardRoute: MainDashboardRoute,
   MainRouteCRoute: MainRouteCRoute,
-  MainUsersEditUserRoute: MainUsersEditUserRoute,
-  MainUsersNewUserRoute: MainUsersNewUserRoute,
   MainUsersIndexRoute: MainUsersIndexRoute,
 }
 
