@@ -1,5 +1,6 @@
-import { Avatar as AvatarPrimitive } from 'radix-ui';
 import { type HTMLAttributes, type ImgHTMLAttributes, useState } from 'react';
+
+import { Avatar as AvatarPrimitive } from 'radix-ui';
 
 import cn from '@app/utils/cn';
 

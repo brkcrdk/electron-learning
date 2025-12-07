@@ -1,5 +1,6 @@
-import { type SortDirection } from '@tanstack/react-table';
 import type { ReactNode } from 'react';
+
+import { type SortDirection } from '@tanstack/react-table';
 
 import Icon from '@app/components/ui/icon';
 import type { IconListProps } from '@app/components/ui/icon/icon-list';

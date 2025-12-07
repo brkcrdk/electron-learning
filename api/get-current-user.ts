@@ -3,7 +3,6 @@ import { ipcMain } from 'electron';
 import type { User } from '@db/schema';
 
 import { getCurrentUser } from './user-session';
-
 import type { ApiResponseProps } from '../types/api-response-types';
 
 function getCurrentUserHandler() {

@@ -1,5 +1,6 @@
-import type { LinkComponentProps } from '@tanstack/react-router';
 import type { ButtonHTMLAttributes, ComponentPropsWithoutRef, ReactNode } from 'react';
+
+import type { LinkComponentProps } from '@tanstack/react-router';
 
 import type Dropdown from '../dropdown';
 

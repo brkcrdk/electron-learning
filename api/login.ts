@@ -5,7 +5,6 @@ import { db } from '@db/client';
 import { users, type User } from '@db/schema';
 
 import { setCurrentUser } from './user-session';
-
 import type { ApiResponseProps } from '../types/api-response-types';
 
 export interface LoginPayload {

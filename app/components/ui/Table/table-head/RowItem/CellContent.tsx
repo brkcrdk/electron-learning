@@ -1,5 +1,6 @@
-import { type SortDirection } from '@tanstack/react-table';
 import { type ReactNode } from 'react';
+
+import { type SortDirection } from '@tanstack/react-table';
 
 import cn from '@app/utils/cn';
 

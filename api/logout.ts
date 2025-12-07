@@ -1,7 +1,6 @@
 import { ipcMain } from 'electron';
 
 import { clearCurrentUser } from './user-session';
-
 import type { ApiResponseProps } from '../types/api-response-types';
 
 function logoutHandler() {

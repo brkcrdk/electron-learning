@@ -1,6 +1,7 @@
+import { type ButtonHTMLAttributes, type PropsWithChildren } from 'react';
+
 import { type LinkComponentProps } from '@tanstack/react-router';
 import { Dialog } from 'radix-ui';
-import { type ButtonHTMLAttributes, type PropsWithChildren } from 'react';
 
 import cn from '@app/utils/cn';
 

@@ -1,8 +1,7 @@
 import Store from 'electron-store';
 
-import { themes, type ThemeSchema, getTheme, setTheme } from './theme';
-
 import type { LanguageTypes } from './lang';
+import { themes, type ThemeSchema, getTheme, setTheme } from './theme';
 
 export interface StoreSchema {
   theme: ThemeSchema;

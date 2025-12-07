@@ -1,6 +1,7 @@
+import type { ReactNode } from 'react';
+
 import { Link } from '@tanstack/react-router';
 import { Dialog } from 'radix-ui';
-import type { ReactNode } from 'react';
 
 import cn from '@app/utils/cn';
 
