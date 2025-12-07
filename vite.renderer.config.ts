@@ -1,3 +1,5 @@
+import path from 'path';
+
 import tailwindcss from '@tailwindcss/vite';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
@@ -5,6 +7,13 @@ import { defineConfig } from 'vite';
 
 // https://vite.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@app': path.resolve(__dirname, './app'),
+      '@api': path.resolve(__dirname, './api'),
+      '@db': path.resolve(__dirname, './db'),
+    },
+  },
   plugins: [
     tanstackRouter({
       routesDirectory: 'app/routes',
