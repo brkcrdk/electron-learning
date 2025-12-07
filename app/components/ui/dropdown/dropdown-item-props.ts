@@ -1,6 +1,7 @@
+import type { ComponentPropsWithoutRef } from 'react';
+
 import { type LinkComponentProps } from '@tanstack/react-router';
 import type { DropdownMenu } from 'radix-ui';
-import type { ComponentPropsWithoutRef } from 'react';
 
 import type Icon from '../icon';
 

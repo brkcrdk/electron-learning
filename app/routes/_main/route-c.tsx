@@ -1,6 +1,7 @@
+import { useState } from 'react';
+
 import { createFileRoute } from '@tanstack/react-router';
 import type { RowSelectionState } from '@tanstack/react-table';
-import { useState } from 'react';
 
 import Table from '@app/components/ui/table';
 
