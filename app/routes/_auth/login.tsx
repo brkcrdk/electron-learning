@@ -31,8 +31,7 @@ function RouteComponent() {
         password: data.password,
       });
     },
-    onSuccess: data => {
-      console.log(data);
+    onSuccess: () => {
       navigate({ to: '/', replace: true });
     },
     onError: error => {
