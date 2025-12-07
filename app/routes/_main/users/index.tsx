@@ -16,6 +16,7 @@ function RouteComponent() {
 
   return (
     <Table
+      tableTitle="Kullanıcı Listesi"
       columns={columns}
       data={data ? data : []}
       isLoading={isLoading}
