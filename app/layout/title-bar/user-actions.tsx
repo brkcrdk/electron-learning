@@ -10,7 +10,7 @@ function UserActions() {
     return <div className="skeleton size-6 rounded-sm" />;
   }
 
-  if (!data?.success) return null;
+  if (!data) return null;
 
   return (
     <Dropdown
@@ -19,7 +19,7 @@ function UserActions() {
         children: (
           <>
             <Avatar
-              name={data.data.name}
+              name={data.name}
               avatarRootProps={{
                 className: 'size-6 rounded-sm',
               }}

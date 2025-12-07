@@ -35,7 +35,7 @@ function loginHandler() {
 
       const [updatedUser] = await db
         .update(users)
-        .set({ lastLoginAt: sql`CURRENT_TIMESTAMP` })
+        .set({ lastLoginAt: sql`(unixepoch())` })
         .where(eq(users.id, user.id))
         .returning();
 

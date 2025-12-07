@@ -19,7 +19,7 @@ function createSuperAdminHandler() {
           password: data.password,
           roles: 'super-admin',
           status: 'active',
-          lastLoginAt: sql`CURRENT_TIMESTAMP`,
+          lastLoginAt: sql`(unixepoch())`,
         })
         .returning();
 

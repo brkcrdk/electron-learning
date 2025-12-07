@@ -16,10 +16,10 @@ export const users = sqliteTable(
       .default('active'),
     createdAt: integer('created_at', { mode: 'timestamp' })
       .notNull()
-      .default(sql`CURRENT_TIMESTAMP`),
+      .default(sql`(unixepoch())`),
     updatedAt: integer('updated_at', { mode: 'timestamp' })
       .notNull()
-      .default(sql`CURRENT_TIMESTAMP`),
+      .default(sql`(unixepoch())`),
     lastLoginAt: integer('last_login_at', { mode: 'timestamp' }),
   },
   table => [index('roles_idx').on(table.roles)]
