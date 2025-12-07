@@ -19,7 +19,7 @@ function getUserListHandler() {
         };
       }
 
-      if (currentUser.roles === 'super-admin') {
+      if (currentUser.roles === 'user') {
         return {
           success: false,
           error: 'Bu işlemi yapmak için yetkiniz yok.',

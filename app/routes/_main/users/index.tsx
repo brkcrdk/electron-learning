@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import useUserListQuery from '../../../services/useUserListQuery';
+import useUserListQuery from '../../../services/use-user-list-query';
 
 export const Route = createFileRoute('/_main/users/')({
   component: RouteComponent,
