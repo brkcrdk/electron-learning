@@ -1,7 +1,7 @@
-import RelativeDateCell from '../../../../components/table-cells/relative-date-cell';
-
-import type { User } from '../../../../../db/schema';
 import type { ColumnDef } from '@tanstack/react-table';
+
+import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
+import type { User } from '@db/schema';
 
 function useColumns(): ColumnDef<User>[] {
   return [

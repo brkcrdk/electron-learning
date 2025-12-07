@@ -1,6 +1,6 @@
 import { useLocation, type LinkProps } from '@tanstack/react-router';
 
-import type { IconListProps } from '../../../components/ui/icon/icon-list';
+import type { IconListProps } from '@app/components/ui/icon/icon-list';
 
 export interface SidebarItem {
   label: string;

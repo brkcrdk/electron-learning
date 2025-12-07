@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import Icon from '../../components/ui/icon';
+import Icon from '@app/components/ui/icon';
 
 import type { ThemeType } from '../../../store/theme';
 

@@ -1,8 +1,8 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
-import Input from '../../../components/ui/input';
-import PasswordInput from '../../../components/ui/password-input';
-import { emailValidation } from '../../../utils/form-validations';
+import Input from '@app/components/ui/input';
+import PasswordInput from '@app/components/ui/password-input';
+import { emailValidation } from '@app/utils/form-validations';
 
 import type { AuthLayoutMode } from './auth-layout';
 

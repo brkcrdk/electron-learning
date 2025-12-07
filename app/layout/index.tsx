@@ -1,8 +1,8 @@
+import type { PropsWithChildren } from 'react';
+
 import Header from './header';
 import Sidebar from './sidebar';
 import TitleBar from './title-bar';
-
-import type { PropsWithChildren } from 'react';
 
 function Layout({ children }: PropsWithChildren) {
   return (

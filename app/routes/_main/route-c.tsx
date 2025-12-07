@@ -1,9 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
+import type { RowSelectionState } from '@tanstack/react-table';
 import { useState } from 'react';
 
-import Table from '../../components/ui/table';
-
-import type { RowSelectionState } from '@tanstack/react-table';
+import Table from '@app/components/ui/table';
 
 export const Route = createFileRoute('/_main/route-c')({
   component: RouteComponent,

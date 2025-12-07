@@ -1,6 +1,6 @@
-import Header from './header';
-
 import type { PropsWithChildren } from 'react';
+
+import Header from './header';
 
 export type AuthLayoutMode = 'signup' | 'login';
 

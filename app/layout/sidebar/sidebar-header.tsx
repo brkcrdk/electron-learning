@@ -1,4 +1,4 @@
-import Icon from '../../components/ui/icon';
+import Icon from '@app/components/ui/icon';
 
 function SidebarHeader() {
   return (

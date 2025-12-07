@@ -1,7 +1,7 @@
-import Avatar from '../../components/ui/avatar';
-import Dropdown from '../../components/ui/dropdown';
-import Icon from '../../components/ui/icon';
-import useCurrentUserQuery from '../../services/use-current-user-query';
+import Avatar from '@app/components/ui/avatar';
+import Dropdown from '@app/components/ui/dropdown';
+import Icon from '@app/components/ui/icon';
+import useCurrentUserQuery from '@app/services/use-current-user-query';
 
 function UserActions() {
   const { data, isLoading } = useCurrentUserQuery();

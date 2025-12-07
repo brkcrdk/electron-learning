@@ -1,8 +1,9 @@
 import { Link } from '@tanstack/react-router';
 
+import Icon from '@app/components/ui/icon';
+import cn from '@app/utils/cn';
+
 import useSidebarItems from './use-sidebar-items';
-import Icon from '../../../components/ui/icon';
-import cn from '../../../utils/cn';
 
 function SidebarItems() {
   const sidebarItems = useSidebarItems();

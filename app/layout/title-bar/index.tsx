@@ -1,8 +1,9 @@
 import { useCanGoBack, useRouter } from '@tanstack/react-router';
 
+import Icon from '@app/components/ui/icon';
+
 import ThemeToggle from './theme-toggle';
 import UserActions from './user-actions';
-import Icon from '../../components/ui/icon';
 
 function TitleBar() {
   const canGoBack = useCanGoBack();
