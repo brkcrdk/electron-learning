@@ -4,7 +4,7 @@ import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
 import cn from '@app/utils/cn';
 import type { User } from '@db/schema';
 
-import EditUser from './edit-user';
+import EditUser from '../modules/edit-user';
 
 interface ColumnBadgeProps {
   label: string;

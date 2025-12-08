@@ -1,6 +1,6 @@
 import type { TableActionsProps } from '@app/components/ui/table';
 
-import NewUser from './new-user';
+import NewUser from '../modules/new-user';
 
 function useTableActions(): TableActionsProps[] {
   return [
