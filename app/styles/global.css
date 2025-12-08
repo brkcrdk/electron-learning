@@ -50,3 +50,26 @@
 html {
   font-family: var(--font-poppins);
 }
+
+@theme {
+  --animate-slide-in-right: slide-in-right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-out-right: slide-out-right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-right {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}

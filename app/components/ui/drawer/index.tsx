@@ -1,47 +1,38 @@
-import type { LabelHTMLAttributes, PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
+
+import { Dialog } from 'radix-ui';
 
 import cn from '@app/utils/cn';
 
-import CloseBtn from './close-btn';
-import { DrawerContextProvider } from './drawer-context';
 import DrawerHeader from './header';
 
 interface Props extends PropsWithChildren {
-  triggerProps: LabelHTMLAttributes<HTMLLabelElement>;
-  drawerId: string;
+  triggerProps?: Dialog.DialogTriggerProps;
+  rootProps?: Dialog.DialogProps;
 }
-
-function Drawer({ children, triggerProps, drawerId }: Props) {
+function Drawer({ triggerProps, children }: Props) {
   return (
-    <DrawerContextProvider drawerId={drawerId}>
-      <div className="drawer drawer-end">
-        <input
-          id={drawerId}
-          type="checkbox"
-          className="drawer-toggle"
-        />
-        <div className="drawer-content">
-          <label
-            htmlFor={drawerId}
-            {...triggerProps}
-            className={cn('btn', triggerProps?.className)}
-          />
-        </div>
-
-        <div className="drawer-side webkit-no-draggable z-50">
-          <label
-            htmlFor={drawerId}
-            aria-label="close sidebar"
-            className="drawer-overlay"
-          />
-          <div className="menu bg-base-200 max-w-120 min-h-full w-1/2 p-4">{children}</div>
-        </div>
-      </div>
-    </DrawerContextProvider>
+    <Dialog.Root>
+      <Dialog.Trigger
+        {...triggerProps}
+        className={cn('btn', triggerProps?.className)}
+      />
+      <Dialog.Portal>
+        <Dialog.Overlay className="z-popover-overlay bg-base-300/60 fixed inset-0" />
+        <Dialog.Content
+          className={cn(
+            'z-popover-content webkit-no-draggable max-w-120 bg-base-200 rounded-lg p-4 shadow-2xl',
+            'border-base-content/20 border',
+            'absolute right-2 top-2 h-[calc(100vh-1rem)] w-1/2',
+            'data-[state=open]:animate-slide-in-right data-[state=closed]:animate-slide-out-right'
+          )}
+        >
+          {children}
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }
 
-Drawer.CloseBtn = CloseBtn;
 Drawer.Header = DrawerHeader;
-
 export default Drawer;
