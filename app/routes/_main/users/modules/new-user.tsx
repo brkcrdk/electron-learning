@@ -7,26 +7,43 @@ import type { UserFormInputs } from './user-form';
 import UserForm from './user-form';
 
 function NewUser() {
-  const form = useForm<UserFormInputs>({});
+  const form = useForm<UserFormInputs>({
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      roles: 'user',
+      isActive: true,
+    },
+  });
+
   return (
-    // <Drawer
-    //   drawerId="new-user-drawer"
-    //   triggerProps={{ children: 'Kullanıcı Ekle' }}
-    // >
-    //   <Drawer.Header title="Yeni Kullanıcı Oluştur" />
-    //   <FormProvider {...form}>
-    //     <UserForm onSubmit={values => console.log('values', values)} />
-    //   </FormProvider>
-    // </Drawer>
-    <Drawer triggerProps={{ children: 'Kullanıcı Ekle' }}>
+    <Drawer
+      triggerProps={{ children: 'Kullanıcı Ekle' }}
+      rootProps={{
+        onOpenChange: open => {
+          if (!open) {
+            form.reset();
+          }
+        },
+      }}
+    >
       <Drawer.Header
         title="Yeni Kullanıcı Oluştur"
         description="Yeni bir kullanıcı oluşturmak için lütfen bilgilerinizi giriniz."
       />
-      qwewqewqel;qwe
+      <FormProvider {...form}>
+        <UserForm onSubmit={values => console.log('values', values)} />
+      </FormProvider>
       <Drawer.Footer>
-        <Dialog.Close className="btn btn-soft btn-accent flex-1">Kapat</Dialog.Close>
-        <button className="btn btn-primary flex-1">Kaydet</button>
+        <Dialog.Close className="btn btn-soft flex-1">Kapat</Dialog.Close>
+        <button
+          form="user-form-inputs"
+          type="submit"
+          className="btn btn-primary btn-soft flex-1"
+        >
+          Kaydet
+        </button>
       </Drawer.Footer>
     </Drawer>
   );

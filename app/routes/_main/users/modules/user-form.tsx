@@ -25,6 +25,7 @@ function UserForm({ onSubmit }: Props) {
   return (
     <form
       className="mt-6 grid gap-3"
+      id="user-form-inputs"
       onSubmit={handleSubmit(onSubmit)}
     >
       <Controller
@@ -33,7 +34,7 @@ function UserForm({ onSubmit }: Props) {
         rules={{ required: 'Adı Soyadı alanı zorunludur' }}
         render={({ field, fieldState }) => (
           <Input
-            label="Adı Soyadı*"
+            label="Adı Soyadı"
             placeholder="Adı Soyadı"
             error={fieldState.error?.message}
             {...field}
@@ -46,7 +47,7 @@ function UserForm({ onSubmit }: Props) {
         rules={emailValidation}
         render={({ field, fieldState }) => (
           <Input
-            label="E-posta*"
+            label="E-posta"
             placeholder="test@example.com"
             error={fieldState.error?.message}
             {...field}
@@ -59,7 +60,7 @@ function UserForm({ onSubmit }: Props) {
         rules={passwordValidation}
         render={({ field, fieldState }) => (
           <PasswordInput
-            label="Şifre*"
+            label="Şifre"
             error={fieldState.error?.message}
             inputProps={{
               placeholder: '********',
@@ -71,19 +72,19 @@ function UserForm({ onSubmit }: Props) {
         )}
       />
 
-      <Select label="Kullanıcı Rolü" />
+      <Select
+        label="Kullanıcı Rolü"
+        options={[
+          { label: 'Admin', value: 'admin' },
+          { label: 'Kullanıcı', value: 'user' },
+        ]}
+      />
       <Switch
         label="Aktiflik Durumu"
         id="status"
         defaultChecked
         rootProps={{ className: 'mt-4' }}
       />
-      <button
-        type="submit"
-        className="btn btn-primary btn-outline"
-      >
-        Kaydet
-      </button>
     </form>
   );
 }
