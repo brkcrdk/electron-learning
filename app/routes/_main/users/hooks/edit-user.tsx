@@ -15,7 +15,7 @@ function EditUser() {
         className: 'btn btn-square btn-sm',
       }}
     >
-      <h2 className="text-lg font-medium">Kullanıcı Düzenle</h2>
+      <Drawer.Header title="Kullanıcı Düzenle" />
     </Drawer>
   );
 }
