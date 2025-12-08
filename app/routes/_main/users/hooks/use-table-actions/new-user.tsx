@@ -1,5 +1,6 @@
 import Drawer from '@app/components/ui/drawer';
 import Input from '@app/components/ui/input';
+import Select from '@app/components/ui/select';
 
 function NewUser() {
   return (
@@ -11,6 +12,10 @@ function NewUser() {
         <Input label="Şifre" />
         <Input label="Rol" />
         <Input label="Aktiflik Durumu" />
+        <Select
+          error="Bu alan zorunludur"
+          selectProps={{ 'aria-label': 'xx' }}
+        />
       </form>
     </Drawer>
   );
