@@ -10,7 +10,7 @@ function Layout({ children }: PropsWithChildren) {
       <TitleBar />
       <div className="drawer drawer-open">
         <input
-          id="my-drawer-4"
+          id="sidebar-drawer"
           type="checkbox"
           className="drawer-toggle"
         />

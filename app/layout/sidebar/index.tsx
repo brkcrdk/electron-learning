@@ -6,7 +6,7 @@ function Sidebar() {
   return (
     <div className="drawer-side is-drawer-close:overflow-visible relative">
       <label
-        htmlFor="my-drawer-4"
+        htmlFor="sidebar-drawer"
         aria-label="close sidebar"
         className="drawer-overlay"
       />

@@ -4,7 +4,7 @@ function Header() {
   return (
     <nav className="navbar bg-base-300 w-full">
       <label
-        htmlFor="my-drawer-4"
+        htmlFor="sidebar-drawer"
         aria-label="open sidebar"
         className="btn btn-square btn-ghost"
       >
