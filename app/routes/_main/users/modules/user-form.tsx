@@ -1,8 +1,10 @@
 import { Controller, useFormContext } from 'react-hook-form';
 
 import Input from '@app/components/ui/input';
+import PasswordInput from '@app/components/ui/password-input';
 import Select from '@app/components/ui/select';
 import Switch from '@app/components/ui/switch';
+import { emailValidation, passwordValidation } from '@app/utils/form-validations';
 import type { User } from '@db/schema';
 
 export interface UserFormInputs {
@@ -31,14 +33,43 @@ function UserForm({ onSubmit }: Props) {
         rules={{ required: 'Adı Soyadı alanı zorunludur' }}
         render={({ field, fieldState }) => (
           <Input
-            label="Adı Soyadı"
+            label="Adı Soyadı*"
+            placeholder="Adı Soyadı"
             error={fieldState.error?.message}
             {...field}
           />
         )}
       />
-      <Input label="E-posta" />
-      <Input label="Şifre" />
+      <Controller
+        control={control}
+        name="email"
+        rules={emailValidation}
+        render={({ field, fieldState }) => (
+          <Input
+            label="E-posta*"
+            placeholder="test@example.com"
+            error={fieldState.error?.message}
+            {...field}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="password"
+        rules={passwordValidation}
+        render={({ field, fieldState }) => (
+          <PasswordInput
+            label="Şifre*"
+            error={fieldState.error?.message}
+            inputProps={{
+              placeholder: '********',
+              id: 'password',
+              value: field.value,
+              onChange: field.onChange,
+            }}
+          />
+        )}
+      />
       <Input label="Rol" />
       <Input label="Aktiflik Durumu" />
       <Select label="Kullanıcı Rolü" />
