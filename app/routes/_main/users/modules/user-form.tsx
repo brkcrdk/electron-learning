@@ -70,8 +70,7 @@ function UserForm({ onSubmit }: Props) {
           />
         )}
       />
-      <Input label="Rol" />
-      <Input label="Aktiflik Durumu" />
+
       <Select label="Kullanıcı Rolü" />
       <Switch
         label="Aktiflik Durumu"
@@ -81,7 +80,7 @@ function UserForm({ onSubmit }: Props) {
       />
       <button
         type="submit"
-        className="btn btn-primary"
+        className="btn btn-primary btn-outline"
       >
         Kaydet
       </button>

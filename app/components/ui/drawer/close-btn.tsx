@@ -10,7 +10,7 @@ function CloseBtn(props: LabelHTMLAttributes<HTMLLabelElement>) {
     <label
       htmlFor={drawerId}
       {...props}
-      className={cn('btn btn-primary btn-soft', props.className)}
+      className={cn('btn btn-soft', props.className)}
     />
   );
 }

@@ -23,7 +23,7 @@ function Switch({ error, label, rootProps, ...switchProps }: Props) {
       <input
         {...switchProps}
         type="checkbox"
-        className={cn('toggle toggle-primary', error && 'input-error', switchProps?.className)}
+        className={cn('toggle toggle-sm', error && 'input-error', switchProps?.className)}
       />
       {error && <span className="label-text-alt text-error mt-1">{error}</span>}
     </div>

@@ -24,7 +24,7 @@ function Drawer({ children, triggerProps, drawerId }: Props) {
           <label
             htmlFor={drawerId}
             {...triggerProps}
-            className={cn('btn btn-primary', triggerProps?.className)}
+            className={cn('btn', triggerProps?.className)}
           />
         </div>
 
