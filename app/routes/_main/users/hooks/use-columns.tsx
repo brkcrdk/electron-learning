@@ -46,6 +46,9 @@ function useColumns(): ColumnDef<User>[] {
     {
       header: 'Email',
       accessorKey: 'email',
+      meta: {
+        centeredColumn: true,
+      },
     },
     {
       header: 'Rol',
@@ -53,6 +56,9 @@ function useColumns(): ColumnDef<User>[] {
       cell: info => info.getValue(),
       accessorFn: ({ roles }) => {
         return <span className={cn('badge badge-soft', userRoles[roles].badgeType)}>{userRoles[roles].label}</span>;
+      },
+      meta: {
+        centeredColumn: true,
       },
     },
     {
@@ -62,6 +68,9 @@ function useColumns(): ColumnDef<User>[] {
       accessorFn: ({ status }) => {
         return <span className={cn('badge badge-soft', userStatus[status].badgeType)}>{userStatus[status].label}</span>;
       },
+      meta: {
+        centeredColumn: true,
+      },
     },
     {
       header: 'Oluşturulma Tarihi',
@@ -69,6 +78,9 @@ function useColumns(): ColumnDef<User>[] {
       cell: info => info.getValue(),
       accessorFn: ({ createdAt }) => {
         return <RelativeDateCell date={createdAt} />;
+      },
+      meta: {
+        centeredColumn: true,
       },
     },
     {
@@ -79,6 +91,9 @@ function useColumns(): ColumnDef<User>[] {
         if (!lastLoginAt) return null;
         return <RelativeDateCell date={lastLoginAt} />;
       },
+      meta: {
+        centeredColumn: true,
+      },
     },
     {
       header: 'İşlemler',
@@ -86,6 +101,9 @@ function useColumns(): ColumnDef<User>[] {
       cell: info => info.getValue(),
       accessorFn: ({ id }) => {
         return <EditUser />;
+      },
+      meta: {
+        centeredColumn: true,
       },
     },
   ];
