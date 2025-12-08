@@ -3,12 +3,18 @@ import type { LabelHTMLAttributes, PropsWithChildren } from 'react';
 import cn from '@app/utils/cn';
 
 import CloseBtn from './close-btn';
+import Icon from '../icon';
 
 interface Props extends PropsWithChildren {
   triggerProps: LabelHTMLAttributes<HTMLLabelElement>;
+  /**
+   * Drawer headerında kapatma iconunu render edip etmeyeceğimizi belirten proptur
+   * @defaultValue `true`
+   */
+  hasCloseIcon?: boolean;
 }
 
-function Drawer({ children, triggerProps }: Props) {
+function Drawer({ children, triggerProps, hasCloseIcon = true }: Props) {
   return (
     <div className="drawer drawer-end">
       <input
@@ -30,7 +36,21 @@ function Drawer({ children, triggerProps }: Props) {
           aria-label="close sidebar"
           className="drawer-overlay"
         />
-        <div className="menu bg-base-200 max-w-120 min-h-full w-1/2 p-4">{children}</div>
+        <div className="menu bg-base-200 max-w-120 min-h-full w-1/2 p-4">
+          {hasCloseIcon && (
+            <label
+              htmlFor="drawer-component"
+              aria-label="close drawer"
+              className="btn btn-square btn-ghost absolute right-4 top-2"
+            >
+              <Icon
+                name="close"
+                className="size-4"
+              />
+            </label>
+          )}
+          {children}
+        </div>
       </div>
     </div>
   );
