@@ -102,6 +102,7 @@ function useColumns(): ColumnDef<User>[] {
       accessorFn: ({ id }) => {
         return <EditUser />;
       },
+      enableSorting: false,
       meta: {
         centeredColumn: true,
       },
