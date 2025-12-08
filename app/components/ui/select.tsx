@@ -23,7 +23,7 @@ function Select<TOption, TIsMulti extends boolean = false, TGroup extends GroupB
 }: SelectProps<TOption, TIsMulti, TGroup>) {
   return (
     <div className={cn('flex flex-col gap-1', wrapperClassName)}>
-      {label && <label className="label label-text font-medium">{label}</label>}
+      {label && <label className="label label-text text-sm">{label}</label>}
 
       <ReactSelect
         ref={ref}

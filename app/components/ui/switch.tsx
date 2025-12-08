@@ -12,10 +12,10 @@ function Switch({ error, label, rootProps, ...switchProps }: Props) {
   return (
     <div
       {...rootProps}
-      className={cn('flex items-center gap-2', rootProps?.className)}
+      className={cn('flex flex-col gap-2', rootProps?.className)}
     >
       <label
-        className="label label-text font-medium"
+        className="label label-text text-sm"
         htmlFor={switchProps.id}
       >
         {label}

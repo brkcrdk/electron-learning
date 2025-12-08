@@ -11,7 +11,7 @@ function Input({ error, label, ...inputProps }: Props) {
   return (
     <div className="flex flex-col gap-1">
       <label
-        className="label label-text font-medium"
+        className="label label-text text-sm"
         htmlFor={inputProps.id}
       >
         {label}

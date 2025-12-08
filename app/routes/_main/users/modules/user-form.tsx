@@ -83,7 +83,6 @@ function UserForm({ onSubmit }: Props) {
         label="Aktiflik Durumu"
         id="status"
         defaultChecked
-        rootProps={{ className: 'mt-4 flex-col items-start' }}
       />
     </form>
   );

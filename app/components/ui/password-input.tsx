@@ -15,7 +15,7 @@ function PasswordInput({ inputProps, error, label }: Props) {
     <PasswordToggleField.Root>
       <div className="space-y-2">
         <label
-          className="label label-text font-medium"
+          className="label label-text text-sm"
           htmlFor={inputProps?.id}
         >
           {label}
