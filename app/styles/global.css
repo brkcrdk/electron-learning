@@ -56,11 +56,6 @@
   white-space: nowrap;
 }
 
-@utility drawer-side{
-  -webkit-app-region: no-drag;
-  z-index: 50000;
-} 
-
 html {
   font-family: var(--font-poppins);
 }
