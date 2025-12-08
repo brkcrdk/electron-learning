@@ -1,11 +1,11 @@
 import type { LabelHTMLAttributes } from 'react';
 
 import cn from '@app/utils/cn';
-interface Props extends LabelHTMLAttributes<HTMLLabelElement> {
-  drawerId: string;
-}
 
-function CloseBtn({ drawerId, ...props }: Props) {
+import { useDrawerContext } from './drawer-context';
+
+function CloseBtn(props: LabelHTMLAttributes<HTMLLabelElement>) {
+  const { drawerId } = useDrawerContext();
   return (
     <label
       htmlFor={drawerId}
