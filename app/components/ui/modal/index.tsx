@@ -45,7 +45,7 @@ function Modal({
     <Dialog.Root {...rootProps}>
       <Dialog.Trigger {...triggerProps} />
       <Dialog.Portal {...portalProps}>
-        <Dialog.Overlay className="z-popover-overlay fixed inset-0 bg-gray-900/60" />
+        <Dialog.Overlay className="z-popover-overlay bg-base-300/60 fixed inset-0" />
         <Dialog.Content
           className={cn(
             'z-popover-content w-180 fixed inset-0 m-auto flex h-fit max-h-[80vh] flex-col items-start justify-center gap-2 overflow-auto rounded-lg bg-white p-4',

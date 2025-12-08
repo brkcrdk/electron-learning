@@ -8,14 +8,20 @@ import UserForm from './user-form';
 function NewUser() {
   const form = useForm<UserFormInputs>({});
   return (
-    <Drawer
-      drawerId="new-user-drawer"
-      triggerProps={{ children: 'Kullanıcı Ekle' }}
-    >
-      <Drawer.Header title="Yeni Kullanıcı Oluştur" />
-      <FormProvider {...form}>
-        <UserForm onSubmit={values => console.log('values', values)} />
-      </FormProvider>
+    // <Drawer
+    //   drawerId="new-user-drawer"
+    //   triggerProps={{ children: 'Kullanıcı Ekle' }}
+    // >
+    //   <Drawer.Header title="Yeni Kullanıcı Oluştur" />
+    //   <FormProvider {...form}>
+    //     <UserForm onSubmit={values => console.log('values', values)} />
+    //   </FormProvider>
+    // </Drawer>
+    <Drawer triggerProps={{ children: 'Kullanıcı Ekle' }}>
+      <Drawer.Header
+        title="Yeni Kullanıcı Oluştur"
+        description="Yeni bir kullanıcı oluşturmak için lütfen bilgilerinizi giriniz."
+      />
     </Drawer>
   );
 }
