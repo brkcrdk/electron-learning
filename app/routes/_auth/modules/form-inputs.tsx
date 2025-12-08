@@ -2,7 +2,7 @@ import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import Input from '@app/components/ui/input';
 import PasswordInput from '@app/components/ui/password-input';
-import { emailValidation } from '@app/utils/form-validations';
+import { emailValidation, passwordValidation } from '@app/utils/form-validations';
 
 import type { AuthLayoutMode } from './auth-layout';
 
@@ -50,13 +50,7 @@ function FormInputs({ mode }: Props) {
       <Controller
         control={control}
         name="password"
-        rules={{
-          required: 'Şifre alanı zorunludur',
-          minLength: {
-            value: 8,
-            message: 'Şifre en az 8 karakter olmalıdır',
-          },
-        }}
+        rules={passwordValidation}
         render={({ field, fieldState }) => (
           <PasswordInput
             error={fieldState.error?.message}
@@ -76,16 +70,12 @@ function FormInputs({ mode }: Props) {
           control={control}
           name="confirmPassword"
           rules={{
-            required: 'Şifre tekrar alanı zorunludur',
+            ...passwordValidation,
             validate: value => {
               if (value !== passwordValue) {
                 return 'Şifreler eşleşmiyor!';
               }
               return true;
-            },
-            minLength: {
-              value: 8,
-              message: 'Şifre en az 8 karakter olmalıdır',
             },
           }}
           render={({ field, fieldState }) => (
