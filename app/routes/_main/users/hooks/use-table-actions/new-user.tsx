@@ -5,7 +5,10 @@ import Switch from '@app/components/ui/switch';
 
 function NewUser() {
   return (
-    <Drawer triggerProps={{ children: 'Kullanıcı Ekle' }}>
+    <Drawer
+      drawerId="new-user-drawer"
+      triggerProps={{ children: 'Kullanıcı Ekle' }}
+    >
       <h2 className="text-lg font-medium">Yeni Kullanıcı Oluştur</h2>
       <form className="mt-6 grid gap-3">
         <Input label="Adı Soyadı" />
