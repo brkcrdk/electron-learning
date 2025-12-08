@@ -43,7 +43,7 @@ function Select<TOption, TIsMulti extends boolean = false, TGroup extends GroupB
               errorMessage && 'ring-error border-error'
             ),
           valueContainer: () => 'gap-1.5 py-0.5',
-          placeholder: () => 'text-sm',
+          placeholder: () => 'text-sm text-base-content/50',
           input: () => 'text-sm cursor-pointer',
           singleValue: () => 'text-sm',
           multiValue: () => 'bg-primary/50 rounded-sm flex items-center gap-1 pl-2 pr-1 py-0.5',
@@ -54,7 +54,7 @@ function Select<TOption, TIsMulti extends boolean = false, TGroup extends GroupB
           option: state =>
             cn(
               'cursor-pointer! rounded-sm px-3 py-2 transition-colors font-medium',
-              state.isSelected ? 'bg-primary' : state.isFocused && 'bg-primary/50',
+              state.isSelected ? 'bg-primary text-primary-content' : state.isFocused && 'bg-primary/50',
               state.isDisabled && 'cursor-not-allowed opacity-50'
             ),
           noOptionsMessage: () => 'text-base-content py-3 text-center',
