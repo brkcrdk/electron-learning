@@ -11,9 +11,9 @@ interface Props extends PropsWithChildren {
   triggerProps?: Dialog.DialogTriggerProps;
   rootProps?: Dialog.DialogProps;
 }
-function Drawer({ triggerProps, children }: Props) {
+function Drawer({ triggerProps, rootProps, children }: Props) {
   return (
-    <Dialog.Root>
+    <Dialog.Root {...rootProps}>
       <Dialog.Trigger
         {...triggerProps}
         className={cn('btn', triggerProps?.className)}
