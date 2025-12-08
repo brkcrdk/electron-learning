@@ -12,10 +12,7 @@ function NewUser() {
         <Input label="Şifre" />
         <Input label="Rol" />
         <Input label="Aktiflik Durumu" />
-        <Select
-          error="Bu alan zorunludur"
-          selectProps={{ 'aria-label': 'xx' }}
-        />
+        <Select label="Kullanıcı Rolü" />
       </form>
     </Drawer>
   );
