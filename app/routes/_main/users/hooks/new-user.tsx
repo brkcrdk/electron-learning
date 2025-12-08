@@ -14,7 +14,7 @@ function NewUser() {
     >
       <Drawer.Header title="Yeni Kullanıcı Oluştur" />
       <FormProvider {...form}>
-        <UserForm />
+        <UserForm onSubmit={values => console.log('values', values)} />
       </FormProvider>
     </Drawer>
   );
