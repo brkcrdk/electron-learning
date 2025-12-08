@@ -12,7 +12,7 @@ function TableHeader({ tableTitle, searchProps, tableActions }: TableHeaderProps
   return (
     <header className="flex h-fit items-center justify-between gap-4">
       {(tableTitle || searchProps) && (
-        <div className="flex w-full items-center gap-4">
+        <div className="flex flex-1 items-center gap-4">
           {tableTitle && <h3 className="w-fit whitespace-nowrap text-xl font-medium">{tableTitle}</h3>}
           {searchProps && (
             <TableSearchBar
