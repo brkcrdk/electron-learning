@@ -10,7 +10,7 @@ export interface StoreSchema {
 
 export const store = new Store<StoreSchema>({
   defaults: {
-    theme: themes.wireframe,
+    theme: themes.light,
     language: 'tr',
   },
 });

@@ -2,7 +2,7 @@ import { ipcMain } from 'electron';
 
 import { store } from '.';
 
-export type ThemeType = 'wireframe' | 'dark';
+export type ThemeType = 'light' | 'dark';
 
 export interface ThemeSchema {
   id: ThemeType;
@@ -11,8 +11,8 @@ export interface ThemeSchema {
 }
 
 export const themes: Record<ThemeType, ThemeSchema> = {
-  wireframe: {
-    id: 'wireframe',
+  light: {
+    id: 'light',
     name: 'Light',
     backgroundColor: '#ffffff',
   },

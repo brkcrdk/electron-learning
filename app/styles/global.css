@@ -2,16 +2,7 @@
 @import "./font/index.css";
 
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark, wireframe;
-}
-
-@plugin "daisyui/theme" {
-  name: "wireframe";
-
-  /* NOTE: wireframe temasının border radius değerleri çok keskin olduğu için custom değerleri belirlend. */
-  --radius-selector: 1rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.5rem;
+  themes: light --default, dark --prefersdark;
 }
 
 @theme {
