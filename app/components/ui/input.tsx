@@ -9,7 +9,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 
 function Input({ error, label, ...inputProps }: Props) {
   return (
-    <div className="space-y-2">
+    <div className="flex flex-col gap-1">
       <label
         className="label label-text font-medium"
         htmlFor={inputProps.id}
