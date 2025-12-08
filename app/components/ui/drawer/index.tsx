@@ -30,7 +30,7 @@ function Drawer({ children, triggerProps }: Props) {
           aria-label="close sidebar"
           className="drawer-overlay"
         />
-        <div className="menu bg-base-200 min-h-full w-80 p-4">{children}</div>
+        <div className="menu bg-base-200 max-w-120 min-h-full w-1/2 p-4">{children}</div>
       </div>
     </div>
   );
