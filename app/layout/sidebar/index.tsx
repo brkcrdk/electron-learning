@@ -85,7 +85,11 @@ function Sidebar({ side = 'left', variant = 'sidebar', collapsible = 'offcanvas'
         <div
           data-sidebar="sidebar"
           data-slot="sidebar-inner"
-          className="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
+          className={cn(
+            'bg-sidebar flex size-full flex-col',
+            'group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm',
+            'pt-(--title-bar-height)'
+          )}
         >
           {children}
         </div>

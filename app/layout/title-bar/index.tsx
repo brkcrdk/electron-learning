@@ -10,7 +10,7 @@ function TitleBar() {
   const { history } = useRouter();
 
   return (
-    <div className="bg-base-100 webkit-draggable relative flex h-12 w-full items-center justify-between px-4">
+    <div className="webkit-draggable z-999 bg-sidebar border-sidebar-border h-(--title-bar-height) relative flex w-full items-center justify-between border px-4">
       {/* <nav className="webkit-no-draggable flex items-center gap-2 pl-20">
         <div className="flex gap-1">
           <button
