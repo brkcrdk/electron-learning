@@ -129,28 +129,26 @@ function MainTable<T>({
         tableActions={tableActions}
       />
 
-      {table.getRowModel().rows.length > 0 ? (
-        <div className="overflow-hidden rounded-md border">
-          {/* <TableHead
-                table={table}
-                onSortingChange={sortingProps.onSortingChange}
-              /> */}
-          {/* <TableBody table={table} /> */}
-          {/* </table> */}
-
-          <Table>
-            <TableHead
-              table={table}
-              onSortingChange={sortingProps.onSortingChange}
-            />
+      <div className="overflow-hidden rounded-md border">
+        <Table>
+          <TableHead
+            table={table}
+            onSortingChange={sortingProps.onSortingChange}
+          />
+          {table.getRowModel().rows.length > 0 ? (
             <TableBody table={table} />
-          </Table>
-
-          {/* {paginationProps && <TableFooter {...paginationProps} />} */}
-        </div>
+          ) : (
+            <TableEmptyState
+              tableColumnsCount={table.getAllColumns().length}
+              {...tableEmptyStateProps}
+            />
+          )}
+        </Table>
+      </div>
+      {/* {table.getRowModel().rows.length > 0 ? (
       ) : (
         <TableEmptyState {...tableEmptyStateProps} />
-      )}
+      )} */}
     </div>
   );
 }

@@ -1,8 +1,6 @@
 import { type Table as TableType, flexRender } from '@tanstack/react-table';
 
 import Table from '@app/components/ui/table';
-import cd from '@app/utils/cd';
-import cn from '@app/utils/cn';
 
 interface Props<T> {
   table: TableType<T>;
