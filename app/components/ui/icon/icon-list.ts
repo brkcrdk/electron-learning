@@ -21,7 +21,7 @@ import {
 import { MdMoreHoriz } from 'react-icons/md';
 import { PiWarningCircleFill } from 'react-icons/pi';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
-import { TbLayoutSidebarLeftExpand } from 'react-icons/tb';
+import { TbLayoutSidebarLeftExpand, TbContrastFilled } from 'react-icons/tb';
 import { VscSettings } from 'react-icons/vsc';
 
 export const iconList = [
@@ -49,6 +49,7 @@ export const iconList = [
   { label: 'users', icon: LuUsers },
   { label: 'pencil', icon: LuPencil },
   { label: 'loader-circle', icon: LuLoaderCircle },
+  { label: 'contrast-filled', icon: TbContrastFilled },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];

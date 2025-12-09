@@ -6,9 +6,8 @@
     <script>
     (async () => {
         const theme = await window.store.getTheme();
-        console.log(theme)
-        // document.documentElement.classList.add(theme.id);
-        // document.documentElement.style.colorScheme = theme.id;
+        document.documentElement.classList.add(theme.id);
+        document.documentElement.style.colorScheme = theme.id;
       })();
     </script>
   </head>

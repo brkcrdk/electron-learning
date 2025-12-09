@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import Button from '@app/components/ui/button';
 import Icon from '@app/components/ui/icon';
 
 import type { ThemeType } from '../../../store/theme';
@@ -19,32 +20,26 @@ function ThemeToggle() {
   const toggleTheme = async () => {
     if (theme === 'light') {
       await window.store.setTheme('dark');
-      document.documentElement.setAttribute('data-theme', 'dark');
+      document.documentElement.classList.add('dark');
+      document.documentElement.style.colorScheme = 'dark';
+      document.documentElement.classList.remove('light');
       setTheme('dark');
     } else {
       await window.store.setTheme('light');
-      document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      document.documentElement.style.colorScheme = 'light';
       setTheme('light');
     }
   };
   return (
-    <label className="swap swap-rotate">
-      <input
-        type="checkbox"
-        className="theme-controller"
-        value={theme}
-        onChange={toggleTheme}
-      />
-      <Icon
-        name="sun"
-        className="swap-off size-5"
-      />
-
-      <Icon
-        name="moon"
-        className="swap-on size-5"
-      />
-    </label>
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={toggleTheme}
+    >
+      <Icon name="contrast-filled" />
+    </Button>
   );
 }
 
