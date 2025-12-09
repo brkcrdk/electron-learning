@@ -2,7 +2,6 @@ import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import InputField from '@app/components/form-fields/input-field';
 import PasswordField from '@app/components/form-fields/password-field';
-import Field from '@app/components/ui/field';
 import { emailValidation, passwordValidation } from '@app/utils/form-validations';
 
 import type { AuthLayoutMode } from './auth-layout';
@@ -42,9 +41,9 @@ function FormInputs({ mode }: Props) {
           render={({ field, fieldState }) => (
             <InputField
               error={fieldState.error?.message}
-              label="Adınız ve Soyadınız"
+              label="Adınız"
               id="name"
-              placeholder="Adınız ve Soyadınız"
+              placeholder="Adınız ve soyadınız"
               {...field}
             />
           )}

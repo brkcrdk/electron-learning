@@ -3,6 +3,9 @@ import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import Button from '@app/components/ui/button';
+import Field from '@app/components/ui/field';
+
 import AuthLayout from './modules/auth-layout';
 import FormInputs, { type SignupFormInputsProps } from './modules/form-inputs';
 
@@ -29,7 +32,7 @@ function RouteComponent() {
       return window.electronAPI.createSuperAdmin({
         email: data.email,
         password: data.password,
-        name: 'Super Admin',
+        name: data.name,
       });
     },
     onSuccess: () => {
@@ -44,6 +47,7 @@ function RouteComponent() {
 
   const form = useForm<SignupFormInputsProps>({
     defaultValues: {
+      name: 'Super Admin',
       email: 'test@test.com',
       password: '12345678',
       confirmPassword: '12345678',
@@ -59,18 +63,19 @@ function RouteComponent() {
     <AuthLayout actionMode="signup">
       <FormProvider {...form}>
         <form
-          aria-disabled={isPending}
-          className="aria-disabled:disable-interactions space-y-4"
-          name="welcome-form"
+          id="signup-form"
           onSubmit={form.handleSubmit(onSubmit)}
         >
-          <FormInputs mode="signup" />
-          <button
-            type="submit"
-            className="btn btn-block mt-6"
-          >
-            Kayıt Ol ve Giriş Yap
-          </button>
+          <Field.Group>
+            <FormInputs mode="signup" />
+            <Button
+              type="submit"
+              disabled={isPending}
+              isLoading={isPending}
+            >
+              Kayıt Ol ve Giriş Yap
+            </Button>
+          </Field.Group>
         </form>
       </FormProvider>
     </AuthLayout>

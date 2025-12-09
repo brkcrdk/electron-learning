@@ -1,9 +1,7 @@
-// import { useMutation } from '@tanstack/react-query';
-// import { FormProvider, useForm } from 'react-hook-form';
-// import { toast } from 'sonner';
-
+import { useMutation } from '@tanstack/react-query';
 import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
 import { FormProvider, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import Button from '@app/components/ui/button';
 import Field from '@app/components/ui/field';
@@ -11,7 +9,6 @@ import Field from '@app/components/ui/field';
 import AuthLayout from './modules/auth-layout';
 import type { LoginFormInputsProps } from './modules/form-inputs';
 import FormInputs from './modules/form-inputs';
-// import FormInputs, { type LoginFormInputsProps } from './modules/form-inputs';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
@@ -31,22 +28,22 @@ export const Route = createFileRoute('/_auth/login')({
 function RouteComponent() {
   const navigate = useNavigate();
 
-  // const { mutateAsync, isPending } = useMutation({
-  //   mutationFn: (data: LoginFormInputsProps) => {
-  //     return window.electronAPI.login({
-  //       email: data.email,
-  //       password: data.password,
-  //     });
-  //   },
-  //   onSuccess: () => {
-  //     navigate({ to: '/', replace: true });
-  //   },
-  //   onError: error => {
-  //     toast.error(error.message, {
-  //       dismissible: false,
-  //     });
-  //   },
-  // });
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: (data: LoginFormInputsProps) => {
+      return window.electronAPI.login({
+        email: data.email,
+        password: data.password,
+      });
+    },
+    onSuccess: () => {
+      navigate({ to: '/', replace: true });
+    },
+    onError: error => {
+      toast.error(error.message, {
+        dismissible: false,
+      });
+    },
+  });
 
   const form = useForm<LoginFormInputsProps>({
     defaultValues: {
@@ -57,8 +54,7 @@ function RouteComponent() {
   });
 
   async function onSubmit(data: LoginFormInputsProps) {
-    // await mutateAsync(data);
-    console.log(data);
+    await mutateAsync(data);
   }
 
   return (
@@ -70,7 +66,13 @@ function RouteComponent() {
         >
           <Field.Group>
             <FormInputs mode="login" />
-            <Button type="submit">Giriş Yap</Button>
+            <Button
+              type="submit"
+              disabled={isPending}
+              isLoading={isPending}
+            >
+              Giriş Yap
+            </Button>
           </Field.Group>
         </form>
       </FormProvider>
