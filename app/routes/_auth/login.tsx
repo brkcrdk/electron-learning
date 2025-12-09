@@ -1,11 +1,16 @@
 // import { useMutation } from '@tanstack/react-query';
-import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
 // import { FormProvider, useForm } from 'react-hook-form';
 // import { toast } from 'sonner';
 
+import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
+import { FormProvider, useForm } from 'react-hook-form';
+
 import Button from '@app/components/ui/button';
+import Card from '@app/components/ui/card';
 
 import AuthLayout from './modules/auth-layout';
+import type { LoginFormInputsProps } from './modules/form-inputs';
+import FormInputs from './modules/form-inputs';
 // import FormInputs, { type LoginFormInputsProps } from './modules/form-inputs';
 
 export const Route = createFileRoute('/_auth/login')({
@@ -24,7 +29,7 @@ export const Route = createFileRoute('/_auth/login')({
 });
 
 function RouteComponent() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // const { mutateAsync, isPending } = useMutation({
   //   mutationFn: (data: LoginFormInputsProps) => {
@@ -43,13 +48,13 @@ function RouteComponent() {
   //   },
   // });
 
-  // const form = useForm<LoginFormInputsProps>({
-  //   defaultValues: {
-  //     email: 'test@test.com',
-  //     password: '12345678',
-  //   },
-  //   mode: 'onSubmit',
-  // });
+  const form = useForm<LoginFormInputsProps>({
+    defaultValues: {
+      email: 'test@test.com',
+      password: '12345678',
+    },
+    mode: 'onSubmit',
+  });
 
   // async function onSubmit(data: LoginFormInputsProps) {
   //   await mutateAsync(data);
@@ -57,7 +62,9 @@ function RouteComponent() {
 
   return (
     <AuthLayout actionMode="login">
-      <Button variant="outline">Giriş Yap</Button>
+      <FormProvider {...form}>
+        <FormInputs mode="login" />
+      </FormProvider>
     </AuthLayout>
   );
 }

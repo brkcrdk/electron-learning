@@ -1,5 +1,7 @@
 import type { PropsWithChildren } from 'react';
 
+import Card from '@app/components/ui/card';
+
 import Header from './header';
 
 export type AuthLayoutMode = 'signup' | 'login';
@@ -20,19 +22,19 @@ const actionModeTitles = {
   },
 };
 
-function AuthLayout({ actionMode, children }: Props) {
+function AuthLayout({ children, actionMode }: Props) {
   return (
     <>
       <div className="webkit-draggable h-8 w-full" />
-      <section className="bg-base-200 flex h-screen w-screen flex-col items-center justify-center p-4">
-        <div className="card bg-base-100 w-full max-w-lg shadow-xl">
-          <div className="card-body space-y-6">
-            <Header
-              title={actionModeTitles[actionMode].title}
-              description={actionModeTitles[actionMode].description}
-            />
-            {children}
-          </div>
+      <section className="flex min-h-svh w-full items-center justify-center p-6">
+        <div className="flex flex-col gap-6">
+          <Card className="min-w-100">
+            <Card.Header>
+              <Card.Title>{actionModeTitles[actionMode].title}</Card.Title>
+              <Card.Description>{actionModeTitles[actionMode].description}</Card.Description>
+            </Card.Header>
+            <Card.Content>{children}</Card.Content>
+          </Card>
         </div>
       </section>
     </>

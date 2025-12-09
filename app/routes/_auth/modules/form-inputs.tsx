@@ -1,5 +1,6 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+import Field from '@app/components/ui/field';
 import Input from '@app/components/ui/input';
 import PasswordInput from '@app/components/ui/password-input';
 import { emailValidation, passwordValidation } from '@app/utils/form-validations';
@@ -31,8 +32,26 @@ function FormInputs({ mode }: Props) {
   });
 
   return (
-    <>
-      <Controller
+    <form>
+      <Field.Group>
+        <Field>
+          <Field.Label htmlFor="email">Email</Field.Label>
+          <Input
+            id="email"
+            placeholder="example@example.com"
+          />
+        </Field>
+        <Field>
+          <Field.Label htmlFor="password">Şifre</Field.Label>
+          <PasswordInput
+            inputProps={{
+              id: 'password',
+              placeholder: '********',
+            }}
+          />
+        </Field>
+      </Field.Group>
+      {/* <Controller
         control={control}
         name="email"
         rules={emailValidation}
@@ -90,8 +109,8 @@ function FormInputs({ mode }: Props) {
             />
           )}
         />
-      )}
-    </>
+      )} */}
+    </form>
   );
 }
 
