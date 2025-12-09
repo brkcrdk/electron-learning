@@ -20,6 +20,7 @@ function Button({ className, variant, size, asChild = false, isLoading = false, 
   return (
     <Comp
       data-slot="button"
+      {...props}
       className={cn(buttonVariants({ variant, size, className }))}
     >
       {isLoading && <Spinner />}
