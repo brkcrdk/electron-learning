@@ -8,7 +8,7 @@ function Layout({ children }: PropsWithChildren) {
   return (
     <>
       <TitleBar />
-      <div className="drawer drawer-open">
+      {/* <div className="drawer drawer-open">
         <input
           id="sidebar-drawer"
           type="checkbox"
@@ -19,7 +19,7 @@ function Layout({ children }: PropsWithChildren) {
           <section className="p-4">{children}</section>
         </div>
         <Sidebar />
-      </div>
+      </div> */}
     </>
   );
 }
