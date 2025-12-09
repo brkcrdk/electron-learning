@@ -16,7 +16,7 @@ function Header() {
         <Breadcrumb>
           <Breadcrumb.List>
             <Breadcrumb.Item>
-              <Breadcrumb.Link>
+              <Breadcrumb.Link asChild>
                 <Link to="/">Acme Inc</Link>
               </Breadcrumb.Link>
             </Breadcrumb.Item>
