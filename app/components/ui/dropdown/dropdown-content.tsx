@@ -8,6 +8,7 @@ function DropdownContent({ className, sideOffset = 4, ...props }: DropdownMenu.D
       <DropdownMenu.Content
         data-slot="dropdown-menu-content"
         sideOffset={sideOffset}
+        collisionPadding={10}
         className={cn(
           'bg-popover text-popover-foreground z-50 min-w-32 overflow-y-auto overflow-x-hidden rounded-md border p-1 shadow-md',
           'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
