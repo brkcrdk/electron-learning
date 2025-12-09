@@ -1,6 +1,8 @@
 import type { CSSProperties, PropsWithChildren } from 'react';
 
-import Sidebar from './sidebar';
+import Sidebar from '@app/components/ui/sidebar';
+
+import Header from './header';
 import TitleBar from './title-bar';
 
 /**
@@ -19,7 +21,7 @@ function Layout({ children }: PropsWithChildren) {
           variant="inset"
           className="h-(--available-height) mt-12"
         >
-          Sidebar
+          <Header />
         </Sidebar>
         <Sidebar.Inset className="h-(--available-height)">Content</Sidebar.Inset>
       </Sidebar.Provider>
