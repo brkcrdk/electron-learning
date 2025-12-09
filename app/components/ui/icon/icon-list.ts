@@ -15,6 +15,7 @@ import {
   LuArrowDown,
   LuUsers,
   LuPencil,
+  LuLoaderCircle,
 } from 'react-icons/lu';
 import { PiWarningCircleFill } from 'react-icons/pi';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
@@ -43,6 +44,7 @@ export const iconList = [
   { label: 'circle-warning-full', icon: PiWarningCircleFill },
   { label: 'users', icon: LuUsers },
   { label: 'pencil', icon: LuPencil },
+  { label: 'loader-circle', icon: LuLoaderCircle },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];
