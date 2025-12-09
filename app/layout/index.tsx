@@ -19,9 +19,9 @@ function Layout({ children }: PropsWithChildren) {
       <TitleBar />
       <Sidebar.Provider>
         <LayoutSidebar />
-        <Sidebar.Inset className="h-(--available-height) p-4">
+        <Sidebar.Inset className="h-(--available-height)">
           <Header />
-          {children}
+          <section className="flex flex-col gap-4 p-6">{children}</section>
         </Sidebar.Inset>
       </Sidebar.Provider>
     </div>
