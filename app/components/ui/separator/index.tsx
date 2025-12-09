@@ -1,0 +1,20 @@
+import { Separator as SeparatorPrimitive } from 'radix-ui';
+
+import cn from '@app/utils/cn';
+
+function Separator({ className, orientation = 'horizontal', decorative = true, ...props }: SeparatorPrimitive.SeparatorProps) {
+  return (
+    <SeparatorPrimitive.Root
+      data-slot="separator"
+      decorative={decorative}
+      orientation={orientation}
+      className={cn(
+        'bg-border shrink-0 data-[orientation=horizontal]:h-px data-[orientation=vertical]:h-full data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-px',
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+export default Separator;
