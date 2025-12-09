@@ -1,9 +1,16 @@
 import { createFileRoute } from '@tanstack/react-router';
 
+import DataTable from '@app/components/data-table';
+
 export const Route = createFileRoute('/_main/dashboard')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return <div>Hello "/_main/dashboard"!</div>;
+  return (
+    <DataTable
+      data={[]}
+      columns={[]}
+    />
+  );
 }
