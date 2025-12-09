@@ -1,75 +1,19 @@
 @import "tailwindcss";
 @import "./font/index.css";
-
-@plugin "daisyui" {
-  themes: light --default, dark --prefersdark;
-}
+@import "./utilites.css";
+@import "./shadcn.css";
 
 @theme {
   --font-poppins: "Poppins", sans-serif;
-}
-
-@utility webkit-draggable {
-  -webkit-app-region: drag;
-}
-
-@utility webkit-no-draggable {
-  -webkit-app-region: no-drag;
-}
-
-@utility z-header {
-  z-index: 200;
-}
-
-@utility z-sidebar {
-  z-index: 201;
-}
-
-@utility z-popover-elements {
-  z-index: 202;
-}
-
-@utility z-popover-overlay {
-  z-index: 203;
-}
-
-@utility z-popover-content {
-  z-index: 204;
-}
-
-@utility disable-interactions {
-  pointer-events: none;
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-@utility badge{
-  white-space: nowrap;
 }
 
 html {
   font-family: var(--font-poppins);
 }
 
-@theme {
-  --animate-slide-in-right: slide-in-right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  --animate-slide-out-right: slide-out-right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes slide-in-right {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-@keyframes slide-out-right {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(100%);
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
 }

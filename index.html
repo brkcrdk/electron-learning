@@ -1,13 +1,12 @@
 <!doctype html>
-<html data-theme="light">
+<html class="light">
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="./app/styles/global.css" />
     <script>
     (async () => {
-        const theme = await window.store.getTheme();
-        console.log(theme);
-        document.documentElement.setAttribute('data-theme', theme.id);
+        // const theme = await window.store.getTheme();
+        // document.documentElement.classList.add(theme.id);
       })();
     </script>
   </head>
