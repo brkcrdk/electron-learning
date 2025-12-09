@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as MainRouteImport } from './routes/_main'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as MainRouteCRouteImport } from './routes/_main/route-c'
 import { Route as MainDashboardRouteImport } from './routes/_main/dashboard'
 import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
@@ -31,11 +30,6 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
-const MainRouteCRoute = MainRouteCRouteImport.update({
-  id: '/route-c',
-  path: '/route-c',
-  getParentRoute: () => MainRoute,
 } as any)
 const MainDashboardRoute = MainDashboardRouteImport.update({
   id: '/dashboard',
@@ -64,7 +58,6 @@ export interface FileRoutesByFullPath {
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
   '/dashboard': typeof MainDashboardRoute
-  '/route-c': typeof MainRouteCRoute
   '/users': typeof MainUsersIndexRoute
 }
 export interface FileRoutesByTo {
@@ -73,7 +66,6 @@ export interface FileRoutesByTo {
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
   '/dashboard': typeof MainDashboardRoute
-  '/route-c': typeof MainRouteCRoute
   '/users': typeof MainUsersIndexRoute
 }
 export interface FileRoutesById {
@@ -84,28 +76,13 @@ export interface FileRoutesById {
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/signup': typeof AuthSignupRoute
   '/_main/dashboard': typeof MainDashboardRoute
-  '/_main/route-c': typeof MainRouteCRoute
   '/_main/users/': typeof MainUsersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/logout'
-    | '/login'
-    | '/signup'
-    | '/dashboard'
-    | '/route-c'
-    | '/users'
+  fullPaths: '/' | '/logout' | '/login' | '/signup' | '/dashboard' | '/users'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/logout'
-    | '/login'
-    | '/signup'
-    | '/dashboard'
-    | '/route-c'
-    | '/users'
+  to: '/' | '/logout' | '/login' | '/signup' | '/dashboard' | '/users'
   id:
     | '__root__'
     | '/'
@@ -114,7 +91,6 @@ export interface FileRouteTypes {
     | '/_auth/login'
     | '/_auth/signup'
     | '/_main/dashboard'
-    | '/_main/route-c'
     | '/_main/users/'
   fileRoutesById: FileRoutesById
 }
@@ -149,13 +125,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_main/route-c': {
-      id: '/_main/route-c'
-      path: '/route-c'
-      fullPath: '/route-c'
-      preLoaderRoute: typeof MainRouteCRouteImport
-      parentRoute: typeof MainRoute
-    }
     '/_main/dashboard': {
       id: '/_main/dashboard'
       path: '/dashboard'
@@ -189,13 +158,11 @@ declare module '@tanstack/react-router' {
 
 interface MainRouteChildren {
   MainDashboardRoute: typeof MainDashboardRoute
-  MainRouteCRoute: typeof MainRouteCRoute
   MainUsersIndexRoute: typeof MainUsersIndexRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
   MainDashboardRoute: MainDashboardRoute,
-  MainRouteCRoute: MainRouteCRoute,
   MainUsersIndexRoute: MainUsersIndexRoute,
 }
 
