@@ -1,13 +1,14 @@
 <!doctype html>
-<html class="light" style="color-scheme: light;">
+<html>
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="./app/styles/global.css" />
     <script>
     (async () => {
         const theme = await window.store.getTheme();
-        document.documentElement.classList.add(theme.id);
-        document.documentElement.style.colorScheme = theme.id;
+        console.log(theme)
+        // document.documentElement.classList.add(theme.id);
+        // document.documentElement.style.colorScheme = theme.id;
       })();
     </script>
   </head>
