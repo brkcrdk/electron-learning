@@ -1,7 +1,7 @@
 import Sidebar from '@app/components/ui/sidebar';
 
-import Content from './content';
 import Header from './header';
+import SidebarItems from './sidebar-items';
 
 function LayoutSidebar() {
   return (
@@ -10,7 +10,7 @@ function LayoutSidebar() {
       className="h-(--available-height) mt-12"
     >
       <Header />
-      <Content />
+      <SidebarItems />
     </Sidebar>
   );
 }
