@@ -9,11 +9,9 @@ import {
   type TableOptions,
 } from '@tanstack/react-table';
 
-// import TableBody from './table-body';
+// import TableFooter, { type TablePaginationProps } from './table-footer';
 import TableBody from './table-body';
 import TableEmptyState, { type TableEmptyStateProps } from './table-empty-state';
-// import TableFooter, { type TablePaginationProps } from './table-footer';
-// import TableHead from './table-head';
 import TableHead from './table-head';
 import TableHeader from './table-header';
 import type { TableActionsProps } from './table-header/table-actions';
@@ -120,7 +118,6 @@ function MainTable<T>({
   return (
     <div
       aria-disabled={isDisabled}
-      // className="group/table rounded-box border-base-content/5 bg-base-100 flex w-full flex-col gap-5 overflow-hidden border p-4"
       className="group/table flex flex-col gap-4"
     >
       <TableHeader
@@ -145,10 +142,6 @@ function MainTable<T>({
           )}
         </Table>
       </div>
-      {/* {table.getRowModel().rows.length > 0 ? (
-      ) : (
-        <TableEmptyState {...tableEmptyStateProps} />
-      )} */}
     </div>
   );
 }

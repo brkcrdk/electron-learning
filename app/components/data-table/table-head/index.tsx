@@ -1,9 +1,9 @@
-import { flexRender, type Table as TableType } from '@tanstack/react-table';
+import { type Table as TableType } from '@tanstack/react-table';
 
 import Table from '@app/components/ui/table';
 
 import { type SortingChangeStateProps } from '../main-table';
-// import RowItem from './RowItem';
+import RowItem from './row-item';
 
 interface Props<T> {
   table: TableType<T>;
@@ -16,7 +16,13 @@ function TableHead<T>({ table, onSortingChange }: Props<T>) {
       {table.getHeaderGroups().map(headerGroup => (
         <Table.Row key={headerGroup.id}>
           {headerGroup.headers.map(header => {
-            return <Table.Head key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</Table.Head>;
+            return (
+              <RowItem
+                key={header.id}
+                header={header}
+                onSortingChange={onSortingChange}
+              />
+            );
           })}
         </Table.Row>
       ))}
