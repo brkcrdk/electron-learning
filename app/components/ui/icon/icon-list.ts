@@ -7,6 +7,7 @@ import {
   LuArrowLeft,
   LuArrowRight,
   LuChevronDown,
+  LuChevronRight,
   LuX,
   LuLogOut,
   LuUser,
@@ -17,6 +18,7 @@ import {
   LuPencil,
   LuLoaderCircle,
 } from 'react-icons/lu';
+import { MdMoreHoriz } from 'react-icons/md';
 import { PiWarningCircleFill } from 'react-icons/pi';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
 import { TbLayoutSidebarLeftExpand } from 'react-icons/tb';
@@ -33,6 +35,8 @@ export const iconList = [
   { label: 'arrow-up', icon: LuArrowUp },
   { label: 'arrow-down', icon: LuArrowDown },
   { label: 'chevron-down', icon: LuChevronDown },
+  { label: 'chevron-right', icon: LuChevronRight },
+  { label: 'more-horizontal', icon: MdMoreHoriz },
   { label: 'close', icon: LuX },
   { label: 'sidebar-expand', icon: TbLayoutSidebarLeftExpand },
   { label: 'logout', icon: LuLogOut },
