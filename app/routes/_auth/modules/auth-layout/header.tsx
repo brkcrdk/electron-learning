@@ -1,3 +1,4 @@
+import Card from '@app/components/ui/card';
 import Icon from '@app/components/ui/icon';
 
 interface Props {
@@ -7,16 +8,14 @@ interface Props {
 
 function Header({ title, description }: Props) {
   return (
-    <div className="flex flex-col items-center gap-3 text-center">
-      <div className="bg-accent/20 rounded-full p-4">
-        <Icon
-          name="shield-check"
-          className="text-accent size-8"
-        />
-      </div>
-      <h1 className="card-title text-2xl">{title}</h1>
-      <p className="text-base-content/70 text-sm leading-relaxed">{description}</p>
-    </div>
+    <Card.Header className="place-items-center gap-4 text-center">
+      <Icon
+        name="shield-check"
+        className="size-10"
+      />
+      <Card.Title>{title}</Card.Title>
+      <Card.Description>{description}</Card.Description>
+    </Card.Header>
   );
 }
 

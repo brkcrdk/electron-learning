@@ -6,7 +6,7 @@ import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import Button from '@app/components/ui/button';
-import Card from '@app/components/ui/card';
+import Field from '@app/components/ui/field';
 
 import AuthLayout from './modules/auth-layout';
 import type { LoginFormInputsProps } from './modules/form-inputs';
@@ -56,14 +56,23 @@ function RouteComponent() {
     mode: 'onSubmit',
   });
 
-  // async function onSubmit(data: LoginFormInputsProps) {
-  //   await mutateAsync(data);
-  // }
+  async function onSubmit(data: LoginFormInputsProps) {
+    // await mutateAsync(data);
+    console.log(data);
+  }
 
   return (
     <AuthLayout actionMode="login">
       <FormProvider {...form}>
-        <FormInputs mode="login" />
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          id="login-form"
+        >
+          <Field.Group>
+            <FormInputs mode="login" />
+            <Button type="submit">Giriş Yap</Button>
+          </Field.Group>
+        </form>
       </FormProvider>
     </AuthLayout>
   );

@@ -29,10 +29,10 @@ function AuthLayout({ children, actionMode }: Props) {
       <section className="flex min-h-svh w-full items-center justify-center p-6">
         <div className="flex flex-col gap-6">
           <Card className="min-w-100">
-            <Card.Header>
-              <Card.Title>{actionModeTitles[actionMode].title}</Card.Title>
-              <Card.Description>{actionModeTitles[actionMode].description}</Card.Description>
-            </Card.Header>
+            <Header
+              title={actionModeTitles[actionMode].title}
+              description={actionModeTitles[actionMode].description}
+            />
             <Card.Content>{children}</Card.Content>
           </Card>
         </div>

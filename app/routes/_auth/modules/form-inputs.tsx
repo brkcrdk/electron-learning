@@ -1,8 +1,8 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
+import InputField from '@app/components/form-fields/input-field';
+import PasswordField from '@app/components/form-fields/password-field';
 import Field from '@app/components/ui/field';
-import Input from '@app/components/ui/input';
-import PasswordInput from '@app/components/ui/password-input';
 import { emailValidation, passwordValidation } from '@app/utils/form-validations';
 
 import type { AuthLayoutMode } from './auth-layout';
@@ -16,6 +16,7 @@ export interface SignupFormInputsProps {
   email: string;
   password: string;
   confirmPassword: string;
+  name: string;
 }
 
 interface Props {
@@ -32,31 +33,29 @@ function FormInputs({ mode }: Props) {
   });
 
   return (
-    <form>
-      <Field.Group>
-        <Field>
-          <Field.Label htmlFor="email">Email</Field.Label>
-          <Input
-            id="email"
-            placeholder="example@example.com"
-          />
-        </Field>
-        <Field>
-          <Field.Label htmlFor="password">Şifre</Field.Label>
-          <PasswordInput
-            inputProps={{
-              id: 'password',
-              placeholder: '********',
-            }}
-          />
-        </Field>
-      </Field.Group>
-      {/* <Controller
+    <>
+      {mode === 'signup' && (
+        <Controller
+          control={control}
+          name="name"
+          rules={{ required: 'Lütfen adınız ve soyadınızı giriniz' }}
+          render={({ field, fieldState }) => (
+            <InputField
+              error={fieldState.error?.message}
+              label="Adınız ve Soyadınız"
+              id="name"
+              placeholder="Adınız ve Soyadınız"
+              {...field}
+            />
+          )}
+        />
+      )}
+      <Controller
         control={control}
         name="email"
         rules={emailValidation}
         render={({ field, fieldState }) => (
-          <Input
+          <InputField
             error={fieldState.error?.message}
             label="E-posta"
             id="email"
@@ -65,25 +64,22 @@ function FormInputs({ mode }: Props) {
           />
         )}
       />
-
       <Controller
         control={control}
         name="password"
         rules={passwordValidation}
         render={({ field, fieldState }) => (
-          <PasswordInput
+          <PasswordField
             error={fieldState.error?.message}
             label="Şifre"
             inputProps={{
-              placeholder: '********',
               id: 'password',
-              value: field.value,
-              onChange: field.onChange,
+              placeholder: '********',
+              ...field,
             }}
           />
         )}
       />
-
       {mode === 'signup' && (
         <Controller
           control={control}
@@ -98,7 +94,7 @@ function FormInputs({ mode }: Props) {
             },
           }}
           render={({ field, fieldState }) => (
-            <PasswordInput
+            <PasswordField
               label="Şifre (Tekrar)"
               error={fieldState.error?.message}
               inputProps={{
@@ -109,8 +105,8 @@ function FormInputs({ mode }: Props) {
             />
           )}
         />
-      )} */}
-    </form>
+      )}
+    </>
   );
 }
 
