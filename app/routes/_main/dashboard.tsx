@@ -35,23 +35,25 @@ function RouteComponent() {
           ),
         },
       ]}
-      data={[
-        {
-          id: 1,
-          name: 'John Doe',
-          age: 20,
-        },
-        {
-          id: 2,
-          name: 'Jane Doe',
-          age: 21,
-        },
-        {
-          id: 3,
-          name: 'John Doe',
-          age: 20,
-        },
-      ]}
+      data={
+        [
+          // {
+          //   id: 1,
+          //   name: 'John Doe',
+          //   age: 20,
+          // },
+          // {
+          //   id: 2,
+          //   name: 'Jane Doe',
+          //   age: 21,
+          // },
+          // {
+          //   id: 3,
+          //   name: 'John Doe',
+          //   age: 20,
+          // },
+        ]
+      }
       columns={[
         {
           header: 'ID',

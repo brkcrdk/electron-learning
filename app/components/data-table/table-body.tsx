@@ -1,0 +1,56 @@
+import { type Table as TableType, flexRender } from '@tanstack/react-table';
+
+import Table from '@app/components/ui/table';
+import cd from '@app/utils/cd';
+import cn from '@app/utils/cn';
+
+interface Props<T> {
+  table: TableType<T>;
+}
+
+function TableBody<T>({ table }: Props<T>) {
+  /**
+   * NOTE: Table instance'ını react-compiler optimize ettiği için `row selection` işlemlerindeki
+   * güncellemelerde row checkboxları güncellenmiyordu. React-compilerı bu tablo bodysi için optimize
+   * etmekten çıkartıyoruz. Böylece selection işlemlerinden sonra ui istediğimiz tepkiyi verebiliyor.
+   */
+  'use no memo';
+
+  return (
+    <Table.Body>
+      {table.getRowModel().rows.map(row => (
+        <Table.Row
+          key={row.id}
+          // data-selected={cd(row.getIsSelected())}
+          // className="group/tr hover:bg-base-300"
+        >
+          {row.getVisibleCells().map((cell, index) => {
+            // const { meta } = table._getColumnDefs()[index];
+
+            return (
+              <Table.Cell
+                // /**
+                //  * NOTE: align propertysi bir süre sonra geçersizleşecek bu nedenle ilerleyen
+                //  * zamanlarda bu davranışı stillendirme ile yapmak zorundayız.
+                //  *
+                //  * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/td
+                //  */
+                // align={meta?.centeredColumn ? 'center' : 'justify'}
+                key={cell.id}
+                // data-pinned={cd(cell.column.getIsPinned() === 'left')}
+                // style={{
+                //   left: cell.column.getIsPinned() === 'left' ? cell.column.getStart() : undefined,
+                //   width: cell.column.getSize(),
+                // }}
+                // className={cn(meta?.className)}
+              >
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </Table.Cell>
+            );
+          })}
+        </Table.Row>
+      ))}
+    </Table.Body>
+  );
+}
+export default TableBody;

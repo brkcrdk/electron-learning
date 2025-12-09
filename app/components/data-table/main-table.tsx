@@ -10,7 +10,8 @@ import {
 } from '@tanstack/react-table';
 
 // import TableBody from './table-body';
-// import TableEmptyState, { type TableEmptyStateProps } from './table-empty-state';
+import TableBody from './table-body';
+import TableEmptyState, { type TableEmptyStateProps } from './table-empty-state';
 // import TableFooter, { type TablePaginationProps } from './table-footer';
 // import TableHead from './table-head';
 import TableHead from './table-head';
@@ -56,7 +57,7 @@ export interface TableProps<T> {
   sortingProps?: SortingProps;
   rowSelectionProps?: RowSelectionProps<T>;
   pinnedColumns?: string[];
-  // tableEmptyStateProps?: TableEmptyStateProps;
+  tableEmptyStateProps?: TableEmptyStateProps;
   isLoading?: boolean;
   isDisabled?: boolean;
   /**
@@ -74,7 +75,7 @@ function MainTable<T>({
   tableActions,
   // paginationProps,
   isDisabled,
-  // tableEmptyStateProps,
+  tableEmptyStateProps,
   pinnedColumns,
   tableOptions,
   sortingProps = {
@@ -136,23 +137,19 @@ function MainTable<T>({
               /> */}
           {/* <TableBody table={table} /> */}
           {/* </table> */}
+
           <Table>
             <TableHead
               table={table}
               onSortingChange={sortingProps.onSortingChange}
             />
+            <TableBody table={table} />
           </Table>
 
           {/* {paginationProps && <TableFooter {...paginationProps} />} */}
         </div>
       ) : (
-        <table className="group-aria-disabled/table:pointer-events-none group-aria-disabled/table:opacity-30">
-          <tbody>
-            <tr>
-              <td colSpan={1}>{/* <TableEmptyState {...tableEmptyStateProps} /> */}</td>
-            </tr>
-          </tbody>
-        </table>
+        <TableEmptyState {...tableEmptyStateProps} />
       )}
     </div>
   );
