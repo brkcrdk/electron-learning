@@ -13,10 +13,12 @@ import {
 // import TableEmptyState, { type TableEmptyStateProps } from './table-empty-state';
 // import TableFooter, { type TablePaginationProps } from './table-footer';
 // import TableHead from './table-head';
+import TableHead from './table-head';
 import TableHeader from './table-header';
 import type { TableActionsProps } from './table-header/table-actions';
 import { type TableSearchProps } from './table-header/table-search-bar';
 import useTableColumns from './use-table-columns';
+import Table from '../ui/table';
 
 export type RowSelectionProps<T> =
   | {
@@ -118,7 +120,7 @@ function MainTable<T>({
     <div
       aria-disabled={isDisabled}
       // className="group/table rounded-box border-base-content/5 bg-base-100 flex w-full flex-col gap-5 overflow-hidden border p-4"
-      className="group/table"
+      className="group/table flex flex-col gap-4"
     >
       <TableHeader
         tableTitle={tableTitle}
@@ -127,18 +129,22 @@ function MainTable<T>({
       />
 
       {table.getRowModel().rows.length > 0 ? (
-        <>
-          <div className="overflow-auto">
-            <table className="table group-aria-disabled/table:pointer-events-none group-aria-disabled/table:opacity-30">
-              {/* <TableHead
+        <div className="overflow-hidden rounded-md border">
+          {/* <TableHead
                 table={table}
                 onSortingChange={sortingProps.onSortingChange}
               /> */}
-              {/* <TableBody table={table} /> */}
-            </table>
-          </div>
+          {/* <TableBody table={table} /> */}
+          {/* </table> */}
+          <Table>
+            <TableHead
+              table={table}
+              onSortingChange={sortingProps.onSortingChange}
+            />
+          </Table>
+
           {/* {paginationProps && <TableFooter {...paginationProps} />} */}
-        </>
+        </div>
       ) : (
         <table className="group-aria-disabled/table:pointer-events-none group-aria-disabled/table:opacity-30">
           <tbody>
