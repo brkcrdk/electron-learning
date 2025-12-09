@@ -13,9 +13,9 @@ import {
 // import TableEmptyState, { type TableEmptyStateProps } from './table-empty-state';
 // import TableFooter, { type TablePaginationProps } from './table-footer';
 // import TableHead from './table-head';
-// import TableHeader from './table-header';
-// import { type TableSearchProps } from './table-header/table-search-bar';
-import type { TableActionsProps } from './table-types';
+import TableHeader from './table-header';
+import type { TableActionsProps } from './table-header/table-actions';
+import { type TableSearchProps } from './table-header/table-search-bar';
 import useTableColumns from './use-table-columns';
 
 export type RowSelectionProps<T> =
@@ -48,7 +48,7 @@ export interface TableProps<T> {
   data: T[];
   columns: ColumnDef<T>[];
   tableTitle?: string;
-  // searchProps?: TableSearchProps;
+  searchProps?: TableSearchProps;
   tableActions?: TableActionsProps[];
   // paginationProps?: TablePaginationProps;
   sortingProps?: SortingProps;
@@ -68,7 +68,7 @@ function MainTable<T>({
   columns,
   data,
   tableTitle,
-  // searchProps,
+  searchProps,
   tableActions,
   // paginationProps,
   isDisabled,
@@ -118,13 +118,13 @@ function MainTable<T>({
     <div
       aria-disabled={isDisabled}
       // className="group/table rounded-box border-base-content/5 bg-base-100 flex w-full flex-col gap-5 overflow-hidden border p-4"
-      className="group/table overflow-hidden rounded-md border p-4"
+      className="group/table"
     >
-      {/* <TableHeader
+      <TableHeader
         tableTitle={tableTitle}
         searchProps={searchProps}
         tableActions={tableActions}
-      /> */}
+      />
 
       {table.getRowModel().rows.length > 0 ? (
         <>

@@ -30,3 +30,4 @@ function Button({ className, variant, size, asChild = false, isLoading = false, 
 }
 
 export default Button;
+export { buttonVariants };
