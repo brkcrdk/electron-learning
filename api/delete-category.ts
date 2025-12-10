@@ -2,13 +2,13 @@ import { eq } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
 import { db } from '@db/client';
-import { users, type User } from '@db/schema';
+import { category, type Category } from '@db/schema';
 
 import { getCurrentUser } from './user-session';
 import type { ApiResponseProps } from '../types/api-response-types';
 
-function deleteUserHandler() {
-  ipcMain.handle('delete-user', async (_, userId: User['id']): ApiResponseProps<string> => {
+function deleteCategoryHandler() {
+  ipcMain.handle('delete-category', async (_, categoryId: Category['id']): ApiResponseProps<string> => {
     try {
       const currentUser = getCurrentUser();
 
@@ -26,24 +26,17 @@ function deleteUserHandler() {
         };
       }
 
-      if (currentUser.id === userId) {
-        return {
-          success: false,
-          error: 'Kendinizi silemezsiniz.',
-        };
-      }
-
-      await db.delete(users).where(eq(users.id, userId));
+      await db.delete(category).where(eq(category.id, categoryId));
 
       return {
         success: true,
-        data: 'Kullanıcı silindi.',
+        data: 'Kategori silindi.',
       };
     } catch (error) {
-      console.error('delete user error', error);
+      console.error('delete category error', error);
       throw error;
     }
   });
 }
 
-export default deleteUserHandler;
+export default deleteCategoryHandler;

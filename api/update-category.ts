@@ -1,0 +1,55 @@
+import { eq, sql } from 'drizzle-orm';
+import { ipcMain } from 'electron';
+import type { ApiResponseProps } from 'types/api-response-types';
+
+import { db } from '@db/client';
+import { category, type NewCategoryPayload } from '@db/schema';
+
+import { getCurrentUser } from './user-session';
+
+function updateCategoryHandler() {
+  ipcMain.handle('update-category', async (_, data: NewCategoryPayload): ApiResponseProps<string> => {
+    try {
+      const currentUser = getCurrentUser();
+
+      if (!currentUser) {
+        return {
+          success: false,
+          error: 'Giriş yapmış kullanıcı bulunamadı.',
+        };
+      }
+
+      if (currentUser.role === 'user') {
+        return {
+          success: false,
+          error: 'Bu işlemi yapmak için yetkiniz yok.',
+        };
+      }
+
+      if (!data.id) {
+        return {
+          success: false,
+          error: 'Kategori ID bulunamadı.',
+        };
+      }
+
+      await db
+        .update(category)
+        .set({
+          ...data,
+          updatedAt: sql`(unixepoch())`,
+        })
+        .where(eq(category.id, data.id));
+
+      return {
+        success: true,
+        data: 'Kategori güncellendi.',
+      };
+    } catch (error) {
+      console.error('update category error', error);
+      throw error;
+    }
+  });
+}
+
+export default updateCategoryHandler;

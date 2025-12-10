@@ -28,6 +28,8 @@ const apiEventList = {
   // Category services
   getCategoryList: (): ApiResponseProps<Category[]> => ipcRenderer.invoke('get-category-list'),
   createCategory: (data: NewCategoryPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-category', data),
+  updateCategory: (data: NewCategoryPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-category', data),
+  deleteCategory: (data: Category['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-category', data),
 } as const;
 
 export default apiEventList;
