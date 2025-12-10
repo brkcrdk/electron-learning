@@ -1,39 +1,39 @@
 import type { ColumnDef } from '@tanstack/react-table';
 
 import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
-import cn from '@app/utils/cn';
+import Badge, { type BadgeVariantTypes } from '@app/components/ui/badge';
 import type { User } from '@db/schema';
 
-import EditUser from '../modules/edit-user';
+// import EditUser from '../modules/edit-user';
 
 interface ColumnBadgeProps {
   label: string;
-  badgeType: string;
+  badgeType: BadgeVariantTypes;
 }
 
 const userRoles: Record<User['roles'], ColumnBadgeProps> = {
   'super-admin': {
     label: 'Super Admin',
-    badgeType: 'badge-success',
+    badgeType: 'default',
   },
   admin: {
     label: 'Admin',
-    badgeType: 'badge-primary',
+    badgeType: 'secondary',
   },
   user: {
     label: 'User',
-    badgeType: 'badge-default',
+    badgeType: 'default',
   },
 };
 
 const userStatus: Record<User['status'], ColumnBadgeProps> = {
   active: {
     label: 'Aktif',
-    badgeType: 'badge-success',
+    badgeType: 'default',
   },
   passive: {
     label: 'Pasif',
-    badgeType: 'badge-default',
+    badgeType: 'destructive',
   },
 };
 
@@ -55,7 +55,7 @@ function useColumns(): ColumnDef<User>[] {
       accessorKey: 'roles',
       cell: info => info.getValue(),
       accessorFn: ({ roles }) => {
-        return <span className={cn('badge badge-soft', userRoles[roles].badgeType)}>{userRoles[roles].label}</span>;
+        return <Badge variant={userRoles[roles].badgeType}>{userRoles[roles].label}</Badge>;
       },
       meta: {
         centeredColumn: true,
@@ -66,7 +66,7 @@ function useColumns(): ColumnDef<User>[] {
       accessorKey: 'status',
       cell: info => info.getValue(),
       accessorFn: ({ status }) => {
-        return <span className={cn('badge badge-soft', userStatus[status].badgeType)}>{userStatus[status].label}</span>;
+        return <Badge variant={userStatus[status].badgeType}>{userStatus[status].label}</Badge>;
       },
       meta: {
         centeredColumn: true,
@@ -95,18 +95,18 @@ function useColumns(): ColumnDef<User>[] {
         centeredColumn: true,
       },
     },
-    {
-      header: 'İşlemler',
-      accessorKey: 'actions',
-      cell: info => info.getValue(),
-      accessorFn: ({ id }) => {
-        return <EditUser />;
-      },
-      enableSorting: false,
-      meta: {
-        centeredColumn: true,
-      },
-    },
+    // {
+    //   header: 'İşlemler',
+    //   accessorKey: 'actions',
+    //   cell: info => info.getValue(),
+    //   accessorFn: ({ id }) => {
+    //     return <EditUser />;
+    //   },
+    //   enableSorting: false,
+    //   meta: {
+    //     centeredColumn: true,
+    //   },
+    // },
   ];
 }
 
