@@ -12,7 +12,7 @@ interface ColumnBadgeProps {
   badgeType: BadgeVariantTypes;
 }
 
-const userRoles: Record<User['roles'], ColumnBadgeProps> = {
+const userRoles: Record<User['role'], ColumnBadgeProps> = {
   'super-admin': {
     label: 'Super Admin',
     badgeType: 'default',
@@ -55,8 +55,8 @@ function useColumns(): ColumnDef<User>[] {
       header: 'Rol',
       accessorKey: 'roles',
       cell: info => info.getValue(),
-      accessorFn: ({ roles }) => {
-        return <Badge variant={userRoles[roles].badgeType}>{userRoles[roles].label}</Badge>;
+      accessorFn: ({ role }) => {
+        return <Badge variant={userRoles[role].badgeType}>{userRoles[role].label}</Badge>;
       },
       meta: {
         centeredColumn: true,
