@@ -1,5 +1,7 @@
 import dayjs from '@app/utils/dayjs';
 
+import Tooltip from '../ui/tooltip';
+
 interface Props {
   date: Date;
 }
@@ -18,12 +20,12 @@ interface Props {
  */
 function RelativeDateCell({ date }: Props) {
   return (
-    <div
-      className="tooltip whitespace-nowrap"
-      data-tip={dayjs(date).format('DD.MM.YYYY HH:mm')}
-    >
-      {dayjs(date).fromNow()}
-    </div>
+    <Tooltip>
+      <Tooltip.Trigger>{dayjs(date).fromNow()}</Tooltip.Trigger>
+      <Tooltip.Content>
+        <p>{dayjs(date).format('DD.MM.YYYY HH:mm')}</p>
+      </Tooltip.Content>
+    </Tooltip>
   );
 }
 export default RelativeDateCell;
