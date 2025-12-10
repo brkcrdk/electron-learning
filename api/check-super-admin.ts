@@ -27,10 +27,7 @@ function checkSuperAdminHandler() {
     } catch (error) {
       console.error('check super admin error', error);
 
-      throw {
-        success: false,
-        error: 'Super admin kontrolü yapılırken bir hata gerçekleşti.',
-      };
+      throw error;
     }
   });
 }

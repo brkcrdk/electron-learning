@@ -14,10 +14,7 @@ function logoutHandler() {
       };
     } catch (error) {
       console.error('logout error', error);
-      throw {
-        success: false,
-        error: 'Çıkış yapılırken bir hata gerçekleşti.',
-      };
+      throw error;
     }
   });
 }

@@ -24,10 +24,7 @@ function getCurrentUserHandler() {
       };
     } catch (error) {
       console.error('get current user error', error);
-      throw {
-        success: false,
-        error: 'Aktif kullanıcıyı almaya çalışırken bir hata gerçekleşti.',
-      };
+      throw error;
     }
   });
 }

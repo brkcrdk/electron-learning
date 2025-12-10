@@ -34,10 +34,7 @@ function getUserListHandler() {
       };
     } catch (error) {
       console.error('get user list error', error);
-      throw {
-        success: false,
-        error: 'Kullanıcı listesini almaya çalışırken bir hata gerçekleşti.',
-      };
+      throw error;
     }
   });
 }

@@ -30,7 +30,7 @@ function createSuperAdminHandler() {
       };
     } catch (error) {
       console.error('create super admin error', error);
-      throw 'Super admin oluşturulurken bir hata gerçekleşti.';
+      throw error;
     }
   });
 }

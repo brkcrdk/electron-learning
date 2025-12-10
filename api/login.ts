@@ -47,10 +47,7 @@ function loginHandler() {
       };
     } catch (error) {
       console.error('login error', error);
-      throw {
-        success: false,
-        error: 'Kullanıcı girişi yapılırken bir hata gerçekleşti.',
-      };
+      throw error;
     }
   });
 }
