@@ -1,4 +1,4 @@
-import { desc } from 'drizzle-orm';
+import { desc, getTableColumns, sql } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
 import { db } from '@db/client';
@@ -26,7 +26,13 @@ function getCategoryListHandler() {
         };
       }
 
-      const categoryList = await db.select().from(category).orderBy(desc(category.createdAt));
+      const categoryList = await db
+        .select({
+          ...getTableColumns(category),
+          hasChildren: sql<boolean>`EXISTS(SELECT 1 FROM ${category} WHERE ${category.parentId} = ${category.id})`.as('hasChildren'),
+        })
+        .from(category)
+        .orderBy(desc(category.createdAt));
 
       return {
         success: true,
