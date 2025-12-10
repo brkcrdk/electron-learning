@@ -1,6 +1,7 @@
 import type { RowData } from '@tanstack/react-table';
 
 import MainTable, { type TableProps } from './main-table';
+import { type TableActionsProps } from './table-header/table-actions';
 import TableLoader from './table-loader';
 
 function DataTable<T>({ isLoading, ...props }: TableProps<T>) {
@@ -9,6 +10,7 @@ function DataTable<T>({ isLoading, ...props }: TableProps<T>) {
   return <MainTable {...props} />;
 }
 export default DataTable;
+export type { TableActionsProps };
 
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
