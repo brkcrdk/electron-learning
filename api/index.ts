@@ -1,4 +1,5 @@
 import checkSuperAdminHandler from './check-super-admin';
+import createCategoryHandler from './create-category';
 import createSuperAdminHandler from './create-super-admin';
 import createUserHandler from './create-user';
 import deleteUserHandler from './delete-user';
@@ -20,6 +21,7 @@ function registerApiHandlers() {
   updateUserHandler();
   deleteUserHandler();
   getCategoryListHandler();
+  createCategoryHandler();
 }
 
 export default registerApiHandlers;
