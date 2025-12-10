@@ -104,7 +104,7 @@ function useColumns(): ColumnDef<User>[] {
         return (
           <div className="flex items-center gap-2">
             <EditUser user={user} />
-            <DeleteUser />
+            <DeleteUser userId={user.id} />
           </div>
         );
       },
