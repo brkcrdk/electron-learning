@@ -1,4 +1,4 @@
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext, useFormState } from 'react-hook-form';
 
 import InputField from '@app/components/form-fields/input-field';
 import PasswordField from '@app/components/form-fields/password-field';
@@ -37,6 +37,15 @@ interface Props {
 
 function UserForm({ isSelfUpdate }: Props) {
   const { control } = useFormContext<UserFormInputs>();
+  const { isLoading } = useFormState({ control });
+
+  /**
+   * NOTE: Edit formunda formun başlangıç değerlerini promise ile render ediyoruz.
+   * Bu nedenle componentler render edildikten sonra verileri yükleneceği için bu sefer
+   * loglarda uncontrolled component warning'ı verir. Bu sorunu çözmek için bu şekilde
+   * kontrol ediyoruz.
+   */
+  if (isLoading) return null;
 
   return (
     <Field.Group>

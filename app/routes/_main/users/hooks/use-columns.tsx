@@ -4,7 +4,7 @@ import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
 import Badge, { type BadgeVariantTypes } from '@app/components/ui/badge';
 import type { User } from '@db/schema';
 
-import EditUser from '../modules/edit-user';
+import UserActions from '../modules/user-actions';
 
 interface ColumnBadgeProps {
   label: string;
@@ -100,7 +100,7 @@ function useColumns(): ColumnDef<User>[] {
       accessorKey: 'actions',
       cell: info => info.getValue(),
       accessorFn: user => {
-        return <EditUser user={user} />;
+        return <UserActions user={user} />;
       },
       enableSorting: false,
       meta: {
