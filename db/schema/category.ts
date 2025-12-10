@@ -6,6 +6,7 @@ export const category = sqliteTable(
   {
     id: integer('id').primaryKey({ autoIncrement: true }),
     name: text('name').notNull(),
+    slug: text('slug').notNull().unique(),
     description: text('description'),
     parentId: integer('parent_id'),
     hasChildren: integer('has_children', { mode: 'boolean' }).notNull().default(false),
