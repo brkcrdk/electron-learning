@@ -53,7 +53,10 @@ function NewUser() {
   return (
     <Drawer
       open={isOpen}
-      onOpenChange={setIsOpen}
+      onOpenChange={open => {
+        setIsOpen(open);
+        form.reset();
+      }}
     >
       <Drawer.Trigger>Kullanıcı Ekle</Drawer.Trigger>
       <Drawer.Content>
