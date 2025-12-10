@@ -2,16 +2,16 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import InputField from '@app/components/form-fields/input-field';
 import PasswordField from '@app/components/form-fields/password-field';
-import SelectField from '@app/components/form-fields/select-field';
+import SwitchField from '@app/components/form-fields/switch-field';
 import Field from '@app/components/ui/field';
+import Select from '@app/components/ui/select';
 import { emailValidation, passwordValidation } from '@app/utils/form-validations';
-import type { User } from '@db/schema';
 
 export interface UserFormInputs {
   name: string;
   email: string;
   password: string;
-  roles: User['roles'];
+  roles: { label: string; value: string };
   isActive: boolean;
 }
 
@@ -27,7 +27,7 @@ function UserForm() {
           rules={{ required: 'Adı Soyadı alanı zorunludur' }}
           render={({ field, fieldState }) => (
             <InputField
-              label="Adı Soyadı"
+              label="Kullanıcı adı soyadı:"
               placeholder="Adı Soyadı"
               error={fieldState.error?.message}
               {...field}
@@ -40,7 +40,7 @@ function UserForm() {
           rules={emailValidation}
           render={({ field, fieldState }) => (
             <InputField
-              label="E-posta"
+              label="Kullanıcı e-posta adresi:"
               placeholder="test@example.com"
               error={fieldState.error?.message}
               {...field}
@@ -53,7 +53,7 @@ function UserForm() {
           rules={passwordValidation}
           render={({ field, fieldState }) => (
             <PasswordField
-              label="Şifre"
+              label="Kullanıcı şifresi:"
               error={fieldState.error?.message}
               inputProps={{
                 placeholder: '********',
@@ -64,14 +64,35 @@ function UserForm() {
             />
           )}
         />
-        <SelectField
-          label="Rol"
-          placeholder="Rol seçiniz"
-          isMulti
-          options={[
-            { label: 'Admin', value: 'admin' },
-            { label: 'User', value: 'user' },
-          ]}
+        <Controller
+          control={control}
+          name="roles"
+          rules={{ required: 'Rol alanı zorunludur' }}
+          render={({ field, fieldState }) => (
+            <Select
+              label="Kullanıcı rolü:"
+              errorMessage={fieldState.error?.message}
+              options={[
+                { label: 'Admin', value: 'admin' },
+                { label: 'User', value: 'user' },
+              ]}
+              getOptionLabel={val => val.label}
+              getOptionValue={val => val.value}
+              {...field}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="isActive"
+          render={({ field, fieldState }) => (
+            <SwitchField
+              label="Kullanıcı aktiflik durumu:"
+              error={fieldState.error?.message}
+              checked={field.value}
+              onCheckedChange={field.onChange}
+            />
+          )}
         />
       </Field.Group>
     </>

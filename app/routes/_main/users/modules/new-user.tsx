@@ -12,7 +12,7 @@ function NewUser() {
       name: '',
       email: '',
       password: '',
-      roles: 'user',
+      roles: { label: 'User', value: 'user' },
       isActive: true,
     },
   });
