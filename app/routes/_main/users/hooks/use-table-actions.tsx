@@ -1,4 +1,4 @@
-import type { TableActionsProps } from '@app/components/ui/table';
+import type { TableActionsProps } from '@app/components/data-table';
 
 import NewUser from '../modules/new-user';
 
@@ -6,7 +6,6 @@ function useTableActions(): TableActionsProps[] {
   return [
     {
       actionId: 'add-user',
-      actionType: 'custom',
       actionElement: <NewUser />,
     },
   ];
