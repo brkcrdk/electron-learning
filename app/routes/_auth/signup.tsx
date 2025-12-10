@@ -38,11 +38,6 @@ function RouteComponent() {
     onSuccess: () => {
       navigate({ to: '/', replace: true });
     },
-    onError: error => {
-      toast.error(error.message, {
-        dismissible: false,
-      });
-    },
   });
 
   const form = useForm<SignupFormInputsProps>({
