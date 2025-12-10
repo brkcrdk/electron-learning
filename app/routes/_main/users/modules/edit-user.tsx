@@ -61,6 +61,16 @@ function EditUser({ user }: EditUserProps) {
             <UserForm isSelfUpdate={currentUser ? currentUser.id === user.id : false} />
           </form>
         </FormProvider>
+        <Drawer.Footer>
+          <Button
+            form="new-user-form"
+            type="submit"
+            // disabled={isPending}
+            // isLoading={isPending}
+          >
+            Kullanıcıyı Düzenle
+          </Button>
+        </Drawer.Footer>
       </Drawer.Content>
     </Drawer>
   );
