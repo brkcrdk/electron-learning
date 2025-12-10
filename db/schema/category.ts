@@ -9,7 +9,6 @@ export const category = sqliteTable(
     slug: text('slug').notNull().unique(),
     description: text('description'),
     parentId: integer('parent_id'),
-    hasChildren: integer('has_children', { mode: 'boolean' }).notNull().default(false),
     createdAt: integer('created_at', { mode: 'timestamp' })
       .notNull()
       .default(sql`(unixepoch())`),
@@ -26,5 +25,11 @@ export const category = sqliteTable(
   ]
 );
 
-export type Category = typeof category.$inferSelect;
+export type Category = typeof category.$inferSelect & {
+  /**
+   * NOTE: Bu değer veri tabanında saklanmaz. Category listesini alırken hesaplanır ve o sırada
+   * gönderilir.
+   */
+  hasChildren: boolean;
+};
 export type NewCategoryPayload = typeof category.$inferInsert;
