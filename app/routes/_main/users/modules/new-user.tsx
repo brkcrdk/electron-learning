@@ -9,9 +9,9 @@ import UserForm from './user-form';
 function NewUser() {
   const form = useForm<UserFormInputs>({
     defaultValues: {
-      name: '',
-      email: '',
-      password: '',
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      password: '12345678',
       roles: { label: 'User', value: 'user' },
       isActive: true,
     },
