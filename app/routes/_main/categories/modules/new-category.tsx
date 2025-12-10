@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
+import slugify from '@app/utils/slugify';
 
 import CategoryForm, { type CategoryFormInputs } from './category-form';
 
@@ -14,27 +15,26 @@ function NewCategory() {
 
   const queryClient = useQueryClient();
 
-  // const { mutateAsync, isPending } = useMutation({
-  //   mutationFn: (data: CategoryFormInputs) => {
-  //     // return window.electronAPI.createCategory({
-  //     //   name: data.name,
-  //     //   email: data.email,
-  //     //   password: data.password,
-  //     //   role: data.role.value,
-  //     //   status: data.isActive ? 'active' : 'passive',
-  //     // });
-  //   },
-  //   onSuccess: response => {
-  //     if (response.success) {
-  //       setIsOpen(false);
-  //       queryClient.invalidateQueries({ queryKey: ['user-list'] });
-  //     } else {
-  //       toast.error(response.error, {
-  //         dismissible: false,
-  //       });
-  //     }
-  //   },
-  // });
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: (data: CategoryFormInputs) => {
+      return window.electronAPI.createCategory({
+        name: data.name,
+        description: data.description,
+        slug: slugify(data.name),
+        parentId: null,
+      });
+    },
+    onSuccess: response => {
+      if (response.success) {
+        setIsOpen(false);
+        queryClient.invalidateQueries({ queryKey: ['user-list'] });
+      } else {
+        toast.error(response.error, {
+          dismissible: false,
+        });
+      }
+    },
+  });
 
   const form = useForm<CategoryFormInputs>({
     defaultValues: {
@@ -44,7 +44,7 @@ function NewCategory() {
   });
 
   function onSubmit(data: CategoryFormInputs) {
-    // mutateAsync(data);
+    mutateAsync(data);
   }
 
   return (
@@ -73,8 +73,8 @@ function NewCategory() {
           <Button
             form="new-category-form"
             type="submit"
-            // disabled={isPending}
-            // isLoading={isPending}
+            disabled={isPending}
+            isLoading={isPending}
           >
             Kategoriyi Ekle
           </Button>
