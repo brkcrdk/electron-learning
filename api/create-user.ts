@@ -13,10 +13,16 @@ function createUserHandler() {
       const currentUser = getCurrentUser();
 
       if (!currentUser) {
-        throw 'Giriş yapmış kullanıcı bulunamadı.';
+        return {
+          success: false,
+          error: 'Giriş yapmış kullanıcı bulunamadı.',
+        };
       }
       if (currentUser.roles === 'user') {
-        throw 'Bu işlemi yapmak için yetkiniz yok.';
+        return {
+          success: false,
+          error: 'Bu işlemi yapmak için yetkiniz yok.',
+        };
       }
 
       const hasUserWithSameEmail = await db.query.users.findFirst({
@@ -24,7 +30,10 @@ function createUserHandler() {
       });
 
       if (hasUserWithSameEmail) {
-        throw 'Bu e-posta adresiyle zaten bir kullanıcı var.';
+        return {
+          success: false,
+          error: 'Bu e-posta adresiyle zaten bir kullanıcı var.',
+        };
       }
 
       await db.insert(users).values(data);

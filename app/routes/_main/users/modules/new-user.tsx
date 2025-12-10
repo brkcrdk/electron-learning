@@ -25,15 +25,16 @@ function NewUser() {
         status: data.isActive ? 'active' : 'passive',
       });
     },
-    onSuccess: () => {
-      toast.success('Kullanıcı başarıyla oluşturuldu.');
-      setIsOpen(false);
-      queryClient.invalidateQueries({ queryKey: ['user-list'] });
-    },
-    onError: error => {
-      toast.error(error.message, {
-        dismissible: false,
-      });
+    onSuccess: response => {
+      if (response.success) {
+        toast.success(response.data);
+        setIsOpen(false);
+        queryClient.invalidateQueries({ queryKey: ['user-list'] });
+      } else {
+        toast.error(response.error, {
+          dismissible: false,
+        });
+      }
     },
   });
   const form = useForm<UserFormInputs>({
