@@ -1,6 +1,7 @@
 import type { ColumnDef, ColumnPinningState } from '@tanstack/react-table';
 
 import type { RowSelectionProps } from './main-table';
+import Checkbox from '../ui/checkbox';
 
 interface Props<T> {
   rowSelectionProps: RowSelectionProps<T>;
@@ -21,21 +22,21 @@ function useTableColumns<T>({ rowSelectionProps, columns, pinnedColumns }: Props
           enableResizing: false,
           enablePinning: true,
           meta: { centeredColumn: false },
-          header: ({ table }) => (
-            <input
-              type="checkbox"
-              checked={table.getIsAllRowsSelected()}
-              onChange={table.getToggleAllRowsSelectedHandler()}
-              className="checkbox"
-            />
-          ),
+          header: ({ table }) => {
+            const computedCheckedState = table.getIsSomeRowsSelected() ? 'indeterminate' : table.getIsAllRowsSelected();
+            return (
+              <Checkbox
+                className="border-accent-foreground/50"
+                checked={computedCheckedState}
+                onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+              />
+            );
+          },
           cell: ({ row }) => (
-            <input
-              type="checkbox"
+            <Checkbox
               checked={row.getIsSelected()}
-              onChange={row.getToggleSelectedHandler()}
               disabled={!row.getCanSelect()}
-              className="checkbox"
+              onCheckedChange={row.getToggleSelectedHandler()}
             />
           ),
         },
