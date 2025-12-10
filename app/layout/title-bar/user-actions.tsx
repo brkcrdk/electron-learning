@@ -5,7 +5,7 @@ import Button from '@app/components/ui/button';
 import Dropdown from '@app/components/ui/dropdown';
 import Icon from '@app/components/ui/icon';
 import type { IconListProps } from '@app/components/ui/icon/icon-list';
-import useCurrentUserQuery from '@app/services/use-current-user-query';
+import useCurrentUserQuery from '@app/hooks/use-current-user-query';
 
 interface DropdownItem {
   dropdownItemId: string;
