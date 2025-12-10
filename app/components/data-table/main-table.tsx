@@ -120,7 +120,7 @@ function MainTable<T>({
   return (
     <div
       aria-disabled={isDisabled}
-      className="group/table flex flex-col gap-4"
+      className="group/table flex flex-col gap-4 overflow-x-auto"
     >
       <TableHeader
         tableTitle={tableTitle}
