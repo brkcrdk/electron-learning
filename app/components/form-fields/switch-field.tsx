@@ -8,16 +8,22 @@ import Switch from '../ui/switch';
 interface Props extends ComponentProps<typeof Switch> {
   error?: string;
   label: string;
+  activeLabel?: string;
+  passiveLabel?: string;
 }
 
-function SwitchField({ error, ...props }: Props) {
+function SwitchField({ error, activeLabel, passiveLabel, ...props }: Props) {
   return (
     <Field className="w-auto">
       <Field.Label htmlFor={props.id}>{props.label}</Field.Label>
-      <Switch
-        {...props}
-        className={cn(props.className, error && 'ring-destructive ring-2')}
-      />
+      <div className="flex items-center gap-2">
+        {passiveLabel && <Field.Label>{passiveLabel}</Field.Label>}
+        <Switch
+          {...props}
+          className={cn(props.className, error && 'ring-destructive ring-2')}
+        />
+        {activeLabel && <Field.Label>{activeLabel}</Field.Label>}
+      </div>
       {error && <Field.Error>{error}</Field.Error>}
     </Field>
   );
