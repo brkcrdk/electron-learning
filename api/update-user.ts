@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
 import { db } from '@db/client';
@@ -33,7 +33,13 @@ function updateUserHandler() {
       }
 
       if (data.id) {
-        await db.update(users).set(data).where(eq(users.id, data.id));
+        await db
+          .update(users)
+          .set({
+            ...data,
+            updatedAt: sql`(unixepoch())`,
+          })
+          .where(eq(users.id, data.id));
       } else {
         return {
           success: false,

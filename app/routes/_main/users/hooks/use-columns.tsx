@@ -53,7 +53,7 @@ function useColumns(): ColumnDef<User>[] {
     },
     {
       header: 'Rol',
-      accessorKey: 'roles',
+      accessorKey: 'role',
       cell: info => info.getValue(),
       accessorFn: ({ role }) => {
         return <Badge variant={userRoles[role].badgeType}>{userRoles[role].label}</Badge>;
