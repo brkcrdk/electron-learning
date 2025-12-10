@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
+import DataTable from '@app/components/data-table';
+
 export const Route = createFileRoute('/_main/categories/')({
   component: RouteComponent,
 });
@@ -25,8 +27,12 @@ function RouteComponent() {
     return <div>Loading...</div>;
   }
   return (
-    <div>
-      <pre>{JSON.stringify(data, null, 4)}</pre>
-    </div>
+    <DataTable
+      tableTitle="Kategori Listesi"
+      columns={[]}
+      data={data ? data : []}
+      isLoading={isLoading}
+      // tableActions={tableActions}
+    />
   );
 }
