@@ -2,12 +2,16 @@ import type { ComponentProps } from 'react';
 
 import { Drawer } from 'vaul';
 
-function DrawerTrigger({ ...props }: ComponentProps<typeof Drawer.Trigger>) {
+import Button from '../button';
+
+function DrawerTrigger(props: ComponentProps<typeof Button>) {
   return (
     <Drawer.Trigger
       data-slot="drawer-trigger"
-      {...props}
-    />
+      asChild
+    >
+      <Button {...props} />
+    </Drawer.Trigger>
   );
 }
 

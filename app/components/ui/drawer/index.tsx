@@ -12,10 +12,11 @@ import DrawerPortal from './drawer-portal';
 import DrawerTitle from './drawer-title';
 import DrawerTrigger from './drawer-trigger';
 
-function Drawer({ ...props }: ComponentProps<typeof DrawerPrimitive.Root>) {
+function Drawer({ direction = 'right', ...props }: ComponentProps<typeof DrawerPrimitive.Root>) {
   return (
     <DrawerPrimitive.Root
       data-slot="drawer"
+      direction={direction}
       {...props}
     />
   );
