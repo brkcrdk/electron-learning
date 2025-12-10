@@ -17,7 +17,7 @@ function createUserHandler() {
           error: 'Giriş yapmış kullanıcı bulunamadı.',
         };
       }
-      if (currentUser.roles !== 'user') {
+      if (currentUser.roles === 'user') {
         throw {
           success: false,
           error: 'Bu işlemi yapmak için yetkiniz yok.',

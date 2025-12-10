@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -12,6 +12,8 @@ import UserForm from './user-form';
 
 function NewUser() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const queryClient = useQueryClient();
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (data: UserFormInputs) => {
@@ -25,6 +27,8 @@ function NewUser() {
     },
     onSuccess: () => {
       toast.success('Kullanıcı başarıyla oluşturuldu.');
+      setIsOpen(false);
+      queryClient.invalidateQueries({ queryKey: ['user-list'] });
     },
     onError: error => {
       toast.error(error.message, {
@@ -42,9 +46,8 @@ function NewUser() {
     },
   });
 
-  async function onSubmit(data: UserFormInputs) {
-    await mutateAsync(data);
-    setIsOpen(false);
+  function onSubmit(data: UserFormInputs) {
+    mutateAsync(data);
   }
 
   return (

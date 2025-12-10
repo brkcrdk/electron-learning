@@ -90,7 +90,7 @@ function useColumns(): ColumnDef<User>[] {
       accessorKey: 'lastLoginAt',
       cell: info => info.getValue(),
       accessorFn: ({ lastLoginAt }) => {
-        if (!lastLoginAt) return null;
+        if (!lastLoginAt) return <Badge variant="secondary">Giriş Yapmadı.</Badge>;
         return <RelativeDateCell date={lastLoginAt} />;
       },
       meta: {
