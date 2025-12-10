@@ -1,17 +1,24 @@
+import ConfirmModal from '@app/components/confirm-modal';
 import Button from '@app/components/ui/button';
 import Icon from '@app/components/ui/icon';
 
 function DeleteUser() {
   return (
-    <Button
-      variant="destructive"
-      size="icon-sm"
+    <ConfirmModal
+      title="Kullanıcıyı silmek istediğinize emin misiniz?"
+      description="Bu işlem geri alınamaz. Kullanıcı ve verileri kalıcı olarak silinecektir."
+      onConfirm={() => {}}
     >
-      <Icon
-        name="trash"
-        className="size-4"
-      />
-    </Button>
+      <Button
+        variant="destructive"
+        size="icon-sm"
+      >
+        <Icon
+          name="trash"
+          className="size-4"
+        />
+      </Button>
+    </ConfirmModal>
   );
 }
 
