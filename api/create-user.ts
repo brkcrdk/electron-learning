@@ -1,3 +1,4 @@
+import { eq } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
 import { db } from '@db/client';
@@ -12,16 +13,18 @@ function createUserHandler() {
       const currentUser = getCurrentUser();
 
       if (!currentUser) {
-        throw {
-          success: false,
-          error: 'Giriş yapmış kullanıcı bulunamadı.',
-        };
+        throw 'Giriş yapmış kullanıcı bulunamadı.';
       }
       if (currentUser.roles === 'user') {
-        throw {
-          success: false,
-          error: 'Bu işlemi yapmak için yetkiniz yok.',
-        };
+        throw 'Bu işlemi yapmak için yetkiniz yok.';
+      }
+
+      const hasUserWithSameEmail = await db.query.users.findFirst({
+        where: eq(users.email, data.email),
+      });
+
+      if (hasUserWithSameEmail) {
+        throw 'Bu e-posta adresiyle zaten bir kullanıcı var.';
       }
 
       await db.insert(users).values(data);
@@ -32,10 +35,7 @@ function createUserHandler() {
       };
     } catch (error) {
       console.error('create user error', error);
-      throw {
-        success: false,
-        error: 'Kullanıcı oluşturulurken bir hata gerçekleşti.',
-      };
+      throw error;
     }
   });
 }

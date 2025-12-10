@@ -38,8 +38,8 @@ function RouteComponent() {
     onSuccess: () => {
       navigate({ to: '/', replace: true });
     },
-    onError: () => {
-      toast.error('Kullanıcı oluşturulurken bir hata gerçekleşti', {
+    onError: error => {
+      toast.error(error.message, {
         dismissible: false,
       });
     },
