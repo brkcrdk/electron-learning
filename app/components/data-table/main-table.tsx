@@ -10,6 +10,8 @@ import {
 } from '@tanstack/react-table';
 
 // import TableFooter, { type TablePaginationProps } from './table-footer';
+import cn from '@app/utils/cn';
+
 import TableBody from './table-body';
 import TableEmptyState, { type TableEmptyStateProps } from './table-empty-state';
 import TableHead from './table-head';
@@ -126,7 +128,7 @@ function MainTable<T>({
         tableActions={tableActions}
       />
 
-      <div className="overflow-hidden rounded-md border">
+      <div className={cn('overflow-hidden rounded-md border', isDisabled && 'pointer-events-none opacity-50')}>
         <Table>
           <TableHead
             table={table}
