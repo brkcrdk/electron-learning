@@ -11,7 +11,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Toaster />
+      <Toaster position="bottom-left" />
       <RouterProvider router={router} />
       {import.meta.env.DEV && (
         <>

@@ -6,12 +6,13 @@ import SwitchField from '@app/components/form-fields/switch-field';
 import Field from '@app/components/ui/field';
 import Select from '@app/components/ui/select';
 import { emailValidation, passwordValidation } from '@app/utils/form-validations';
+import type { User } from '@db/schema';
 
 export interface UserFormInputs {
   name: string;
   email: string;
   password: string;
-  roles: { label: string; value: string };
+  roles: { label: string; value: User['roles'] };
   isActive: boolean;
 }
 
