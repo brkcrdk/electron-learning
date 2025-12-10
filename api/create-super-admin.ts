@@ -16,7 +16,7 @@ function createSuperAdminHandler() {
           email: data.email,
           name: data.name,
           password: data.password,
-          roles: 'super-admin',
+          role: 'super-admin',
           status: 'active',
           lastLoginAt: sql`(unixepoch())`,
         })
