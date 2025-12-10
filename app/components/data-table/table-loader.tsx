@@ -1,15 +1,11 @@
+import Skeleton from '../ui/skeleton';
+
 function TableLoader() {
   return (
     <div className="bg-base-100 w-full space-y-4 rounded-md p-4">
       <div className="flex items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="skeleton h-10 w-32" />
-          <div className="skeleton h-10 w-24" />
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="skeleton h-10 w-40" />
-          <div className="skeleton size-10 rounded-full" />
-        </div>
+        <Skeleton className="w-100 h-8" />
+        <Skeleton className="h-8 w-32" />
       </div>
 
       <div className="space-y-2">
@@ -18,10 +14,10 @@ function TableLoader() {
             key={`table-loader-row-${i}`}
             className="flex items-center gap-3"
           >
-            <div className="skeleton h-6 w-2/5 rounded-xl" />
-            <div className="skeleton h-6 w-1/5 rounded-xl" />
-            <div className="skeleton h-6 w-1/5 rounded-xl" />
-            <div className="skeleton h-6 w-1/5 rounded-xl" />
+            <Skeleton className="h-6 w-2/5" />
+            <Skeleton className="h-6 w-1/5" />
+            <Skeleton className="h-6 w-1/5" />
+            <Skeleton className="h-6 w-1/5" />
           </div>
         ))}
       </div>
