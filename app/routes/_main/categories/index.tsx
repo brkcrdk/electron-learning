@@ -4,6 +4,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import DataTable from '@app/components/data-table';
 
 import useColumns from './hooks/use-columns';
+import useTableActions from './hooks/use-table-actions';
 
 export const Route = createFileRoute('/_main/categories/')({
   component: RouteComponent,
@@ -22,6 +23,7 @@ function RouteComponent() {
   });
 
   const columns = useColumns();
+  const tableActions = useTableActions();
 
   return (
     <DataTable
@@ -29,7 +31,7 @@ function RouteComponent() {
       columns={columns}
       data={data ? data : []}
       isLoading={isLoading}
-      // tableActions={tableActions}
+      tableActions={tableActions}
     />
   );
 }

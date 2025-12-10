@@ -1,12 +1,12 @@
 import type { TableActionsProps } from '@app/components/data-table';
 
-// import NewUser from '../modules/new-user';
+import NewCategory from '../modules/new-category';
 
 function useTableActions(): TableActionsProps[] {
   return [
     {
       actionId: 'add-new-category',
-      actionElement: 'new category',
+      actionElement: <NewCategory />,
     },
   ];
 }

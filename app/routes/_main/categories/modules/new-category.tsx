@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
 
-import CategoryForm from './category-form';
+import CategoryForm, { type CategoryFormInputs } from './category-form';
 
 function NewCategory() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,18 +15,14 @@ function NewCategory() {
   const queryClient = useQueryClient();
 
   // const { mutateAsync, isPending } = useMutation({
-  //   mutationFn: (data: UserFormInputs) => {
-  //     // return window.electronAPI.createUser({
+  //   mutationFn: (data: CategoryFormInputs) => {
+  //     // return window.electronAPI.createCategory({
   //     //   name: data.name,
   //     //   email: data.email,
   //     //   password: data.password,
   //     //   role: data.role.value,
   //     //   status: data.isActive ? 'active' : 'passive',
   //     // });
-  //     return {
-  //       success: true,
-  //       data: 'Kategori oluşturuldu.',
-  //     };
   //   },
   //   onSuccess: response => {
   //     if (response.success) {
@@ -39,9 +35,15 @@ function NewCategory() {
   //     }
   //   },
   // });
-  const form = useForm({});
 
-  function onSubmit() {
+  const form = useForm<CategoryFormInputs>({
+    defaultValues: {
+      name: '',
+      description: '',
+    },
+  });
+
+  function onSubmit(data: CategoryFormInputs) {
     // mutateAsync(data);
   }
 
