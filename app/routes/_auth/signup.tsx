@@ -1,10 +1,9 @@
-import { useMutation } from '@tanstack/react-query';
-import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 import { FormProvider, useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 
 import Button from '@app/components/ui/button';
 import Field from '@app/components/ui/field';
+import useSignupMutation from '@app/services/use-signup-mutation';
 
 import AuthLayout from './modules/auth-layout';
 import FormInputs, { type SignupFormInputsProps } from './modules/form-inputs';
@@ -25,20 +24,7 @@ export const Route = createFileRoute('/_auth/signup')({
 });
 
 function RouteComponent() {
-  const navigate = useNavigate();
-
-  const { mutateAsync, isPending } = useMutation({
-    mutationFn: (data: SignupFormInputsProps) => {
-      return window.electronAPI.createSuperAdmin({
-        email: data.email,
-        password: data.password,
-        name: data.name,
-      });
-    },
-    onSuccess: () => {
-      navigate({ to: '/', replace: true });
-    },
-  });
+  const { mutateAsync, isPending } = useSignupMutation();
 
   const form = useForm<SignupFormInputsProps>({
     defaultValues: {
@@ -51,7 +37,11 @@ function RouteComponent() {
   });
 
   async function onSubmit(data: SignupFormInputsProps) {
-    await mutateAsync(data);
+    await mutateAsync({
+      email: data.email,
+      password: data.password,
+      name: data.name,
+    });
   }
 
   return (
