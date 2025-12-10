@@ -18,6 +18,7 @@ const apiEventList = {
   getUserList: (): ApiResponseProps<User[]> => ipcRenderer.invoke('get-user-list'),
   createSuperAdmin: (data: NewUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-super-admin', data),
   getCurrentUser: (): ApiResponseProps<User> => ipcRenderer.invoke('get-current-user'),
+  updateUser: (data: NewUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-user', data),
 } as const;
 
 export default apiEventList;
