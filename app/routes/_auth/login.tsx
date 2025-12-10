@@ -1,9 +1,10 @@
-import { createFileRoute, redirect } from '@tanstack/react-router';
+import { useMutation } from '@tanstack/react-query';
+import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
 import { FormProvider, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import Button from '@app/components/ui/button';
 import Field from '@app/components/ui/field';
-import useLoginMutation from '@app/services/use-login-mutation';
 
 import AuthLayout from './modules/auth-layout';
 import type { LoginFormInputsProps } from './modules/form-inputs';
@@ -25,7 +26,25 @@ export const Route = createFileRoute('/_auth/login')({
 });
 
 function RouteComponent() {
-  const { mutateAsync, isPending } = useLoginMutation();
+  const navigate = useNavigate();
+
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: (data: LoginFormInputsProps) => {
+      return window.electronAPI.login({
+        email: data.email,
+        password: data.password,
+      });
+    },
+    onSuccess: response => {
+      if (response.success) {
+        navigate({ to: '/', replace: true });
+      } else {
+        toast.error(response.error, {
+          dismissible: false,
+        });
+      }
+    },
+  });
 
   const form = useForm<LoginFormInputsProps>({
     defaultValues: {
@@ -36,10 +55,7 @@ function RouteComponent() {
   });
 
   async function onSubmit(data: LoginFormInputsProps) {
-    await mutateAsync({
-      email: data.email,
-      password: data.password,
-    });
+    await mutateAsync(data);
   }
 
   return (
