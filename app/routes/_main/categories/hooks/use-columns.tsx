@@ -3,6 +3,8 @@ import type { ColumnDef } from '@tanstack/react-table';
 import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
 import type { Category } from '@db/schema';
 
+import CategoryActions from '../modules/category-actions';
+
 function useColumns(): ColumnDef<Category>[] {
   return [
     {
@@ -31,6 +33,18 @@ function useColumns(): ColumnDef<Category>[] {
       accessorFn: ({ updatedAt }) => {
         return <RelativeDateCell date={updatedAt} />;
       },
+      meta: {
+        centeredColumn: true,
+      },
+    },
+    {
+      header: 'İşlemler',
+      accessorKey: 'actions',
+      cell: info => info.getValue(),
+      accessorFn: category => {
+        return <CategoryActions category={category} />;
+      },
+      enableSorting: false,
       meta: {
         centeredColumn: true,
       },
