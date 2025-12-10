@@ -1,19 +1,26 @@
+import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
-// import Table from '@app/components/ui/table';
 import DataTable from '@app/components/data-table';
-import useUserListQuery from '@app/services/use-user-list-query';
 
 import useColumns from './hooks/use-columns';
 import useTableActions from './hooks/use-table-actions';
-// import useTableActions from './hooks/use-table-actions';
 
 export const Route = createFileRoute('/_main/users/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { data, isLoading } = useUserListQuery();
+  const { data, isLoading } = useQuery({
+    queryKey: ['user-list'],
+    queryFn: async () => {
+      const response = await window.electronAPI.getUserList();
+      if (!response.success) {
+        throw response;
+      }
+      return response.data;
+    },
+  });
 
   const columns = useColumns();
   const tableActions = useTableActions();
