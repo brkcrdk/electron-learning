@@ -10,7 +10,7 @@ function checkSuperAdminHandler() {
   ipcMain.handle('check-super-admin-exists', async (): ApiResponseProps<boolean> => {
     try {
       const user = await db.query.users.findFirst({
-        where: eq(users.roles, 'super-admin'),
+        where: eq(users.role, 'super-admin'),
       });
 
       if (user) {

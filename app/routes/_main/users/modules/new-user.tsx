@@ -21,7 +21,7 @@ function NewUser() {
         name: data.name,
         email: data.email,
         password: data.password,
-        roles: data.roles.value,
+        role: data.role.value,
         status: data.isActive ? 'active' : 'passive',
       });
     },
@@ -41,7 +41,7 @@ function NewUser() {
       name: 'John Doe',
       email: 'john.doe@example.com',
       password: '12345678',
-      roles: { label: 'User', value: 'user' },
+      role: { label: 'User', value: 'user' },
       isActive: true,
     },
   });

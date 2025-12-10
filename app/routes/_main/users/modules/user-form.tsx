@@ -12,13 +12,13 @@ export interface UserFormInputs {
   name: string;
   email: string;
   password: string;
-  roles: { label: string; value: User['roles'] };
+  role: { label: string; value: User['role'] };
   isActive: boolean;
 }
 
 interface UserRoleOption {
   label: string;
-  value: User['roles'];
+  value: User['role'];
 }
 
 export const userRoleOptions: UserRoleOption[] = [
@@ -85,7 +85,7 @@ function UserForm({ isSelfUpdate }: Props) {
       />
       <Controller
         control={control}
-        name="roles"
+        name="role"
         rules={{ required: 'Rol alanı zorunludur' }}
         render={({ field, fieldState }) => (
           <Select

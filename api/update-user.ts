@@ -18,14 +18,14 @@ function updateUserHandler() {
           error: 'Giriş yapmış kullanıcı bulunamadı.',
         };
       }
-      if (currentUser.roles === 'user') {
+      if (currentUser.role === 'user') {
         return {
           success: false,
           error: 'Bu işlemi yapmak için yetkiniz yok.',
         };
       }
 
-      if (currentUser.roles !== 'super-admin' && data.roles === 'super-admin') {
+      if (currentUser.role !== 'super-admin' && data.role === 'super-admin') {
         return {
           success: false,
           error: 'Super admin rolünü değiştiremezsiniz.',

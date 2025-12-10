@@ -8,7 +8,7 @@ export const users = sqliteTable(
     name: text('name').notNull(),
     email: text('email').notNull().unique(),
     password: text('password').notNull(),
-    roles: text('roles', { enum: ['super-admin', 'admin', 'user'] })
+    role: text('role', { enum: ['super-admin', 'admin', 'user'] })
       .notNull()
       .default('user'),
     status: text('status', { enum: ['active', 'passive'] })
@@ -22,7 +22,7 @@ export const users = sqliteTable(
       .default(sql`(unixepoch())`),
     lastLoginAt: integer('last_login_at', { mode: 'timestamp' }),
   },
-  table => [index('roles_idx').on(table.roles)]
+  table => [index('roles_idx').on(table.role)]
 );
 
 export type User = typeof users.$inferSelect;

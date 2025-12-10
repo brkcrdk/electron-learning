@@ -30,7 +30,7 @@ function EditUser({ user }: EditUserProps) {
         name: data.name,
         email: data.email,
         password: data.password,
-        roles: data.roles.value,
+        role: data.role.value,
         status: data.isActive ? 'active' : 'passive',
       });
     },
@@ -46,13 +46,13 @@ function EditUser({ user }: EditUserProps) {
 
   const form = useForm<UserFormInputs>({
     defaultValues: async () => {
-      const selectedUserRole = userRoleOptions.find(role => role.value === user.roles);
+      const selectedUserRole = userRoleOptions.find(role => role.value === user.role);
 
       return {
         name: user.name,
         email: user.email,
         password: '12345678',
-        roles: selectedUserRole ? selectedUserRole : userRoleOptions[0],
+        role: selectedUserRole ? selectedUserRole : userRoleOptions[0],
         isActive: true,
       };
     },
