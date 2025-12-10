@@ -27,7 +27,15 @@ export const userRoleOptions: UserRoleOption[] = [
   { label: 'Super Admin', value: 'super-admin' },
 ];
 
-function UserForm() {
+interface Props {
+  /**
+   * Eğer kullanıcı kendi bilgilerini düzenlemek için bu formu açmışsa, bu form fieldı
+   * bazı form fieldlarını bu değere göre kapalı hale getirebilir.
+   */
+  isSelfUpdate?: boolean;
+}
+
+function UserForm({ isSelfUpdate }: Props) {
   const { control } = useFormContext<UserFormInputs>();
 
   return (
@@ -86,6 +94,7 @@ function UserForm() {
             options={userRoleOptions}
             getOptionLabel={val => val.label}
             getOptionValue={val => val.value}
+            isDisabled={isSelfUpdate}
             {...field}
           />
         )}
@@ -101,6 +110,7 @@ function UserForm() {
             error={fieldState.error?.message}
             checked={field.value}
             onCheckedChange={field.onChange}
+            disabled={isSelfUpdate}
           />
         )}
       />

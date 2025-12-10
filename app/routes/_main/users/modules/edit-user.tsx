@@ -6,6 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
 import Icon from '@app/components/ui/icon';
+import useCurrentUserQuery from '@app/hooks/use-current-user-query';
 import type { User } from '@db/schema';
 
 import type { UserFormInputs } from './user-form';
@@ -13,15 +14,11 @@ import UserForm, { userRoleOptions } from './user-form';
 
 interface EditUserProps {
   user: User;
-  /**
-   * Eğer kullanıcı kendi bilgilerini düzenlemek için bu formu açmışsa, bu form fieldı
-   * bazı form fieldlarını bu değere göre kapalı hale getirebilir.
-   */
-  isSelfUpdate?: boolean;
 }
 
 function EditUser({ user }: EditUserProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const { data: currentUser } = useCurrentUserQuery();
 
   const queryClient = useQueryClient();
 
@@ -61,19 +58,9 @@ function EditUser({ user }: EditUserProps) {
             id="new-user-form"
             onSubmit={form.handleSubmit(onSubmit)}
           >
-            <UserForm />
+            <UserForm isSelfUpdate={currentUser ? currentUser.id === user.id : false} />
           </form>
         </FormProvider>
-        <Drawer.Footer>
-          <Button
-            form="new-user-form"
-            type="submit"
-            // disabled={isPending}
-            // isLoading={isPending}
-          >
-            Kullanıcıyı Ekle
-          </Button>
-        </Drawer.Footer>
       </Drawer.Content>
     </Drawer>
   );
