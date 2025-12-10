@@ -27,7 +27,7 @@ function NewCategory() {
     onSuccess: response => {
       if (response.success) {
         setIsOpen(false);
-        queryClient.invalidateQueries({ queryKey: ['user-list'] });
+        queryClient.invalidateQueries({ queryKey: ['category-list'] });
       } else {
         toast.error(response.error, {
           dismissible: false,
