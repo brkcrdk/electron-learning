@@ -20,8 +20,8 @@ function CategoryActions({ category }: Props) {
       </Drawer.Trigger>
       <Drawer.Content>
         <Drawer.Header>
-          <Drawer.Title>Kullanıcı Bilgilerini Düzenle</Drawer.Title>
-          <Drawer.Description>Kullanıcı bilgilerini düzenlemek için lütfen bilgilerinizi giriniz.</Drawer.Description>
+          <Drawer.Title>Kategori Bilgilerini Düzenle</Drawer.Title>
+          <Drawer.Description>Kategori bilgilerini düzenlemek için lütfen bilgilerinizi giriniz.</Drawer.Description>
         </Drawer.Header>
         <EditCategory category={category} />
         <Drawer.Footer className="grid grid-cols-2 gap-2">
@@ -30,7 +30,7 @@ function CategoryActions({ category }: Props) {
             form="edit-category-form"
             type="submit"
           >
-            Kullanıcıyı Düzenle
+            Kategoriyi Düzenle
           </Button>
         </Drawer.Footer>
       </Drawer.Content>
