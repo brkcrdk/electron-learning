@@ -1,10 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import Table from '@app/components/ui/table';
+// import Table from '@app/components/ui/table';
+import DataTable from '@app/components/data-table';
 import useUserListQuery from '@app/services/use-user-list-query';
 
-import useColumns from './hooks/use-columns';
-import useTableActions from './hooks/use-table-actions';
+// import useColumns from './hooks/use-columns';
+// import useTableActions from './hooks/use-table-actions';
 
 export const Route = createFileRoute('/_main/users/')({
   component: RouteComponent,
@@ -13,16 +14,17 @@ export const Route = createFileRoute('/_main/users/')({
 function RouteComponent() {
   const { data, isLoading } = useUserListQuery();
 
-  const columns = useColumns();
-  const tableActions = useTableActions();
+  // const columns = useColumns();
+  // const tableActions = useTableActions();
 
   return (
-    <Table
+    <DataTable
       tableTitle="Kullanıcı Listesi"
-      columns={columns}
+      // columns={columns}
+      columns={[]}
       data={data ? data : []}
       isLoading={isLoading}
-      tableActions={tableActions}
+      // tableActions={tableActions}
     />
   );
 }
