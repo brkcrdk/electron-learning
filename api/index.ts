@@ -2,6 +2,7 @@ import checkSuperAdminHandler from './check-super-admin';
 import createSuperAdminHandler from './create-super-admin';
 import createUserHandler from './create-user';
 import deleteUserHandler from './delete-user';
+import getCategoryListHandler from './get-category-list';
 import getCurrentUserHandler from './get-current-user';
 import getUserListHandler from './get-user-list';
 import loginHandler from './login';
@@ -18,6 +19,7 @@ function registerApiHandlers() {
   logoutHandler();
   updateUserHandler();
   deleteUserHandler();
+  getCategoryListHandler();
 }
 
 export default registerApiHandlers;
