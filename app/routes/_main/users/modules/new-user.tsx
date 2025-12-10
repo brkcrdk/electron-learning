@@ -27,7 +27,6 @@ function NewUser() {
     },
     onSuccess: response => {
       if (response.success) {
-        toast.success(response.data);
         setIsOpen(false);
         queryClient.invalidateQueries({ queryKey: ['user-list'] });
       } else {

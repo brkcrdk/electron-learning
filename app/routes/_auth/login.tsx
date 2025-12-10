@@ -35,13 +35,14 @@ function RouteComponent() {
         password: data.password,
       });
     },
-    onSuccess: () => {
-      navigate({ to: '/', replace: true });
-    },
-    onError: error => {
-      toast.error(error.message, {
-        dismissible: false,
-      });
+    onSuccess: response => {
+      if (response.success) {
+        navigate({ to: '/', replace: true });
+      } else {
+        toast.error(response.error, {
+          dismissible: false,
+        });
+      }
     },
   });
 
