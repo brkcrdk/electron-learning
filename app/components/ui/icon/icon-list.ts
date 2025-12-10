@@ -17,6 +17,7 @@ import {
   LuUsers,
   LuPencil,
   LuLoaderCircle,
+  LuCheck,
 } from 'react-icons/lu';
 import { MdMoreHoriz } from 'react-icons/md';
 import { PiWarningCircleFill } from 'react-icons/pi';
@@ -50,6 +51,7 @@ export const iconList = [
   { label: 'pencil', icon: LuPencil },
   { label: 'loader-circle', icon: LuLoaderCircle },
   { label: 'contrast-filled', icon: TbContrastFilled },
+  { label: 'check', icon: LuCheck },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];
