@@ -10,6 +10,7 @@ import Icon from '@app/components/ui/icon';
 import useCurrentUserQuery from '@app/hooks/use-current-user-query';
 import type { User } from '@db/schema';
 
+import DeleteUser from './delete-user';
 import type { UserFormInputs } from './user-form';
 import UserForm, { userRoleOptions } from './user-form';
 
@@ -89,7 +90,8 @@ function EditUser({ user }: EditUserProps) {
             <UserForm isSelfUpdate={currentUser ? currentUser.id === user.id : false} />
           </form>
         </FormProvider>
-        <Drawer.Footer>
+        <Drawer.Footer className="grid grid-cols-2 gap-2">
+          <DeleteUser userId={user.id} />
           <Button
             form="new-user-form"
             type="submit"

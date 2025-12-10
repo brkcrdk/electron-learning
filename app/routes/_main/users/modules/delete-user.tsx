@@ -31,14 +31,12 @@ function DeleteUser({ userId }: Props) {
       onConfirm={mutate}
       isPending={isPending}
     >
-      <Button
-        variant="destructive"
-        size="icon-sm"
-      >
+      <Button variant="destructive">
         <Icon
           name="trash"
           className="size-4"
         />
+        Kullanıcıyı Sil
       </Button>
     </ConfirmModal>
   );
