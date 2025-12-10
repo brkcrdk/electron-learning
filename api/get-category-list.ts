@@ -26,10 +26,29 @@ function getCategoryListHandler() {
         };
       }
 
+      /**
+       * Tüm kategorileri getirirken her bir kategorinin alt kategorisi (children) olup olmadığını
+       * kontrol ediyoruz ve bu bilgiyi `hasChildren` boolean değeri olarak döndürüyoruz.
+       *
+       * NOT: Bu değer veritabanında saklanmaz, her sorgu sırasında hesaplanır.
+       *
+       * Performans notları:
+       * - EXISTS kullanımı: COUNT yerine EXISTS kullanıyoruz çünkü ilk eşleşmeyi bulunca durur,
+       *   tüm kayıtları saymaz. Bu daha performanslıdır.
+       * - Correlated subquery: Her kategori için, o kategorinin id'sine parentId olarak sahip
+       *   başka bir kategori var mı kontrol eder.
+       * - Index kullanımı: parentId üzerindeki index (idx_category_parent_id) bu sorguyu hızlandırır.
+       * - mapWith(Boolean): SQLite boolean tipi desteklemediği için EXISTS sonucu integer (0/1)
+       *   olarak döner. mapWith(Boolean) ile bu değeri JavaScript boolean'ına çeviriyoruz.
+       */
       const categoryList = await db
         .select({
+          // Tüm kategori kolonlarını getir (id, name, slug, description, parentId, createdAt, updatedAt)
           ...getTableColumns(category),
-          hasChildren: sql<boolean>`EXISTS(SELECT 1 FROM ${category} WHERE ${category.parentId} = ${category.id})`.as('hasChildren'),
+          // Her kategori için alt kategori kontrolü yap
+          // EXISTS: parentId değeri bu kategorinin id'sine eşit olan bir kategori var mı?
+          // mapWith(Boolean): SQLite'dan gelen integer (0/1) değerini boolean'a çevir
+          hasChildren: sql<boolean>`EXISTS(SELECT 1 FROM ${category} WHERE ${category.parentId} = ${category.id})`.mapWith(Boolean).as('hasChildren'),
         })
         .from(category)
         .orderBy(desc(category.createdAt));
