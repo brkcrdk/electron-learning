@@ -35,6 +35,16 @@ function useSidebarItems() {
         to: '/users',
       },
     },
+    {
+      label: 'Kategoriler',
+      itemKey: 'category-list',
+      icon: 'folder',
+      isActive: pathname.startsWith('/categories'),
+      isProtected: false,
+      routeProps: {
+        to: '/categories',
+      },
+    },
   ];
 
   return sidebarItems;

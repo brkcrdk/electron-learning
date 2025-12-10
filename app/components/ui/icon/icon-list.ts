@@ -19,6 +19,7 @@ import {
   LuLoaderCircle,
   LuCheck,
   LuTrash,
+  LuFolder,
 } from 'react-icons/lu';
 import { MdMoreHoriz } from 'react-icons/md';
 import { PiWarningCircleFill } from 'react-icons/pi';
@@ -54,6 +55,7 @@ export const iconList = [
   { label: 'contrast-filled', icon: TbContrastFilled },
   { label: 'check', icon: LuCheck },
   { label: 'trash', icon: LuTrash },
+  { label: 'folder', icon: LuFolder },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];
