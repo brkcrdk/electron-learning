@@ -1,7 +1,5 @@
 import type { ComponentProps } from 'react';
 
-import cn from '@app/utils/cn';
-
 import Field from '../ui/field';
 import Select from '../ui/select';
 
@@ -17,7 +15,6 @@ function SelectField({ error, ...props }: Props) {
       <Select
         {...props}
         errorMessage={error}
-        className={cn(props.className, error && 'border-destructive')}
       />
       {error && <Field.Error>{error}</Field.Error>}
     </Field>

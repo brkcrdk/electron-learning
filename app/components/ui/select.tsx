@@ -34,7 +34,7 @@ function Select<TOption, TIsMulti extends boolean = false, TGroup extends GroupB
             'min-h-11 px-3 py-2',
             state.isFocused && 'border-ring ring-ring/50 ring-2',
             state.isDisabled && 'pointer-events-none cursor-not-allowed opacity-50',
-            errorMessage && 'ring-destructive/20 border-destructive'
+            errorMessage && 'ring-destructive ring-2'
           ),
         valueContainer: () => 'gap-1.5 py-0.5',
         placeholder: () => 'text-muted-foreground text-sm',

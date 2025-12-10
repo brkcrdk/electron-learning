@@ -16,7 +16,7 @@ function InputField({ error, ...props }: Props) {
       <Field.Label htmlFor={props.id}>{props.label}</Field.Label>
       <Input
         {...props}
-        className={cn(props.className, error && 'border-destructive')}
+        className={cn(props.className, error && 'ring-destructive ring-2')}
       />
       {error && <Field.Error>{error}</Field.Error>}
     </Field>

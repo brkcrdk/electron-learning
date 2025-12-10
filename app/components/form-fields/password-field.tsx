@@ -18,7 +18,7 @@ function PasswordField({ error, ...props }: Props) {
         {...props}
         inputProps={{
           ...props.inputProps,
-          className: cn(props.inputProps?.className, error && 'border-destructive'),
+          className: cn(props.inputProps?.className, error && 'ring-destructive ring-2'),
         }}
       />
       {error && <Field.Error>{error}</Field.Error>}
