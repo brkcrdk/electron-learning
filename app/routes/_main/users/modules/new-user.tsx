@@ -1,11 +1,10 @@
-// import { Dialog } from 'radix-ui';
-
 import { FormProvider, useForm } from 'react-hook-form';
 
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
 
 import type { UserFormInputs } from './user-form';
+import UserForm from './user-form';
 
 function NewUser() {
   const form = useForm<UserFormInputs>({
@@ -34,7 +33,9 @@ function NewUser() {
           <form
             id="new-user-form"
             onSubmit={form.handleSubmit(onSubmit)}
-          />
+          >
+            <UserForm />
+          </form>
         </FormProvider>
         <Drawer.Footer>
           <Button
