@@ -25,14 +25,21 @@ function updateUserHandler() {
         };
       }
 
-      if (data.roles === 'super-admin') {
+      if (currentUser.roles !== 'super-admin' && data.roles === 'super-admin') {
         return {
           success: false,
           error: 'Super admin rolünü değiştiremezsiniz.',
         };
       }
 
-      await db.update(users).set(data).where(eq(users.id, currentUser.id));
+      if (data.id) {
+        await db.update(users).set(data).where(eq(users.id, data.id));
+      } else {
+        return {
+          success: false,
+          error: 'Kullanıcı bulunamadı.',
+        };
+      }
 
       return {
         success: true,

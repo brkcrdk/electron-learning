@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormProvider, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
@@ -22,6 +23,27 @@ function EditUser({ user }: EditUserProps) {
 
   const queryClient = useQueryClient();
 
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: (data: UserFormInputs) => {
+      return window.electronAPI.updateUser({
+        id: user.id,
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        roles: data.roles.value,
+        status: data.isActive ? 'active' : 'passive',
+      });
+    },
+    onSuccess: response => {
+      if (response.success) {
+        setIsOpen(false);
+        queryClient.invalidateQueries({ queryKey: ['user-list'] });
+      } else {
+        toast.error(response.error, { dismissible: false });
+      }
+    },
+  });
+
   const form = useForm<UserFormInputs>({
     defaultValues: async () => {
       const selectedUserRole = userRoleOptions.find(role => role.value === user.roles);
@@ -37,11 +59,17 @@ function EditUser({ user }: EditUserProps) {
   });
 
   function onSubmit(data: UserFormInputs) {
-    console.log(data);
+    mutateAsync(data);
   }
 
   return (
-    <Drawer>
+    <Drawer
+      open={isOpen}
+      onOpenChange={open => {
+        setIsOpen(open);
+        form.reset();
+      }}
+    >
       <Drawer.Trigger size="icon-sm">
         <Icon
           name="pencil"
@@ -65,8 +93,8 @@ function EditUser({ user }: EditUserProps) {
           <Button
             form="new-user-form"
             type="submit"
-            // disabled={isPending}
-            // isLoading={isPending}
+            disabled={isPending}
+            isLoading={isPending}
           >
             Kullanıcıyı Düzenle
           </Button>
