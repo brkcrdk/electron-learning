@@ -3,12 +3,14 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import DataTable from '@app/components/data-table';
 
+import useColumns from './hooks/use-columns';
+
 export const Route = createFileRoute('/_main/categories/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['category-list'],
     queryFn: async () => {
       const response = await window.electronAPI.getCategoryList();
@@ -19,17 +21,12 @@ function RouteComponent() {
     },
   });
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  const columns = useColumns();
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
   return (
     <DataTable
       tableTitle="Kategori Listesi"
-      columns={[]}
+      columns={columns}
       data={data ? data : []}
       isLoading={isLoading}
       // tableActions={tableActions}
