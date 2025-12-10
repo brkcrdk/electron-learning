@@ -13,6 +13,11 @@ import UserForm, { userRoleOptions } from './user-form';
 
 interface EditUserProps {
   user: User;
+  /**
+   * Eğer kullanıcı kendi bilgilerini düzenlemek için bu formu açmışsa, bu form fieldı
+   * bazı form fieldlarını bu değere göre kapalı hale getirebilir.
+   */
+  isSelfUpdate?: boolean;
 }
 
 function EditUser({ user }: EditUserProps) {
