@@ -5,6 +5,7 @@ import { app, BrowserWindow } from 'electron';
 import started from 'electron-squirrel-startup';
 
 import registerApiHandlers from '../api';
+import { initializeDatabase } from '../db/client';
 import registerStoreHandlers from '../store';
 import { store } from '../store';
 
@@ -50,6 +51,9 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
+  // Veritabanını başlat (tablolar yoksa oluştur)
+  await initializeDatabase();
+
   // İçerik klasörlerini oluştur
   const contentRoot = path.join(app.getPath('userData'), 'content');
   console.log('contentRoot', contentRoot);
