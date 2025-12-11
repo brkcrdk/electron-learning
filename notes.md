@@ -9,3 +9,6 @@
     - Eğer eğitimin kapak görseli olacaksa da burada yönetilsin, eğitimin adı vs olacaksa da burada yönetilsin.
   - Normal kullanıcılar sadece kendilerine atanmış olan eğitimleri görsün.
   - Pagination ve arama herkes için çalışsın.
+- İçerikleri clickuptaki gibi göstermeyi düşünüyorum. Bir materyal açıldığı zaman bir modalı fullscreen açıp, modala sığacak şekilde göstereceğim.
+  - Böylece html, video, pdf aynı şekilde gösterilebilir.
+  - Kullanıcılar html materyalini zip olarak mı atarlar, yoksa direk html ne varsa o şekilde mi eklerler
