@@ -13,7 +13,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
 function PdfViewer({ documentProps }: PdfContentProps) {
   return (
     <Dialog>
-      <Dialog.Trigger>xx</Dialog.Trigger>
+      <Dialog.Trigger>Pdf Viewer</Dialog.Trigger>
       <Dialog.Content
         className="min-w-screen min-h-screen p-0"
         showCloseButton={false}

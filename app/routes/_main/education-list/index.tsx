@@ -20,7 +20,7 @@ function RouteComponent() {
           file: '/public/pdf/test.pdf',
         }}
       />
-      <StorylineViewer />
+      <StorylineViewer storyLink="/public/stories/demo/index.html" />
     </>
   );
 }
