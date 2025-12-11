@@ -21,6 +21,7 @@ import {
   LuTrash,
   LuFolder,
   LuBook,
+  LuTriangleAlert,
 } from 'react-icons/lu';
 import { MdMoreHoriz } from 'react-icons/md';
 import { PiWarningCircleFill } from 'react-icons/pi';
@@ -58,6 +59,7 @@ export const iconList = [
   { label: 'trash', icon: LuTrash },
   { label: 'folder', icon: LuFolder },
   { label: 'book', icon: LuBook },
+  { label: 'alert-triangle', icon: LuTriangleAlert },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];

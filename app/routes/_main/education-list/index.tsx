@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-// import video from '@app/assets/test.mp4';
+import PdfViewer from '@app/components/ui/pdf-viewer';
 import VideoPlayer from '@app/components/ui/video-player';
 
 export const Route = createFileRoute('/_main/education-list/')({
@@ -9,9 +9,16 @@ export const Route = createFileRoute('/_main/education-list/')({
 
 function RouteComponent() {
   return (
-    <VideoPlayer
-      src="/public/videos/test.mp4"
-      title="1 Minute Doggie Video"
-    />
+    <>
+      {/* <VideoPlayer
+        src="/public/videos/test.mp4"
+        title="1 Minute Doggie Video"
+      /> */}
+      <PdfViewer
+        documentProps={{
+          file: '/public/pdf/test.pdf',
+        }}
+      />
+    </>
   );
 }
