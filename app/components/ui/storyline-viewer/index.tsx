@@ -12,7 +12,7 @@ function StorylineViewer() {
       >
         <Card className="pointer-events-auto relative overflow-hidden border-none">
           <StorylineHeader />
-          <Card.Content>
+          <Card.Content className="bg-accent relative mx-4 flex rounded-sm py-4">
             <h1>Storyline Viewer</h1>
           </Card.Content>
         </Card>
