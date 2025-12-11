@@ -1,0 +1,11 @@
+- Eğitim materyallerini ayrı listeleyelim. 
+  - Bunları ayrı bir listede gösterelim. Burada eklenip, silinebilsin. 
+  - Kapak görseli, isimlendirmesi vs olacaksa da burada yönetilsin.
+  - Bu sayfa sadece yöneticilere açık olsun.
+  - Böylece materyallerin gereksiz yere kopyalanarak oluşması gerekmez.
+- Eğitim listeleme için ayrı bir sayfa olsun
+  - Yöneticileri eğitimleri düzenleyip ekleyebilsin
+    - Sayfada eğitimleri materyallerle ilişkilendirelim ve bir eğitim oluşturalım.
+    - Eğer eğitimin kapak görseli olacaksa da burada yönetilsin, eğitimin adı vs olacaksa da burada yönetilsin.
+  - Normal kullanıcılar sadece kendilerine atanmış olan eğitimleri görsün.
+  - Pagination ve arama herkes için çalışsın.

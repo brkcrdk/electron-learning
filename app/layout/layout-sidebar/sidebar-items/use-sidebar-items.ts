@@ -26,6 +26,16 @@ function useSidebarItems() {
       },
     },
     {
+      label: 'Eğitim Listesi',
+      itemKey: 'education-list',
+      icon: 'book',
+      isActive: pathname.startsWith('/education-list'),
+      isProtected: false,
+      routeProps: {
+        to: '/education-list',
+      },
+    },
+    {
       label: 'Kullanıcılar',
       itemKey: 'user-list',
       icon: 'users',
