@@ -1,10 +1,13 @@
 import { Page } from 'react-pdf';
 
+import { usePdfContext } from '../pdf-context';
+
 interface Props {
   pageCount: number;
 }
 
 function PageList({ pageCount }: Props) {
+  const { zoomLevel } = usePdfContext();
   return (
     <>
       {Array.from({ length: pageCount }).map((_, index) => (
@@ -14,7 +17,7 @@ function PageList({ pageCount }: Props) {
           loading="Sayfa yükleniyor..."
           error="Sayfa yüklenirken hata oluştu."
           className="flex size-fit overflow-hidden rounded-md"
-          scale={2.4}
+          scale={zoomLevel}
         />
       ))}
     </>

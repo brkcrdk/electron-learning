@@ -20,7 +20,7 @@ function PdfZoomControl() {
       >
         <Icon name="zoom-out" />
       </Button>
-      <span>{zoomLevel}%</span>
+      <span>{Math.round(zoomLevel * 100)}%</span>
       <Button
         variant="outline"
         size="icon"

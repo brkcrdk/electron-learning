@@ -6,17 +6,24 @@ interface PdfContextProps {
   handleZoomOut: () => void;
 }
 
+const DEFAULT_ZOOM_LEVEL = 1;
+const ZOOM_LEVEL_STEP = 0.1;
+const MAX_ZOOM_LEVEL = 2.4;
+const MIN_ZOOM_LEVEL = 0.5;
+
 const PdfContext = createContext<PdfContextProps | null>(null);
 
 export const PdfContextProvider = ({ children }: PropsWithChildren) => {
-  const [zoomLevel, setZoomLevel] = useState(100);
+  const [zoomLevel, setZoomLevel] = useState(DEFAULT_ZOOM_LEVEL);
 
   const handleZoomIn = () => {
-    setZoomLevel(zoomLevel + 10);
+    if (zoomLevel >= MAX_ZOOM_LEVEL) return;
+    setZoomLevel(zoomLevel + ZOOM_LEVEL_STEP);
   };
 
   const handleZoomOut = () => {
-    setZoomLevel(zoomLevel - 10);
+    if (zoomLevel <= MIN_ZOOM_LEVEL) return;
+    setZoomLevel(zoomLevel - ZOOM_LEVEL_STEP);
   };
 
   return (
