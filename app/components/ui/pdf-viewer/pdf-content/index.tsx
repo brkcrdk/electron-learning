@@ -29,11 +29,10 @@ function PdfContent({ documentProps }: PdfContentProps) {
         loading={<PdfLoader />}
         error={<PdfLoadingError errorReason={errorStatus} />}
         onLoadError={error => setErrorStatus(error.name)}
+        className="h-full"
       >
-        <Card.Content className="bg-accent relative mx-4 flex flex-col items-center justify-center gap-2 rounded-sm">
-          <div className="relative flex h-[calc(100vh-400px)] w-full flex-col items-center gap-4 overflow-y-auto overflow-x-hidden">
-            <PageList pageCount={pageCount} />
-          </div>
+        <Card.Content className="bg-accent max-h-100 relative mx-4 flex flex-col items-center gap-2 overflow-auto rounded-sm">
+          <PageList pageCount={pageCount} />
         </Card.Content>
       </Document>
     </Card>

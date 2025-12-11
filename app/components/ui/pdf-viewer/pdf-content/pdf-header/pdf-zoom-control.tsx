@@ -8,7 +8,7 @@ function PdfZoomControl() {
 
   return (
     /**
-     * NOTE: Traffic light ışıkları nedeniyle titleı 24px soldan boşluk bıraktığımız zaman
+     * NOTE: Traffic light ışıkları nedeniyle titleı soldan boşluk bıraktığımız zaman
      * zoom control da sağa kayık gibi oluyor. Ortalamak için benzer şekilde buraya da sağdan
      * margin koyarak durumu nötralize ediyoruz.
      */
