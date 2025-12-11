@@ -22,6 +22,8 @@ import {
   LuFolder,
   LuBook,
   LuTriangleAlert,
+  LuZoomIn,
+  LuZoomOut,
 } from 'react-icons/lu';
 import { MdMoreHoriz } from 'react-icons/md';
 import { PiWarningCircleFill } from 'react-icons/pi';
@@ -60,6 +62,8 @@ export const iconList = [
   { label: 'folder', icon: LuFolder },
   { label: 'book', icon: LuBook },
   { label: 'alert-triangle', icon: LuTriangleAlert },
+  { label: 'zoom-in', icon: LuZoomIn },
+  { label: 'zoom-out', icon: LuZoomOut },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];

@@ -23,7 +23,7 @@ function PdfViewer({ documentProps }: Props) {
     <Dialog>
       <Dialog.Trigger>xx</Dialog.Trigger>
       <Dialog.Content
-        className="min-h-[90vh] min-w-[90vw] p-0"
+        className="min-w-screen min-h-screen p-0"
         showCloseButton={false}
       >
         <Document
