@@ -1,10 +1,11 @@
 import { useState } from 'react';
 
 import workerSrc from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
-import { Document, Page, pdfjs, type DocumentProps } from 'react-pdf';
+import { Document, pdfjs, type DocumentProps } from 'react-pdf';
 
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
+import PdfContent from './pdf-content';
 import PdfLoader from './pdf-loader';
 import PdfLoadingError from './pdf-loading-error';
 
@@ -25,7 +26,8 @@ function PdfViewer({ documentProps }: Props) {
       error={<PdfLoadingError errorReason={errorStatus} />}
       onLoadError={error => setErrorStatus(error.name)}
     >
-      <Page pageNumber={1} />
+      <PdfContent />
+      {/* <Page pageNumber={1} /> */}
     </Document>
   );
 }
