@@ -9,7 +9,7 @@ function PdfHeader() {
   return (
     <Card.Header className="flex items-center justify-between border-b">
       {/* Title traffic light ışıklarının üstüne bindiği için soldan boşluk bırakıyoruz. */}
-      <h3 className="webkit-no-draggable ml-24 text-2xl font-medium">Test File</h3>
+      <Dialog.Title className="webkit-no-draggable ml-24 text-2xl font-medium">Test File</Dialog.Title>
       <PdfZoomControl />
       <Dialog.Close asChild>
         <Button
