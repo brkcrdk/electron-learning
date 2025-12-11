@@ -1,25 +1,16 @@
-import { useState } from 'react';
-
 import workerSrc from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
-import { Document, pdfjs, type DocumentProps } from 'react-pdf';
+import { pdfjs } from 'react-pdf';
 
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
-import PdfContent from './pdf-content';
-import PdfLoader from './pdf-loader';
-import PdfLoadingError from './pdf-loading-error';
+import PdfContent, { type PdfContentProps } from './pdf-content';
 import Dialog from '../dialog';
 import { PdfContextProvider } from './pdf-context';
 
-interface Props {
-  documentProps?: DocumentProps;
-}
 // Vite ?url ile worker'ı build'e kopyalıyoruz; offline çalışır.
 pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
 
-function PdfViewer({ documentProps }: Props) {
-  const [errorStatus, setErrorStatus] = useState<string>('');
-
+function PdfViewer({ documentProps }: PdfContentProps) {
   return (
     <Dialog>
       <Dialog.Trigger>xx</Dialog.Trigger>
@@ -28,15 +19,7 @@ function PdfViewer({ documentProps }: Props) {
         showCloseButton={false}
       >
         <PdfContextProvider>
-          <Document
-            {...documentProps}
-            onError={error => console.error(error)}
-            loading={<PdfLoader />}
-            error={<PdfLoadingError errorReason={errorStatus} />}
-            onLoadError={error => setErrorStatus(error.name)}
-          >
-            <PdfContent />
-          </Document>
+          <PdfContent documentProps={documentProps} />
         </PdfContextProvider>
       </Dialog.Content>
     </Dialog>
