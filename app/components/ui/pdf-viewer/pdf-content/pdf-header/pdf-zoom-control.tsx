@@ -3,6 +3,11 @@ import Icon from '@app/components/ui/icon';
 
 function PdfZoomControl() {
   return (
+    /**
+     * NOTE: Traffic light ışıkları nedeniyle titleı 24px soldan boşluk bıraktığımız zaman
+     * zoom control da sağa kayık gibi oluyor. Ortalamak için benzer şekilde buraya da sağdan
+     * margin koyarak durumu nötralize ediyoruz.
+     */
     <div className="webkit-no-draggable bg-accent/50 mr-24 flex items-center gap-4 rounded-md p-2">
       <Button
         variant="outline"
