@@ -1,7 +1,11 @@
 import Button from '@app/components/ui/button';
 import Icon from '@app/components/ui/icon';
 
+import { usePdfContext } from '../../pdf-context';
+
 function PdfZoomControl() {
+  const { zoomLevel, handleZoomIn, handleZoomOut } = usePdfContext();
+
   return (
     /**
      * NOTE: Traffic light ışıkları nedeniyle titleı 24px soldan boşluk bıraktığımız zaman
@@ -12,13 +16,15 @@ function PdfZoomControl() {
       <Button
         variant="outline"
         size="icon"
+        onClick={handleZoomOut}
       >
         <Icon name="zoom-out" />
       </Button>
-      <span>100%</span>
+      <span>{zoomLevel}%</span>
       <Button
         variant="outline"
         size="icon"
+        onClick={handleZoomIn}
       >
         <Icon name="zoom-in" />
       </Button>

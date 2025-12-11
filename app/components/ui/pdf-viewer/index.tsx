@@ -9,6 +9,7 @@ import PdfContent from './pdf-content';
 import PdfLoader from './pdf-loader';
 import PdfLoadingError from './pdf-loading-error';
 import Dialog from '../dialog';
+import { PdfContextProvider } from './pdf-context';
 
 interface Props {
   documentProps?: DocumentProps;
@@ -26,15 +27,17 @@ function PdfViewer({ documentProps }: Props) {
         className="min-w-screen min-h-screen p-0"
         showCloseButton={false}
       >
-        <Document
-          {...documentProps}
-          onError={error => console.error(error)}
-          loading={<PdfLoader />}
-          error={<PdfLoadingError errorReason={errorStatus} />}
-          onLoadError={error => setErrorStatus(error.name)}
-        >
-          <PdfContent />
-        </Document>
+        <PdfContextProvider>
+          <Document
+            {...documentProps}
+            onError={error => console.error(error)}
+            loading={<PdfLoader />}
+            error={<PdfLoadingError errorReason={errorStatus} />}
+            onLoadError={error => setErrorStatus(error.name)}
+          >
+            <PdfContent />
+          </Document>
+        </PdfContextProvider>
       </Dialog.Content>
     </Dialog>
   );
