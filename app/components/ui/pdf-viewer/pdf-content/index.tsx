@@ -6,6 +6,7 @@ import PdfHeader from './pdf-header';
 import Card from '../../card';
 import PdfLoader from '../pdf-loader';
 import PdfLoadingError from '../pdf-loading-error';
+import PageList from './page-list';
 
 export interface PdfContentProps {
   documentProps: DocumentProps;
@@ -13,24 +14,28 @@ export interface PdfContentProps {
 
 function PdfContent({ documentProps }: PdfContentProps) {
   const [errorStatus, setErrorStatus] = useState<string>('');
+  const [pageCount, setPageCount] = useState<number>(0);
 
   return (
     <Card className="pointer-events-auto relative overflow-hidden border-none">
       <PdfHeader />
-      <Card.Content className="bg-accent mx-4 flex flex-col items-center justify-center gap-2 rounded-sm p-20">
-        <Document
-          {...documentProps}
-          onLoadSuccess={({ numPages }) => {
-            console.log('load success');
-          }}
-          onError={error => console.error(error)}
-          loading={<PdfLoader />}
-          error={<PdfLoadingError errorReason={errorStatus} />}
-          onLoadError={error => setErrorStatus(error.name)}
-        >
-          <p className="text-xl">Test Content</p>
-        </Document>
-      </Card.Content>
+
+      <Document
+        {...documentProps}
+        onLoadSuccess={({ numPages }) => {
+          setPageCount(numPages);
+        }}
+        onError={error => console.error(error)}
+        loading={<PdfLoader />}
+        error={<PdfLoadingError errorReason={errorStatus} />}
+        onLoadError={error => setErrorStatus(error.name)}
+      >
+        <Card.Content className="bg-accent relative mx-4 flex flex-col items-center justify-center gap-2 rounded-sm">
+          <div className="relative flex h-[calc(100vh-400px)] w-full flex-col items-center gap-4 overflow-y-auto overflow-x-hidden">
+            <PageList pageCount={pageCount} />
+          </div>
+        </Card.Content>
+      </Document>
     </Card>
   );
 }
