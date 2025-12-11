@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import PdfViewer from '@app/components/ui/pdf-viewer';
+import StorylineViewer from '@app/components/ui/storyline-viewer';
 import VideoPlayer from '@app/components/ui/video-player';
 
 export const Route = createFileRoute('/_main/education-list/')({
@@ -19,6 +20,7 @@ function RouteComponent() {
           file: '/public/pdf/test.pdf',
         }}
       />
+      <StorylineViewer />
     </>
   );
 }
