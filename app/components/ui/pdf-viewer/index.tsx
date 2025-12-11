@@ -8,6 +8,7 @@ import 'react-pdf/dist/Page/TextLayer.css';
 import PdfContent from './pdf-content';
 import PdfLoader from './pdf-loader';
 import PdfLoadingError from './pdf-loading-error';
+import Dialog from '../dialog';
 
 interface Props {
   documentProps?: DocumentProps;
@@ -19,16 +20,23 @@ function PdfViewer({ documentProps }: Props) {
   const [errorStatus, setErrorStatus] = useState<string>('');
 
   return (
-    <Document
-      {...documentProps}
-      onError={error => console.error(error)}
-      loading={<PdfLoader />}
-      error={<PdfLoadingError errorReason={errorStatus} />}
-      onLoadError={error => setErrorStatus(error.name)}
-    >
-      <PdfContent />
-      {/* <Page pageNumber={1} /> */}
-    </Document>
+    <Dialog>
+      <Dialog.Trigger>xx</Dialog.Trigger>
+      <Dialog.Content
+        className="min-h-[90vh] min-w-[90vw] p-0"
+        showCloseButton={false}
+      >
+        <Document
+          {...documentProps}
+          onError={error => console.error(error)}
+          loading={<PdfLoader />}
+          error={<PdfLoadingError errorReason={errorStatus} />}
+          onLoadError={error => setErrorStatus(error.name)}
+        >
+          <PdfContent />
+        </Document>
+      </Dialog.Content>
+    </Dialog>
   );
 }
 
