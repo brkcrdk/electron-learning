@@ -7,7 +7,6 @@ import type { ApiResponseProps } from '../types/api-response-types';
 
 function getCurrentUserHandler() {
   ipcMain.handle('get-current-user', async (): ApiResponseProps<User> => {
-    console.log('current user requested');
     try {
       const currentUser = getCurrentUser();
 

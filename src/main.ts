@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises';
 import path from 'node:path';
 
 import { app, BrowserWindow } from 'electron';
@@ -48,7 +49,14 @@ const createWindow = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', () => {
+app.on('ready', async () => {
+  // İçerik klasörlerini oluştur
+  const contentRoot = path.join(app.getPath('userData'), 'content');
+  console.log('contentRoot', contentRoot);
+  await fs.mkdir(path.join(contentRoot, 'videos'), { recursive: true });
+  await fs.mkdir(path.join(contentRoot, 'pdfs'), { recursive: true });
+  await fs.mkdir(path.join(contentRoot, 'stories'), { recursive: true });
+
   // IPC handler'larını kaydet
   registerApiHandlers();
   registerStoreHandlers();
