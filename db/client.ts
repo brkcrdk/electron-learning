@@ -16,7 +16,7 @@ function getDatabasePath() {
   if (import.meta.env.PROD) {
     return path.join(app.getPath('userData'), 'app.db');
   } else {
-    return './app.db';
+    return './development.db';
   }
 }
 
