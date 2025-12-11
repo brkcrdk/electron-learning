@@ -51,8 +51,10 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
-  // Veritabanını başlat (tablolar yoksa oluştur)
-  await initializeDatabase();
+  if (import.meta.env.PROD) {
+    // Veritabanını başlat (tablolar yoksa oluştur)
+    await initializeDatabase();
+  }
 
   // İçerik klasörlerini oluştur
   const contentRoot = path.join(app.getPath('userData'), 'content');
