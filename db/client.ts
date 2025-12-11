@@ -7,18 +7,18 @@ import { app } from 'electron';
 
 import * as schema from './schema';
 
-export const getDatabasePath = (): string => {
-  // app.getPath('userData') genelde app.isReady() olmadan da çalışır
-  // Ama güvenli olan kontrol etmek
-  if (app && app.isReady()) {
+/**
+ * Veritabanı dosyasının path'ini döndürür
+ * - Production: userData içindeki app.db
+ * - Development: ./app.db
+ */
+function getDatabasePath() {
+  if (import.meta.env.PROD) {
     return path.join(app.getPath('userData'), 'app.db');
+  } else {
+    return './app.db';
   }
-
-  // Eğer app henüz hazır değilse, userData path'ini manuel oluştur
-  // veya app.isReady() bekleyebiliriz
-  // Ama genelde bu durum oluşmaz çünkü db import'u app.on('ready') sonrası yapılır
-  return path.join(app.getPath('userData'), 'app.db');
-};
+}
 
 const DATABASE_URL = `file:${getDatabasePath()}`;
 
@@ -31,7 +31,7 @@ export const db = drizzle(client, { schema });
 /**
  * Veritabanını başlatır - migration dosyalarını çalıştırarak tabloları oluşturur
  */
-export const initializeDatabase = async (): Promise<void> => {
+export async function initializeDatabase() {
   try {
     // Migration dosyalarının path'ini belirle
     // Electron build edildiğinde migration dosyaları da build klasörüne kopyalanmalı
@@ -44,4 +44,4 @@ export const initializeDatabase = async (): Promise<void> => {
     console.error('Veritabanı başlatma hatası:', error);
     throw error;
   }
-};
+}
