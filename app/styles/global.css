@@ -2,6 +2,7 @@
 @import "./font/index.css";
 @import "./utilites.css";
 @import "./shadcn.css";
+@import "./vidstack.css";
 
 @theme {
   --font-poppins: "Poppins", sans-serif;

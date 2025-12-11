@@ -1,0 +1,7 @@
+/* 
+* NOTE: Playerın, layoutunu default kullanıyoruz ve bu layouttan google cast buttoni gizliyoruz.
+* Eğer kendimiz layout yapmaya karar verirsek bu stili kaldırabiliriz.
+*/
+.vds-google-cast-button{
+  display: none;
+}
