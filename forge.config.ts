@@ -30,9 +30,11 @@ const config: ForgeConfig = {
         const destPath = path.join(buildPath, 'node_modules', moduleName);
 
         if (await fs.pathExists(sourcePath)) {
-          console.log(`${moduleName} kopyalanıyor...`);
-          console.log('Kaynak:', sourcePath);
-          console.log('Hedef:', destPath);
+          // Cyan renk - bilgi mesajı
+          console.log(`\x1b[36m${moduleName} kopyalanıyor...\x1b[0m`);
+          // Gri renk - detay bilgileri
+          console.log(`\x1b[90mKaynak:\x1b[0m ${sourcePath}`);
+          console.log(`\x1b[90mHedef:\x1b[0m ${destPath}`);
 
           // Hedef klasörü oluştur
           await fs.ensureDir(path.dirname(destPath));
@@ -42,9 +44,11 @@ const config: ForgeConfig = {
             overwrite: true,
           });
 
-          console.log(`${moduleName} başarıyla kopyalandı!`);
+          // Yeşil renk - başarı mesajı
+          console.log(`\x1b[32m✓\x1b[0m \x1b[32m${moduleName} başarıyla kopyalandı!\x1b[0m`);
         } else {
-          console.warn(`${moduleName} node_modules içinde bulunamadı!`);
+          // Sarı renk - uyarı mesajı
+          console.warn(`\x1b[33m⚠\x1b[0m \x1b[33m${moduleName} node_modules içinde bulunamadı!\x1b[0m`);
         }
       }
     },

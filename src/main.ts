@@ -41,9 +41,7 @@ const createWindow = () => {
   }
 
   // Open the DevTools.
-  if (import.meta.env.DEV) {
-    mainWindow.webContents.openDevTools({ mode: 'detach' });
-  }
+  mainWindow.webContents.openDevTools({ mode: 'detach' });
 
   // Kaydedilmiş temayı uygula
   mainWindow.setBackgroundColor(store.get('theme.backgroundColor'));
