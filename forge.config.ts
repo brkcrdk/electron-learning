@@ -51,6 +51,30 @@ const config: ForgeConfig = {
           console.warn(`\x1b[33m⚠\x1b[0m \x1b[33m${moduleName} node_modules içinde bulunamadı!\x1b[0m`);
         }
       }
+
+      // Migration dosyalarını resources klasörüne kopyala
+      // GitHub discussion: https://github.com/drizzle-team/drizzle-orm/discussions/1891
+      const drizzleSourcePath = path.join(__dirname, 'drizzle');
+      // resources klasörüne kopyala (process.resourcesPath ile erişilebilir)
+      const drizzleDestPath = path.join(buildPath, 'resources', 'drizzle');
+
+      if (await fs.pathExists(drizzleSourcePath)) {
+        console.log('\x1b[36mMigration dosyaları kopyalanıyor...\x1b[0m');
+        console.log(`\x1b[90mKaynak:\x1b[0m ${drizzleSourcePath}`);
+        console.log(`\x1b[90mHedef:\x1b[0m ${drizzleDestPath}`);
+
+        // Hedef klasörü oluştur
+        await fs.ensureDir(drizzleDestPath);
+
+        // Drizzle klasörünü kopyala
+        await fs.copy(drizzleSourcePath, drizzleDestPath, {
+          overwrite: true,
+        });
+
+        console.log('\x1b[32m✓\x1b[0m \x1b[32mMigration dosyaları başarıyla kopyalandı!\x1b[0m');
+      } else {
+        console.warn(`\x1b[33m⚠\x1b[0m \x1b[33mDrizzle klasörü bulunamadı: ${drizzleSourcePath}\x1b[0m`);
+      }
     },
   },
   makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],

@@ -5,7 +5,7 @@ import started from 'electron-squirrel-startup';
 
 import { users } from '@db/schema';
 
-import { db } from '../db/client';
+import { getDb, initializeDatabase } from '../db/client';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -44,16 +44,26 @@ const createWindow = () => {
   // Kaydedilmiş temayı uygula
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.whenReady().then(async () => {
-  ipcMain.handle('get-current-user', async () => {
+// IPC handler'ı önce kaydet (veritabanı hazır olana kadar bekler)
+ipcMain.handle('get-current-user', async () => {
+  try {
+    const db = getDb();
     const userList = await db.select().from(users);
     console.log(userList);
 
     return userList;
-  });
+  } catch (error) {
+    console.error('get-current-user hatası:', error);
+    throw error;
+  }
+});
+
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.whenReady().then(async () => {
+  // Veritabanını başlat
+  await initializeDatabase(app);
   // Window'u oluştur
   createWindow();
 });
