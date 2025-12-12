@@ -17,29 +17,38 @@ async function copyNativeModules(buildPath: string): Promise<void> {
   const projectRoot = cwd();
 
   for (const moduleName of modulesToCopy) {
-    const sourcePath = path.join(projectRoot, 'node_modules', moduleName);
-    const destPath = path.join(buildPath, 'node_modules', moduleName);
+    try {
+      const sourcePath = path.join(projectRoot, 'node_modules', moduleName);
+      const destPath = path.join(buildPath, 'node_modules', moduleName);
 
-    if (await fs.pathExists(sourcePath)) {
-      // Cyan renk - bilgi mesajı
-      console.log(`\x1b[36m${moduleName} kopyalanıyor...\x1b[0m`);
-      // Gri renk - detay bilgileri
-      console.log(`\x1b[90mKaynak:\x1b[0m ${sourcePath}`);
-      console.log(`\x1b[90mHedef:\x1b[0m ${destPath}`);
+      if (await fs.pathExists(sourcePath)) {
+        // Cyan renk - bilgi mesajı
+        console.log(`\x1b[36m${moduleName} kopyalanıyor...\x1b[0m`);
+        // Gri renk - detay bilgileri
+        console.log(`\x1b[90mKaynak:\x1b[0m ${sourcePath}`);
+        console.log(`\x1b[90mHedef:\x1b[0m ${destPath}`);
 
-      // Hedef klasörü oluştur
-      await fs.ensureDir(path.dirname(destPath));
+        // Hedef klasörü oluştur
+        await fs.ensureDir(path.dirname(destPath));
 
-      // Modülü kopyala
-      await fs.copy(sourcePath, destPath, {
-        overwrite: true,
+        // Modülü kopyala
+        await fs.copy(sourcePath, destPath, {
+          overwrite: true,
+        });
+
+        // Yeşil renk - başarı mesajı
+        console.log(`\x1b[32m✓\x1b[0m \x1b[32m${moduleName} başarıyla kopyalandı!\x1b[0m`);
+      } else {
+        // Sarı renk - uyarı mesajı
+        console.warn(`\x1b[33m⚠\x1b[0m \x1b[33m${moduleName} node_modules içinde bulunamadı!\x1b[0m`);
+      }
+    } catch (error) {
+      // Kırmızı renk - hata mesajı
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.error(`\x1b[31m✗\x1b[0m \x1b[31m${moduleName} kopyalanırken hata oluştu:\x1b[0m ${errorMessage}`);
+      throw new Error(`Native modül kopyalama hatası (${moduleName}): ${errorMessage}`, {
+        cause: error,
       });
-
-      // Yeşil renk - başarı mesajı
-      console.log(`\x1b[32m✓\x1b[0m \x1b[32m${moduleName} başarıyla kopyalandı!\x1b[0m`);
-    } else {
-      // Sarı renk - uyarı mesajı
-      console.warn(`\x1b[33m⚠\x1b[0m \x1b[33m${moduleName} node_modules içinde bulunamadı!\x1b[0m`);
     }
   }
 }
