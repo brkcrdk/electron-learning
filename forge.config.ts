@@ -10,12 +10,7 @@ import type { ForgeConfig } from '@electron-forge/shared-types';
 
 const config: ForgeConfig = {
   packagerConfig: {
-    asar: {
-      // @libsql modüllerini ve native binary'lerini unpack et
-      // AutoUnpackNativesPlugin sadece .node dosyalarını unpack eder,
-      // @libsql platforma özel binary'ler içerdiği için manuel unpack gerekiyor
-      unpack: '**/node_modules/@libsql/**',
-    },
+    asar: true,
   },
   rebuildConfig: {},
   makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],

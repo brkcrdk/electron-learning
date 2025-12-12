@@ -1,8 +1,8 @@
 import path from 'path';
 
-import { createClient } from '@libsql/client';
-import { drizzle } from 'drizzle-orm/libsql';
-import { migrate } from 'drizzle-orm/libsql/migrator';
+import Database from 'better-sqlite3';
+import { drizzle } from 'drizzle-orm/better-sqlite3';
+import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 import { app } from 'electron';
 
 import * as schema from './schema';
@@ -20,13 +20,10 @@ function getDatabasePath() {
   }
 }
 
-const DATABASE_URL = `file:${getDatabasePath()}`;
+const sqlite = new Database(getDatabasePath());
+sqlite.pragma('journal_mode = WAL'); // Performans için
 
-const client = createClient({
-  url: DATABASE_URL,
-});
-
-export const db = drizzle(client, { schema });
+export const db = drizzle(sqlite, { schema });
 
 /**
  * Veritabanını başlatır - migration dosyalarını çalıştırarak tabloları oluşturur
