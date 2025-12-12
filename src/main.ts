@@ -1,12 +1,9 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import started from 'electron-squirrel-startup';
 
-import registerApiHandlers from '../api';
-import { initializeDatabase } from '../db/client';
-import registerStoreHandlers from '../store';
 import { store } from '../store';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -51,24 +48,9 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(async () => {
-  /**
-   * Uygulama production ortamında ise veritabanını başlat
-   */
-  if (import.meta.env.PROD) {
-    await initializeDatabase();
-  }
-
-  // İçerik klasörlerini oluştur
-  const contentRoot = path.join(app.getPath('userData'), 'content');
-  console.log('contentRoot', contentRoot);
-  await fs.mkdir(path.join(contentRoot, 'videos'), { recursive: true });
-  await fs.mkdir(path.join(contentRoot, 'pdfs'), { recursive: true });
-  await fs.mkdir(path.join(contentRoot, 'stories'), { recursive: true });
-
-  // IPC handler'larını kaydet
-  registerApiHandlers();
-  registerStoreHandlers();
-
+  ipcMain.handle('get-current-user', async () => {
+    return 'currentUser';
+  });
   // Window'u oluştur
   createWindow();
 });
