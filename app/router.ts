@@ -1,4 +1,4 @@
-import { createRouter } from '@tanstack/react-router';
+import { createHashHistory, createRouter } from '@tanstack/react-router';
 
 import { routeTree } from './routeTree.gen';
 
@@ -8,7 +8,10 @@ declare module '@tanstack/react-router' {
   }
 }
 
+const hashHistory = createHashHistory();
+
 export const router = createRouter({
   defaultPendingMinMs: 0,
   routeTree,
+  history: hashHistory,
 });
