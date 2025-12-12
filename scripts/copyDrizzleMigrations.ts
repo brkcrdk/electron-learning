@@ -5,9 +5,11 @@ import fs from 'fs-extra';
 
 /**
  * Drizzle migration dosyalarını resources klasörüne kopyalar
- * GitHub discussion: https://github.com/drizzle-team/drizzle-orm/discussions/1891
+ * Migration dosyaları kopyalama sırasında hata oluşursa Error fırlatır
+ *
+ * @see https://github.com/drizzle-team/drizzle-orm/discussions/1891
  */
-async function copyDrizzleMigrations(buildPath: string): Promise<void> {
+async function copyDrizzleMigrations(buildPath: string) {
   try {
     const drizzleSourcePath = path.join(cwd(), 'drizzle');
     // resources klasörüne kopyala (process.resourcesPath ile erişilebilir)

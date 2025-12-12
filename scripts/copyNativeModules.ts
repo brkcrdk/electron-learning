@@ -11,8 +11,9 @@ export const NATIVE_MODULES = ['better-sqlite3', 'bindings', 'file-uri-to-path']
 
 /**
  * Native modülleri build path'e kopyalar
+ * Modül kopyalama sırasında hata oluşursa Error fırlatır
  */
-async function copyNativeModules(buildPath: string): Promise<void> {
+async function copyNativeModules(buildPath: string) {
   const modulesToCopy = NATIVE_MODULES;
   const projectRoot = cwd();
 
