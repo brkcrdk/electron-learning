@@ -8,7 +8,7 @@ import type { App } from 'electron';
 
 import * as schema from './schema';
 
-let sqlite: Database.Database | null = null;
+let sqlite: InstanceType<typeof Database> | null = null;
 let db: ReturnType<typeof drizzle> | null = null;
 
 /**
@@ -20,7 +20,8 @@ function getDatabasePath(app: App) {
   if (app.isPackaged) {
     return path.join(app.getPath('userData'), 'app.db');
   }
-  return './development.db';
+  // Development: Proje kökündeki development.db dosyası
+  return path.resolve(__dirname, '../../development.db');
 }
 
 /**
@@ -53,7 +54,7 @@ export function getDb() {
  * Veritabanını başlatır - migration dosyalarını çalıştırarak tabloları oluşturur
  * app.whenReady() içinde çağrılmalıdır
  */
-export async function initializeDatabase(app: App) {
+export function initializeDatabase(app: App) {
   try {
     if (sqlite || db) {
       console.warn('Veritabanı zaten başlatılmış.');
@@ -78,14 +79,29 @@ export async function initializeDatabase(app: App) {
       throw new Error(`Migration klasörü bulunamadı: ${migrationsFolder}`);
     }
 
-    // Migration dosyalarını listele (debug için)
-    const migrationFiles = fs.readdirSync(migrationsFolder);
-    console.log('Bulunan migration dosyaları:', migrationFiles);
+    // Migration dosyalarını listele (sadece development'ta)
+    if (!app.isPackaged) {
+      const migrationFiles = fs.readdirSync(migrationsFolder);
+      console.log('Bulunan migration dosyaları:', migrationFiles);
+    }
 
     migrate(db, { migrationsFolder });
     console.log('✓ Veritabanı başarıyla başlatıldı.');
   } catch (error) {
     console.error('Veritabanı başlatma hatası:', error);
     throw error;
+  }
+}
+
+/**
+ * Veritabanı bağlantısını kapatır
+ * Genellikle uygulama kapanırken veya test sırasında kullanılır
+ */
+export function closeDatabase() {
+  if (sqlite) {
+    sqlite.close();
+    sqlite = null;
+    db = null;
+    console.log('Veritabanı bağlantısı kapatıldı.');
   }
 }
