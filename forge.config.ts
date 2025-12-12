@@ -1,3 +1,5 @@
+import path from 'path';
+
 import { FuseV1Options, FuseVersion } from '@electron/fuses';
 import { MakerDeb } from '@electron-forge/maker-deb';
 import { MakerRpm } from '@electron-forge/maker-rpm';
@@ -7,12 +9,46 @@ import { AutoUnpackNativesPlugin } from '@electron-forge/plugin-auto-unpack-nati
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { VitePlugin } from '@electron-forge/plugin-vite';
 import type { ForgeConfig } from '@electron-forge/shared-types';
+import fs from 'fs-extra';
 
 const config: ForgeConfig = {
   packagerConfig: {
-    asar: true,
+    asar: {
+      unpack: '**/node_modules/{better-sqlite3,bindings,file-uri-to-path}/**',
+    },
   },
-  rebuildConfig: {},
+  rebuildConfig: {
+    onlyModules: ['better-sqlite3'],
+  },
+  hooks: {
+    packageAfterCopy: async (config, buildPath) => {
+      // Kopyalanacak native modüller ve bağımlılıkları
+      const modulesToCopy = ['better-sqlite3', 'bindings', 'file-uri-to-path'];
+
+      for (const moduleName of modulesToCopy) {
+        const sourcePath = path.join(__dirname, 'node_modules', moduleName);
+        const destPath = path.join(buildPath, 'node_modules', moduleName);
+
+        if (await fs.pathExists(sourcePath)) {
+          console.log(`${moduleName} kopyalanıyor...`);
+          console.log('Kaynak:', sourcePath);
+          console.log('Hedef:', destPath);
+
+          // Hedef klasörü oluştur
+          await fs.ensureDir(path.dirname(destPath));
+
+          // Modülü kopyala
+          await fs.copy(sourcePath, destPath, {
+            overwrite: true,
+          });
+
+          console.log(`${moduleName} başarıyla kopyalandı!`);
+        } else {
+          console.warn(`${moduleName} node_modules içinde bulunamadı!`);
+        }
+      }
+    },
+  },
   makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
   plugins: [
     new AutoUnpackNativesPlugin({}),
