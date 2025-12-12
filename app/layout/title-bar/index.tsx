@@ -31,7 +31,7 @@ function TitleBar() {
         </div>
       </nav>
       <div className="webkit-no-draggable flex items-center gap-2">
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
         <UserActions />
       </div>
     </div>

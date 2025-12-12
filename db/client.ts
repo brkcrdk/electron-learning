@@ -3,7 +3,7 @@ import path from 'path';
 import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
-import { app } from 'electron';
+// import { app } from 'electron';
 
 import * as schema from './schema';
 
@@ -13,11 +13,11 @@ import * as schema from './schema';
  * - Development: ./app.db
  */
 function getDatabasePath() {
-  if (import.meta.env.PROD) {
-    return path.join(app.getPath('userData'), 'app.db');
-  } else {
-    return './development.db';
-  }
+  return './development.db';
+  // if (import.meta.env.PROD) {
+  //   return path.join(app.getPath('userData'), 'app.db');
+  // } else {
+  // }
 }
 
 const sqlite = new Database(getDatabasePath());
@@ -35,7 +35,7 @@ export async function initializeDatabase() {
     const migrationsFolder = path.join(__dirname, '../../drizzle');
 
     console.log('Veritabanı migration dosyaları uygulanıyor...');
-    await migrate(db, { migrationsFolder });
+    migrate(db, { migrationsFolder });
     console.log('Veritabanı başarıyla başlatıldı.');
   } catch (error) {
     console.error('Veritabanı başlatma hatası:', error);

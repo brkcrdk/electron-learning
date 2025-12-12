@@ -1,10 +1,9 @@
-import fs from 'node:fs/promises';
 import path from 'node:path';
 
 import { app, BrowserWindow, ipcMain } from 'electron';
 import started from 'electron-squirrel-startup';
 
-import { store } from '../store';
+import { db } from '../db/client';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -41,7 +40,6 @@ const createWindow = () => {
   mainWindow.webContents.openDevTools({ mode: 'detach' });
 
   // Kaydedilmiş temayı uygula
-  mainWindow.setBackgroundColor(store.get('theme.backgroundColor'));
 };
 
 // This method will be called when Electron has finished

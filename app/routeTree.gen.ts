@@ -9,151 +9,38 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as LogoutRouteImport } from './routes/logout'
-import { Route as MainRouteImport } from './routes/_main'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as MainDashboardRouteImport } from './routes/_main/dashboard'
-import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
-import { Route as AuthLoginRouteImport } from './routes/_auth/login'
-import { Route as MainUsersIndexRouteImport } from './routes/_main/users/index'
-import { Route as MainEducationListIndexRouteImport } from './routes/_main/education-list/index'
-import { Route as MainCategoriesIndexRouteImport } from './routes/_main/categories/index'
 
-const LogoutRoute = LogoutRouteImport.update({
-  id: '/logout',
-  path: '/logout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MainRoute = MainRouteImport.update({
-  id: '/_main',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MainDashboardRoute = MainDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => MainRoute,
-} as any)
-const AuthSignupRoute = AuthSignupRouteImport.update({
-  id: '/_auth/signup',
-  path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthLoginRoute = AuthLoginRouteImport.update({
-  id: '/_auth/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MainUsersIndexRoute = MainUsersIndexRouteImport.update({
-  id: '/users/',
-  path: '/users/',
-  getParentRoute: () => MainRoute,
-} as any)
-const MainEducationListIndexRoute = MainEducationListIndexRouteImport.update({
-  id: '/education-list/',
-  path: '/education-list/',
-  getParentRoute: () => MainRoute,
-} as any)
-const MainCategoriesIndexRoute = MainCategoriesIndexRouteImport.update({
-  id: '/categories/',
-  path: '/categories/',
-  getParentRoute: () => MainRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/logout': typeof LogoutRoute
-  '/login': typeof AuthLoginRoute
-  '/signup': typeof AuthSignupRoute
-  '/dashboard': typeof MainDashboardRoute
-  '/categories': typeof MainCategoriesIndexRoute
-  '/education-list': typeof MainEducationListIndexRoute
-  '/users': typeof MainUsersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/logout': typeof LogoutRoute
-  '/login': typeof AuthLoginRoute
-  '/signup': typeof AuthSignupRoute
-  '/dashboard': typeof MainDashboardRoute
-  '/categories': typeof MainCategoriesIndexRoute
-  '/education-list': typeof MainEducationListIndexRoute
-  '/users': typeof MainUsersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_main': typeof MainRouteWithChildren
-  '/logout': typeof LogoutRoute
-  '/_auth/login': typeof AuthLoginRoute
-  '/_auth/signup': typeof AuthSignupRoute
-  '/_main/dashboard': typeof MainDashboardRoute
-  '/_main/categories/': typeof MainCategoriesIndexRoute
-  '/_main/education-list/': typeof MainEducationListIndexRoute
-  '/_main/users/': typeof MainUsersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/logout'
-    | '/login'
-    | '/signup'
-    | '/dashboard'
-    | '/categories'
-    | '/education-list'
-    | '/users'
+  fullPaths: '/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/logout'
-    | '/login'
-    | '/signup'
-    | '/dashboard'
-    | '/categories'
-    | '/education-list'
-    | '/users'
-  id:
-    | '__root__'
-    | '/'
-    | '/_main'
-    | '/logout'
-    | '/_auth/login'
-    | '/_auth/signup'
-    | '/_main/dashboard'
-    | '/_main/categories/'
-    | '/_main/education-list/'
-    | '/_main/users/'
+  to: '/'
+  id: '__root__' | '/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  MainRoute: typeof MainRouteWithChildren
-  LogoutRoute: typeof LogoutRoute
-  AuthLoginRoute: typeof AuthLoginRoute
-  AuthSignupRoute: typeof AuthSignupRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/logout': {
-      id: '/logout'
-      path: '/logout'
-      fullPath: '/logout'
-      preLoaderRoute: typeof LogoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_main': {
-      id: '/_main'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof MainRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -161,73 +48,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_main/dashboard': {
-      id: '/_main/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof MainDashboardRouteImport
-      parentRoute: typeof MainRoute
-    }
-    '/_auth/signup': {
-      id: '/_auth/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof AuthSignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_auth/login': {
-      id: '/_auth/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof AuthLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_main/users/': {
-      id: '/_main/users/'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof MainUsersIndexRouteImport
-      parentRoute: typeof MainRoute
-    }
-    '/_main/education-list/': {
-      id: '/_main/education-list/'
-      path: '/education-list'
-      fullPath: '/education-list'
-      preLoaderRoute: typeof MainEducationListIndexRouteImport
-      parentRoute: typeof MainRoute
-    }
-    '/_main/categories/': {
-      id: '/_main/categories/'
-      path: '/categories'
-      fullPath: '/categories'
-      preLoaderRoute: typeof MainCategoriesIndexRouteImport
-      parentRoute: typeof MainRoute
-    }
   }
 }
 
-interface MainRouteChildren {
-  MainDashboardRoute: typeof MainDashboardRoute
-  MainCategoriesIndexRoute: typeof MainCategoriesIndexRoute
-  MainEducationListIndexRoute: typeof MainEducationListIndexRoute
-  MainUsersIndexRoute: typeof MainUsersIndexRoute
-}
-
-const MainRouteChildren: MainRouteChildren = {
-  MainDashboardRoute: MainDashboardRoute,
-  MainCategoriesIndexRoute: MainCategoriesIndexRoute,
-  MainEducationListIndexRoute: MainEducationListIndexRoute,
-  MainUsersIndexRoute: MainUsersIndexRoute,
-}
-
-const MainRouteWithChildren = MainRoute._addFileChildren(MainRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  MainRoute: MainRouteWithChildren,
-  LogoutRoute: LogoutRoute,
-  AuthLoginRoute: AuthLoginRoute,
-  AuthSignupRoute: AuthSignupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
