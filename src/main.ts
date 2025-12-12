@@ -41,7 +41,7 @@ const createWindow = () => {
   }
 
   // Open the DevTools.
-  if (!import.meta.env.DEV) {
+  if (import.meta.env.DEV) {
     mainWindow.webContents.openDevTools({ mode: 'detach' });
   }
 
