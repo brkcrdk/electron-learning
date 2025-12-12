@@ -3,7 +3,7 @@ import path from 'node:path';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import started from 'electron-squirrel-startup';
 
-import { users } from '@db/schema';
+import { users, type User } from '@db/schema';
 
 import { closeDatabase, getDb, initializeDatabase } from '../db/client';
 
@@ -38,18 +38,26 @@ const createWindow = () => {
     mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   }
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools({ mode: 'detach' });
+  // Open DevTools only in development
+  if (!app.isPackaged) {
+    mainWindow.webContents.openDevTools({ mode: 'detach' });
+  }
 
   // Kaydedilmiş temayı uygula
 };
 
-// IPC handler'ı önce kaydet (veritabanı hazır olana kadar bekler)
-ipcMain.handle('get-current-user', async () => {
+/**
+ * IPC handler: Kullanıcı listesini döndürür
+ */
+ipcMain.handle('get-current-user', async (): Promise<User[]> => {
   try {
     const db = getDb();
     const userList = await db.select().from(users);
-    console.log(userList);
+
+    // Log only in development
+    if (!app.isPackaged) {
+      console.log('Kullanıcı listesi:', userList);
+    }
 
     return userList;
   } catch (error) {
@@ -58,9 +66,10 @@ ipcMain.handle('get-current-user', async () => {
   }
 });
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+/**
+ * Electron başlatıldığında çalışır
+ * Veritabanını başlatır ve ana pencereyi oluşturur
+ */
 app.whenReady().then(() => {
   // Veritabanını başlat
   initializeDatabase(app);
@@ -68,28 +77,28 @@ app.whenReady().then(() => {
   createWindow();
 });
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
+/**
+ * Tüm pencereler kapatıldığında uygulamayı kapat
+ * macOS'ta menü çubuğu aktif kalır, Cmd + Q ile kapatılır
+ */
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
+/**
+ * macOS'ta dock ikonuna tıklandığında pencereyi yeniden oluştur
+ */
 app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
 });
 
-// Uygulama kapanırken veritabanı bağlantısını kapat
+/**
+ * Uygulama kapanırken veritabanı bağlantısını kapat
+ */
 app.on('will-quit', () => {
   closeDatabase();
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
-// IPC handler'lar artık src/ipc/ klasöründe organize edilmiştir.
