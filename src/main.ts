@@ -3,6 +3,8 @@ import path from 'node:path';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import started from 'electron-squirrel-startup';
 
+import { users } from '@db/schema';
+
 import { db } from '../db/client';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -47,7 +49,10 @@ const createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(async () => {
   ipcMain.handle('get-current-user', async () => {
-    return 'currentUser';
+    const userList = await db.select().from(users);
+    console.log(userList);
+
+    return userList;
   });
   // Window'u oluştur
   createWindow();

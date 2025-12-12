@@ -7,7 +7,10 @@ export const Route = createFileRoute('/')({
 });
 
 function IndexComponent() {
-  async function testApi() {}
+  async function testApi() {
+    const response = await window.electronAPI.getCurrentUser();
+    console.log(response);
+  }
 
   return (
     <div className="flex size-full h-svh items-center justify-center">
