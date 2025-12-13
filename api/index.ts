@@ -7,7 +7,7 @@ import checkSuperAdminHandler from './check-super-admin';
 // import getCategoryListHandler from './get-category-list';
 import getCurrentUserHandler from './get-current-user';
 // import getUserListHandler from './get-user-list';
-// import loginHandler from './login';
+import loginHandler from './login';
 // import logoutHandler from './logout';
 // import updateCategoryHandler from './update-category';
 // import updateUserHandler from './update-user';
@@ -18,7 +18,7 @@ function registerApiHandlers() {
   checkSuperAdminHandler();
   // createSuperAdminHandler();
   getCurrentUserHandler();
-  // loginHandler();
+  loginHandler();
   // logoutHandler();
   // updateUserHandler();
   // deleteUserHandler();

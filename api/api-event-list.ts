@@ -1,7 +1,8 @@
 import { ipcRenderer } from 'electron';
 
-import type { User } from '@db/schema';
+import type { Category, NewCategoryPayload, NewUserPayload, User } from '@db/schema';
 
+import type { LoginPayload } from './login';
 import type { ApiResponseProps } from '../types/api-response-types';
 
 const apiEventList = {
@@ -13,14 +14,22 @@ const apiEventList = {
    * NOTE: Super admin veritabnında sadece bir tane olmalıdır.
    */
   checkSuperAdminExists: (): ApiResponseProps<boolean> => ipcRenderer.invoke('check-super-admin-exists'),
+  login: (data: LoginPayload): ApiResponseProps<User> => ipcRenderer.invoke('login', data),
+  logout: (): ApiResponseProps<string> => ipcRenderer.invoke('logout'),
 
   // User services
+  createUser: (data: NewUserPayload) => ipcRenderer.invoke('create-user', data),
+  getUserList: (): ApiResponseProps<User[]> => ipcRenderer.invoke('get-user-list'),
+  createSuperAdmin: (data: NewUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-super-admin', data),
   getCurrentUser: (): ApiResponseProps<User> => ipcRenderer.invoke('get-current-user'),
-  // createUser: (data: NewUserPayload) => ipcRenderer.invoke('create-user', data),
-  // getUserList: (): ApiResponseProps<User[]> => ipcRenderer.invoke('get-user-list'),
-  // createSuperAdmin: (data: NewUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-super-admin', data),
-  // updateUser: (data: NewUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-user', data),
-  // deleteUser: (data: User['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-user', data),
+  updateUser: (data: NewUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-user', data),
+  deleteUser: (data: User['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-user', data),
+
+  // Category services
+  getCategoryList: (): ApiResponseProps<Category[]> => ipcRenderer.invoke('get-category-list'),
+  createCategory: (data: NewCategoryPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-category', data),
+  updateCategory: (data: NewCategoryPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-category', data),
+  deleteCategory: (data: Category['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-category', data),
 } as const;
 
 export default apiEventList;

@@ -1,11 +1,11 @@
 import path from 'node:path';
 
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import started from 'electron-squirrel-startup';
 
-import { users, type User } from '@db/schema';
+import registerApiHandlers from '@api/index';
+import { closeDatabase, initializeDatabase } from '@db/client';
 
-import { closeDatabase, getDb, initializeDatabase } from '../db/client';
 import registerStoreHandlers, { store } from '../store';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -50,26 +50,6 @@ const createWindow = () => {
 };
 
 /**
- * IPC handler: Kullanıcı listesini döndürür
- */
-ipcMain.handle('get-current-user', async (): Promise<User[]> => {
-  try {
-    const db = getDb();
-    const userList = await db.select().from(users);
-
-    // Log only in development
-    if (!app.isPackaged) {
-      console.log('Kullanıcı listesi:', userList);
-    }
-
-    return userList;
-  } catch (error) {
-    console.error('get-current-user hatası:', error);
-    throw error;
-  }
-});
-
-/**
  * Electron başlatıldığında çalışır
  * Veritabanını başlatır ve ana pencereyi oluşturur
  */
@@ -87,7 +67,7 @@ app.whenReady().then(async () => {
     // await fs.mkdir(path.join(contentRoot, 'stories'), { recursive: true });
 
     // // IPC handler'larını kaydet
-    // registerApiHandlers();
+    registerApiHandlers();
     registerStoreHandlers();
   } catch (error) {
     // Migration hatası olsa bile window'u aç - kullanıcı hata mesajını görebilsin
