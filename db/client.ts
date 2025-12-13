@@ -66,6 +66,7 @@ export function initializeDatabase(app: App) {
 
     sqlite = new Database(dbPath);
     sqlite.pragma('journal_mode = WAL'); // Performans için
+    sqlite.pragma('foreign_keys = ON'); // Foreign key constraint'lerini aktif et
 
     db = drizzle(sqlite, { schema });
 
