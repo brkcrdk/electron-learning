@@ -1,50 +1,12 @@
-import { useEffect, useState } from 'react';
-
-import { createFileRoute } from '@tanstack/react-router';
-
-import Button from '@app/components/ui/button';
-import Icon from '@app/components/ui/icon';
-
-import type { ThemeType } from '../../store/theme';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/')({
-  component: IndexComponent,
-});
-
-function IndexComponent() {
-  const [theme, setTheme] = useState<ThemeType>('light');
-
-  useEffect(() => {
-    const getTheme = async () => {
-      const theme = await window.store.getTheme();
-      setTheme(theme.id);
-    };
-
-    getTheme();
-  }, []);
-
-  const toggleTheme = async () => {
-    if (theme === 'light') {
-      await window.store.setTheme('dark');
-      document.documentElement.classList.add('dark');
-      document.documentElement.style.colorScheme = 'dark';
-      document.documentElement.classList.remove('light');
-      setTheme('dark');
+  beforeLoad: async () => {
+    const currentUser = await window.electronAPI.getCurrentUser();
+    if (currentUser.success) {
+      throw redirect({ to: '/dashboard' });
     } else {
-      await window.store.setTheme('light');
-      document.documentElement.classList.remove('dark');
-      document.documentElement.classList.add('light');
-      document.documentElement.style.colorScheme = 'light';
-      setTheme('light');
+      throw redirect({ to: '/login', replace: true });
     }
-  };
-  return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={toggleTheme}
-    >
-      <Icon name="contrast-filled" />
-    </Button>
-  );
-}
+  },
+});
