@@ -3,13 +3,16 @@ import path from 'path';
 
 import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
+import type { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 import type { App } from 'electron';
 
 import * as schema from './schema';
 
+type DatabaseInstance = BetterSQLite3Database<typeof schema>;
+
 let sqlite: InstanceType<typeof Database> | null = null;
-let db: ReturnType<typeof drizzle> | null = null;
+let db: DatabaseInstance | null = null;
 
 /**
  * Veritabanı dosyasının path'ini döndürür
@@ -42,8 +45,9 @@ function getMigrationsPath(app: App) {
 
 /**
  * Veritabanı bağlantısını döndürür
+ * Schema'ya yeni tablolar eklendiğinde tip güvenliği otomatik olarak güncellenir
  */
-export function getDb() {
+export function getDb(): DatabaseInstance {
   if (!db) {
     throw new Error('Veritabanı henüz başlatılmadı. initializeDatabase() çağrılmalı.');
   }
