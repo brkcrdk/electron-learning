@@ -21,6 +21,7 @@ const createWindow = () => {
     minHeight: 600,
     title: 'Electron Learning',
     center: true,
+    show: true, // Window'u hemen göster
     titleBarStyle: 'hidden',
     trafficLightPosition: {
       x: 18,
@@ -71,10 +72,16 @@ ipcMain.handle('get-current-user', async (): Promise<User[]> => {
  * Veritabanını başlatır ve ana pencereyi oluşturur
  */
 app.whenReady().then(() => {
-  // Veritabanını başlat
-  initializeDatabase(app);
-  // Window'u oluştur
-  createWindow();
+  try {
+    // Veritabanını başlat
+    initializeDatabase(app);
+    // Window'u oluştur
+    createWindow();
+  } catch (error) {
+    // Migration hatası olsa bile window'u aç - kullanıcı hata mesajını görebilsin
+    console.error('Veritabanı başlatma hatası:', error);
+    createWindow();
+  }
 });
 
 /**
