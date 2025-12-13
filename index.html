@@ -1,18 +1,22 @@
 <!doctype html>
-<html class="dark" style="color-scheme: dark;">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="./app/styles/global.css" />
-    <!-- <script>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="./app/styles/global.css" />
+  
+  <script>
     (async () => {
-        const theme = await window.store.getTheme();
-        document.documentElement.classList.add(theme.id);
-        document.documentElement.style.colorScheme = theme.id;
-      })();
-    </script> -->
+      const theme = await window.store.getTheme();
+      document.documentElement.classList.add(theme.id);
+      document.documentElement.style.colorScheme = theme.id;
+    })();
+  </script>
   </head>
+
   <body>
     <div id="root"></div>
     <script type="module" src="/src/renderer.tsx"></script>
   </body>
+
 </html>

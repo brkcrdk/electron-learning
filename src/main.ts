@@ -6,7 +6,7 @@ import started from 'electron-squirrel-startup';
 import { users, type User } from '@db/schema';
 
 import { closeDatabase, getDb, initializeDatabase } from '../db/client';
-import { store } from '../store';
+import registerStoreHandlers, { store } from '../store';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -88,7 +88,7 @@ app.whenReady().then(async () => {
 
     // // IPC handler'larını kaydet
     // registerApiHandlers();
-    // registerStoreHandlers();
+    registerStoreHandlers();
   } catch (error) {
     // Migration hatası olsa bile window'u aç - kullanıcı hata mesajını görebilsin
     console.error('Veritabanı başlatma hatası:', error);
