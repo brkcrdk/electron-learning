@@ -6,6 +6,7 @@ import started from 'electron-squirrel-startup';
 import { users, type User } from '@db/schema';
 
 import { closeDatabase, getDb, initializeDatabase } from '../db/client';
+import { store } from '../store';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -45,6 +46,7 @@ const createWindow = () => {
   }
 
   // Kaydedilmiş temayı uygula
+  mainWindow.setBackgroundColor(store.get('theme.backgroundColor'));
 };
 
 /**
@@ -71,12 +73,22 @@ ipcMain.handle('get-current-user', async (): Promise<User[]> => {
  * Electron başlatıldığında çalışır
  * Veritabanını başlatır ve ana pencereyi oluşturur
  */
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   try {
     // Veritabanını başlat
     initializeDatabase(app);
     // Window'u oluştur
     createWindow();
+    // İçerik klasörlerini oluştur
+    const contentRoot = path.join(app.getPath('userData'), 'content');
+    console.log('contentRoot', contentRoot);
+    // await fs.mkdir(path.join(contentRoot, 'videos'), { recursive: true });
+    // await fs.mkdir(path.join(contentRoot, 'pdfs'), { recursive: true });
+    // await fs.mkdir(path.join(contentRoot, 'stories'), { recursive: true });
+
+    // // IPC handler'larını kaydet
+    // registerApiHandlers();
+    // registerStoreHandlers();
   } catch (error) {
     // Migration hatası olsa bile window'u aç - kullanıcı hata mesajını görebilsin
     console.error('Veritabanı başlatma hatası:', error);
