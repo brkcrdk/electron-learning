@@ -97,3 +97,6 @@ database.db
 
 # Drizzle
 drizzle/
+development.db-wal
+.gitignore
+development.db-shm
