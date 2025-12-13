@@ -7,15 +7,16 @@
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "yarn db:generate && electron-forge make",
+    "make": "yarn rebuild && yarn db:generate && electron-forge make",
     "lint": "eslint --ext .ts,.tsx .",
     "packages:check": "npx npm-check-updates",
     "packages:update": "npx npm-check-updates -u && yarn install",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio",
-    "postinstall": "npm rebuild better-sqlite3"
+    "db:studio": "yarn rebuild && drizzle-kit studio",
+    "rebuild": "electron-rebuild -f -w better-sqlite3",
+    "postinstall": "yarn rebuild"
   },
   "keywords": [],
   "author": {
