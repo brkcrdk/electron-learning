@@ -59,21 +59,25 @@ app.whenReady().then(async () => {
     initializeDatabase(app);
     // Window'u oluştur
     createWindow();
-    // İçerik klasörlerini oluştur
-    const contentRoot = path.join(app.getPath('userData'), 'content');
-    console.log('contentRoot', contentRoot);
-    // await fs.mkdir(path.join(contentRoot, 'videos'), { recursive: true });
-    // await fs.mkdir(path.join(contentRoot, 'pdfs'), { recursive: true });
-    // await fs.mkdir(path.join(contentRoot, 'stories'), { recursive: true });
-
-    // // IPC handler'larını kaydet
-    registerApiHandlers();
-    registerStoreHandlers();
   } catch (error) {
     // Migration hatası olsa bile window'u aç - kullanıcı hata mesajını görebilsin
     console.error('Veritabanı başlatma hatası:', error);
     createWindow();
   }
+});
+
+app.on('ready', () => {
+  registerApiHandlers();
+
+  // İçerik klasörlerini oluştur
+  const contentRoot = path.join(app.getPath('userData'), 'content');
+  console.log('contentRoot', contentRoot);
+  // await fs.mkdir(path.join(contentRoot, 'videos'), { recursive: true });
+  // await fs.mkdir(path.join(contentRoot, 'pdfs'), { recursive: true });
+  // await fs.mkdir(path.join(contentRoot, 'stories'), { recursive: true });
+
+  // // IPC handler'larını kaydet
+  registerStoreHandlers();
 });
 
 /**
