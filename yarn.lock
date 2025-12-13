@@ -1218,10 +1218,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@eslint/js@9.39.1", "@eslint/js@^9.39.1":
-  version "9.39.1"
-  resolved "https://registry.yarnpkg.com/@eslint/js/-/js-9.39.1.tgz#0dd59c3a9f40e3f1882975c321470969243e0164"
-  integrity sha512-S26Stp4zCy88tH94QbBv3XCuzRQiZ9yXofEILmglYTh/Ug/a9/umqvgFtYBAo3Lp0nsI/5/qH1CCrbdK3AP1Tw==
+"@eslint/js@9.39.2", "@eslint/js@^9.39.2":
+  version "9.39.2"
+  resolved "https://registry.yarnpkg.com/@eslint/js/-/js-9.39.2.tgz#2d4b8ec4c3ea13c1b3748e0c97ecd766bdd80599"
+  integrity sha512-q1mjIoW1VX4IvSocvM/vbTiveKC4k9eLrajNEuSsmjymSDEbpGddtpfOoN7YGAqBK3NG+uqo8ia4PDTt8buCYA==
 
 "@eslint/object-schema@^2.1.7":
   version "2.1.7"
@@ -2598,21 +2598,21 @@
   dependencies:
     "@tanstack/query-core" "5.90.12"
 
-"@tanstack/react-router-devtools@^1.141.1":
-  version "1.141.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-router-devtools/-/react-router-devtools-1.141.1.tgz#d4824069a03329fe0eef65eea09be6d0d29f0076"
-  integrity sha512-+XCn9cXSe1fZAD9jRrezEYE0ojn9U+Y0lRTRFdR8n51wx0UzJ6xe/Pewtw0rp03h/zmBR0pX+HRNU9NJDneWGA==
+"@tanstack/react-router-devtools@^1.141.2":
+  version "1.141.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-router-devtools/-/react-router-devtools-1.141.2.tgz#d46fec36c4cd43bae9c64d8881beed4f888aff2d"
+  integrity sha512-E55O6sYRCHpTMDB+jDaZ8so4G+/Sg5D/bPvomx35hsHrXEc6RaiGHzzWy0bfrc+PVcmhP2sTTBfVakjJfQolAQ==
   dependencies:
-    "@tanstack/router-devtools-core" "1.141.1"
+    "@tanstack/router-devtools-core" "1.141.2"
 
-"@tanstack/react-router@^1.141.1":
-  version "1.141.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-router/-/react-router-1.141.1.tgz#1b3645bc475bc49fe3fe0fd220144b00283e03c0"
-  integrity sha512-pLQ6ZFCh5s86ewZIAu2wQc2svf+DqttD7CFd1NPSxdEU20KvMMj9RPQdDHj/pbf2VvB3i1nEDxjli/Z0PBvnCQ==
+"@tanstack/react-router@^1.141.2":
+  version "1.141.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-router/-/react-router-1.141.2.tgz#24f94a5af7c70064d9e1dc64c3b440db12b339f4"
+  integrity sha512-inPEgxYuGPNJvd7wo9BYVKW/BP9GwZO0EaZLBE7+l0RtPcIqAQQLqYhYwb2xikuQg6ueZectj7LObAGivkBpSw==
   dependencies:
     "@tanstack/history" "1.141.0"
     "@tanstack/react-store" "^0.8.0"
-    "@tanstack/router-core" "1.141.1"
+    "@tanstack/router-core" "1.141.2"
     isbot "^5.1.22"
     tiny-invariant "^1.3.3"
     tiny-warning "^1.0.3"
@@ -2632,10 +2632,10 @@
   dependencies:
     "@tanstack/table-core" "8.21.3"
 
-"@tanstack/router-core@1.141.1":
-  version "1.141.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/router-core/-/router-core-1.141.1.tgz#9af4359560f022a2de6b1cea8f3e5bdd0ebc434f"
-  integrity sha512-fR1GGpp6v3dVKu4KIAjEh+Sd0qGLQd/wvCOVHeopSY6aFidXKCzwrS5cBOBqoPPWTKmn6CdW1a0CzFr5Furdog==
+"@tanstack/router-core@1.141.2":
+  version "1.141.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/router-core/-/router-core-1.141.2.tgz#48330e63830b78d89ba226a26c3c2bf258cc0cda"
+  integrity sha512-6fJSQ+Xcqy6xvB+CTEJljynf5wxQXC/YbtvxAc7wkzBLQwXvwoYrkmUTzqWHFtDZVGKr0cxA+Tg1FikSAZOiQQ==
   dependencies:
     "@tanstack/history" "1.141.0"
     "@tanstack/store" "^0.8.0"
@@ -2645,21 +2645,21 @@
     tiny-invariant "^1.3.3"
     tiny-warning "^1.0.3"
 
-"@tanstack/router-devtools-core@1.141.1":
-  version "1.141.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/router-devtools-core/-/router-devtools-core-1.141.1.tgz#4d567f0d06147db917c46b2c96e1181fa4b9a18d"
-  integrity sha512-wD9yRvOk6FI+thiNBplhkGutPIPBlXvWu9ttU/obdFY5oXQj9WYgNS+IO9BEe8Pz5rNEu8zE/oLn4RUGIVdtnw==
+"@tanstack/router-devtools-core@1.141.2":
+  version "1.141.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/router-devtools-core/-/router-devtools-core-1.141.2.tgz#b5619a9975820cd071928b8501e581e70f85b80b"
+  integrity sha512-ZvXuq8ASvIzffyl61BwSdAWh//Tp+wBn0GcSIP/LOrp0f/bW8aODPXm1RSGY2/tXrSjntdP7XPID50YXZdyKfg==
   dependencies:
     clsx "^2.1.1"
     goober "^2.1.16"
     tiny-invariant "^1.3.3"
 
-"@tanstack/router-generator@1.141.1":
-  version "1.141.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/router-generator/-/router-generator-1.141.1.tgz#eb526586bdb1a96ed67089cfb87709e76bf4dd5e"
-  integrity sha512-21RbVAoIDn7s/n/PKMN6U60d5hCeVADrBH/uN6B/poMT4MVYtJXqISVzkc2RAboVRw6eRdYFeF+YlwA3nF6y3Q==
+"@tanstack/router-generator@1.141.2":
+  version "1.141.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/router-generator/-/router-generator-1.141.2.tgz#c08e1bac3f07a28a260272e6bfa5b00f66e6bf5f"
+  integrity sha512-90xDdtHE1zHfL5J0sBV06h3H9Rv1qO+gQuGYUEEmRPGxluifx+ivIk/rD/8dpuqcjErofKi8io/DuKxxJ5kOmA==
   dependencies:
-    "@tanstack/router-core" "1.141.1"
+    "@tanstack/router-core" "1.141.2"
     "@tanstack/router-utils" "1.141.0"
     "@tanstack/virtual-file-routes" "1.141.0"
     prettier "^3.5.0"
@@ -2668,10 +2668,10 @@
     tsx "^4.19.2"
     zod "^3.24.2"
 
-"@tanstack/router-plugin@^1.141.1":
-  version "1.141.1"
-  resolved "https://registry.yarnpkg.com/@tanstack/router-plugin/-/router-plugin-1.141.1.tgz#12e7ea021b4891edbeea2f7b8001f8c0324e0194"
-  integrity sha512-SoNXm8QK8cqX1Q4y1AfLU0tZLOt4mB4wkdpBI/Mi3ZEezF8tIrmaenyJ3987cjT9jedTy3VDBab1wN0g8MoOXg==
+"@tanstack/router-plugin@^1.141.2":
+  version "1.141.2"
+  resolved "https://registry.yarnpkg.com/@tanstack/router-plugin/-/router-plugin-1.141.2.tgz#b9ef9f2a71b64c1923aaa0cf232ee10a7c967267"
+  integrity sha512-9dordZdt1C8D6O5kp5iASa3DDCLGV/7v4MDB9nx0WXKnBRLv9ZpLt58jevIQ6Wov8V9zH5gLWKaRVfiWMAE4Gg==
   dependencies:
     "@babel/core" "^7.27.7"
     "@babel/plugin-syntax-jsx" "^7.27.1"
@@ -2679,8 +2679,8 @@
     "@babel/template" "^7.27.2"
     "@babel/traverse" "^7.27.7"
     "@babel/types" "^7.27.7"
-    "@tanstack/router-core" "1.141.1"
-    "@tanstack/router-generator" "1.141.1"
+    "@tanstack/router-core" "1.141.2"
+    "@tanstack/router-generator" "1.141.2"
     "@tanstack/router-utils" "1.141.0"
     "@tanstack/virtual-file-routes" "1.141.0"
     babel-dead-code-elimination "^1.0.10"
@@ -4180,10 +4180,10 @@ electron-winstaller@^5.3.0:
   optionalDependencies:
     "@electron/windows-sign" "^1.1.2"
 
-electron@39.2.6:
-  version "39.2.6"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-39.2.6.tgz#7e1fdc01020418ea6c5cc92a3dd05fe65ad94941"
-  integrity sha512-dHBgTodWBZd+tL1Dt0PSh/CFLHeDkFCTKCTXu1dgPhlE9Z3k2zzlBQ9B2oW55CFsKanBDHiUomHJNw0XaSdQpA==
+electron@39.2.7:
+  version "39.2.7"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-39.2.7.tgz#1cf2371304994fe26c564764bd50878fe405fb4b"
+  integrity sha512-KU0uFS6LSTh4aOIC3miolcbizOFP7N1M46VTYVfqIgFiuA2ilfNaOHLDS9tCMvwwHRowAsvqBrh9NgMXcTOHCQ==
   dependencies:
     "@electron/get" "^2.0.0"
     "@types/node" "^22.7.7"
@@ -4602,10 +4602,10 @@ eslint-visitor-keys@^4.2.1:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-4.2.1.tgz#4cfea60fe7dd0ad8e816e1ed026c1d5251b512c1"
   integrity sha512-Uhdk5sfqcee/9H/rCOJikYz67o0a2Tw2hGRPOG2Y1R2dg7brRe1uG0yaNQDHu+TO/uQPF/5eCapvYSmHUjt7JQ==
 
-eslint@^9.39.1:
-  version "9.39.1"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-9.39.1.tgz#be8bf7c6de77dcc4252b5a8dcb31c2efff74a6e5"
-  integrity sha512-BhHmn2yNOFA9H9JmmIVKJmd288g9hrVRDkdoIgRCRuSySRUHH7r/DI6aAXW9T1WwUuY3DFgrcaqB+deURBLR5g==
+eslint@^9.39.2:
+  version "9.39.2"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-9.39.2.tgz#cb60e6d16ab234c0f8369a3fe7cc87967faf4b6c"
+  integrity sha512-LEyamqS7W5HB3ujJyvi0HQK/dtVINZvd5mAAp9eT5S/ujByGjiZLCzPcHVzuXbpJDJF/cxwHlfceVUDZ2lnSTw==
   dependencies:
     "@eslint-community/eslint-utils" "^4.8.0"
     "@eslint-community/regexpp" "^4.12.1"
@@ -4613,7 +4613,7 @@ eslint@^9.39.1:
     "@eslint/config-helpers" "^0.4.2"
     "@eslint/core" "^0.17.0"
     "@eslint/eslintrc" "^3.3.1"
-    "@eslint/js" "9.39.1"
+    "@eslint/js" "9.39.2"
     "@eslint/plugin-kit" "^0.4.1"
     "@humanfs/node" "^0.16.6"
     "@humanwhocodes/module-importer" "^1.0.1"
