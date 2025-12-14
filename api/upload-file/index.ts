@@ -104,9 +104,9 @@ function uploadFileHandler() {
         // Stream'i kapat
         return new Promise((resolve, reject) => {
           // Error handler'ı önce ekle (race condition önlemek için)
-          stream.on('error', error => {
+          stream.on('error', async error => {
             // Hata durumunda temizle
-            cleanupStream(data.uploadId);
+            await cleanupStream(data.uploadId);
             reject(error);
           });
 
@@ -134,8 +134,8 @@ function uploadFileHandler() {
     } catch (error) {
       console.error('upload file error', error);
 
-      // Hata durumunda stream'i temizle
-      cleanupStream(data.uploadId);
+      // Hata durumunda stream'i ve dosyayı temizle
+      await cleanupStream(data.uploadId);
 
       throw error;
     }
