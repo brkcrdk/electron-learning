@@ -2,10 +2,9 @@ import { join } from 'path';
 
 import { app, ipcMain } from 'electron';
 import { ensureDir, createWriteStream } from 'fs-extra';
-import type { ApiResponseProps } from 'types/api-response-types';
 
 import { setStream, getStream, getMetadata, deleteStream, cleanupStream } from './streamManager';
-import type { UploadContentMaterialPayload } from './types';
+import type { FileUploadResponseType, UploadContentMaterialPayload } from './types';
 import type { FileUploadTypes } from './types';
 
 const fileUploadPathMap: Record<FileUploadTypes, string> = {
@@ -16,7 +15,7 @@ const fileUploadPathMap: Record<FileUploadTypes, string> = {
 };
 
 function uploadContentMaterialHandler() {
-  ipcMain.handle('upload-content-material', async (_, data: UploadContentMaterialPayload): ApiResponseProps<string> => {
+  ipcMain.handle('upload-content-material', async (_, data: UploadContentMaterialPayload): FileUploadResponseType => {
     try {
       // İlk chunk kontrolü (chunkIndex === 0)
       if (data.chunkIndex === 0) {
@@ -48,7 +47,7 @@ function uploadContentMaterialHandler() {
         // İlk chunk başarılı
         return {
           success: true,
-          data: 'İlk chunk başarılı bir şekilde yazıldı.',
+          data: 'İlk chunk başarılı bir şekilde yazıldı, upload başlatıldı..',
         };
       }
 
@@ -84,7 +83,16 @@ function uploadContentMaterialHandler() {
             deleteStream(data.uploadId);
 
             console.log('File saved to:', metadata.filePath);
-            resolve({ success: true, data: 'Dosya başarılı bir şekilde kaydedildi.' });
+            resolve({
+              success: true,
+              data: {
+                id: 0,
+                mediaType: data.fileType,
+                fileName: data.fileName,
+                fileFullUrl: metadata.filePath,
+                fileSize: data.fileSize,
+              },
+            });
           });
 
           stream.on('error', error => {

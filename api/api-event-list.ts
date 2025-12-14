@@ -5,6 +5,7 @@ import type { Category, NewCategoryPayload, NewUserPayload, User } from '@db/sch
 import type { LoginPayload } from './login';
 import type { UploadContentMaterialPayload } from './upload-content-material';
 import type { ApiResponseProps } from '../types/api-response-types';
+import type { FileUploadResponseType } from './upload-content-material/types';
 
 const apiEventList = {
   // Auth services
@@ -33,7 +34,7 @@ const apiEventList = {
   deleteCategory: (data: Category['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-category', data),
 
   // Education Material services
-  uploadContentMaterial: (data: UploadContentMaterialPayload): ApiResponseProps<string> => ipcRenderer.invoke('upload-content-material', data),
+  uploadContentMaterial: (data: UploadContentMaterialPayload): FileUploadResponseType => ipcRenderer.invoke('upload-content-material', data),
 } as const;
 
 export default apiEventList;
