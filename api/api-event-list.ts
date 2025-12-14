@@ -3,6 +3,7 @@ import { ipcRenderer } from 'electron';
 import type { Category, NewCategoryPayload, NewUserPayload, User } from '@db/schema';
 
 import type { LoginPayload } from './login';
+import type { UploadContentMaterialPayload } from './upload-content-material';
 import type { ApiResponseProps } from '../types/api-response-types';
 
 const apiEventList = {
@@ -30,6 +31,9 @@ const apiEventList = {
   createCategory: (data: NewCategoryPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-category', data),
   updateCategory: (data: NewCategoryPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-category', data),
   deleteCategory: (data: Category['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-category', data),
+
+  // Education Material services
+  uploadContentMaterial: (data: UploadContentMaterialPayload): ApiResponseProps<string> => ipcRenderer.invoke('upload-content-material', data),
 } as const;
 
 export default apiEventList;

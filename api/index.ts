@@ -11,21 +11,30 @@ import loginHandler from './login';
 import logoutHandler from './logout';
 import updateCategoryHandler from './update-category';
 import updateUserHandler from './update-user';
+import uploadContentMaterialHandler from './upload-content-material';
 
 function registerApiHandlers() {
+  // User Events
   createUserHandler();
   getUserListHandler();
-  checkSuperAdminHandler();
-  createSuperAdminHandler();
-  getCurrentUserHandler();
-  loginHandler();
-  logoutHandler();
   updateUserHandler();
   deleteUserHandler();
+  createSuperAdminHandler();
+  getCurrentUserHandler();
+  checkSuperAdminHandler();
+
+  // Auth Events
+  loginHandler();
+  logoutHandler();
+
+  // Category Events
   getCategoryListHandler();
   createCategoryHandler();
   updateCategoryHandler();
   deleteCategoryHandler();
+
+  // Education Material Events
+  uploadContentMaterialHandler();
 }
 
 export default registerApiHandlers;
