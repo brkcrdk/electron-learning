@@ -1,13 +1,16 @@
-import { desc } from 'drizzle-orm';
+import { desc, eq, getTableColumns } from 'drizzle-orm';
+import { alias } from 'drizzle-orm/sqlite-core';
 import { ipcMain } from 'electron';
 import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
-import { educations, type Educations } from '@db/schema';
+import { educations, type EducationListItem } from '@db/schema';
+import { mediaFiles } from '@db/schema';
+import { users } from '@db/schema';
 
 function getEducationList() {
-  ipcMain.handle('get-education-list', async (): ApiResponseProps<Educations[]> => {
+  ipcMain.handle('get-education-list', async (): ApiResponseProps<EducationListItem[]> => {
     try {
       const db = getDb();
 
@@ -26,7 +29,27 @@ function getEducationList() {
         };
       }
 
-      const educationList = await db.select().from(educations).orderBy(desc(educations.createdAt));
+      // Aynı tabloyu iki kez join etmek için alias kullanıyoruz
+      const coverImage = alias(mediaFiles, 'cover_image');
+      const contentFile = alias(mediaFiles, 'content_file');
+
+      const educationList = await db
+        .select({
+          id: educations.id,
+          name: educations.name,
+          description: educations.description,
+          contentType: educations.contentType,
+          coverImage: getTableColumns(coverImage),
+          contentFile: getTableColumns(contentFile),
+          createdBy: getTableColumns(users),
+          createdAt: educations.createdAt,
+          updatedAt: educations.updatedAt,
+        })
+        .from(educations)
+        .innerJoin(coverImage, eq(educations.coverImageId, coverImage.id))
+        .innerJoin(contentFile, eq(educations.contentFileId, contentFile.id))
+        .innerJoin(users, eq(educations.createdBy, users.id))
+        .orderBy(desc(educations.createdAt));
 
       return {
         success: true,
