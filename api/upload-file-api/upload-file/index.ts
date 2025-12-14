@@ -3,9 +3,10 @@ import { createWriteStream } from 'fs-extra';
 
 import { getCurrentUser } from '@api/user-session';
 
-import { cleanupStream, deleteStream, getMetadata, getStream, setStream } from '../stream-manager';
+import { cleanupStream, getMetadata, getStream, setStream } from '../stream-manager';
 import type { FileUploadResponseType, UploadFilePayload } from '../types';
 import finalizeUpload from './finalize-upload';
+import finalizeUploadWithCleanup from './finalize-upload-with-cleanup';
 import getFilePath from './get-file-path';
 
 function uploadFile() {
@@ -27,10 +28,10 @@ function uploadFile() {
         };
       }
 
-      const { mediaType, fileName, chunkData, fileSize } = data;
+      const { mediaType, fileName, chunkData, fileSize, totalChunks, chunkIndex, uploadId } = data;
 
       // İlk chunk kontrolü (chunkIndex === 0)
-      if (data.chunkIndex === 0) {
+      if (chunkIndex === 0) {
         // Dizin yoksa oluştur
         const filePath = await getFilePath({ mediaType, fileName });
 
@@ -43,14 +44,20 @@ function uploadFile() {
 
         // Tek chunk durumu kontrolü
         if (data.totalChunks === 1) {
-          await finalizeUpload({ writeStream, filePath, fileName, fileSize, mediaType });
+          return finalizeUpload({
+            writeStream,
+            filePath,
+            fileName,
+            fileSize,
+            mediaType,
+          });
         }
 
         // Çoklu chunk durumu: Stream ve metadata'yı kaydet
-        setStream(data.uploadId, writeStream, {
+        setStream(uploadId, writeStream, {
           filePath,
-          totalChunks: data.totalChunks,
-          fileName: data.fileName,
+          totalChunks,
+          fileName,
         });
 
         // İlk chunk başarılı
@@ -61,8 +68,8 @@ function uploadFile() {
       }
 
       // Sonraki chunk'lar
-      const stream = getStream(data.uploadId);
-      const metadata = getMetadata(data.uploadId);
+      const stream = getStream(uploadId);
+      const metadata = getMetadata(uploadId);
 
       if (!stream || !metadata) {
         return {
@@ -72,44 +79,27 @@ function uploadFile() {
       }
 
       // Validation: Dosya bilgileri tutarlı mı kontrol et
-      if (metadata.fileName !== data.fileName || metadata.totalChunks !== data.totalChunks) {
+      if (metadata.fileName !== fileName || metadata.totalChunks !== totalChunks) {
         return {
           success: false,
-          error: `Upload session mismatch for uploadId: ${data.uploadId}`,
+          error: `Upload session mismatch for uploadId: ${uploadId}`,
         };
       }
 
       // Chunk'ı stream'e yaz
-      const buffer = Buffer.from(data.chunkData);
+      const buffer = Buffer.from(chunkData);
       stream.write(buffer);
 
       // Son chunk kontrolü
-      if (data.chunkIndex === data.totalChunks - 1) {
-        // Stream'i kapat
-        return new Promise((resolve, reject) => {
-          // Error handler'ı önce ekle (race condition önlemek için)
-          stream.on('error', async error => {
-            // Hata durumunda temizle
-            await cleanupStream(data.uploadId);
-            reject(error);
-          });
-
-          stream.end(() => {
-            // Temizle
-            deleteStream(data.uploadId);
-
-            console.log('File saved to:', metadata.filePath);
-            resolve({
-              success: true,
-              data: {
-                id: 0,
-                mediaType: data.mediaType,
-                fileName: data.fileName,
-                fileFullUrl: metadata.filePath,
-                fileSize: data.fileSize,
-              },
-            });
-          });
+      if (chunkIndex === totalChunks - 1) {
+        return finalizeUploadWithCleanup({
+          writeStream: stream,
+          filePath: metadata.filePath,
+          fileName: data.fileName,
+          fileSize: data.fileSize,
+          mediaType: data.mediaType,
+          uploadId: data.uploadId,
+          uploadedBy: currentUser.id,
         });
       }
 

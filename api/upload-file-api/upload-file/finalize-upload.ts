@@ -2,6 +2,9 @@ import type { WriteStream } from 'fs';
 
 import type { MediaFileTypes } from '@db/schema';
 
+import type { ApiResponseProps } from '../../../types/api-response-types';
+import type { FileUploadResponse } from '../types';
+
 interface Props {
   writeStream: WriteStream;
   filePath: string;
@@ -9,7 +12,12 @@ interface Props {
   fileSize: number;
   mediaType: MediaFileTypes;
 }
-function finalizeUpload({ writeStream, filePath, fileName, fileSize, mediaType }: Props) {
+
+/**
+ * Temel finalize işlemi - Stream'i kapatır ve response döndürür
+ * Tek chunk durumları için kullanılır
+ */
+function finalizeUpload({ writeStream, filePath, fileName, fileSize, mediaType }: Props): ApiResponseProps<FileUploadResponse> {
   return new Promise((resolve, reject) => {
     // Error handler'ı önce ekle (race condition önlemek için)
     writeStream.on('error', error => {
