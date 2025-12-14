@@ -6,7 +6,7 @@ export const mediaFiles = sqliteTable(
   'media_files',
   {
     id: integer('id').primaryKey({ autoIncrement: true }),
-    filePath: text('file_path').notNull(), // Fiziksel dosya yolu
+    filePath: text('file_path').notNull(), // Relative dosya yolu
     fileName: text('file_name').notNull(), // Orijinal dosya adı
     fileSize: integer('file_size').notNull(), // Byte cinsinden boyut
     mediaType: text('media_type', { enum: ['video', 'stories', 'pdfs', 'images'] }).notNull(),
