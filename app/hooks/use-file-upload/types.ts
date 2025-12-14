@@ -18,7 +18,7 @@ export interface ChunkCompletedStateProps {
   status: 'completed';
   progress: number;
   progressId: string;
-  response: string | FileUploadResponse;
+  response: FileUploadResponse;
   file: File;
 }
 
