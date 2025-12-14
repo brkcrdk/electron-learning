@@ -32,6 +32,8 @@ function registerContentProtocol() {
       const userDataPath = resolve(app.getPath('userData'));
 
       // Full path oluştur ve normalize et
+      // relativePath: "content/videos/file.mp4"
+      // resolvedFilePath: "/Users/.../AppData/Roaming/app/content/videos/file.mp4"
       const resolvedFilePath = resolve(userDataPath, relativePath);
 
       // Güvenlik kontrolü: Dosyanın userData altında olup olmadığını kontrol et
