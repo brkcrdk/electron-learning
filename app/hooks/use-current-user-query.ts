@@ -6,7 +6,7 @@ function useCurrentUserQuery() {
     queryFn: async () => {
       const response = await window.electronAPI.getCurrentUser();
       if (!response.success) {
-        throw response;
+        throw response.error;
       }
       return response.data;
     },
