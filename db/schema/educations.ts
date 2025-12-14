@@ -43,3 +43,4 @@ export const educations = sqliteTable(
 
 export type Educations = typeof educations.$inferSelect;
 export type NewEducationsPayload = typeof educations.$inferInsert;
+export type CreateEducationPayload = Omit<NewEducationsPayload, 'id' | 'createdBy' | 'createdAt' | 'updatedAt'>;
