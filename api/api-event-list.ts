@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron';
 
-import type { Category, MediaFile, NewCategoryPayload, NewUserPayload, User } from '@db/schema';
+import type { Category, NewCategoryPayload, NewUserPayload, User } from '@db/schema';
 
 import type { LoginPayload } from './session-api/login';
 import type { UploadFilePayload } from './upload-file-api';
@@ -37,9 +37,6 @@ const apiEventList = {
   // File Upload services
   uploadFile: (data: UploadFilePayload): FileUploadResponseType => ipcRenderer.invoke('upload-file', data),
   cleanupUpload: (uploadId: string) => ipcRenderer.invoke('cleanup-upload', uploadId),
-
-  // File Directory services
-  getFileList: (): ApiResponseProps<MediaFile[]> => ipcRenderer.invoke('get-file-list'),
 } as const;
 
 export default apiEventList;
