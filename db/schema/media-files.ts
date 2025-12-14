@@ -10,7 +10,6 @@ export const mediaFiles = sqliteTable(
     fileName: text('file_name').notNull(), // Orijinal dosya adı
     fileSize: integer('file_size').notNull(), // Byte cinsinden boyut
     mediaType: text('media_type', { enum: ['video', 'stories', 'pdfs', 'images'] }).notNull(),
-    mimeType: text('mime_type'), // Opsiyonel: image/jpeg, video/mp4 gibi
     uploadedBy: integer('uploaded_by'), // user_id - foreign key
     createdAt: integer('created_at', { mode: 'timestamp' })
       .notNull()
