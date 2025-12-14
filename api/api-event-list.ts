@@ -3,7 +3,7 @@ import { ipcRenderer } from 'electron';
 import type { Category, NewCategoryPayload, NewUserPayload, User } from '@db/schema';
 
 import type { LoginPayload } from './login';
-import type { UploadFilePayload } from './upload-file';
+import type { UploadFilePayload } from './upload-file-api';
 import type { ApiResponseProps } from '../types/api-response-types';
 import type { FileUploadResponseType } from './upload-file/types';
 

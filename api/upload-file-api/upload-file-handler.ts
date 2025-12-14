@@ -2,11 +2,9 @@ import { join } from 'path';
 
 import { app, ipcMain } from 'electron';
 import { ensureDir, createWriteStream } from 'fs-extra';
-import type { ApiResponseProps } from 'types/api-response-types';
 
-import { setStream, getStream, getMetadata, deleteStream, cleanupStream } from './streamManager';
-import type { FileUploadResponseType, UploadFilePayload } from './types';
-import type { FileUploadTypes } from './types';
+import { cleanupStream, deleteStream, getMetadata, getStream, setStream } from './streamManager';
+import type { FileUploadResponseType, FileUploadTypes, UploadFilePayload } from './types';
 
 const fileUploadPathMap: Record<FileUploadTypes, string> = {
   video: 'videos',
@@ -141,18 +139,5 @@ function uploadFileHandler() {
       throw error;
     }
   });
-
-  // Cleanup endpoint'i: Yarım kalan upload'ı temizler
-  ipcMain.handle('cleanup-upload', async (_, uploadId: string): ApiResponseProps<string> => {
-    try {
-      await cleanupStream(uploadId);
-      return { success: true, data: 'Upload temizlendi.' };
-    } catch (error) {
-      console.error('cleanup upload error', error);
-      return { success: false, error: String(error) };
-    }
-  });
 }
-
-export type { UploadFilePayload } from './types';
 export default uploadFileHandler;

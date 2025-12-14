@@ -11,7 +11,7 @@ import loginHandler from './login';
 import logoutHandler from './logout';
 import updateCategoryHandler from './update-category';
 import updateUserHandler from './update-user';
-import uploadFileHandler from './upload-file';
+import uploadFileApi from './upload-file-api';
 
 function registerApiHandlers() {
   // User Events
@@ -34,7 +34,7 @@ function registerApiHandlers() {
   deleteCategoryHandler();
 
   // File Upload Events
-  uploadFileHandler();
+  uploadFileApi();
 }
 
 export default registerApiHandlers;
