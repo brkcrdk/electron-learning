@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron';
 
-import { cleanupStream } from './streamManager';
+import { cleanupStream } from './stream-manager';
 import type { ApiResponseProps } from '../../types/api-response-types';
 
 function cleanupPayload() {
