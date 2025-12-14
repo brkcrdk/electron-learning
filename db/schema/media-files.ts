@@ -2,6 +2,9 @@ import { sql } from 'drizzle-orm';
 import { integer, sqliteTable, text, index, foreignKey } from 'drizzle-orm/sqlite-core';
 
 import { users } from './users';
+
+export const mediaTypeEnum = ['video', 'stories', 'pdfs', 'images'] as const;
+
 export const mediaFiles = sqliteTable(
   'media_files',
   {
@@ -9,7 +12,7 @@ export const mediaFiles = sqliteTable(
     filePath: text('file_path').notNull(), // Relative dosya yolu
     fileName: text('file_name').notNull(), // Orijinal dosya adı
     fileSize: integer('file_size').notNull(), // Byte cinsinden boyut
-    mediaType: text('media_type', { enum: ['video', 'stories', 'pdfs', 'images'] }).notNull(),
+    mediaType: text('media_type', { enum: mediaTypeEnum }).notNull(),
     uploadedBy: integer('uploaded_by'), // user_id - foreign key
     createdAt: integer('created_at', { mode: 'timestamp' })
       .notNull()

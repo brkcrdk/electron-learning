@@ -1,9 +1,12 @@
 import { useState } from 'react';
 
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormProvider, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
+import type { CreateEducationPayload } from '@db/schema';
 
 import type { MaterialFormInputs } from './material-form';
 import MaterialForm, { mediaContentOptions } from './material-form';
@@ -11,10 +14,28 @@ import MaterialForm, { mediaContentOptions } from './material-form';
 function NewMaterial() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const queryClient = useQueryClient();
+
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: (data: CreateEducationPayload) => {
+      return window.electronAPI.createEducation(data);
+    },
+    onSuccess: response => {
+      if (response.success) {
+        setIsOpen(false);
+        queryClient.invalidateQueries({ queryKey: ['education-contents'] });
+      } else {
+        toast.error(response.error, {
+          dismissible: false,
+        });
+      }
+    },
+  });
+
   const form = useForm<MaterialFormInputs>({
     defaultValues: {
-      name: '',
-      description: '',
+      name: 'Deneme Eğitim İçeriği',
+      description: 'Deneme Eğitim İçeriği açıklaması',
       cover_image: null,
       media: null,
       media_type: mediaContentOptions[0],
@@ -22,7 +43,15 @@ function NewMaterial() {
   });
 
   const onSubmit = (data: MaterialFormInputs) => {
-    console.log(data);
+    if (data.cover_image && data.media) {
+      mutateAsync({
+        name: data.name,
+        description: data.description,
+        contentType: data.media_type.value,
+        coverImageId: data.cover_image.id,
+        contentFileId: data.media.id,
+      });
+    }
   };
 
   return (
@@ -51,8 +80,8 @@ function NewMaterial() {
           <Button
             form="new-material-form"
             type="submit"
-            // disabled={isPending}
-            // isLoading={isPending}
+            disabled={isPending}
+            isLoading={isPending}
           >
             Eğitim İçeriği Ekle
           </Button>

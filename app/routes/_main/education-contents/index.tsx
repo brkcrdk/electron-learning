@@ -1,7 +1,9 @@
+import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
 import DataTable from '@app/components/data-table';
 
+import useColumns from './hooks/use-columns';
 import useTableActions from './hooks/use-table-actions';
 
 export const Route = createFileRoute('/_main/education-contents/')({
@@ -9,20 +11,27 @@ export const Route = createFileRoute('/_main/education-contents/')({
 });
 
 function RouteComponent() {
-  // const columns = useColumns();
+  const { data, isLoading } = useQuery({
+    queryKey: ['education-contents'],
+    queryFn: async () => {
+      const response = await window.electronAPI.getEducationList();
+      if (!response.success) {
+        throw response.error;
+      }
+      return response.data;
+    },
+  });
+
+  const columns = useColumns();
   const tableActions = useTableActions();
 
   return (
     <DataTable
       tableTitle="Eğitim İçerikleri Listesi"
-      columns={[]}
-      data={[]}
-      isLoading={false}
+      columns={columns}
+      data={data ? data : []}
       tableActions={tableActions}
-      // columns={columns}
-      // data={data ? data : []}
-      // isLoading={isLoading}
-      // tableActions={tableActions}
+      isLoading={isLoading}
     />
   );
 }

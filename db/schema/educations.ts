@@ -1,7 +1,7 @@
 import { sql } from 'drizzle-orm';
 import { integer, sqliteTable, text, index, foreignKey } from 'drizzle-orm/sqlite-core';
 
-import { mediaFiles, type MediaFile } from './media-files';
+import { mediaFiles, type MediaFile, mediaTypeEnum } from './media-files';
 import { users, type User } from './users';
 
 export const educations = sqliteTable(
@@ -10,7 +10,7 @@ export const educations = sqliteTable(
     id: integer('id').primaryKey({ autoIncrement: true }),
     name: text('name').notNull(),
     description: text('description').notNull(),
-    contentType: text('content_type', { enum: ['video', 'stories', 'pdfs'] }).notNull(),
+    contentType: text('content_type', { enum: mediaTypeEnum }).notNull(),
     coverImageId: integer('cover_image_id').notNull(),
     contentFileId: integer('content_file_id').notNull(),
     createdBy: integer('created_by').notNull(),
