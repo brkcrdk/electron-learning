@@ -4,15 +4,15 @@ import { ipcMain } from 'electron';
 import { getDb } from '@db/client';
 import { users, type User } from '@db/schema';
 
-import { setCurrentUser } from './user-session';
-import type { ApiResponseProps } from '../types/api-response-types';
+import type { ApiResponseProps } from '../../types/api-response-types';
+import { setCurrentUser } from '../user-session';
 
 export interface LoginPayload {
   email: string;
   password: string;
 }
 
-function loginHandler() {
+function login() {
   ipcMain.handle('login', async (_, data: LoginPayload): ApiResponseProps<User> => {
     try {
       const db = getDb();
@@ -54,4 +54,4 @@ function loginHandler() {
   });
 }
 
-export default loginHandler;
+export default login;

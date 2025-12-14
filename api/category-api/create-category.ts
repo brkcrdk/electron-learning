@@ -5,9 +5,9 @@ import type { ApiResponseProps } from 'types/api-response-types';
 import { getDb } from '@db/client';
 import { category, type NewCategoryPayload } from '@db/schema';
 
-import { getCurrentUser } from './user-session';
+import { getCurrentUser } from '../user-session';
 
-function createCategoryHandler() {
+function createCategory() {
   ipcMain.handle('create-category', async (_, data: NewCategoryPayload): ApiResponseProps<string> => {
     try {
       const db = getDb();
@@ -50,4 +50,4 @@ function createCategoryHandler() {
   });
 }
 
-export default createCategoryHandler;
+export default createCategory;

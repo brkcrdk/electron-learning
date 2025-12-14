@@ -1,9 +1,9 @@
-import cleanupPayloadHandler from './cleanup-payload-handler';
-import uploadFileHandler from './upload-file-handler';
+import cleanupPayload from './cleanup-payload';
+import uploadFile from './upload-file';
 
 function uploadFileApi() {
-  uploadFileHandler();
-  cleanupPayloadHandler();
+  uploadFile();
+  cleanupPayload();
 }
 
 export type { UploadFilePayload } from './types';

@@ -4,10 +4,10 @@ import { ipcMain } from 'electron';
 import { getDb } from '@db/client';
 import { users, type User } from '@db/schema';
 
-import { getCurrentUser } from './user-session';
-import type { ApiResponseProps } from '../types/api-response-types';
+import type { ApiResponseProps } from '../../types/api-response-types';
+import { getCurrentUser } from '../user-session';
 
-function getUserListHandler() {
+function getUserList() {
   ipcMain.handle('get-user-list', async (): ApiResponseProps<User[]> => {
     try {
       const db = getDb();
@@ -48,4 +48,4 @@ function getUserListHandler() {
     }
   });
 }
-export default getUserListHandler;
+export default getUserList;

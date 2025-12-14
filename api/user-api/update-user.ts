@@ -4,10 +4,10 @@ import { ipcMain } from 'electron';
 import { getDb } from '@db/client';
 import { users, type NewUserPayload } from '@db/schema';
 
-import { getCurrentUser } from './user-session';
-import type { ApiResponseProps } from '../types/api-response-types';
+import type { ApiResponseProps } from '../../types/api-response-types';
+import { getCurrentUser } from '../user-session';
 
-function updateUserHandler() {
+function updateUser() {
   ipcMain.handle('update-user', async (_, data: NewUserPayload): ApiResponseProps<string> => {
     try {
       const db = getDb();
@@ -60,4 +60,4 @@ function updateUserHandler() {
   });
 }
 
-export default updateUserHandler;
+export default updateUser;

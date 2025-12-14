@@ -1,9 +1,9 @@
 import { ipcMain } from 'electron';
-import type { ApiResponseProps } from 'types/api-response-types';
 
 import { cleanupStream } from './streamManager';
+import type { ApiResponseProps } from '../../types/api-response-types';
 
-function cleanupPayloadHandler() {
+function cleanupPayload() {
   ipcMain.handle('cleanup-payload', async (_, uploadId: string): ApiResponseProps<string> => {
     try {
       await cleanupStream(uploadId);
@@ -15,4 +15,4 @@ function cleanupPayloadHandler() {
   });
 }
 
-export default cleanupPayloadHandler;
+export default cleanupPayload;

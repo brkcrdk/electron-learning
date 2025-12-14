@@ -4,10 +4,10 @@ import { ipcMain } from 'electron';
 import { getDb } from '@db/client';
 import { category, type Category } from '@db/schema';
 
-import { getCurrentUser } from './user-session';
-import type { ApiResponseProps } from '../types/api-response-types';
+import type { ApiResponseProps } from '../../types/api-response-types';
+import { getCurrentUser } from '../user-session';
 
-function getCategoryListHandler() {
+function getCategoryList() {
   ipcMain.handle('get-category-list', async (): ApiResponseProps<Category[]> => {
     try {
       const db = getDb();
@@ -73,4 +73,4 @@ function getCategoryListHandler() {
   });
 }
 
-export default getCategoryListHandler;
+export default getCategoryList;

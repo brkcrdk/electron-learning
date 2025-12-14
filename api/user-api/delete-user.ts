@@ -4,10 +4,10 @@ import { ipcMain } from 'electron';
 import { getDb } from '@db/client';
 import { users, type User } from '@db/schema';
 
-import { getCurrentUser } from './user-session';
-import type { ApiResponseProps } from '../types/api-response-types';
+import type { ApiResponseProps } from '../../types/api-response-types';
+import { getCurrentUser } from '../user-session';
 
-function deleteUserHandler() {
+function deleteUser() {
   ipcMain.handle('delete-user', async (_, userId: User['id']): ApiResponseProps<string> => {
     try {
       const db = getDb();
@@ -47,4 +47,4 @@ function deleteUserHandler() {
   });
 }
 
-export default deleteUserHandler;
+export default deleteUser;

@@ -4,10 +4,10 @@ import { ipcMain } from 'electron';
 import { getDb } from '@db/client';
 import { category, type Category } from '@db/schema';
 
-import { getCurrentUser } from './user-session';
-import type { ApiResponseProps } from '../types/api-response-types';
+import type { ApiResponseProps } from '../../types/api-response-types';
+import { getCurrentUser } from '../user-session';
 
-function deleteCategoryHandler() {
+function deleteCategory() {
   ipcMain.handle('delete-category', async (_, categoryId: Category['id']): ApiResponseProps<string> => {
     try {
       const db = getDb();
@@ -41,4 +41,4 @@ function deleteCategoryHandler() {
   });
 }
 
-export default deleteCategoryHandler;
+export default deleteCategory;

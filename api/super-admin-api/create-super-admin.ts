@@ -4,10 +4,10 @@ import { ipcMain } from 'electron';
 import { getDb } from '@db/client';
 import { users, type NewUserPayload } from '@db/schema';
 
-import { setCurrentUser } from './user-session';
-import type { ApiResponseProps } from '../types/api-response-types';
+import type { ApiResponseProps } from '../../types/api-response-types';
+import { setCurrentUser } from '../user-session';
 
-function createSuperAdminHandler() {
+function createSuperAdmin() {
   ipcMain.handle('create-super-admin', async (_, data: NewUserPayload): ApiResponseProps<string> => {
     try {
       const db = getDb();
@@ -36,4 +36,4 @@ function createSuperAdminHandler() {
     }
   });
 }
-export default createSuperAdminHandler;
+export default createSuperAdmin;

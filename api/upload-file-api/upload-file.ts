@@ -13,7 +13,7 @@ const fileUploadPathMap: Record<FileUploadTypes, string> = {
   images: 'images',
 };
 
-function uploadFileHandler() {
+function uploadFile() {
   ipcMain.handle('upload-file', async (_, data: UploadFilePayload): FileUploadResponseType => {
     try {
       // İlk chunk kontrolü (chunkIndex === 0)
@@ -140,4 +140,4 @@ function uploadFileHandler() {
     }
   });
 }
-export default uploadFileHandler;
+export default uploadFile;

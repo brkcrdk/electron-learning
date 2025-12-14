@@ -4,9 +4,9 @@ import { ipcMain } from 'electron';
 import { getDb } from '@db/client';
 import { users } from '@db/schema';
 
-import type { ApiResponseProps } from '../types/api-response-types';
+import type { ApiResponseProps } from '../../types/api-response-types';
 
-function checkSuperAdminHandler() {
+function checkSuperAdmin() {
   ipcMain.handle('check-super-admin-exists', async (): ApiResponseProps<boolean> => {
     try {
       const db = getDb();
@@ -34,4 +34,4 @@ function checkSuperAdminHandler() {
   });
 }
 
-export default checkSuperAdminHandler;
+export default checkSuperAdmin;

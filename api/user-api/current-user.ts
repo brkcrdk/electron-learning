@@ -2,11 +2,11 @@ import { ipcMain } from 'electron';
 
 import type { User } from '@db/schema';
 
-import { getCurrentUser } from './user-session';
-import type { ApiResponseProps } from '../types/api-response-types';
+import type { ApiResponseProps } from '../../types/api-response-types';
+import { getCurrentUser } from '../user-session';
 
-function getCurrentUserHandler() {
-  ipcMain.handle('get-current-user', async (): ApiResponseProps<User> => {
+function currentUser() {
+  ipcMain.handle('current-user', async (): ApiResponseProps<User> => {
     try {
       const currentUser = getCurrentUser();
 
@@ -28,4 +28,4 @@ function getCurrentUserHandler() {
   });
 }
 
-export default getCurrentUserHandler;
+export default currentUser;

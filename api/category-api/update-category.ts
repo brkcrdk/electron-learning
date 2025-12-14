@@ -5,9 +5,9 @@ import type { ApiResponseProps } from 'types/api-response-types';
 import { getDb } from '@db/client';
 import { category, type NewCategoryPayload } from '@db/schema';
 
-import { getCurrentUser } from './user-session';
+import { getCurrentUser } from '../user-session';
 
-function updateCategoryHandler() {
+function updateCategory() {
   ipcMain.handle('update-category', async (_, data: NewCategoryPayload): ApiResponseProps<string> => {
     try {
       const db = getDb();
@@ -54,4 +54,4 @@ function updateCategoryHandler() {
   });
 }
 
-export default updateCategoryHandler;
+export default updateCategory;
