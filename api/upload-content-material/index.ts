@@ -78,6 +78,13 @@ function uploadContentMaterialHandler() {
       if (data.chunkIndex === data.totalChunks - 1) {
         // Stream'i kapat
         return new Promise((resolve, reject) => {
+          // Error handler'ı önce ekle (race condition önlemek için)
+          stream.on('error', error => {
+            // Hata durumunda temizle
+            cleanupStream(data.uploadId);
+            reject(error);
+          });
+
           stream.end(() => {
             // Temizle
             deleteStream(data.uploadId);
@@ -93,12 +100,6 @@ function uploadContentMaterialHandler() {
                 fileSize: data.fileSize,
               },
             });
-          });
-
-          stream.on('error', error => {
-            // Hata durumunda temizle
-            cleanupStream(data.uploadId);
-            reject(error);
           });
         });
       }

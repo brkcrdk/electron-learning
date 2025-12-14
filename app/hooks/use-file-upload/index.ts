@@ -20,10 +20,12 @@ function useFileUpload({ uploadType, onComplete, onProgress }: Props) {
 
   const handleUpload = useCallback(
     async (file: File) => {
+      const uploadId = crypto.randomUUID();
+
       const fileListClone: ChunkStateProps = {
         status: 'pending',
         progress: 0,
-        progressId: crypto.randomUUID(),
+        progressId: uploadId,
         file,
       };
       setUploadState(fileListClone);
@@ -41,7 +43,7 @@ function useFileUpload({ uploadType, onComplete, onProgress }: Props) {
         try {
           const chunkData = await chunk.arrayBuffer();
           const result = await window.electronAPI.uploadContentMaterial({
-            uploadId: crypto.randomUUID(),
+            uploadId,
             fileName: file.name,
             fileSize: file.size,
             fileType: uploadType,
@@ -61,7 +63,7 @@ function useFileUpload({ uploadType, onComplete, onProgress }: Props) {
               const completedState: ChunkCompletedStateProps = {
                 status: 'completed',
                 progress,
-                progressId: crypto.randomUUID(),
+                progressId: uploadId,
                 response: result.data,
                 file,
               };
@@ -75,7 +77,7 @@ function useFileUpload({ uploadType, onComplete, onProgress }: Props) {
               const inProgressState: ChunkInProgressStateProps = {
                 status: 'in_progress',
                 progress,
-                progressId: fileListClone.progressId,
+                progressId: uploadId,
                 file,
               };
               setUploadState(inProgressState);
@@ -106,7 +108,7 @@ function useFileUpload({ uploadType, onComplete, onProgress }: Props) {
             status: 'error',
             reason: 'Error happened while uploading chunk',
             progress: 0,
-            progressId: crypto.randomUUID(),
+            progressId: uploadId,
             file,
           });
           console.error(error);
