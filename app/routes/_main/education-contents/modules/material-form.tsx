@@ -1,11 +1,12 @@
 import { Controller, useFormContext } from 'react-hook-form';
 
-import FileUploadField from '@app/components/form-fields/file-upload-field';
+import type { FileUploadResponse } from '@api/upload-file-api/types';
 import InputField from '@app/components/form-fields/input-field';
 import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
-import useFileUpload from '@app/hooks/use-file-upload';
 import type { MediaFileTypes } from '@db/schema';
+
+import CoverImage from './cover-image';
 
 export interface MediaContentOption {
   label: string;
@@ -21,23 +22,13 @@ export const mediaContentOptions: MediaContentOption[] = [
 export interface MaterialFormInputs {
   name: string;
   description: string;
-  cover_image: string;
+  cover_image: FileUploadResponse | null;
+  media: FileUploadResponse | null;
   media_type: MediaContentOption;
-  media_url: string;
 }
 
 function MaterialForm() {
   const { control } = useFormContext<MaterialFormInputs>();
-
-  const { handleUpload, uploadState, resetUploadState } = useFileUpload({
-    uploadType: 'video',
-    onProgress: progress => {
-      console.log(progress);
-    },
-    onComplete: completed => {
-      console.log(completed.response);
-    },
-  });
 
   return (
     <Field.Group>
@@ -69,17 +60,7 @@ function MaterialForm() {
           />
         )}
       />
-      <FileUploadField
-        label="Kapak Resmi:"
-        inputId="cover_image"
-        uploadProviderProps={{
-          onChange: handleUpload,
-          accept: 'video/*',
-          sizeLimit: 100,
-        }}
-        uploadingProgress={uploadState}
-        onReset={resetUploadState}
-      />
+      <CoverImage />
     </Field.Group>
   );
 }
