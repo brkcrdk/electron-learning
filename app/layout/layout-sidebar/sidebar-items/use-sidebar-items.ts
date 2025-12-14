@@ -65,6 +65,16 @@ function useSidebarItems() {
         to: '/education-materials',
       },
     },
+    {
+      label: 'Dosya Yöneticisi',
+      itemKey: 'file-manager',
+      icon: 'file-directory',
+      isActive: pathname.startsWith('/file-manager'),
+      isProtected: false,
+      routeProps: {
+        to: '/file-manager',
+      },
+    },
   ];
 
   return sidebarItems;

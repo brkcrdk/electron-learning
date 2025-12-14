@@ -1,5 +1,6 @@
 import { BiHomeAlt } from 'react-icons/bi';
 import { BsEasel2 } from 'react-icons/bs';
+import { GoFileDirectory } from 'react-icons/go';
 import { HiShieldCheck } from 'react-icons/hi2';
 import { IoFolderOpenOutline } from 'react-icons/io5';
 import {
@@ -66,6 +67,7 @@ export const iconList = [
   { label: 'zoom-in', icon: LuZoomIn },
   { label: 'zoom-out', icon: LuZoomOut },
   { label: 'easel', icon: BsEasel2 },
+  { label: 'file-directory', icon: GoFileDirectory },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];
