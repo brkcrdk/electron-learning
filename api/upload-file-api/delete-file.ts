@@ -17,6 +17,10 @@ function deleteFile() {
     try {
       const db = getDb();
 
+      if (!fileId) {
+        return { success: false, error: 'Dosya ID bulunamadı.' };
+      }
+
       // Önce veritabanından dosya bilgisini al
       const [file] = await db.select().from(mediaFiles).where(eq(mediaFiles.id, fileId)).limit(1);
 

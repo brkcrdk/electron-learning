@@ -34,14 +34,16 @@ interface Props {
 }
 
 function ErrorReason({ errorReason, sizeLimit }: Props) {
+  if (!errorReason) return null;
+
   return (
     <>
       <Icon
         name="alert-triangle"
         className="text-destructive size-7"
       />
-      <strong className="text-sm">{errorMessages[errorReason]}</strong>
-      {errorReason === 'sizeLimit' && <span className="text-sm">Yüklemek istediğiniz dosya {humanizeSize(sizeLimit)}tan büyük olmamalıdır.</span>}
+      <strong className="text-center text-sm">{errorMessages[errorReason]}</strong>
+      {errorReason === 'sizeLimit' && <span className="text-center text-sm">Yüklemek istediğiniz dosya {humanizeSize(sizeLimit)}tan büyük olmamalıdır.</span>}
     </>
   );
 }
