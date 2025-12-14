@@ -43,6 +43,7 @@ function useColumns(): ColumnDef<EducationListItem>[] {
             <img
               src={getContentPath(coverImage.filePath)}
               alt={name}
+              className="relative aspect-video w-20 overflow-hidden rounded-sm object-cover"
             />
             <span className="line-clamp-1 max-w-40">{name}</span>
           </div>
