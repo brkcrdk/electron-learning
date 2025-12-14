@@ -11,10 +11,11 @@ interface Props {
   uploadType: MediaFileTypes;
   onComplete?: (response: ChunkCompletedStateProps) => void;
   onProgress?: (progress: ChunkInProgressStateProps) => void;
+  defaultUploadState?: ChunkStateProps;
 }
 
-function useFileUpload({ uploadType, onComplete, onProgress }: Props) {
-  const [uploadState, setUploadState] = useState<ChunkStateProps | null>(null);
+function useFileUpload({ uploadType, onComplete, onProgress, defaultUploadState }: Props) {
+  const [uploadState, setUploadState] = useState<ChunkStateProps | null>(defaultUploadState || null);
   const [controller, setController] = useState<AbortController | null>(null);
   const currentUploadId = useRef<string | null>(null);
 

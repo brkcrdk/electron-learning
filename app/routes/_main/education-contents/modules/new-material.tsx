@@ -6,7 +6,7 @@ import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
 
 import type { MaterialFormInputs } from './material-form';
-import MaterialForm from './material-form';
+import MaterialForm, { mediaContentOptions } from './material-form';
 
 function NewMaterial() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +15,9 @@ function NewMaterial() {
     defaultValues: {
       name: '',
       description: '',
-      cover_image: '',
+      cover_image: null,
+      media: null,
+      media_type: mediaContentOptions[0],
     },
   });
 
