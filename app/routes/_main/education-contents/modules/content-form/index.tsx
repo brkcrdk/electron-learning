@@ -22,7 +22,7 @@ export const mediaContentOptions: MediaContentOption[] = [
   { label: 'PDF İçeriği', value: 'pdfs' },
 ];
 
-export interface MaterialFormInputs {
+export interface ContentFormInputs {
   name: string;
   description: string;
   cover_image: FileUploadResponse | null;
@@ -37,8 +37,8 @@ const allowedMediaMimeTypes: Record<MediaFileTypes, string> = {
   images: 'image/jpeg, image/png, image/gif, image/webp',
 };
 
-function MaterialForm() {
-  const { control, setValue, trigger } = useFormContext<MaterialFormInputs>();
+function ContentForm() {
+  const { control, setValue, trigger } = useFormContext<ContentFormInputs>();
 
   const media_type = useWatch({
     control,
@@ -135,4 +135,4 @@ function MaterialForm() {
   );
 }
 
-export default MaterialForm;
+export default ContentForm;

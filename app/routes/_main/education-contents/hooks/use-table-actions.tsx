@@ -1,12 +1,12 @@
 import type { TableActionsProps } from '@app/components/data-table';
 
-import NewMaterial from '../modules/new-material';
+import NewContent from '../modules/new-content';
 
 function useTableActions(): TableActionsProps[] {
   return [
     {
-      actionId: 'add-new-material',
-      actionElement: <NewMaterial />,
+      actionId: 'add-new-content',
+      actionElement: <NewContent />,
     },
   ];
 }

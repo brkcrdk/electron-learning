@@ -8,10 +8,10 @@ import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
 import type { CreateEducationPayload } from '@db/schema';
 
-import type { MaterialFormInputs } from './material-form';
-import MaterialForm, { mediaContentOptions } from './material-form';
+import type { ContentFormInputs } from './content-form';
+import ContentForm, { mediaContentOptions } from './content-form';
 
-function NewMaterial() {
+function NewContent() {
   const [isOpen, setIsOpen] = useState(false);
 
   const queryClient = useQueryClient();
@@ -32,7 +32,7 @@ function NewMaterial() {
     },
   });
 
-  const form = useForm<MaterialFormInputs>({
+  const form = useForm<ContentFormInputs>({
     defaultValues: {
       name: 'Deneme Eğitim İçeriği',
       description: 'Deneme Eğitim İçeriği açıklaması',
@@ -42,7 +42,7 @@ function NewMaterial() {
     },
   });
 
-  const onSubmit = (data: MaterialFormInputs) => {
+  const onSubmit = (data: ContentFormInputs) => {
     if (data.cover_image && data.media) {
       mutateAsync({
         name: data.name,
@@ -73,7 +73,7 @@ function NewMaterial() {
             id="new-material-form"
             onSubmit={form.handleSubmit(onSubmit)}
           >
-            <MaterialForm />
+            <ContentForm />
           </form>
         </FormProvider>
         <Drawer.Footer>
@@ -91,4 +91,4 @@ function NewMaterial() {
   );
 }
 
-export default NewMaterial;
+export default NewContent;

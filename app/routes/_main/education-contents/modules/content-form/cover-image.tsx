@@ -3,10 +3,10 @@ import { Controller, useFormContext } from 'react-hook-form';
 import FileUploadField from '@app/components/form-fields/file-upload-field';
 import useFileUpload from '@app/hooks/use-file-upload';
 
-import type { MaterialFormInputs } from './index';
+import type { ContentFormInputs } from './index';
 
 function CoverImage() {
-  const { control, setValue, trigger } = useFormContext<MaterialFormInputs>();
+  const { control, setValue, trigger } = useFormContext<ContentFormInputs>();
 
   const { handleUpload, uploadState, resetUploadState } = useFileUpload({
     uploadType: 'images',

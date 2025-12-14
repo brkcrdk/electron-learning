@@ -7,6 +7,8 @@ import type { IconListProps } from '@app/components/ui/icon/icon-list';
 import getContentPath from '@app/utils/get-content-path';
 import type { EducationListItem, MediaFileTypes } from '@db/schema';
 
+import ContentActions from '../modules/content-actions';
+
 interface ContentTypeOption {
   label: string;
   icon: IconListProps;
@@ -34,7 +36,7 @@ const contentTypeLabels: Record<MediaFileTypes, ContentTypeOption> = {
 function useColumns(): ColumnDef<EducationListItem>[] {
   return [
     {
-      header: 'Adı',
+      header: 'İçerik Başlığı',
       accessorKey: 'name',
       cell: info => info.getValue(),
       accessorFn: ({ name, coverImage }) => {
@@ -84,6 +86,18 @@ function useColumns(): ColumnDef<EducationListItem>[] {
       accessorFn: ({ createdAt }) => {
         return <RelativeDateCell date={createdAt} />;
       },
+      meta: {
+        centeredColumn: true,
+      },
+    },
+    {
+      header: 'İşlemler',
+      accessorKey: 'actions',
+      cell: info => info.getValue(),
+      accessorFn: content => {
+        return <ContentActions content={content} />;
+      },
+      enableSorting: false,
       meta: {
         centeredColumn: true,
       },
