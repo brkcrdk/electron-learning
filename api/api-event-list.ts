@@ -37,6 +37,7 @@ const apiEventList = {
   // File Upload services
   uploadFile: (data: UploadFilePayload): FileUploadResponseType => ipcRenderer.invoke('upload-file', data),
   cleanupUpload: (uploadId: string) => ipcRenderer.invoke('cleanup-upload', uploadId),
+  deleteFile: (fileId: number): ApiResponseProps<string> => ipcRenderer.invoke('delete-file', fileId),
 } as const;
 
 export default apiEventList;
