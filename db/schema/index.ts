@@ -1,3 +1,3 @@
 export * from './users';
 export * from './category';
-export * from './mediaFiles';
+export * from './media-files';

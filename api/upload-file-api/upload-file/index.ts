@@ -1,66 +1,49 @@
-import { join } from 'path';
+import { ipcMain } from 'electron';
+import { createWriteStream } from 'fs-extra';
 
-import { app, ipcMain } from 'electron';
-import { ensureDir, createWriteStream } from 'fs-extra';
+import { getCurrentUser } from '@api/user-session';
 
-import type { MediaFileType } from '@db/schema';
-
-import { cleanupStream, deleteStream, getMetadata, getStream, setStream } from './streamManager';
-import type { FileUploadResponseType, UploadFilePayload } from './types';
-
-const fileUploadPathMap: Record<MediaFileType, string> = {
-  video: 'videos',
-  stories: 'stories',
-  pdfs: 'pdfs',
-  images: 'images',
-};
+import { cleanupStream, deleteStream, getMetadata, getStream, setStream } from '../stream-manager';
+import type { FileUploadResponseType, UploadFilePayload } from '../types';
+import finalizeUpload from './finalize-upload';
+import getFilePath from './get-file-path';
 
 function uploadFile() {
   ipcMain.handle('upload-file', async (_, data: UploadFilePayload): FileUploadResponseType => {
     try {
+      const currentUser = getCurrentUser();
+
+      if (!currentUser) {
+        return {
+          success: false,
+          error: 'Giriş yapmış kullanıcı bulunamadı.',
+        };
+      }
+
+      if (currentUser.role === 'user') {
+        return {
+          success: false,
+          error: 'Bu işlemi yapmak için yetkiniz yok.',
+        };
+      }
+
+      const { mediaType, fileName, chunkData, fileSize } = data;
+
       // İlk chunk kontrolü (chunkIndex === 0)
       if (data.chunkIndex === 0) {
         // Dizin yoksa oluştur
-        const userDataPath = app.getPath('userData');
-        const contentRoot = join(userDataPath, 'content');
-        const uploadFolder = fileUploadPathMap[data.fileType];
-        const uploadPath = join(contentRoot, uploadFolder);
-
-        await ensureDir(uploadPath);
-
-        // Dosya yolunu oluştur
-        const filePath = join(uploadPath, data.fileName);
+        const filePath = await getFilePath({ mediaType, fileName });
 
         // Stream oluştur
         const writeStream = createWriteStream(filePath);
 
         // İlk chunk'ı yaz
-        const buffer = Buffer.from(data.chunkData);
+        const buffer = Buffer.from(chunkData);
         writeStream.write(buffer);
 
         // Tek chunk durumu kontrolü
         if (data.totalChunks === 1) {
-          // Tek chunk varsa stream'i kapat ve son cevabı döndür
-          return new Promise((resolve, reject) => {
-            // Error handler'ı önce ekle (race condition önlemek için)
-            writeStream.on('error', error => {
-              reject(error);
-            });
-
-            writeStream.end(() => {
-              console.log('File saved to:', filePath);
-              resolve({
-                success: true,
-                data: {
-                  id: 0,
-                  mediaType: data.fileType,
-                  fileName: data.fileName,
-                  fileFullUrl: filePath,
-                  fileSize: data.fileSize,
-                },
-              });
-            });
-          });
+          await finalizeUpload({ writeStream, filePath, fileName, fileSize, mediaType });
         }
 
         // Çoklu chunk durumu: Stream ve metadata'yı kaydet
@@ -120,7 +103,7 @@ function uploadFile() {
               success: true,
               data: {
                 id: 0,
-                mediaType: data.fileType,
+                mediaType: data.mediaType,
                 fileName: data.fileName,
                 fileFullUrl: metadata.filePath,
                 fileSize: data.fileSize,
