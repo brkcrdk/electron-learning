@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron';
 
-import type { Category, CreateEducationPayload, Educations, NewCategoryPayload, NewUserPayload, User } from '@db/schema';
+import type { Category, CreateEducationPayload, EducationListItem, NewCategoryPayload, NewUserPayload, User } from '@db/schema';
 
 import type { LoginPayload } from './session-api/login';
 import type { UploadFilePayload } from './upload-file-api';
@@ -40,7 +40,7 @@ const apiEventList = {
   deleteFile: (fileId: number): ApiResponseProps<string> => ipcRenderer.invoke('delete-file', fileId),
 
   // Education services
-  getEducationList: (): ApiResponseProps<Educations[]> => ipcRenderer.invoke('get-education-list'),
+  getEducationList: (): ApiResponseProps<EducationListItem[]> => ipcRenderer.invoke('get-education-list'),
   createEducation: (data: CreateEducationPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-education', data),
 } as const;
 
