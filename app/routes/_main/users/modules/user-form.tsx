@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { Controller, useFormContext, useFormState } from 'react-hook-form';
 
 import InputField from '@app/components/form-fields/input-field';
@@ -5,6 +7,7 @@ import PasswordField from '@app/components/form-fields/password-field';
 import SwitchField from '@app/components/form-fields/switch-field';
 import Field from '@app/components/ui/field';
 import Select from '@app/components/ui/select';
+import useCurrentUserQuery from '@app/hooks/use-current-user-query';
 import { emailValidation, passwordValidation } from '@app/utils/form-validations';
 import type { User } from '@db/schema';
 
@@ -38,6 +41,15 @@ interface Props {
 function UserForm({ isSelfUpdate }: Props) {
   const { control } = useFormContext<UserFormInputs>();
   const { isLoading } = useFormState({ control });
+  const { data: currentUser } = useCurrentUserQuery();
+
+  const computedUserRoleOptions = useMemo(() => {
+    // return userRoleOptions.filter(role => role.value !== currentUser.data?.role);
+    if (currentUser && currentUser.role === 'super-admin') {
+      return userRoleOptions;
+    }
+    return userRoleOptions.filter(role => role.value !== 'super-admin');
+  }, [currentUser]);
 
   /**
    * NOTE: Edit formunda formun başlangıç değerlerini promise ile render ediyoruz.
@@ -100,7 +112,7 @@ function UserForm({ isSelfUpdate }: Props) {
           <Select
             label="Kullanıcı rolü:"
             errorMessage={fieldState.error?.message}
-            options={userRoleOptions}
+            options={computedUserRoleOptions}
             getOptionLabel={val => val.label}
             getOptionValue={val => val.value}
             isDisabled={isSelfUpdate}
