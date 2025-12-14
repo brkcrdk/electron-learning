@@ -1,33 +1,50 @@
 import { useState } from 'react';
 
+import { FormProvider, useForm } from 'react-hook-form';
+
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
 
+import type { MaterialFormInputs } from './material-form';
+import MaterialForm from './material-form';
+
 function NewMaterial() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const form = useForm<MaterialFormInputs>({
+    defaultValues: {
+      name: '',
+      description: '',
+      cover_image: '',
+    },
+  });
+
+  const onSubmit = (data: MaterialFormInputs) => {
+    console.log(data);
+  };
 
   return (
     <Drawer
       open={isOpen}
       onOpenChange={open => {
         setIsOpen(open);
-        // form.reset();
+        form.reset();
       }}
     >
       <Drawer.Trigger>Eğitim İçeriği Ekle</Drawer.Trigger>
       <Drawer.Content>
         <Drawer.Header>
           <Drawer.Title>Yeni Eğitim İçeriği Oluştur</Drawer.Title>
-          <Drawer.Description>Yeni bir eğitim içeriği oluşturmak için lütfen bilgilerinizi giriniz.</Drawer.Description>
+          <Drawer.Description>Yeni bir eğitim içeriği oluşturmak için lütfen içerik bilgilerini giriniz.</Drawer.Description>
         </Drawer.Header>
-        {/* <FormProvider {...form}>
+        <FormProvider {...form}>
           <form
-            id="new-category-form"
+            id="new-material-form"
             onSubmit={form.handleSubmit(onSubmit)}
           >
-            <CategoryForm />
+            <MaterialForm />
           </form>
-        </FormProvider> */}
+        </FormProvider>
         <Drawer.Footer>
           <Button
             form="new-material-form"

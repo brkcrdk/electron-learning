@@ -17,6 +17,7 @@ function CategoryForm() {
       <Controller
         control={control}
         name="name"
+        rules={{ required: 'Kategori adı alanı zorunludur' }}
         render={({ field, fieldState }) => (
           <InputField
             label="Kategori Adı"
@@ -30,6 +31,7 @@ function CategoryForm() {
       <Controller
         control={control}
         name="description"
+        rules={{ required: 'Kategori açıklaması alanı zorunludur' }}
         render={({ field, fieldState }) => (
           <TextareaField
             label="Açıklama:"

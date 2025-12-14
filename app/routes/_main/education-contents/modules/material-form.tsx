@@ -3,25 +3,41 @@ import { Controller, useFormContext } from 'react-hook-form';
 import InputField from '@app/components/form-fields/input-field';
 import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
+import type { MediaFileTypes } from '@db/schema';
 
-export interface CategoryFormInputs {
+export interface MediaContentOption {
+  label: string;
+  value: MediaFileTypes;
+}
+
+export const mediaContentOptions: MediaContentOption[] = [
+  { label: 'Video', value: 'video' },
+  { label: 'Stories', value: 'stories' },
+  { label: 'PDFs', value: 'pdfs' },
+];
+
+export interface MaterialFormInputs {
   name: string;
   description: string;
+  cover_image: string;
+  media_type: MediaContentOption;
+  media_url: string;
 }
 
 function MaterialForm() {
-  const { control } = useFormContext<CategoryFormInputs>();
+  const { control } = useFormContext<MaterialFormInputs>();
 
   return (
     <Field.Group>
       <Controller
         control={control}
         name="name"
+        rules={{ required: 'İçerik adı alanı zorunludur' }}
         render={({ field, fieldState }) => (
           <InputField
-            label="Kategori Adı"
+            label="İçerik Adı:"
             id="name"
-            placeholder="Kategori Adı"
+            placeholder="İçerik Adı"
             error={fieldState.error?.message}
             {...field}
           />
@@ -30,11 +46,12 @@ function MaterialForm() {
       <Controller
         control={control}
         name="description"
+        rules={{ required: 'İçerik açıklaması alanı zorunludur' }}
         render={({ field, fieldState }) => (
           <TextareaField
             label="Açıklama:"
             id="description"
-            placeholder="Kategori hakkında kısa bir açıklama yazınız..."
+            placeholder="İçerik hakkında kısa bir açıklama yazınız..."
             error={fieldState.error?.message}
             {...field}
           />
@@ -45,3 +62,5 @@ function MaterialForm() {
 }
 
 export default MaterialForm;
+
+// isim, cover_image, media_type, media_url

@@ -4,7 +4,7 @@ import DataTable from '@app/components/data-table';
 
 import useTableActions from './hooks/use-table-actions';
 
-export const Route = createFileRoute('/_main/education-materials/')({
+export const Route = createFileRoute('/_main/education-contents/')({
   component: RouteComponent,
 });
 
@@ -14,7 +14,7 @@ function RouteComponent() {
 
   return (
     <DataTable
-      tableTitle="Eğitim Malzemeleri Listesi"
+      tableTitle="Eğitim İçerikleri Listesi"
       columns={[]}
       data={[]}
       isLoading={false}

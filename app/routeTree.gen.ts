@@ -16,8 +16,8 @@ import { Route as MainDashboardRouteImport } from './routes/_main/dashboard'
 import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as MainUsersIndexRouteImport } from './routes/_main/users/index'
-import { Route as MainEducationMaterialsIndexRouteImport } from './routes/_main/education-materials/index'
 import { Route as MainEducationListIndexRouteImport } from './routes/_main/education-list/index'
+import { Route as MainEducationContentsIndexRouteImport } from './routes/_main/education-contents/index'
 import { Route as MainCategoriesIndexRouteImport } from './routes/_main/categories/index'
 
 const LogoutRoute = LogoutRouteImport.update({
@@ -54,17 +54,17 @@ const MainUsersIndexRoute = MainUsersIndexRouteImport.update({
   path: '/users/',
   getParentRoute: () => MainRoute,
 } as any)
-const MainEducationMaterialsIndexRoute =
-  MainEducationMaterialsIndexRouteImport.update({
-    id: '/education-materials/',
-    path: '/education-materials/',
-    getParentRoute: () => MainRoute,
-  } as any)
 const MainEducationListIndexRoute = MainEducationListIndexRouteImport.update({
   id: '/education-list/',
   path: '/education-list/',
   getParentRoute: () => MainRoute,
 } as any)
+const MainEducationContentsIndexRoute =
+  MainEducationContentsIndexRouteImport.update({
+    id: '/education-contents/',
+    path: '/education-contents/',
+    getParentRoute: () => MainRoute,
+  } as any)
 const MainCategoriesIndexRoute = MainCategoriesIndexRouteImport.update({
   id: '/categories/',
   path: '/categories/',
@@ -78,8 +78,8 @@ export interface FileRoutesByFullPath {
   '/signup': typeof AuthSignupRoute
   '/dashboard': typeof MainDashboardRoute
   '/categories': typeof MainCategoriesIndexRoute
+  '/education-contents': typeof MainEducationContentsIndexRoute
   '/education-list': typeof MainEducationListIndexRoute
-  '/education-materials': typeof MainEducationMaterialsIndexRoute
   '/users': typeof MainUsersIndexRoute
 }
 export interface FileRoutesByTo {
@@ -89,8 +89,8 @@ export interface FileRoutesByTo {
   '/signup': typeof AuthSignupRoute
   '/dashboard': typeof MainDashboardRoute
   '/categories': typeof MainCategoriesIndexRoute
+  '/education-contents': typeof MainEducationContentsIndexRoute
   '/education-list': typeof MainEducationListIndexRoute
-  '/education-materials': typeof MainEducationMaterialsIndexRoute
   '/users': typeof MainUsersIndexRoute
 }
 export interface FileRoutesById {
@@ -102,8 +102,8 @@ export interface FileRoutesById {
   '/_auth/signup': typeof AuthSignupRoute
   '/_main/dashboard': typeof MainDashboardRoute
   '/_main/categories/': typeof MainCategoriesIndexRoute
+  '/_main/education-contents/': typeof MainEducationContentsIndexRoute
   '/_main/education-list/': typeof MainEducationListIndexRoute
-  '/_main/education-materials/': typeof MainEducationMaterialsIndexRoute
   '/_main/users/': typeof MainUsersIndexRoute
 }
 export interface FileRouteTypes {
@@ -115,8 +115,8 @@ export interface FileRouteTypes {
     | '/signup'
     | '/dashboard'
     | '/categories'
+    | '/education-contents'
     | '/education-list'
-    | '/education-materials'
     | '/users'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -126,8 +126,8 @@ export interface FileRouteTypes {
     | '/signup'
     | '/dashboard'
     | '/categories'
+    | '/education-contents'
     | '/education-list'
-    | '/education-materials'
     | '/users'
   id:
     | '__root__'
@@ -138,8 +138,8 @@ export interface FileRouteTypes {
     | '/_auth/signup'
     | '/_main/dashboard'
     | '/_main/categories/'
+    | '/_main/education-contents/'
     | '/_main/education-list/'
-    | '/_main/education-materials/'
     | '/_main/users/'
   fileRoutesById: FileRoutesById
 }
@@ -202,18 +202,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainUsersIndexRouteImport
       parentRoute: typeof MainRoute
     }
-    '/_main/education-materials/': {
-      id: '/_main/education-materials/'
-      path: '/education-materials'
-      fullPath: '/education-materials'
-      preLoaderRoute: typeof MainEducationMaterialsIndexRouteImport
-      parentRoute: typeof MainRoute
-    }
     '/_main/education-list/': {
       id: '/_main/education-list/'
       path: '/education-list'
       fullPath: '/education-list'
       preLoaderRoute: typeof MainEducationListIndexRouteImport
+      parentRoute: typeof MainRoute
+    }
+    '/_main/education-contents/': {
+      id: '/_main/education-contents/'
+      path: '/education-contents'
+      fullPath: '/education-contents'
+      preLoaderRoute: typeof MainEducationContentsIndexRouteImport
       parentRoute: typeof MainRoute
     }
     '/_main/categories/': {
@@ -229,16 +229,16 @@ declare module '@tanstack/react-router' {
 interface MainRouteChildren {
   MainDashboardRoute: typeof MainDashboardRoute
   MainCategoriesIndexRoute: typeof MainCategoriesIndexRoute
+  MainEducationContentsIndexRoute: typeof MainEducationContentsIndexRoute
   MainEducationListIndexRoute: typeof MainEducationListIndexRoute
-  MainEducationMaterialsIndexRoute: typeof MainEducationMaterialsIndexRoute
   MainUsersIndexRoute: typeof MainUsersIndexRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
   MainDashboardRoute: MainDashboardRoute,
   MainCategoriesIndexRoute: MainCategoriesIndexRoute,
+  MainEducationContentsIndexRoute: MainEducationContentsIndexRoute,
   MainEducationListIndexRoute: MainEducationListIndexRoute,
-  MainEducationMaterialsIndexRoute: MainEducationMaterialsIndexRoute,
   MainUsersIndexRoute: MainUsersIndexRoute,
 }
 

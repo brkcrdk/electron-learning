@@ -62,7 +62,7 @@ function useSidebarItems() {
       isActive: pathname.startsWith('/education-materials'),
       isProtected: false,
       routeProps: {
-        to: '/education-materials',
+        to: '/education-contents',
       },
     },
   ];
