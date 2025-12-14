@@ -7,12 +7,15 @@ import registerApiHandlers from '@api/index';
 import { closeDatabase, initializeDatabase } from '@db/client';
 
 import registerStoreHandlers, { store } from '../store';
-import registerContentProtocol from './protocol-handler';
+import registerContentProtocol, { registerContentProtocolPrivileges } from './protocol-handler';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
   app.quit();
 }
+
+// Custom protocol'ü privileged olarak kaydet (app.whenReady() ÖNCESİNDE!)
+registerContentProtocolPrivileges();
 
 const createWindow = () => {
   // Create the browser window.

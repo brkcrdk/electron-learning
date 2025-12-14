@@ -5,6 +5,27 @@ import { pathToFileURL } from 'url';
 import { app, net, protocol } from 'electron';
 
 /**
+ * Custom protocol'ü privileged olarak kaydet
+ * Bu işlem app.whenReady() ÖNCESİNDE yapılmalı!
+ *
+ * standard: true - Protocol'ü standard scheme olarak kaydeder (relative URL'ler çalışır)
+ * secure: true - Güvenli scheme olarak işaretler
+ * supportFetchAPI: true - fetch API'nin çalışması için gerekli
+ */
+export function registerContentProtocolPrivileges() {
+  protocol.registerSchemesAsPrivileged([
+    {
+      scheme: 'content',
+      privileges: {
+        standard: true,
+        secure: true,
+        supportFetchAPI: true,
+      },
+    },
+  ]);
+}
+
+/**
  * Custom protocol handler'ı kaydeder
  *
  * Bu handler, renderer process'te kullanılmak üzere userData içindeki dosyaları
@@ -25,8 +46,25 @@ function registerContentProtocol() {
     try {
       // URL'den relative path'i al
       // content://content/videos/file.mp4 -> content/videos/file.mp4
+      // URL parse edildiğinde:
+      // - url.hostname = "content" (authority kısmı)
+      // - url.pathname = "/videos/file.mp4" (path kısmı)
+      // Bu yüzden hostname + pathname'i birleştirmemiz gerekiyor
       const url = new URL(request.url);
-      const relativePath = url.pathname;
+      let relativePath = '';
+
+      // Eğer hostname varsa (content://content/... formatında), hostname'i path'e ekle
+      if (url.hostname) {
+        relativePath = url.hostname + url.pathname;
+      } else {
+        // Eğer hostname yoksa (content:///videos/... formatında), sadece pathname kullan
+        relativePath = url.pathname;
+      }
+
+      // Başındaki "/" varsa kaldır
+      if (relativePath.startsWith('/')) {
+        relativePath = relativePath.slice(1);
+      }
 
       // userData path'ini al ve normalize et
       const userDataPath = resolve(app.getPath('userData'));
