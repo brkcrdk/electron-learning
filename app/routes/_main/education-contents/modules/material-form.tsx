@@ -60,8 +60,14 @@ function MaterialForm() {
       />
       <FileUploadField
         label="Kapak Resmi:"
-        id="cover_image"
-        placeholder="Kapak Resmi"
+        inputId="cover_image"
+        uploadProviderProps={{
+          onChange: () => {},
+          accept: 'image/*',
+          multiple: false,
+          sizeLimit: 1,
+        }}
+        isUploading={true}
       />
     </Field.Group>
   );

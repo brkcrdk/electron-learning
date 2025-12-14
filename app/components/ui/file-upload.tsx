@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-// import { useIntl } from 'react-intl';
-
 import Icon from './icon';
 import Spinner from './spinner';
 import UploadProvider, { type UploadProviderProps, type UploadErrorReasonTypes } from './upload-provider';
@@ -17,7 +15,7 @@ const errorMessages: Record<string, string> = {
   invalidType: 'Geçersiz dosya tipi. Lütfen geçerli bir dosya deneyiniz.',
   uploadLimit: 'Birden fazla dosya sürüklendi. Lütfen sadece bir tane dosya ile deneyiniz.',
   connectionError: 'Dosya yüklenmesi sırasında bağlantı sorunu oluştu. Lütfen tekrar deneyiniz.',
-  sizeLimit: 'Yüklemek istediğiniz dosya boyutu limitlerin üstündedir.',
+  sizeLimit: 'Boyut aşımı hatası oluştu.',
   sizeLimitDescription: 'Yüklemek istediğiniz dosya {size}tan büyük olmamalıdır.',
 };
 
@@ -41,8 +39,6 @@ function humanizeSize(size?: number) {
 }
 
 function FileUpload<T extends boolean>({ uploadProviderProps, isUploading }: Props<T>) {
-  // const { $t } = useIntl();
-
   const [errorReason, setErrorReason] = useState<UploadErrorReasonTypes>(null);
 
   return (
@@ -50,9 +46,9 @@ function FileUpload<T extends boolean>({ uploadProviderProps, isUploading }: Pro
       {...uploadProviderProps}
       rootProps={{
         className: cn(
-          'group/upload-layout border border-dashed border-dark-300 w-full p-1 rounded-lg flex-col bg-gray-100 cursor-pointer flex justify-center items-center min-h-40 gap-2',
-          'data-hovering:bg-success/20 data-hovering:border-success',
-          'data-error:bg-danger/20 data-error:border-danger'
+          'group/upload border border-dashed w-full rounded-md flex flex-col items-center justify-center min-h-40 gap-2 p-1 text-center',
+          'data-hovering:bg-accent',
+          'data-error:bg-destructive/50'
         ),
       }}
       onError={reason => {
@@ -64,14 +60,14 @@ function FileUpload<T extends boolean>({ uploadProviderProps, isUploading }: Pro
     >
       {isUploading ? (
         <div className="flex gap-2">
-          <Spinner />
-          <span className="text-xl font-bold">Yükleniyor.....</span>
+          <Spinner className="size-6" />
+          <span className="text-lg font-semibold">Yükleniyor.....</span>
         </div>
       ) : (
         <>
           <Icon
             name={errorReason ? 'alert-triangle' : 'copy'}
-            className="group-data/upload-layout:text-danger size-10 text-gray-600"
+            className="group-data/upload-layout:text-danger size-10"
           />
           {errorReason ? (
             <>
@@ -83,8 +79,8 @@ function FileUpload<T extends boolean>({ uploadProviderProps, isUploading }: Pro
             </>
           ) : (
             <span className="flex gap-1 text-sm">
-              <strong className="text-primary">Dosya yükle</strong>
-              ya da sürükleyip bırakın veya tıklayın
+              <strong className="text-primary">Dosya yükleyin</strong>
+              ya da sürükleyip bırakın
             </span>
           )}
         </>
