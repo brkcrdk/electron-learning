@@ -1,6 +1,6 @@
 import checkSuperAdminHandler from './check-super-admin';
 // import createCategoryHandler from './create-category';
-// import createSuperAdminHandler from './create-super-admin';
+import createSuperAdminHandler from './create-super-admin';
 // import createUserHandler from './create-user';
 // import deleteCategoryHandler from './delete-category';
 // import deleteUserHandler from './delete-user';
@@ -13,10 +13,14 @@ import loginHandler from './login';
 // import updateUserHandler from './update-user';
 
 function registerApiHandlers() {
+  /**
+   * Super admin için gerekli olan API handler'ları.
+   */
+  createSuperAdminHandler();
+  checkSuperAdminHandler();
+
   // createUserHandler();
   // getUserListHandler();
-  checkSuperAdminHandler();
-  // createSuperAdminHandler();
   getCurrentUserHandler();
   loginHandler();
   // logoutHandler();
