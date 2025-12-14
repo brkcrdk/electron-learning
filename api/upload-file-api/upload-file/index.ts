@@ -5,9 +5,8 @@ import { getCurrentUser } from '@api/user-session';
 
 import { cleanupStream, getMetadata, getStream, setStream } from '../stream-manager';
 import type { FileUploadResponseType, UploadFilePayload } from '../types';
-import finalizeUpload from './finalize-upload';
-import finalizeUploadWithCleanup from './finalize-upload-with-cleanup';
-import getFilePath from './get-file-path';
+import finalizeAndSave from './finalize-upload';
+import { getFullFilePath } from './get-file-path';
 
 function uploadFile() {
   ipcMain.handle('upload-file', async (_, data: UploadFilePayload): FileUploadResponseType => {
@@ -32,8 +31,8 @@ function uploadFile() {
 
       // İlk chunk kontrolü (chunkIndex === 0)
       if (chunkIndex === 0) {
-        // Dizin yoksa oluştur
-        const filePath = await getFilePath({ mediaType, fileName });
+        // Dizin yoksa oluştur ve full path al
+        const filePath = await getFullFilePath({ mediaType, fileName });
 
         // Stream oluştur
         const writeStream = createWriteStream(filePath);
@@ -44,12 +43,14 @@ function uploadFile() {
 
         // Tek chunk durumu kontrolü
         if (data.totalChunks === 1) {
-          return finalizeUpload({
+          return finalizeAndSave({
             writeStream,
             filePath,
             fileName,
             fileSize,
             mediaType,
+            uploadedBy: currentUser.id,
+            // uploadId yok çünkü tek chunk, cleanup gerekmez
           });
         }
 
@@ -92,14 +93,14 @@ function uploadFile() {
 
       // Son chunk kontrolü
       if (chunkIndex === totalChunks - 1) {
-        return finalizeUploadWithCleanup({
+        return finalizeAndSave({
           writeStream: stream,
           filePath: metadata.filePath,
           fileName: data.fileName,
           fileSize: data.fileSize,
           mediaType: data.mediaType,
-          uploadId: data.uploadId,
           uploadedBy: currentUser.id,
+          uploadId: data.uploadId, // Cleanup için gerekli
         });
       }
 
