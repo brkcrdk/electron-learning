@@ -3,9 +3,9 @@ import { ipcRenderer } from 'electron';
 import type { Category, NewCategoryPayload, NewUserPayload, User } from '@db/schema';
 
 import type { LoginPayload } from './login';
-import type { UploadContentMaterialPayload } from './upload-content-material';
+import type { UploadFilePayload } from './upload-file';
 import type { ApiResponseProps } from '../types/api-response-types';
-import type { FileUploadResponseType } from './upload-content-material/types';
+import type { FileUploadResponseType } from './upload-file/types';
 
 const apiEventList = {
   // Auth services
@@ -33,8 +33,8 @@ const apiEventList = {
   updateCategory: (data: NewCategoryPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-category', data),
   deleteCategory: (data: Category['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-category', data),
 
-  // Education Material services
-  uploadContentMaterial: (data: UploadContentMaterialPayload): FileUploadResponseType => ipcRenderer.invoke('upload-content-material', data),
+  // File Upload services
+  uploadFile: (data: UploadFilePayload): FileUploadResponseType => ipcRenderer.invoke('upload-file', data),
 } as const;
 
 export default apiEventList;

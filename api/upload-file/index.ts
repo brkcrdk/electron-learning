@@ -4,7 +4,7 @@ import { app, ipcMain } from 'electron';
 import { ensureDir, createWriteStream } from 'fs-extra';
 
 import { setStream, getStream, getMetadata, deleteStream, cleanupStream } from './streamManager';
-import type { FileUploadResponseType, UploadContentMaterialPayload } from './types';
+import type { FileUploadResponseType, UploadFilePayload } from './types';
 import type { FileUploadTypes } from './types';
 
 const fileUploadPathMap: Record<FileUploadTypes, string> = {
@@ -14,8 +14,8 @@ const fileUploadPathMap: Record<FileUploadTypes, string> = {
   images: 'images',
 };
 
-function uploadContentMaterialHandler() {
-  ipcMain.handle('upload-content-material', async (_, data: UploadContentMaterialPayload): FileUploadResponseType => {
+function uploadFileHandler() {
+  ipcMain.handle('upload-file', async (_, data: UploadFilePayload): FileUploadResponseType => {
     try {
       // İlk chunk kontrolü (chunkIndex === 0)
       if (data.chunkIndex === 0) {
@@ -132,7 +132,7 @@ function uploadContentMaterialHandler() {
       // Orta chunk'lar için sadece onay döndür
       return { success: true, data: 'Orta chunk başarılı bir şekilde yazıldı.' };
     } catch (error) {
-      console.error('upload content material error', error);
+      console.error('upload file error', error);
 
       // Hata durumunda stream'i temizle
       cleanupStream(data.uploadId);
@@ -142,5 +142,5 @@ function uploadContentMaterialHandler() {
   });
 }
 
-export type { UploadContentMaterialPayload } from './types';
-export default uploadContentMaterialHandler;
+export type { UploadFilePayload } from './types';
+export default uploadFileHandler;

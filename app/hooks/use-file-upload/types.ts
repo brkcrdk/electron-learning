@@ -1,4 +1,4 @@
-import type { FileUploadResponse } from '@api/upload-content-material/types';
+import type { FileUploadResponse } from '@api/upload-file/types';
 
 export interface ChunkPendingStateProps {
   status: 'pending';

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import type { FileUploadTypes } from '@api/upload-content-material/types';
+import type { FileUploadTypes } from '@api/upload-file/types';
 
 import chunkFile from './chunkFile';
 import type { ChunkCompletedStateProps, ChunkInProgressStateProps, ChunkStateProps } from './types';
@@ -42,7 +42,7 @@ function useFileUpload({ uploadType, onComplete, onProgress }: Props) {
 
         try {
           const chunkData = await chunk.arrayBuffer();
-          const result = await window.electronAPI.uploadContentMaterial({
+          const result = await window.electronAPI.uploadFile({
             uploadId,
             fileName: file.name,
             fileSize: file.size,

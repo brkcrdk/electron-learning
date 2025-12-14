@@ -2,7 +2,7 @@ import type { ApiResponseProps } from 'types/api-response-types';
 
 export type FileUploadTypes = 'video' | 'stories' | 'pdfs' | 'images';
 
-export interface UploadContentMaterialPayload {
+export interface UploadFilePayload {
   uploadId: string;
   fileName: string;
   fileSize: number;
