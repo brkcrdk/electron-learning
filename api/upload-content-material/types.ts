@@ -4,7 +4,7 @@ export interface UploadContentMaterialPayload {
   uploadId: string;
   fileName: string;
   fileSize: number;
-  fileType: string;
+  fileType: FileUploadTypes;
   totalChunks: number;
   chunkIndex: number;
   chunkData: ArrayBuffer;

@@ -4,9 +4,16 @@ import { app, ipcMain } from 'electron';
 import { ensureDir, createWriteStream } from 'fs-extra';
 import type { ApiResponseProps } from 'types/api-response-types';
 
-import { getUploadPath } from './getUploadPath';
 import { setStream, getStream, getMetadata, deleteStream, cleanupStream } from './streamManager';
 import type { UploadContentMaterialPayload } from './types';
+import type { FileUploadTypes } from './types';
+
+const fileUploadPathMap: Record<FileUploadTypes, string> = {
+  video: 'videos',
+  stories: 'stories',
+  pdfs: 'pdfs',
+  images: 'images',
+};
 
 function uploadContentMaterialHandler() {
   ipcMain.handle('upload-content-material', async (_, data: UploadContentMaterialPayload): ApiResponseProps<string> => {
@@ -16,7 +23,7 @@ function uploadContentMaterialHandler() {
         // Dizin yoksa oluştur
         const userDataPath = app.getPath('userData');
         const contentRoot = join(userDataPath, 'content');
-        const uploadFolder = getUploadPath(data.fileType);
+        const uploadFolder = fileUploadPathMap[data.fileType];
         const uploadPath = join(contentRoot, uploadFolder);
 
         await ensureDir(uploadPath);
