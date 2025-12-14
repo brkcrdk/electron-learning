@@ -37,7 +37,32 @@ function uploadContentMaterialHandler() {
         const buffer = Buffer.from(data.chunkData);
         writeStream.write(buffer);
 
-        // Stream ve metadata'yı kaydet
+        // Tek chunk durumu kontrolü
+        if (data.totalChunks === 1) {
+          // Tek chunk varsa stream'i kapat ve son cevabı döndür
+          return new Promise((resolve, reject) => {
+            // Error handler'ı önce ekle (race condition önlemek için)
+            writeStream.on('error', error => {
+              reject(error);
+            });
+
+            writeStream.end(() => {
+              console.log('File saved to:', filePath);
+              resolve({
+                success: true,
+                data: {
+                  id: 0,
+                  mediaType: data.fileType,
+                  fileName: data.fileName,
+                  fileFullUrl: filePath,
+                  fileSize: data.fileSize,
+                },
+              });
+            });
+          });
+        }
+
+        // Çoklu chunk durumu: Stream ve metadata'yı kaydet
         setStream(data.uploadId, writeStream, {
           filePath,
           totalChunks: data.totalChunks,
