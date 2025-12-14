@@ -9,6 +9,7 @@ import Progress from '../progress';
 
 interface Props {
   state: ChunkStateProps;
+  onReset?: (fileId: number) => void;
 }
 
 const uploadIconTypes: Record<MediaFileTypes, IconListProps> = {
@@ -18,7 +19,7 @@ const uploadIconTypes: Record<MediaFileTypes, IconListProps> = {
   pdfs: 'file-pdf',
 };
 
-function UploadingState({ state }: Props) {
+function UploadingState({ state, onReset }: Props) {
   if (state.status === 'error') {
     return <ErrorReason errorReason={state.reason} />;
   }
@@ -35,18 +36,28 @@ function UploadingState({ state }: Props) {
         <div className="flex w-full flex-col gap-2">
           <div className="flex items-center justify-between">
             <span className="line-clamp-1 max-w-40">{state.file.name} dosyası yüklendi</span>
-            <Button
-              variant="ghost"
-              type="button"
-              size="icon-sm"
-            >
-              <Icon
-                name="close"
-                className="size-4"
-              />
-            </Button>
+            {onReset && (
+              <Button
+                variant="ghost"
+                type="button"
+                size="icon-sm"
+                onClick={() => {
+                  if (onReset) {
+                    onReset(state.response.id);
+                  }
+                }}
+              >
+                <Icon
+                  name="close"
+                  className="size-4"
+                />
+              </Button>
+            )}
           </div>
-          <Progress value={state.progress} />
+          <Progress
+            key={state.progressId}
+            value={state.progress}
+          />
           <span className="text-sm">Yükleme tamamlandı</span>
         </div>
       </div>

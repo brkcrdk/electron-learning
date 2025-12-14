@@ -11,9 +11,10 @@ import UploadingState from './uploading-state';
 interface Props {
   uploadProviderProps: UploadProviderProps;
   uploadingProgress: ChunkStateProps | null;
+  onReset?: (fileId: number) => void;
 }
 
-function FileUpload({ uploadProviderProps, uploadingProgress }: Props) {
+function FileUpload({ uploadProviderProps, uploadingProgress, onReset }: Props) {
   const [errorReason, setErrorReason] = useState<UploadErrorReasonTypes>(null);
 
   return (
@@ -21,7 +22,7 @@ function FileUpload({ uploadProviderProps, uploadingProgress }: Props) {
       {...uploadProviderProps}
       rootProps={{
         className: cn(
-          'group/upload border border-dashed w-full rounded-md flex flex-col items-center justify-center min-h-40 gap-2 p-1 text-center',
+          'group/upload border border-dashed w-full rounded-md flex flex-col items-center justify-center min-h-30 gap-2 p-1 relative',
           'data-hovering:bg-accent',
           'data-error:bg-destructive/30'
         ),
@@ -40,7 +41,10 @@ function FileUpload({ uploadProviderProps, uploadingProgress }: Props) {
           sizeLimit={uploadProviderProps.sizeLimit}
         />
       ) : uploadingProgress ? (
-        <UploadingState state={uploadingProgress} />
+        <UploadingState
+          state={uploadingProgress}
+          onReset={onReset}
+        />
       ) : (
         <>
           <Icon

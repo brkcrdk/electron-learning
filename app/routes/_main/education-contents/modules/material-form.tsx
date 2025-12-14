@@ -29,10 +29,13 @@ export interface MaterialFormInputs {
 function MaterialForm() {
   const { control } = useFormContext<MaterialFormInputs>();
 
-  const { handleUpload, uploadState } = useFileUpload({
-    uploadType: 'images',
+  const { handleUpload, uploadState, resetUploadState } = useFileUpload({
+    uploadType: 'video',
     onProgress: progress => {
       console.log(progress);
+    },
+    onComplete: completed => {
+      console.log(completed.response);
     },
   });
 
@@ -71,10 +74,11 @@ function MaterialForm() {
         inputId="cover_image"
         uploadProviderProps={{
           onChange: handleUpload,
-          accept: 'image/*',
-          sizeLimit: 1,
+          accept: 'video/*',
+          sizeLimit: 100,
         }}
         uploadingProgress={uploadState}
+        onReset={resetUploadState}
       />
     </Field.Group>
   );
