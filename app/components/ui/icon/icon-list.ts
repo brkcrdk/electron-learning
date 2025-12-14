@@ -1,4 +1,5 @@
 import { BiHomeAlt } from 'react-icons/bi';
+import { BsEasel2 } from 'react-icons/bs';
 import { HiShieldCheck } from 'react-icons/hi2';
 import { IoFolderOpenOutline } from 'react-icons/io5';
 import {
@@ -64,6 +65,7 @@ export const iconList = [
   { label: 'alert-triangle', icon: LuTriangleAlert },
   { label: 'zoom-in', icon: LuZoomIn },
   { label: 'zoom-out', icon: LuZoomOut },
+  { label: 'easel', icon: BsEasel2 },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];

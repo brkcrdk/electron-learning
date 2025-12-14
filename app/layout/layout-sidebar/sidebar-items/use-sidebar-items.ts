@@ -55,6 +55,16 @@ function useSidebarItems() {
         to: '/categories',
       },
     },
+    {
+      label: 'Eğitim Materyalleri',
+      itemKey: 'education-materials',
+      icon: 'easel',
+      isActive: pathname.startsWith('/education-materials'),
+      isProtected: false,
+      routeProps: {
+        to: '/education-materials',
+      },
+    },
   ];
 
   return sidebarItems;
