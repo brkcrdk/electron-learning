@@ -1,13 +1,14 @@
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import type { FileUploadResponse } from '@api/upload-file-api/types';
+import FileUploadField from '@app/components/form-fields/file-upload-field';
 import InputField from '@app/components/form-fields/input-field';
 import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
 import Select from '@app/components/ui/select';
+import useFileUpload from '@app/hooks/use-file-upload';
 import type { MediaFileTypes } from '@db/schema';
 
-import ContentUploader from './content-uploader';
 import CoverImage from './cover-image';
 
 export interface MediaContentOption {
@@ -29,8 +30,33 @@ export interface MaterialFormInputs {
   media_type: MediaContentOption;
 }
 
+const allowedMediaMimeTypes: Record<MediaFileTypes, string> = {
+  video: 'video/mp4, video/mov, video/avi, video/wmv, video/flv, video/mkv',
+  stories: 'application/zip, application/x-zip-compressed',
+  pdfs: 'application/pdf',
+  images: 'image/jpeg, image/png, image/gif, image/webp',
+};
+
 function MaterialForm() {
-  const { control } = useFormContext<MaterialFormInputs>();
+  const { control, setValue, trigger } = useFormContext<MaterialFormInputs>();
+
+  const media_type = useWatch({
+    control,
+    name: 'media_type',
+  });
+
+  const mediaId = useWatch({
+    control,
+    name: 'media.id',
+  });
+
+  const { handleUpload, uploadState, resetUploadState } = useFileUpload({
+    uploadType: media_type.value,
+    onComplete: completed => {
+      setValue('media', completed.response);
+      trigger('media');
+    },
+  });
 
   return (
     <Field.Group>
@@ -48,6 +74,11 @@ function MaterialForm() {
             getOptionLabel={val => val.label}
             getOptionValue={val => val.value}
             {...field}
+            onChange={value => {
+              field.onChange(value);
+              setValue('media', null);
+              resetUploadState(mediaId);
+            }}
           />
         )}
       />
@@ -80,7 +111,26 @@ function MaterialForm() {
         )}
       />
       <CoverImage />
-      <ContentUploader />
+
+      <Controller
+        control={control}
+        name="media"
+        rules={{ required: 'İçerik dosyası alanı zorunludur' }}
+        render={({ fieldState }) => (
+          <FileUploadField
+            label="İçerik Dosyası:"
+            inputId="media"
+            error={fieldState.error?.message}
+            uploadingProgress={uploadState}
+            uploadProviderProps={{
+              onChange: handleUpload,
+              accept: allowedMediaMimeTypes[media_type.value],
+              sizeLimit: 100,
+            }}
+            onReset={resetUploadState}
+          />
+        )}
+      />
     </Field.Group>
   );
 }
