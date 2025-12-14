@@ -4,8 +4,10 @@ import type { FileUploadResponse } from '@api/upload-file-api/types';
 import InputField from '@app/components/form-fields/input-field';
 import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
+import Select from '@app/components/ui/select';
 import type { MediaFileTypes } from '@db/schema';
 
+import ContentUploader from './content-uploader';
 import CoverImage from './cover-image';
 
 export interface MediaContentOption {
@@ -14,9 +16,9 @@ export interface MediaContentOption {
 }
 
 export const mediaContentOptions: MediaContentOption[] = [
-  { label: 'Video', value: 'video' },
-  { label: 'Stories', value: 'stories' },
-  { label: 'PDFs', value: 'pdfs' },
+  { label: 'Video İçeriği', value: 'video' },
+  { label: 'Articulate İçeriği', value: 'stories' },
+  { label: 'PDF İçeriği', value: 'pdfs' },
 ];
 
 export interface MaterialFormInputs {
@@ -32,6 +34,23 @@ function MaterialForm() {
 
   return (
     <Field.Group>
+      <Controller
+        control={control}
+        name="media_type"
+        rules={{ required: 'İçerik tipi alanı zorunludur' }}
+        render={({ field, fieldState }) => (
+          <Select
+            label="İçerik Tipi:"
+            id="media_type"
+            placeholder="İçerik Tipi"
+            errorMessage={fieldState.error?.message}
+            options={mediaContentOptions}
+            getOptionLabel={val => val.label}
+            getOptionValue={val => val.value}
+            {...field}
+          />
+        )}
+      />
       <Controller
         control={control}
         name="name"
@@ -61,6 +80,7 @@ function MaterialForm() {
         )}
       />
       <CoverImage />
+      <ContentUploader />
     </Field.Group>
   );
 }
