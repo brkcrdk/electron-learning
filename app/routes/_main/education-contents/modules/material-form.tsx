@@ -1,5 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form';
 
+import FileUploadField from '@app/components/form-fields/file-upload-field';
 import InputField from '@app/components/form-fields/input-field';
 import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
@@ -57,10 +58,13 @@ function MaterialForm() {
           />
         )}
       />
+      <FileUploadField
+        label="Kapak Resmi:"
+        id="cover_image"
+        placeholder="Kapak Resmi"
+      />
     </Field.Group>
   );
 }
 
 export default MaterialForm;
-
-// isim, cover_image, media_type, media_url

@@ -12,10 +12,10 @@ interface Props extends ComponentProps<typeof Switch> {
   passiveLabel?: string;
 }
 
-function SwitchField({ error, activeLabel, passiveLabel, ...props }: Props) {
+function SwitchField({ error, activeLabel, passiveLabel, label, ...props }: Props) {
   return (
     <Field className="w-auto">
-      <Field.Label htmlFor={props.id}>{props.label}</Field.Label>
+      <Field.Label htmlFor={props.id}>{label}</Field.Label>
       <div className="flex items-center gap-2">
         {passiveLabel && <Field.Label>{passiveLabel}</Field.Label>}
         <Switch

@@ -26,6 +26,7 @@ import {
   LuTriangleAlert,
   LuZoomIn,
   LuZoomOut,
+  LuCopy,
 } from 'react-icons/lu';
 import { MdMoreHoriz } from 'react-icons/md';
 import { PiWarningCircleFill } from 'react-icons/pi';
@@ -68,6 +69,7 @@ export const iconList = [
   { label: 'zoom-out', icon: LuZoomOut },
   { label: 'easel', icon: BsEasel2 },
   { label: 'file-directory', icon: GoFileDirectory },
+  { label: 'copy', icon: LuCopy },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];

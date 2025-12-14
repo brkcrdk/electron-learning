@@ -10,10 +10,10 @@ interface Props extends ComponentProps<typeof Input> {
   label: string;
 }
 
-function InputField({ error, ...props }: Props) {
+function InputField({ error, label, ...props }: Props) {
   return (
     <Field>
-      <Field.Label htmlFor={props.id}>{props.label}</Field.Label>
+      <Field.Label htmlFor={props.id}>{label}</Field.Label>
       <Input
         {...props}
         className={cn(props.className, error && 'ring-destructive ring-2')}
