@@ -5,5 +5,9 @@ export const Route = createFileRoute('/_main/education-materials/')({
 });
 
 function RouteComponent() {
-  return <div>Hello "/_main/education-materials/"!</div>;
+  return (
+    <div>
+      <input type="file" />
+    </div>
+  );
 }
