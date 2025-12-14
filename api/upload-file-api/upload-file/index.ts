@@ -1,3 +1,5 @@
+import { basename } from 'path';
+
 import { ipcMain } from 'electron';
 import { createWriteStream } from 'fs-extra';
 
@@ -31,8 +33,11 @@ function uploadFile() {
 
       // İlk chunk kontrolü (chunkIndex === 0)
       if (chunkIndex === 0) {
-        // Dizin yoksa oluştur ve full path al
-        const filePath = await getFullFilePath({ mediaType, fileName });
+        // Dizin yoksa oluştur ve full path al (uploadId ile unique dosya adı)
+        const filePath = await getFullFilePath({ mediaType, fileName, uploadId });
+
+        // Path'ten unique dosya adını çıkar (extension korunmuş olacak)
+        const finalFileName = basename(filePath);
 
         // Stream oluştur
         const writeStream = createWriteStream(filePath);
@@ -46,7 +51,7 @@ function uploadFile() {
           return finalizeAndSave({
             writeStream,
             filePath,
-            fileName,
+            fileName: finalFileName, // Unique dosya adını kullan
             fileSize,
             mediaType,
             uploadedBy: currentUser.id,
@@ -58,7 +63,7 @@ function uploadFile() {
         setStream(uploadId, writeStream, {
           filePath,
           totalChunks,
-          fileName,
+          fileName: finalFileName, // Unique dosya adını kullan
         });
 
         // İlk chunk başarılı
@@ -80,7 +85,8 @@ function uploadFile() {
       }
 
       // Validation: Dosya bilgileri tutarlı mı kontrol et
-      if (metadata.fileName !== fileName || metadata.totalChunks !== totalChunks) {
+      // fileName kontrolü kaldırıldı çünkü unique isimler kullanılıyor
+      if (metadata.totalChunks !== totalChunks) {
         return {
           success: false,
           error: `Upload session mismatch for uploadId: ${uploadId}`,
@@ -96,7 +102,7 @@ function uploadFile() {
         return finalizeAndSave({
           writeStream: stream,
           filePath: metadata.filePath,
-          fileName: data.fileName,
+          fileName: metadata.fileName, // Metadata'daki unique dosya adını kullan
           fileSize: data.fileSize,
           mediaType: data.mediaType,
           uploadedBy: currentUser.id,

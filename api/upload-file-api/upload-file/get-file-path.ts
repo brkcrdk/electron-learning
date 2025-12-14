@@ -1,4 +1,4 @@
-import { join, relative } from 'path';
+import { join, parse, relative } from 'path';
 
 import { app } from 'electron';
 import { ensureDir } from 'fs-extra';
@@ -13,6 +13,12 @@ const fileUploadPathMap: Record<MediaFileTypes, string> = {
 };
 
 interface GetFilePathProps {
+  mediaType: MediaFileTypes;
+  fileName: string;
+  uploadId: string;
+}
+
+interface GetRelativeFilePathProps {
   mediaType: MediaFileTypes;
   fileName: string;
 }
@@ -32,18 +38,34 @@ function getContentRootPath(): string {
 }
 
 /**
- * Dosya yazmak için full path oluşturur ve dizini oluşturur
- * Örnek: C:\Users\...\AppData\Roaming\app\content\videos\file.mp4
+ * Extension'ı koruyarak unique dosya adı oluşturur
+ * uploadId (UUID) kullanarak her zaman unique isim garantiler
+ * Örnek: document.pdf -> document_a1b2c3d4-e5f6-7890-abcd-ef1234567890.pdf
  */
-export async function getFullFilePath({ mediaType, fileName }: GetFilePathProps): Promise<string> {
+function generateUniqueFileName(fileName: string, uploadId: string): string {
+  const parsed = parse(fileName);
+
+  // Extension varsa: name + uploadId + ext
+  // Extension yoksa: name + uploadId
+  return parsed.ext ? `${parsed.name}_${uploadId}${parsed.ext}` : `${parsed.name}_${uploadId}`;
+}
+
+/**
+ * Dosya yazmak için full path oluşturur ve dizini oluşturur
+ * uploadId kullanarak her zaman unique isim oluşturur (extension korunur)
+ * Örnek: C:\Users\...\AppData\Roaming\app\content\videos\file_a1b2c3d4-e5f6-7890-abcd-ef1234567890.mp4
+ */
+export async function getFullFilePath({ mediaType, fileName, uploadId }: GetFilePathProps): Promise<string> {
   const contentRoot = getContentRootPath();
   const uploadFolder = fileUploadPathMap[mediaType];
   const uploadPath = join(contentRoot, uploadFolder);
 
   await ensureDir(uploadPath);
 
-  // Dosya yolunu oluştur
-  const filePath = join(uploadPath, fileName);
+  // uploadId kullanarak unique dosya adı oluştur
+  const uniqueFileName = generateUniqueFileName(fileName, uploadId);
+  const filePath = join(uploadPath, uniqueFileName);
+
   return filePath;
 }
 
@@ -51,7 +73,7 @@ export async function getFullFilePath({ mediaType, fileName }: GetFilePathProps)
  * Veritabanına kaydetmek için relative path oluşturur
  * Örnek: content/videos/file.mp4
  */
-export function getRelativeFilePath({ mediaType, fileName }: GetFilePathProps): string {
+export function getRelativeFilePath({ mediaType, fileName }: GetRelativeFilePathProps): string {
   const uploadFolder = fileUploadPathMap[mediaType];
   return join('content', uploadFolder, fileName).replace(/\\/g, '/'); // Windows için / kullan
 }
