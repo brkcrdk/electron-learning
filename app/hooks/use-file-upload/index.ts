@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { FileUploadTypes } from '@api/upload-file/types';
 
@@ -15,8 +15,8 @@ interface Props {
 
 function useFileUpload({ uploadType, onComplete, onProgress }: Props) {
   const [uploadState, setUploadState] = useState<ChunkStateProps | null>(null);
-
   const [controller, setController] = useState<AbortController | null>(null);
+  const currentUploadId = useRef<string | null>(null);
 
   const handleUpload = useCallback(
     async (file: File) => {
@@ -122,12 +122,27 @@ function useFileUpload({ uploadType, onComplete, onProgress }: Props) {
     [uploadType, controller, onComplete, onProgress]
   );
 
-  const handleCancel = useCallback(() => {
+  // Component unmount olduğunda cleanup yap
+  useEffect(() => {
+    return () => {
+      if (currentUploadId.current && controller) {
+        controller.abort('Component unmount oldu');
+        try {
+          window.electronAPI.cleanupUpload(currentUploadId.current);
+        } catch (error) {
+          console.error('Cleanup error on unmount:', error);
+        }
+      }
+    };
+  }, [controller]);
+
+  const handleCancel = useCallback(async () => {
     try {
-      if (controller) {
+      if (controller && currentUploadId.current) {
         controller.abort('chunk upload iptal edildi.');
         setController(null);
         setUploadState(null);
+        await window.electronAPI.cleanupUpload(currentUploadId.current);
       }
     } catch (error) {
       console.error('Error aborting request:', error);

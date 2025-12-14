@@ -2,6 +2,7 @@ import { join } from 'path';
 
 import { app, ipcMain } from 'electron';
 import { ensureDir, createWriteStream } from 'fs-extra';
+import type { ApiResponseProps } from 'types/api-response-types';
 
 import { setStream, getStream, getMetadata, deleteStream, cleanupStream } from './streamManager';
 import type { FileUploadResponseType, UploadFilePayload } from './types';
@@ -138,6 +139,17 @@ function uploadFileHandler() {
       await cleanupStream(data.uploadId);
 
       throw error;
+    }
+  });
+
+  // Cleanup endpoint'i: Yarım kalan upload'ı temizler
+  ipcMain.handle('cleanup-upload', async (_, uploadId: string): ApiResponseProps<string> => {
+    try {
+      await cleanupStream(uploadId);
+      return { success: true, data: 'Upload temizlendi.' };
+    } catch (error) {
+      console.error('cleanup upload error', error);
+      return { success: false, error: String(error) };
     }
   });
 }
