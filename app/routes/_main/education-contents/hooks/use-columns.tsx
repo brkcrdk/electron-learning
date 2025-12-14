@@ -4,6 +4,7 @@ import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
 import UserCell from '@app/components/table-cells/user-cell';
 import Icon from '@app/components/ui/icon';
 import type { IconListProps } from '@app/components/ui/icon/icon-list';
+import getContentPath from '@app/utils/get-content-path';
 import type { EducationListItem, MediaFileTypes } from '@db/schema';
 
 interface ContentTypeOption {
@@ -40,7 +41,7 @@ function useColumns(): ColumnDef<EducationListItem>[] {
         return (
           <div className="flex items-center gap-2">
             <img
-              // src={getContentPath(coverImage.filePath)}
+              src={getContentPath(coverImage.filePath)}
               alt={name}
             />
             <span className="line-clamp-1 max-w-40">{name}</span>
