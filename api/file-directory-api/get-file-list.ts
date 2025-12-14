@@ -1,13 +1,17 @@
-import { desc } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
-import { mediaFiles, type MediaFile } from '@db/schema';
+import { mediaFiles, users, type MediaFile, type User } from '@db/schema';
+
+type UserWithoutPassword = Omit<User, 'password'>;
+
+type FileWithUser = Omit<MediaFile, 'uploadedBy'> & { uploadedBy: UserWithoutPassword | null };
 
 function getFileList() {
-  ipcMain.handle('get-file-list', async (): ApiResponseProps<MediaFile[]> => {
+  ipcMain.handle('get-file-list', async (): ApiResponseProps<FileWithUser[]> => {
     try {
       const db = getDb();
 
@@ -27,7 +31,29 @@ function getFileList() {
         };
       }
 
-      const fileList = await db.select().from(mediaFiles).orderBy(desc(mediaFiles.createdAt));
+      const fileList = await db
+        .select({
+          id: mediaFiles.id,
+          filePath: mediaFiles.filePath,
+          fileName: mediaFiles.fileName,
+          fileSize: mediaFiles.fileSize,
+          mediaType: mediaFiles.mediaType,
+          createdAt: mediaFiles.createdAt,
+          updatedAt: mediaFiles.updatedAt,
+          uploadedBy: {
+            id: users.id,
+            name: users.name,
+            email: users.email,
+            role: users.role,
+            status: users.status,
+            createdAt: users.createdAt,
+            updatedAt: users.updatedAt,
+            lastLoginAt: users.lastLoginAt,
+          },
+        })
+        .from(mediaFiles)
+        .leftJoin(users, eq(mediaFiles.uploadedBy, users.id))
+        .orderBy(desc(mediaFiles.createdAt));
 
       return {
         success: true,
