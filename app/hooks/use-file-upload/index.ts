@@ -5,7 +5,7 @@ import type { FileUploadTypes } from '@api/upload-content-material/types';
 import chunkFile from './chunkFile';
 import type { ChunkCompletedStateProps, ChunkInProgressStateProps, ChunkStateProps } from './types';
 
-const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB
+const CHUNK_SIZE = 1 * 1024 * 1024; // 5MB
 
 interface Props {
   uploadType: FileUploadTypes;
