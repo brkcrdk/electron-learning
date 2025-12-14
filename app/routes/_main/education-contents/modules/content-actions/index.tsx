@@ -24,15 +24,15 @@ function ContentActions({ content }: Props) {
           <Drawer.Description>Eğitim içeriği bilgilerini düzenlemek için lütfen içerik bilgilerini giriniz.</Drawer.Description>
         </Drawer.Header>
         <EditContent content={content} />
-        {/* <Drawer.Footer className="grid grid-cols-2 gap-2">
-          <DeleteCategory categoryId={category.id} />
+        <Drawer.Footer className="grid grid-cols-2 gap-2">
+          {/* <DeleteCategory categoryId={category.id} /> */}
           <Button
-            form="edit-category-form"
+            form="edit-content-form"
             type="submit"
           >
             Kategoriyi Düzenle
           </Button>
-        </Drawer.Footer> */}
+        </Drawer.Footer>
       </Drawer.Content>
     </Drawer>
   );

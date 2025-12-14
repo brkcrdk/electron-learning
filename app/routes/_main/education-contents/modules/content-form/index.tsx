@@ -1,4 +1,4 @@
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { Controller, useFormContext, useFormState, useWatch } from 'react-hook-form';
 
 import type { FileUploadResponse } from '@api/upload-file-api/types';
 import FileUploadField from '@app/components/form-fields/file-upload-field';
@@ -45,9 +45,9 @@ function ContentForm() {
     name: 'media_type',
   });
 
-  const mediaId = useWatch({
+  const media = useWatch({
     control,
-    name: 'media.id',
+    name: 'media',
   });
 
   const { handleUpload, uploadState, resetUploadState } = useFileUpload({
@@ -56,6 +56,15 @@ function ContentForm() {
       setValue('media', completed.response);
       trigger('media');
     },
+    defaultUploadState: media
+      ? {
+          status: 'completed',
+          progress: 100,
+          file: new File([], media.fileName),
+          progressId: crypto.randomUUID(),
+          response: media,
+        }
+      : undefined,
   });
 
   return (
@@ -77,7 +86,9 @@ function ContentForm() {
             onChange={value => {
               field.onChange(value);
               setValue('media', null);
-              resetUploadState(mediaId);
+              if (media) {
+                resetUploadState(media.id);
+              }
             }}
           />
         )}

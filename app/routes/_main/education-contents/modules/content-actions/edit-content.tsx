@@ -1,6 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useFormState } from 'react-hook-form';
 
+import Skeleton from '@app/components/ui/skeleton';
 import type { EducationListItem } from '@db/schema';
 
 import ContentForm, { mediaContentOptions, type ContentFormInputs } from '../content-form';
@@ -56,8 +57,13 @@ function EditContent({ content }: Props) {
   });
 
   function onSubmit(data: ContentFormInputs) {
-    // mutateAsync(data);
     console.log(data);
+  }
+
+  const { isLoading } = useFormState({ control: form.control });
+
+  if (isLoading) {
+    return <Skeleton />;
   }
 
   return (
@@ -66,7 +72,7 @@ function EditContent({ content }: Props) {
         id="edit-content-form"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        {/* <ContentForm /> */}
+        <ContentForm />
       </form>
     </FormProvider>
   );
