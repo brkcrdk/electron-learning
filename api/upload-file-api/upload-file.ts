@@ -3,10 +3,12 @@ import { join } from 'path';
 import { app, ipcMain } from 'electron';
 import { ensureDir, createWriteStream } from 'fs-extra';
 
-import { cleanupStream, deleteStream, getMetadata, getStream, setStream } from './streamManager';
-import type { FileUploadResponseType, FileUploadTypes, UploadFilePayload } from './types';
+import type { MediaFileType } from '@db/schema';
 
-const fileUploadPathMap: Record<FileUploadTypes, string> = {
+import { cleanupStream, deleteStream, getMetadata, getStream, setStream } from './streamManager';
+import type { FileUploadResponseType, UploadFilePayload } from './types';
+
+const fileUploadPathMap: Record<MediaFileType, string> = {
   video: 'videos',
   stories: 'stories',
   pdfs: 'pdfs',

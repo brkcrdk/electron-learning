@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import type { FileUploadTypes } from '@api/upload-file/types';
+import type { MediaFileType } from '@db/schema';
 
 import chunkFile from './chunkFile';
 import type { ChunkCompletedStateProps, ChunkInProgressStateProps, ChunkStateProps } from './types';
@@ -8,7 +8,7 @@ import type { ChunkCompletedStateProps, ChunkInProgressStateProps, ChunkStatePro
 const CHUNK_SIZE = 1 * 1024 * 1024; // 5MB
 
 interface Props {
-  uploadType: FileUploadTypes;
+  uploadType: MediaFileType;
   onComplete?: (response: ChunkCompletedStateProps) => void;
   onProgress?: (progress: ChunkInProgressStateProps) => void;
 }

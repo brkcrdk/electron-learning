@@ -1,12 +1,12 @@
 import type { ApiResponseProps } from 'types/api-response-types';
 
-export type FileUploadTypes = 'video' | 'stories' | 'pdfs' | 'images';
+import type { MediaFileType } from '@db/schema';
 
 export interface UploadFilePayload {
   uploadId: string;
   fileName: string;
   fileSize: number;
-  fileType: FileUploadTypes;
+  fileType: MediaFileType;
   totalChunks: number;
   chunkIndex: number;
   chunkData: ArrayBuffer;
@@ -14,7 +14,7 @@ export interface UploadFilePayload {
 
 export interface FileUploadResponse {
   id: number;
-  mediaType: FileUploadTypes;
+  mediaType: MediaFileType;
   fileName: string;
   fileFullUrl: string;
   fileSize: number;
