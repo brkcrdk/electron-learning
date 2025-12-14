@@ -60,7 +60,12 @@ function useFileUpload({ uploadType, onComplete, onProgress }: Props) {
             progress = (i / (fileChunks.length - 1)) * 100;
           }
 
-          if (result.success) {
+          /**
+           * @description chunk upload sırasında sadece başarılı olma durumunda response.data bir object olacaktır.
+           * success olsa da mesaj string ile sadece progress ilerlemesinin devam ettiğin bilgisini string olarak verir.
+           * O nedenle böyle bir typenarrowing yapıyoruz.
+           */
+          if (result.success && typeof result.data === 'object') {
             if (i === fileChunks.length - 1) {
               const completedState: ChunkCompletedStateProps = {
                 status: 'completed',
