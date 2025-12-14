@@ -27,6 +27,10 @@ function FileUpload({ uploadProviderProps, uploadingProgress, onReset }: Props) 
           'data-error:bg-destructive/30'
         ),
       }}
+      onChange={file => {
+        uploadProviderProps.onChange(file);
+        setErrorReason(null);
+      }}
       disabled={uploadingProgress !== null}
       onError={reason => {
         setErrorReason(reason);
