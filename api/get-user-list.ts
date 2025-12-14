@@ -1,4 +1,4 @@
-import { desc } from 'drizzle-orm';
+import { desc, ne } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
 import { getDb } from '@db/client';
@@ -28,12 +28,20 @@ function getUserListHandler() {
         };
       }
 
-      const userList = await db.select().from(users).orderBy(desc(users.createdAt));
-
-      return {
-        success: true,
-        data: userList,
-      };
+      // Eğer kullanıcı super-admin değilse, super-admin rolündeki kullanıcıları filtrele
+      if (currentUser.role === 'super-admin') {
+        const userList = await db.select().from(users).orderBy(desc(users.createdAt));
+        return {
+          success: true,
+          data: userList,
+        };
+      } else {
+        const userList = await db.select().from(users).where(ne(users.role, 'super-admin')).orderBy(desc(users.createdAt));
+        return {
+          success: true,
+          data: userList,
+        };
+      }
     } catch (error) {
       console.error('get user list error', error);
       throw error;

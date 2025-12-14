@@ -1,4 +1,4 @@
-import { MutationCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
@@ -8,6 +8,13 @@ import { router } from './router';
 
 const queryClient = new QueryClient({
   mutationCache: new MutationCache({
+    onError: error => {
+      toast.error(error.message, {
+        dismissible: false,
+      });
+    },
+  }),
+  queryCache: new QueryCache({
     onError: error => {
       toast.error(error.message, {
         dismissible: false,

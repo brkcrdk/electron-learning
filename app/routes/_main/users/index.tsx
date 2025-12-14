@@ -16,7 +16,7 @@ function RouteComponent() {
     queryFn: async () => {
       const response = await window.electronAPI.getUserList();
       if (!response.success) {
-        throw response;
+        throw new Error(response.error);
       }
       return response.data;
     },

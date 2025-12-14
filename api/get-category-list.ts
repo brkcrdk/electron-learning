@@ -28,9 +28,13 @@ function getCategoryListHandler() {
         };
       }
 
-      // Her kategori için alt kategori kontrolü yap
-      // EXISTS: parentId değeri bu kategorinin id'sine eşit olan bir kategori var mı?
-      // mapWith(Boolean): SQLite'dan gelen integer (0/1) değerini boolean'a çevir
+      /**
+       * Her kategori için alt kategori kontrolü yapar.
+       *
+       * @description
+       * - EXISTS: parentId değeri bu kategorinin id'sine eşit olan bir kategori var mı sorusunu sorgular.
+       * - mapWith(Boolean): SQLite'dan gelen integer (0/1) değerini boolean'a çevirir.
+       */
       const hasChildrenQuery = sql<boolean>`EXISTS(SELECT 1 FROM ${category} WHERE ${category.parentId} = ${category.id})`.mapWith(Boolean).as('hasChildren');
 
       /**
