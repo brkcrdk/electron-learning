@@ -36,6 +36,8 @@ function useFileUpload({ uploadType, onComplete, onProgress }: Props) {
       const abortController = new AbortController();
       setController(abortController);
 
+      console.log(file);
+
       for (let i = 0; i < fileChunks.length; i++) {
         const chunk = fileChunks[i];
         const signal = abortController.signal;

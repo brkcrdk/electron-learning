@@ -4,6 +4,7 @@ import FileUploadField from '@app/components/form-fields/file-upload-field';
 import InputField from '@app/components/form-fields/input-field';
 import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
+import useFileUpload from '@app/hooks/use-file-upload';
 import type { MediaFileTypes } from '@db/schema';
 
 export interface MediaContentOption {
@@ -27,6 +28,13 @@ export interface MaterialFormInputs {
 
 function MaterialForm() {
   const { control } = useFormContext<MaterialFormInputs>();
+
+  const { handleUpload, uploadState } = useFileUpload({
+    uploadType: 'images',
+    onProgress: progress => {
+      console.log(progress);
+    },
+  });
 
   return (
     <Field.Group>
@@ -62,12 +70,11 @@ function MaterialForm() {
         label="Kapak Resmi:"
         inputId="cover_image"
         uploadProviderProps={{
-          onChange: () => {},
+          onChange: handleUpload,
           accept: 'image/*',
-          multiple: false,
           sizeLimit: 1,
         }}
-        isUploading={true}
+        uploadingProgress={uploadState}
       />
     </Field.Group>
   );

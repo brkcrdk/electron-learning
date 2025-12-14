@@ -6,10 +6,8 @@ import handleValidateFileList from './handleValidateFileList';
 
 export type UploadErrorReasonTypes = null | 'invalidType' | 'uploadLimit' | 'sizeLimit' | 'connectionError';
 
-export type IsMultiFiles<T extends boolean> = T extends true ? File[] : File;
-
-export interface UploadProviderProps<T extends boolean> extends PropsWithChildren {
-  onChange: (fileList: IsMultiFiles<T>) => void;
+export interface UploadProviderProps extends PropsWithChildren {
+  onChange: (fileList: File) => void;
   onError?: (reason: UploadErrorReasonTypes) => void;
   rootProps?: HTMLAttributes<HTMLDivElement>;
   /**
@@ -26,13 +24,6 @@ export interface UploadProviderProps<T extends boolean> extends PropsWithChildre
    * @defaultValue `false`
    */
   disabled?: boolean;
-  /**
-   * Birden fazla dosya seçme özelliğidir, true olduğu zaman birden fazla dosya seçmeye izin verir.
-   * NOTE: Eğer bu değer false ise, onDrop yapıldığında birden fazla dosya bırakılmışsa bu durumda ilk sıradaki dosyayı return eder.
-   *
-   * @defaultValue `false`
-   */
-  multiple: T;
   ref?: Ref<HTMLDivElement>;
 }
 
@@ -40,18 +31,17 @@ export interface UploadProviderProps<T extends boolean> extends PropsWithChildre
  * Bu component dosya upload işlemleri sırasında kullanılan input tipi için tekrar eden işlemleri ve drag/drop işlemlerini
  * bir standart olarak yönetmek adına oluşturulmuş `headless` bir componenttir.
  */
-function UploadProvider<T extends boolean>({
+function UploadProvider({
   children,
   onError,
   accept,
   inputId = 'uploadProviderInput',
   disabled = false,
-  multiple,
   rootProps,
   sizeLimit = 5,
   onChange,
   ref,
-}: UploadProviderProps<T>) {
+}: UploadProviderProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isHovering, setIsHovering] = useState(false);
 
@@ -83,7 +73,7 @@ function UploadProvider<T extends boolean>({
           const droppedItems = e.dataTransfer.items;
           const acceptedTypes = accept.split(',');
 
-          if (droppedItems.length > 1 && !multiple && onError) {
+          if (droppedItems.length > 1 && onError) {
             e.currentTarget.dataset.error = '';
             return onError('uploadLimit');
           }
@@ -100,8 +90,7 @@ function UploadProvider<T extends boolean>({
            * Eğer provider çoklu import desteklemiyorsa ondrop yapıldığında ilk file return edilir.
            */
           if (files.length > 0) {
-            const fileList = multiple ? files : files[0];
-            onChange(fileList as IsMultiFiles<T>);
+            onChange(files[0]);
           }
         }
       }}
@@ -139,14 +128,12 @@ function UploadProvider<T extends boolean>({
              * Eğer provider çoklu import desteklemiyorsa ondrop yapıldığında ilk file return edilir.
              */
             if (validFiles.length > 0) {
-              const fileList = multiple ? validFiles : validFiles[0];
-              onChange(fileList as IsMultiFiles<T>);
+              onChange(validFiles[0]);
             }
           }
         }}
         ref={inputRef}
         disabled={disabled}
-        multiple={multiple}
       />
     </div>
   );
