@@ -6,7 +6,7 @@ import { mediaFiles, type MediaFileTypes } from '@db/schema';
 import type { ApiResponseProps } from '../../../types/api-response-types';
 import { cleanupStream, deleteStream } from '../stream-manager';
 import type { FileUploadResponse } from '../types';
-import { getFullPathFromRelative, getRelativePathFromFull } from './get-file-path';
+import { getRelativePathFromFull } from './get-file-path';
 
 interface Props {
   writeStream: WriteStream;
@@ -56,9 +56,6 @@ async function finalizeAndSave({ writeStream, filePath, fileName, fileSize, medi
           deleteStream(uploadId);
         }
 
-        // Response için full path oluştur (frontend'e gönderirken)
-        const fullPathForResponse = getFullPathFromRelative(relativePath);
-
         console.log('File saved to:', filePath);
         console.log('Relative path saved to DB:', relativePath);
 
@@ -68,7 +65,7 @@ async function finalizeAndSave({ writeStream, filePath, fileName, fileSize, medi
             id: insertedFile.id,
             mediaType,
             fileName,
-            fileFullUrl: fullPathForResponse,
+            fileFullUrl: relativePath,
             fileSize,
           },
         });
