@@ -1,8 +1,9 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormProvider, useForm, useFormState } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import Skeleton from '@app/components/ui/skeleton';
-import type { EducationListItem } from '@db/schema';
+import type { CreateEducationPayload, EducationListItem } from '@db/schema';
 
 import ContentForm, { mediaContentOptions, type ContentFormInputs } from '../content-form';
 
@@ -13,23 +14,18 @@ interface Props {
 function EditContent({ content }: Props) {
   const queryClient = useQueryClient();
 
-  // const { mutateAsync } = useMutation({
-  //   mutationFn: (data: ContentFormInputs) => {
-  //     return window.electronAPI.updateCategory({
-  //       id: category.id,
-  //       name: data.name,
-  //       description: data.description,
-  //       slug: slugify(data.name),
-  //     });
-  //   },
-  //   onSuccess: response => {
-  //     if (response.success) {
-  //       queryClient.invalidateQueries({ queryKey: ['category-list'] });
-  //     } else {
-  //       toast.error(response.error, { dismissible: false });
-  //     }
-  //   },
-  // });
+  const { mutateAsync } = useMutation({
+    mutationFn: (data: CreateEducationPayload) => {
+      return window.electronAPI.updateEducation(data);
+    },
+    onSuccess: response => {
+      if (response.success) {
+        queryClient.invalidateQueries({ queryKey: ['education-contents'] });
+      } else {
+        toast.error(response.error, { dismissible: false });
+      }
+    },
+  });
 
   const form = useForm<ContentFormInputs>({
     defaultValues: async () => {
@@ -57,7 +53,16 @@ function EditContent({ content }: Props) {
   });
 
   function onSubmit(data: ContentFormInputs) {
-    console.log(data);
+    if (data.cover_image && data.media) {
+      mutateAsync({
+        id: content.id,
+        name: data.name,
+        description: data.description,
+        contentType: data.media_type.value,
+        coverImageId: data.cover_image.id,
+        contentFileId: data.media.id,
+      });
+    }
   }
 
   const { isLoading } = useFormState({ control: form.control });

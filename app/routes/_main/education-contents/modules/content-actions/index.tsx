@@ -1,9 +1,9 @@
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
 import Icon from '@app/components/ui/icon';
-import EditCategory from '@app/routes/_main/categories/modules/category-actions/edit-category';
-import type { Category, EducationListItem } from '@db/schema';
+import type { EducationListItem } from '@db/schema';
 
+import DeleteContent from './delete-content';
 import EditContent from './edit-content';
 
 interface Props {
@@ -25,12 +25,12 @@ function ContentActions({ content }: Props) {
         </Drawer.Header>
         <EditContent content={content} />
         <Drawer.Footer className="grid grid-cols-2 gap-2">
-          {/* <DeleteCategory categoryId={category.id} /> */}
+          <DeleteContent contentId={content.id} />
           <Button
             form="edit-content-form"
             type="submit"
           >
-            Kategoriyi Düzenle
+            Eğitim İçeriğini Düzenle
           </Button>
         </Drawer.Footer>
       </Drawer.Content>

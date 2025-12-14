@@ -70,7 +70,7 @@ function NewContent() {
         </Drawer.Header>
         <FormProvider {...form}>
           <form
-            id="new-material-form"
+            id="new-content-form"
             onSubmit={form.handleSubmit(onSubmit)}
           >
             <ContentForm />
@@ -78,7 +78,7 @@ function NewContent() {
         </FormProvider>
         <Drawer.Footer>
           <Button
-            form="new-material-form"
+            form="new-content-form"
             type="submit"
             disabled={isPending}
             isLoading={isPending}
