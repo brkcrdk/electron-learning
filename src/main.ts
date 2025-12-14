@@ -69,13 +69,6 @@ app.whenReady().then(async () => {
 app.on('ready', () => {
   registerApiHandlers();
 
-  // İçerik klasörlerini oluştur
-  const contentRoot = path.join(app.getPath('userData'), 'content');
-  console.log('contentRoot', contentRoot);
-  // await fs.mkdir(path.join(contentRoot, 'videos'), { recursive: true });
-  // await fs.mkdir(path.join(contentRoot, 'pdfs'), { recursive: true });
-  // await fs.mkdir(path.join(contentRoot, 'stories'), { recursive: true });
-
   // // IPC handler'larını kaydet
   registerStoreHandlers();
 });
