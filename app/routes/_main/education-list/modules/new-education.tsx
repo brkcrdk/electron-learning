@@ -39,7 +39,9 @@ function NewEducation() {
   });
 
   const onSubmit = (data: EducationFormInputs) => {
-    if (!data.category || !data.educationMaterial) return;
+    if (!data.category || !data.educationMaterial || !data.assigneeIds.length) return;
+
+    const assigneeIds = data.assigneeIds.flatMap(val => (val ? val.value : []));
 
     mutateAsync({
       name: data.name,
@@ -47,7 +49,7 @@ function NewEducation() {
       categoryId: data.category.value,
       educationMaterial: data.educationMaterial.value,
       coverImageId: data.coverImage ? data.coverImage.id : null,
-      assigneeIds: [],
+      assigneeIds,
     });
   };
 
@@ -80,7 +82,7 @@ function NewEducation() {
             disabled={isPending}
             isLoading={isPending}
           >
-            Eğitimi Ekle
+            Eğitim Oluştur
           </Button>
         </Drawer.Footer>
       </Drawer.Content>

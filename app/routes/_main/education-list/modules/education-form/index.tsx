@@ -6,22 +6,23 @@ import InputField from '@app/components/form-fields/input-field';
 import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
 import useFileUpload from '@app/hooks/use-file-upload';
-import type { Category, EducationMaterialsListItem } from '@db/schema';
 
+import AssigneeSelector from './assignee-selector';
 import CategorySelector from './category-selector';
 import MaterialSelector from './material-selector';
 
-type SelectOption<TValue> = {
+type SelectOption = {
   label: string;
-  value: TValue;
+  value: number;
 } | null;
 
 export interface EducationFormInputs {
   name: string;
   description: string;
-  category: SelectOption<Category['id']>;
-  educationMaterial: SelectOption<EducationMaterialsListItem['id']>;
+  category: SelectOption;
+  educationMaterial: SelectOption;
   coverImage: FileUploadResponse | null;
+  assigneeIds: SelectOption[];
 }
 
 function EducationForm() {
@@ -75,7 +76,7 @@ function EducationForm() {
           />
         )}
       />
-
+      <AssigneeSelector />
       <CategorySelector />
       <MaterialSelector />
 
