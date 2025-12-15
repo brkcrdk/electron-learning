@@ -16,7 +16,7 @@ const TreeNode = ({ item, onSelect, selectedValue }: Props) => {
     <Collapsible>
       <div className="flex items-center justify-between">
         <Command.Item
-          value={item.id}
+          value={String(item.id)}
           className="data-[selected=true]:bg-accent/30 flex items-center justify-between"
           onSelect={() => {
             if (onSelect) {

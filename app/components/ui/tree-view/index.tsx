@@ -2,7 +2,7 @@ import Command from '../command';
 import TreeNode from './tree-node';
 
 export interface TreeItem {
-  id: string;
+  id: number;
   name: string;
   children?: TreeItem[];
 }
