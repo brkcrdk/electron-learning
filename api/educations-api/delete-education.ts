@@ -33,9 +33,9 @@ function deleteEducation() {
         };
       }
 
-      await db.transaction(async tx => {
-        await tx.delete(educationAssignees).where(eq(educationAssignees.educationId, educationId));
-        await tx.delete(educations).where(eq(educations.id, educationId));
+      db.transaction(tx => {
+        tx.delete(educationAssignees).where(eq(educationAssignees.educationId, educationId)).run();
+        tx.delete(educations).where(eq(educations.id, educationId)).run();
       });
 
       return {

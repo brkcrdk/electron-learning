@@ -38,24 +38,26 @@ function updateEducation() {
       // UI duplicate gönderirse FK/unique kısıta takılmamak için listeyi benzersizleştiriyoruz.
       const uniqueAssigneeIds = Array.from(new Set(assigneeIds)).filter(Boolean);
 
-      await db.transaction(async tx => {
-        await tx
-          .update(educations)
+      db.transaction(tx => {
+        tx.update(educations)
           .set({
             ...educationData,
             updatedAt: sql`(unixepoch())`,
           })
-          .where(eq(educations.id, id));
+          .where(eq(educations.id, id))
+          .run();
 
-        await tx.delete(educationAssignees).where(eq(educationAssignees.educationId, id));
+        tx.delete(educationAssignees).where(eq(educationAssignees.educationId, id)).run();
 
         if (uniqueAssigneeIds.length > 0) {
-          await tx.insert(educationAssignees).values(
-            uniqueAssigneeIds.map(userId => ({
-              educationId: id,
-              assigneeUserId: userId,
-            }))
-          );
+          tx.insert(educationAssignees)
+            .values(
+              uniqueAssigneeIds.map(userId => ({
+                educationId: id,
+                assigneeUserId: userId,
+              }))
+            )
+            .run();
         }
       });
 

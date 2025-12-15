@@ -28,22 +28,25 @@ function createEducation() {
       const { assigneeIds, ...educationData } = data;
       const uniqueAssigneeIds = Array.from(new Set(assigneeIds ?? [])).filter(Boolean);
 
-      await db.transaction(async tx => {
-        const [createdEducation] = await tx
+      db.transaction(tx => {
+        const [createdEducation] = tx
           .insert(educations)
           .values({
             ...educationData,
             createdBy: currentUser.id,
           })
-          .returning({ id: educations.id });
+          .returning({ id: educations.id })
+          .all();
 
         if (createdEducation?.id && uniqueAssigneeIds.length > 0) {
-          await tx.insert(educationAssignees).values(
-            uniqueAssigneeIds.map(userId => ({
-              educationId: createdEducation.id,
-              assigneeUserId: userId,
-            }))
-          );
+          tx.insert(educationAssignees)
+            .values(
+              uniqueAssigneeIds.map(userId => ({
+                educationId: createdEducation.id,
+                assigneeUserId: userId,
+              }))
+            )
+            .run();
         }
       });
 
