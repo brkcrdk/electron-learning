@@ -9,7 +9,7 @@ export const educationAssignees = sqliteTable(
   {
     id: integer('id').primaryKey({ autoIncrement: true }),
     educationId: integer('education_id').notNull(),
-    userId: integer('user_id').notNull(),
+    assigneeUserId: integer('assignee_user_id').notNull(),
     createdAt: integer('created_at', { mode: 'timestamp' })
       .notNull()
       .default(sql`(unixepoch())`),
@@ -19,14 +19,14 @@ export const educationAssignees = sqliteTable(
   },
   table => [
     index('idx_education_assignees_education_id').on(table.educationId),
-    index('idx_education_assignees_user_id').on(table.userId),
-    unique('unique_education_user').on(table.educationId, table.userId),
+    index('idx_education_assignees_assignee_user_id').on(table.assigneeUserId),
+    unique('unique_education_user').on(table.educationId, table.assigneeUserId),
     foreignKey({
       columns: [table.educationId],
       foreignColumns: [educations.id],
     }),
     foreignKey({
-      columns: [table.userId],
+      columns: [table.assigneeUserId],
       foreignColumns: [users.id],
     }),
   ]
