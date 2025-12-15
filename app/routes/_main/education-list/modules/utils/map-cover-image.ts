@@ -2,7 +2,9 @@ import type { FileUploadResponse } from '@api/upload-file-api/types';
 import getContentPath from '@app/utils/get-content-path';
 import type { MediaFile } from '@db/schema';
 
-function mapCoverImageToUploadResponse(coverImage: MediaFile): FileUploadResponse {
+function mapCoverImageToUploadResponse(coverImage: MediaFile | null): FileUploadResponse | null {
+  if (!coverImage) return null;
+
   return {
     id: coverImage.id,
     mediaType: coverImage.mediaType,

@@ -3,11 +3,11 @@ import { ipcRenderer } from 'electron';
 import type {
   Category,
   CreateEducationMaterialsPayload,
-  CreateEducationPayload,
   EducationListItem,
   EducationMaterialsListItem,
   NewCategoryPayload,
   NewUserPayload,
+  MutateEducationPayload,
   User,
 } from '@db/schema';
 
@@ -56,8 +56,8 @@ const apiEventList = {
 
   // Education services
   getEducationList: (): ApiResponseProps<EducationListItem[]> => ipcRenderer.invoke('get-education-list'),
-  createEducation: (data: CreateEducationPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-education', data),
-  updateEducation: (data: CreateEducationPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-education', data),
+  createEducation: (data: MutateEducationPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-education', data),
+  updateEducation: (data: MutateEducationPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-education', data),
   deleteEducation: (data: EducationListItem['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-education', data),
 } as const;
 

@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
-import type { CreateEducationPayload } from '@db/schema';
+import type { MutateEducationPayload } from '@db/schema';
 
 import EducationForm, { type EducationFormInputs } from './education-form';
 
@@ -15,7 +15,7 @@ function NewEducation() {
   const queryClient = useQueryClient();
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: (data: CreateEducationPayload) => {
+    mutationFn: (data: MutateEducationPayload) => {
       return window.electronAPI.createEducation(data);
     },
     onSuccess: response => {
@@ -46,7 +46,8 @@ function NewEducation() {
       description: data.description,
       categoryId: data.category.value,
       educationMaterial: data.educationMaterial.value,
-      coverImageId: data.coverImage?.id ?? null,
+      coverImageId: data.coverImage ? data.coverImage.id : null,
+      assigneeIds: [],
     });
   };
 

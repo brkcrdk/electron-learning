@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import type { NewEducationPayload } from '@db/schema';
+import type { MutateEducationPayload } from '@db/schema';
 import type { EducationListItem } from '@db/schema';
 
 import EducationForm, { type EducationFormInputs } from '../education-form';
@@ -15,8 +15,8 @@ interface Props {
 function EditEducation({ education }: Props) {
   const queryClient = useQueryClient();
 
-  const { mutateAsync, isPending } = useMutation({
-    mutationFn: (data: NewEducationPayload) => {
+  const { mutateAsync } = useMutation({
+    mutationFn: (data: MutateEducationPayload) => {
       return window.electronAPI.updateEducation(data);
     },
     onSuccess: response => {
@@ -39,7 +39,7 @@ function EditEducation({ education }: Props) {
   });
 
   const onSubmit = (data: EducationFormInputs) => {
-    if (!data.category || !data.educationMaterial || !data.coverImage) return;
+    if (!data.category || !data.educationMaterial) return;
 
     mutateAsync({
       id: education.id,
@@ -47,7 +47,8 @@ function EditEducation({ education }: Props) {
       description: data.description,
       categoryId: data.category.value,
       educationMaterial: data.educationMaterial.value,
-      coverImageId: data.coverImage.id,
+      coverImageId: data.coverImage?.id ?? null,
+      assigneeIds: [],
     });
   };
 
@@ -57,7 +58,7 @@ function EditEducation({ education }: Props) {
         id="edit-education-form"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <EducationForm education={education} />
+        <EducationForm />
       </form>
     </FormProvider>
   );
