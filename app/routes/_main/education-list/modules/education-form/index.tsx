@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import type { FileUploadResponse } from '@api/upload-file-api/types';
@@ -6,7 +5,6 @@ import FileUploadField from '@app/components/form-fields/file-upload-field';
 import InputField from '@app/components/form-fields/input-field';
 import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
-import Select from '@app/components/ui/select';
 import useFileUpload from '@app/hooks/use-file-upload';
 import type { Category, EducationMaterialsListItem } from '@db/schema';
 
@@ -30,19 +28,6 @@ function EducationForm() {
   const { control, setValue, trigger } = useFormContext<EducationFormInputs>();
 
   const coverImage = useWatch({ control, name: 'coverImage' });
-
-  const { data: materialData, isLoading: isMaterialLoading } = useQuery({
-    queryKey: ['education-materials'],
-    queryFn: async () => {
-      const response = await window.electronAPI.getEducationMaterialList();
-      if (!response.success) {
-        throw response.error;
-      }
-      return response.data;
-    },
-  });
-
-  const materialOptions: SelectOption<EducationMaterialsListItem['id']>[] = materialData?.map(item => ({ label: item.name, value: item.id })) || [];
 
   const { handleUpload, uploadState, resetUploadState } = useFileUpload({
     uploadType: 'images',
@@ -106,7 +91,7 @@ function EducationForm() {
             uploadingProgress={uploadState}
             uploadProviderProps={{
               onChange: handleUpload,
-              accept: 'image/jpeg, image/png, image/gif, image/webp',
+              accept: 'image/*',
               sizeLimit: 10,
             }}
             onReset={existingId => {
