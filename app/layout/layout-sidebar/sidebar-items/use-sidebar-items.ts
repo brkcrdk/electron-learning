@@ -65,6 +65,16 @@ function useSidebarItems() {
         to: '/education-materials',
       },
     },
+    {
+      label: 'Eğitimlerim',
+      itemKey: 'my-educations',
+      icon: 'school-outline',
+      isActive: pathname.startsWith('/my-educations'),
+      isProtected: false,
+      routeProps: {
+        to: '/my-educations',
+      },
+    },
   ];
 
   return sidebarItems;

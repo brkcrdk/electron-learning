@@ -16,6 +16,7 @@ import { Route as MainDashboardRouteImport } from './routes/_main/dashboard'
 import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as MainUsersIndexRouteImport } from './routes/_main/users/index'
+import { Route as MainMyEducationsIndexRouteImport } from './routes/_main/my-educations/index'
 import { Route as MainEducationMaterialsIndexRouteImport } from './routes/_main/education-materials/index'
 import { Route as MainEducationListIndexRouteImport } from './routes/_main/education-list/index'
 import { Route as MainCategoriesIndexRouteImport } from './routes/_main/categories/index'
@@ -54,6 +55,11 @@ const MainUsersIndexRoute = MainUsersIndexRouteImport.update({
   path: '/users/',
   getParentRoute: () => MainRoute,
 } as any)
+const MainMyEducationsIndexRoute = MainMyEducationsIndexRouteImport.update({
+  id: '/my-educations/',
+  path: '/my-educations/',
+  getParentRoute: () => MainRoute,
+} as any)
 const MainEducationMaterialsIndexRoute =
   MainEducationMaterialsIndexRouteImport.update({
     id: '/education-materials/',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/categories': typeof MainCategoriesIndexRoute
   '/education-list': typeof MainEducationListIndexRoute
   '/education-materials': typeof MainEducationMaterialsIndexRoute
+  '/my-educations': typeof MainMyEducationsIndexRoute
   '/users': typeof MainUsersIndexRoute
 }
 export interface FileRoutesByTo {
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/categories': typeof MainCategoriesIndexRoute
   '/education-list': typeof MainEducationListIndexRoute
   '/education-materials': typeof MainEducationMaterialsIndexRoute
+  '/my-educations': typeof MainMyEducationsIndexRoute
   '/users': typeof MainUsersIndexRoute
 }
 export interface FileRoutesById {
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/_main/categories/': typeof MainCategoriesIndexRoute
   '/_main/education-list/': typeof MainEducationListIndexRoute
   '/_main/education-materials/': typeof MainEducationMaterialsIndexRoute
+  '/_main/my-educations/': typeof MainMyEducationsIndexRoute
   '/_main/users/': typeof MainUsersIndexRoute
 }
 export interface FileRouteTypes {
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/education-list'
     | '/education-materials'
+    | '/my-educations'
     | '/users'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/categories'
     | '/education-list'
     | '/education-materials'
+    | '/my-educations'
     | '/users'
   id:
     | '__root__'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/_main/categories/'
     | '/_main/education-list/'
     | '/_main/education-materials/'
+    | '/_main/my-educations/'
     | '/_main/users/'
   fileRoutesById: FileRoutesById
 }
@@ -202,6 +214,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainUsersIndexRouteImport
       parentRoute: typeof MainRoute
     }
+    '/_main/my-educations/': {
+      id: '/_main/my-educations/'
+      path: '/my-educations'
+      fullPath: '/my-educations'
+      preLoaderRoute: typeof MainMyEducationsIndexRouteImport
+      parentRoute: typeof MainRoute
+    }
     '/_main/education-materials/': {
       id: '/_main/education-materials/'
       path: '/education-materials'
@@ -231,6 +250,7 @@ interface MainRouteChildren {
   MainCategoriesIndexRoute: typeof MainCategoriesIndexRoute
   MainEducationListIndexRoute: typeof MainEducationListIndexRoute
   MainEducationMaterialsIndexRoute: typeof MainEducationMaterialsIndexRoute
+  MainMyEducationsIndexRoute: typeof MainMyEducationsIndexRoute
   MainUsersIndexRoute: typeof MainUsersIndexRoute
 }
 
@@ -239,6 +259,7 @@ const MainRouteChildren: MainRouteChildren = {
   MainCategoriesIndexRoute: MainCategoriesIndexRoute,
   MainEducationListIndexRoute: MainEducationListIndexRoute,
   MainEducationMaterialsIndexRoute: MainEducationMaterialsIndexRoute,
+  MainMyEducationsIndexRoute: MainMyEducationsIndexRoute,
   MainUsersIndexRoute: MainUsersIndexRoute,
 }
 
