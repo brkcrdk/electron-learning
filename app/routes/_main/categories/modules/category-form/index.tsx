@@ -3,6 +3,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import InputField from '@app/components/form-fields/input-field';
 import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
+import TreeView from '@app/components/ui/tree-view';
 import type { Category } from '@db/schema';
 
 import ParentCategorySelector from './parent-category-selector';
@@ -47,6 +48,7 @@ function CategoryForm() {
         )}
       />
       <ParentCategorySelector />
+      <TreeView />
     </Field.Group>
   );
 }
