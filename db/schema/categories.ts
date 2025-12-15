@@ -1,6 +1,8 @@
 import { sql } from 'drizzle-orm';
 import { integer, sqliteTable, text, index, foreignKey } from 'drizzle-orm/sqlite-core';
 
+import { users } from './users';
+
 export const categories = sqliteTable(
   'categories',
   {
@@ -9,6 +11,7 @@ export const categories = sqliteTable(
     slug: text('slug').notNull().unique(),
     description: text('description').notNull(),
     parentId: integer('parent_id'),
+    createdBy: integer('created_by').notNull(),
     createdAt: integer('created_at', { mode: 'timestamp' })
       .notNull()
       .default(sql`(unixepoch())`),
@@ -21,6 +24,10 @@ export const categories = sqliteTable(
     foreignKey({
       columns: [table.parentId],
       foreignColumns: [table.id],
+    }),
+    foreignKey({
+      columns: [table.createdBy],
+      foreignColumns: [users.id],
     }),
   ]
 );
