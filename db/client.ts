@@ -32,12 +32,15 @@ function getDatabasePath(app: App) {
  *
  * Çözüm: https://github.com/drizzle-team/drizzle-orm/discussions/1891
  * - Development: Proje kökündeki drizzle klasörü
- * - Production: resources/drizzle klasörü (build sırasında kopyalanır)
+ * - Production: app/resources/drizzle klasörü (build sırasında kopyalanır)
  */
 function getMigrationsPath(app: App) {
   if (app.isPackaged) {
-    // Production: __dirname = .vite/build, migration dosyaları ../../resources/drizzle içinde
-    return path.join(__dirname, '../../resources/drizzle');
+    // Production: Migration dosyaları app/resources/drizzle içinde (asar dışında)
+    // app.getAppPath() asar durumunda "app.asar" içindeki path'i verir,
+    // bu yüzden "app.asar" kısmını "app" ile değiştiriyoruz
+    const appPath = app.getAppPath().replace('app.asar', 'app');
+    return path.join(appPath, 'resources', 'drizzle');
   }
   // Development: __dirname = db, migration dosyaları ../../drizzle içinde
   return path.join(__dirname, '../../drizzle');
@@ -84,11 +87,9 @@ export function initializeDatabase(app: App) {
       throw new Error(`Migration klasörü bulunamadı: ${migrationsFolder}`);
     }
 
-    // Migration dosyalarını listele (sadece development'ta)
-    if (!app.isPackaged) {
-      const migrationFiles = fs.readdirSync(migrationsFolder);
-      console.log('Bulunan migration dosyaları:', migrationFiles);
-    }
+    // Migration dosyalarını listele (hem development hem production'da)
+    const migrationFiles = fs.readdirSync(migrationsFolder);
+    console.log('Bulunan migration dosyaları:', migrationFiles);
 
     migrate(db, { migrationsFolder });
     console.log('✓ Veritabanı başarıyla başlatıldı.');
