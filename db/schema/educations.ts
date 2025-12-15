@@ -55,4 +55,5 @@ export type EducationListItem = Omit<Education, 'categoryId' | 'coverImageId' | 
   coverImage: MediaFile;
   educationMaterial: EducationMaterials;
   createdBy: User;
+  assignees: User[];
 };

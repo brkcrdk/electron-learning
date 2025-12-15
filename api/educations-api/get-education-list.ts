@@ -1,11 +1,12 @@
 import { desc, eq, getTableColumns } from 'drizzle-orm';
+import { alias } from 'drizzle-orm/sqlite-core';
 import { ipcMain } from 'electron';
 import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
 import hasChildrenColumn from '@api/utils/hasChildrenColumn';
 import { getDb } from '@db/client';
-import { categories, educations, educationMaterials, mediaFiles, type EducationListItem, users } from '@db/schema';
+import { categories, educations, educationAssignees, educationMaterials, mediaFiles, type EducationListItem, type User, users } from '@db/schema';
 
 function getEducationList() {
   ipcMain.handle('get-education-list', async (): ApiResponseProps<EducationListItem[]> => {
@@ -27,7 +28,9 @@ function getEducationList() {
         };
       }
 
-      const educationList = await db
+      const assigneeUsers = alias(users, 'assignee_users');
+
+      const rows = await db
         .select({
           id: educations.id,
           name: educations.name,
@@ -41,13 +44,48 @@ function getEducationList() {
           createdBy: getTableColumns(users),
           createdAt: educations.createdAt,
           updatedAt: educations.updatedAt,
+          assignee: getTableColumns(assigneeUsers),
         })
         .from(educations)
         .innerJoin(categories, eq(educations.categoryId, categories.id))
         .innerJoin(mediaFiles, eq(educations.coverImageId, mediaFiles.id))
         .innerJoin(educationMaterials, eq(educations.educationMaterial, educationMaterials.id))
         .innerJoin(users, eq(educations.createdBy, users.id))
+        .leftJoin(educationAssignees, eq(educationAssignees.educationId, educations.id))
+        .leftJoin(assigneeUsers, eq(educationAssignees.assigneeUserId, assigneeUsers.id))
         .orderBy(desc(educations.createdAt));
+
+      // Satır bazlı join sonucunu educationId’ye göre gruplayıp assignees listesini oluşturuyoruz.
+      const educationList = rows.reduce<EducationListItem[]>((acc, row) => {
+        const existing = acc.find(item => item.id === row.id);
+
+        const assigneeId = row.assignee?.id;
+        const assigneeUser = assigneeId ? (row.assignee as User) : undefined;
+
+        if (!existing) {
+          acc.push({
+            id: row.id,
+            name: row.name,
+            description: row.description,
+            category: row.category,
+            coverImage: row.coverImage,
+            educationMaterial: row.educationMaterial,
+            createdBy: row.createdBy,
+            createdAt: row.createdAt,
+            updatedAt: row.updatedAt,
+            assignees: assigneeUser ? [assigneeUser] : [],
+          });
+          return acc;
+        }
+
+        const assigneeAlreadyAdded = assigneeUser ? existing.assignees.some(user => user.id === assigneeId) : true;
+
+        if (assigneeUser && !assigneeAlreadyAdded) {
+          existing.assignees.push(assigneeUser);
+        }
+
+        return acc;
+      }, []);
 
       return {
         success: true,
