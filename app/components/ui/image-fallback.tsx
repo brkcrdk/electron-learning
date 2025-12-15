@@ -2,7 +2,7 @@ import { useState, type ImgHTMLAttributes } from 'react';
 
 import imageFallback from '@app/assets/cover.png';
 
-const ImageWithFallback = ({ src, ...props }: ImgHTMLAttributes<HTMLImageElement>) => {
+const ImageFallback = ({ src, ...props }: ImgHTMLAttributes<HTMLImageElement>) => {
   const [imgSrc, setImgSrc] = useState(src || '/');
 
   return (
@@ -18,4 +18,4 @@ const ImageWithFallback = ({ src, ...props }: ImgHTMLAttributes<HTMLImageElement
   );
 };
 
-export default ImageWithFallback;
+export default ImageFallback;
