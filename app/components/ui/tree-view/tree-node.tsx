@@ -7,8 +7,8 @@ import type { TreeItem } from '.';
 
 interface Props {
   item: TreeItem;
-  onSelect: (value: string) => void;
-  selectedValue: string | null;
+  onSelect?: (value: TreeItem) => void;
+  selectedValue: TreeItem | null;
 }
 
 const TreeNode = ({ item, onSelect, selectedValue }: Props) => {
@@ -18,9 +18,13 @@ const TreeNode = ({ item, onSelect, selectedValue }: Props) => {
         <Command.Item
           value={item.id}
           className="data-[selected=true]:bg-accent/30 flex items-center justify-between"
-          onSelect={onSelect}
+          onSelect={() => {
+            if (onSelect) {
+              onSelect(item);
+            }
+          }}
         >
-          <Checkbox checked={selectedValue === item.id} />
+          <Checkbox checked={selectedValue ? selectedValue.id === item.id : false} />
           <span>{item.name}</span>
         </Command.Item>
         {item.children && item.children.length > 0 && (

@@ -9,8 +9,8 @@ export interface TreeItem {
 
 interface Props {
   treeData: TreeItem[];
-  onSelect: (value: string) => void;
-  selectedValue: string | null;
+  onSelect?: (value: TreeItem) => void;
+  selectedValue: TreeItem | null;
 }
 
 function TreeView({ treeData, onSelect, selectedValue }: Props) {

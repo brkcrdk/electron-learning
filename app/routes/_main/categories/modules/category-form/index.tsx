@@ -80,7 +80,7 @@ function CategoryForm() {
         label="Üst Kategori"
         inputId="parentId"
         treeData={treeData}
-        selectedValue={null}
+        selectedValue={{ id: '7', name: 'Item 2.2.1' }}
         // error={fieldState.error?.message}
         // {...field}
       />
