@@ -1,15 +1,19 @@
-import Button from '@app/components/ui/button';
-import ButtonGroup from '@app/components/ui/button-group';
+import ToggleGroup from '@app/components/ui/toggle-group';
 
 function MyEducationsHeader() {
   return (
     <header className="flex items-center justify-between">
       <h1 className="text-2xl font-bold">Eğitimlerim</h1>
-      <ButtonGroup>
-        <Button variant="secondary">xx</Button>
-        <ButtonGroup.Separator />
-        <Button variant="secondary">xx</Button>
-      </ButtonGroup>
+
+      <ToggleGroup
+        type="single"
+        defaultValue="all"
+        variant="outline"
+      >
+        <ToggleGroup.Item value="all">Tümü</ToggleGroup.Item>
+        <ToggleGroup.Item value="completed">Tamamlandı</ToggleGroup.Item>
+        <ToggleGroup.Item value="in-progress">Devam Edenler</ToggleGroup.Item>
+      </ToggleGroup>
     </header>
   );
 }
