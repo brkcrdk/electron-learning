@@ -15,7 +15,6 @@ function AssigneeSelector() {
       }
       return response.data;
     },
-    select: data => data.map(item => ({ label: item.name, value: item.id })),
   });
 
   const { control } = useFormContext<EducationFormInputs>();
@@ -32,6 +31,8 @@ function AssigneeSelector() {
           options={data}
           errorMessage={fieldState.error?.message}
           isMulti
+          getOptionLabel={option => option.name}
+          getOptionValue={option => String(option.id)}
           {...field}
         />
       )}

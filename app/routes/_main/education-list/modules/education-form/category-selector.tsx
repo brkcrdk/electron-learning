@@ -17,7 +17,6 @@ function CategorySelector() {
       }
       return response.data;
     },
-    select: data => data.map(item => ({ label: item.name, value: item.id })),
   });
 
   return (
@@ -32,6 +31,8 @@ function CategorySelector() {
           isLoading={isLoading}
           options={categoryData}
           errorMessage={fieldState.error?.message}
+          getOptionLabel={option => option.name}
+          getOptionValue={option => String(option.id)}
           {...field}
         />
       )}
