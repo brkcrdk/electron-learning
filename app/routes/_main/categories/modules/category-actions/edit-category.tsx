@@ -4,7 +4,7 @@ import { toast } from 'sonner';
 
 import Skeleton from '@app/components/ui/skeleton';
 import slugify from '@app/utils/slugify';
-import type { Category } from '@db/schema';
+import type { Category, MutateCategoryPayload } from '@db/schema';
 
 import type { CategoryFormInputs } from '../category-form';
 import CategoryForm from '../category-form';
@@ -17,13 +17,8 @@ function EditCategory({ category }: Props) {
   const queryClient = useQueryClient();
 
   const { mutateAsync } = useMutation({
-    mutationFn: (data: CategoryFormInputs) => {
-      return window.electronAPI.updateCategory({
-        id: category.id,
-        name: data.name,
-        description: data.description,
-        slug: slugify(data.name),
-      });
+    mutationFn: (data: MutateCategoryPayload) => {
+      return window.electronAPI.updateCategory(data);
     },
     onSuccess: response => {
       if (response.success) {
@@ -36,16 +31,32 @@ function EditCategory({ category }: Props) {
 
   const form = useForm<CategoryFormInputs>({
     defaultValues: async () => {
+      if (category.parentId) {
+        const categoryDetail = await window.electronAPI.getCategoryDetail(category.parentId);
+        return {
+          name: category.name,
+          description: category.description,
+          categoryParent: categoryDetail.success ? categoryDetail.data : null,
+          slug: category.slug,
+        };
+      }
       return {
         name: category.name,
         description: category.description,
-        parentId: null,
+        categoryParent: null,
+        slug: category.slug,
       };
     },
   });
 
   function onSubmit(data: CategoryFormInputs) {
-    mutateAsync(data);
+    mutateAsync({
+      id: category.id,
+      name: data.name,
+      description: data.description,
+      slug: slugify(data.name),
+      parentId: data.categoryParent ? data.categoryParent.id : null,
+    });
   }
 
   const { isLoading } = useFormState({ control: form.control });

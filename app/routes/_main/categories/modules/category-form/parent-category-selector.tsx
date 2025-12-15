@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { Controller, useFormContext } from 'react-hook-form';
 
-import Select from '@app/components/ui/select';
+import SelectTreeField from '@app/components/form-fields/select-tree-field';
 
 import type { CategoryFormInputs } from '.';
 
 function ParentCategorySelector() {
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ['query-list-category-detail'],
     queryFn: async () => {
       const response = await window.electronAPI.getCategoryList();
@@ -15,6 +15,7 @@ function ParentCategorySelector() {
       }
       return response.data;
     },
+    select: data => data.map(item => ({ id: String(item.id), name: item.name })),
   });
 
   const { control } = useFormContext<CategoryFormInputs>();
@@ -22,17 +23,17 @@ function ParentCategorySelector() {
   return (
     <Controller
       control={control}
-      name="parentId"
+      name="categoryParent"
       render={({ field, fieldState }) => (
-        <Select
-          label="Üst Kategori:"
-          options={data}
-          isLoading={isLoading}
-          errorMessage={fieldState.error?.message}
-          getOptionLabel={option => option.name}
-          getOptionValue={option => String(option.id)}
-          placeholder="Üst Kategori seçiniz..."
-          {...field}
+        <SelectTreeField
+          label="Üst Kategori"
+          inputId="categoryParent"
+          error={fieldState.error?.message}
+          treeData={data ? data : []}
+          selectedValue={field.value ? { id: String(field.value.id), name: field.value.name } : null}
+          onSelect={value => {
+            console.log(value);
+          }}
         />
       )}
     />

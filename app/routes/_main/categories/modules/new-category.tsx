@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
 import slugify from '@app/utils/slugify';
+import type { MutateCategoryPayload } from '@db/schema';
 
 import type { CategoryFormInputs } from './category-form';
 import CategoryForm from './category-form';
@@ -17,13 +18,8 @@ function NewCategory() {
   const queryClient = useQueryClient();
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: (data: CategoryFormInputs) => {
-      return window.electronAPI.createCategory({
-        name: data.name,
-        description: data.description,
-        slug: slugify(data.name),
-        parentId: null,
-      });
+    mutationFn: (data: MutateCategoryPayload) => {
+      return window.electronAPI.createCategory(data);
     },
     onSuccess: response => {
       if (response.success) {
@@ -41,12 +37,17 @@ function NewCategory() {
     defaultValues: {
       name: '',
       description: '',
-      parentId: null,
+      categoryParent: null,
     },
   });
 
   function onSubmit(data: CategoryFormInputs) {
-    mutateAsync(data);
+    mutateAsync({
+      name: data.name,
+      description: data.description,
+      slug: slugify(data.name),
+      parentId: data.categoryParent ? data.categoryParent.id : null,
+    });
   }
 
   return (
