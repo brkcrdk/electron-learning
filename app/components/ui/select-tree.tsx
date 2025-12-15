@@ -9,11 +9,7 @@ function SelectTree(props: ComponentProps<typeof TreeView>) {
   return (
     <Popover modal>
       <Popover.Trigger className="bg-input/50 hover:bg-input/80 flex items-center justify-between rounded-md p-2">
-        {props.selectedValue ? (
-          <Badge variant="secondary">{props.selectedValue.name}</Badge>
-        ) : (
-          <span className="text-muted-foreground text-sm">Seçiniz...</span>
-        )}
+        {props.selectedValue ? <Badge>{props.selectedValue.name}</Badge> : <span className="text-muted-foreground text-sm">Seçiniz...</span>}
         <Icon
           name="chevron-down"
           className="size-4"
