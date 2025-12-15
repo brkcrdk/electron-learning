@@ -10,7 +10,7 @@ interface Props {
 
 function SelectTree({ treeData, selectedValue }: Props) {
   return (
-    <Popover>
+    <Popover modal>
       <Popover.Trigger className="bg-input/50 hover:bg-input/80 flex items-center justify-between rounded-md p-2">
         {selectedValue ? <Badge variant="secondary">{selectedValue}</Badge> : <span className="text-muted-foreground text-sm">Seçiniz...</span>}
         <Icon
@@ -18,6 +18,7 @@ function SelectTree({ treeData, selectedValue }: Props) {
           className="size-4"
         />
       </Popover.Trigger>
+
       <Popover.Content className="w-(--radix-popover-trigger-width) p-0">
         <TreeView treeData={treeData} />
       </Popover.Content>
