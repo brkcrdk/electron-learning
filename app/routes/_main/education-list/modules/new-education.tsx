@@ -39,14 +39,14 @@ function NewEducation() {
   });
 
   const onSubmit = (data: EducationFormInputs) => {
-    if (!data.category || !data.educationMaterial || !data.coverImage) return;
+    if (!data.category || !data.educationMaterial) return;
 
     mutateAsync({
       name: data.name,
       description: data.description,
       categoryId: data.category.value,
       educationMaterial: data.educationMaterial.value,
-      coverImageId: data.coverImage.id,
+      coverImageId: data.coverImage?.id ?? null,
     });
   };
 

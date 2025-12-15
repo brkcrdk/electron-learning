@@ -13,7 +13,7 @@ export const educations = sqliteTable(
     name: text('name').notNull(),
     description: text('description').notNull(),
     categoryId: integer('category_id').notNull(),
-    coverImageId: integer('cover_image_id').notNull(),
+    coverImageId: integer('cover_image_id'),
     educationMaterial: integer('education_materials').notNull(),
     createdBy: integer('created_by').notNull(),
     createdAt: integer('created_at', { mode: 'timestamp' })
@@ -54,7 +54,7 @@ export type CreateEducationWithAssigneesPayload = CreateEducationPayload & { ass
 export type UpdateEducationWithAssigneesPayload = NewEducationPayload & { assigneeIds: number[] };
 export type EducationListItem = Omit<Education, 'categoryId' | 'coverImageId' | 'educationMaterial' | 'createdBy'> & {
   category: Category;
-  coverImage: MediaFile;
+  coverImage: MediaFile | null;
   educationMaterial: EducationMaterials;
   createdBy: User;
   assignees: User[];

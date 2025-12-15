@@ -82,7 +82,6 @@ function EducationForm() {
       <Controller
         control={control}
         name="coverImage"
-        rules={{ required: 'Kapak görseli zorunludur' }}
         render={({ fieldState }) => (
           <FileUploadField
             label="Kapak Görseli:"
