@@ -30,7 +30,6 @@ function getMaterialList() {
       }
 
       // Aynı tabloyu iki kez join etmek için alias kullanıyoruz
-      const coverImage = alias(mediaFiles, 'cover_image');
       const contentFile = alias(mediaFiles, 'content_file');
 
       const materialList = await db
@@ -39,14 +38,12 @@ function getMaterialList() {
           name: educationMaterials.name,
           description: educationMaterials.description,
           contentType: educationMaterials.contentType,
-          coverImage: getTableColumns(coverImage),
           contentFile: getTableColumns(contentFile),
           createdBy: getTableColumns(users),
           createdAt: educationMaterials.createdAt,
           updatedAt: educationMaterials.updatedAt,
         })
         .from(educationMaterials)
-        .innerJoin(coverImage, eq(educationMaterials.coverImageId, coverImage.id))
         .innerJoin(contentFile, eq(educationMaterials.contentFileId, contentFile.id))
         .innerJoin(users, eq(educationMaterials.createdBy, users.id))
         .orderBy(desc(educationMaterials.createdAt));

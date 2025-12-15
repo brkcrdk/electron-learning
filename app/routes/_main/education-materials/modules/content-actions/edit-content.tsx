@@ -33,13 +33,6 @@ function EditContent({ content }: Props) {
       return {
         name: content.name,
         description: content.description,
-        cover_image: {
-          fileSize: content.coverImage.fileSize,
-          fileName: content.coverImage.fileName,
-          fileFullUrl: content.coverImage.filePath,
-          id: content.coverImage.id,
-          mediaType: content.coverImage.mediaType,
-        },
         media: {
           fileSize: content.contentFile.fileSize,
           fileName: content.contentFile.fileName,
@@ -53,13 +46,12 @@ function EditContent({ content }: Props) {
   });
 
   function onSubmit(data: ContentFormInputs) {
-    if (data.cover_image && data.media) {
+    if (data.media) {
       mutateAsync({
         id: content.id,
         name: data.name,
         description: data.description,
         contentType: data.media_type.value,
-        coverImageId: data.cover_image.id,
         contentFileId: data.media.id,
       });
     }

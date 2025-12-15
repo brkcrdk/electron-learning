@@ -36,19 +36,17 @@ function NewContent() {
     defaultValues: {
       name: 'Deneme Eğitim İçeriği',
       description: 'Deneme Eğitim İçeriği açıklaması',
-      cover_image: null,
       media: null,
       media_type: mediaContentOptions[0],
     },
   });
 
   const onSubmit = (data: ContentFormInputs) => {
-    if (data.cover_image && data.media) {
+    if (data.media) {
       mutateAsync({
         name: data.name,
         description: data.description,
         contentType: data.media_type.value,
-        coverImageId: data.cover_image.id,
         contentFileId: data.media.id,
       });
     }

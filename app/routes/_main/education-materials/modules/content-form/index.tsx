@@ -9,8 +9,6 @@ import Select from '@app/components/ui/select';
 import useFileUpload from '@app/hooks/use-file-upload';
 import type { MediaFileTypes } from '@db/schema';
 
-import CoverImage from './cover-image';
-
 export interface MediaContentOption {
   label: string;
   value: MediaFileTypes;
@@ -25,7 +23,6 @@ export const mediaContentOptions: MediaContentOption[] = [
 export interface ContentFormInputs {
   name: string;
   description: string;
-  cover_image: FileUploadResponse | null;
   media: FileUploadResponse | null;
   media_type: MediaContentOption;
 }
@@ -121,7 +118,6 @@ function ContentForm() {
           />
         )}
       />
-      <CoverImage />
 
       <Controller
         control={control}

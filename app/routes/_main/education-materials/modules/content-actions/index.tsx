@@ -1,13 +1,13 @@
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
 import Icon from '@app/components/ui/icon';
-import type { EducationListItem } from '@db/schema';
+import type { EducationMaterialsListItem } from '@db/schema';
 
 import DeleteContent from './delete-content';
 import EditContent from './edit-content';
 
 interface Props {
-  content: EducationListItem;
+  content: EducationMaterialsListItem;
 }
 function ContentActions({ content }: Props) {
   return (

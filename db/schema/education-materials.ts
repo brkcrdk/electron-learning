@@ -11,7 +11,6 @@ export const educationMaterials = sqliteTable(
     name: text('name').notNull(),
     description: text('description').notNull(),
     contentType: text('content_type', { enum: mediaTypeEnum }).notNull(),
-    coverImageId: integer('cover_image_id').notNull(),
     contentFileId: integer('content_file_id').notNull(),
     createdBy: integer('created_by').notNull(),
     createdAt: integer('created_at', { mode: 'timestamp' })
@@ -22,14 +21,9 @@ export const educationMaterials = sqliteTable(
       .default(sql`(unixepoch())`),
   },
   table => [
-    index('idx_educations_cover_image_id').on(table.coverImageId),
     index('idx_educations_content_file_id').on(table.contentFileId),
     index('idx_educations_created_by').on(table.createdBy),
     index('idx_educations_content_type').on(table.contentType),
-    foreignKey({
-      columns: [table.coverImageId],
-      foreignColumns: [mediaFiles.id],
-    }),
     foreignKey({
       columns: [table.contentFileId],
       foreignColumns: [mediaFiles.id],
@@ -44,8 +38,7 @@ export const educationMaterials = sqliteTable(
 export type EducationMaterials = typeof educationMaterials.$inferSelect;
 export type NewEducationMaterialsPayload = typeof educationMaterials.$inferInsert;
 export type CreateEducationMaterialsPayload = Omit<NewEducationMaterialsPayload, 'createdBy' | 'createdAt' | 'updatedAt'>;
-export type EducationMaterialsListItem = Omit<EducationMaterials, 'coverImageId' | 'contentFileId' | 'createdBy'> & {
-  coverImage: MediaFile;
+export type EducationMaterialsListItem = Omit<EducationMaterials, 'contentFileId' | 'createdBy'> & {
   contentFile: MediaFile;
   createdBy: User;
 };
