@@ -47,7 +47,7 @@ function NewEducation() {
       name: data.name,
       description: data.description,
       categoryId: data.category.id,
-      educationMaterial: data.educationMaterial.id,
+      educationMaterial: data.educationMaterial.value,
       coverImageId: data.coverImage ? data.coverImage.id : null,
       assigneeIds,
     });

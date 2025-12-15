@@ -6,17 +6,22 @@ import InputField from '@app/components/form-fields/input-field';
 import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
 import useFileUpload from '@app/hooks/use-file-upload';
-import type { Category, EducationMaterialsListItem, User } from '@db/schema';
+import type { Category, User } from '@db/schema';
 
 import AssigneeSelector from './assignee-selector';
 import CategorySelector from './category-selector';
 import MaterialSelector from './material-selector';
 
+interface MaterialSelectOption {
+  label: string;
+  value: number;
+}
+
 export interface EducationFormInputs {
   name: string;
   description: string;
   category: Category | null;
-  educationMaterial: EducationMaterialsListItem | null;
+  educationMaterial: MaterialSelectOption | null;
   coverImage: FileUploadResponse | null;
   assignees: User[] | null;
 }

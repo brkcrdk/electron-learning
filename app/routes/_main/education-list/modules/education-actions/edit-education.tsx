@@ -33,7 +33,10 @@ function EditEducation({ education }: Props) {
       name: education.name,
       description: education.description,
       category: education.category,
-      educationMaterial: education.educationMaterial,
+      educationMaterial: {
+        label: education.educationMaterial.name,
+        value: education.educationMaterial.id,
+      },
       coverImage: education.coverImage
         ? {
             id: education.coverImage.id,
@@ -57,7 +60,7 @@ function EditEducation({ education }: Props) {
       name: data.name,
       description: data.description,
       categoryId: data.category.id,
-      educationMaterial: data.educationMaterial.id,
+      educationMaterial: data.educationMaterial.value,
       coverImageId: data.coverImage?.id ?? null,
       assigneeIds,
     });

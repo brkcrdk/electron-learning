@@ -17,6 +17,7 @@ function MaterialSelector() {
       }
       return response.data;
     },
+    select: data => data.map(item => ({ label: item.name, value: item.id })),
   });
 
   return (
@@ -31,8 +32,6 @@ function MaterialSelector() {
           isLoading={isLoading}
           options={materialData}
           errorMessage={fieldState.error?.message}
-          getOptionLabel={option => option.name}
-          getOptionValue={option => String(option.id)}
           {...field}
         />
       )}
