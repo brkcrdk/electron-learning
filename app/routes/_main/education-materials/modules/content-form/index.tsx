@@ -1,4 +1,4 @@
-import { Controller, useFormContext, useFormState, useWatch } from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import type { FileUploadResponse } from '@api/upload-file-api/types';
 import FileUploadField from '@app/components/form-fields/file-upload-field';

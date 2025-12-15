@@ -3,24 +3,24 @@ import { FormProvider, useForm, useFormState } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import Skeleton from '@app/components/ui/skeleton';
-import type { CreateEducationPayload, EducationListItem } from '@db/schema';
+import type { CreateEducationMaterialsPayload, EducationMaterialsListItem } from '@db/schema';
 
 import ContentForm, { mediaContentOptions, type ContentFormInputs } from '../content-form';
 
 interface Props {
-  content: EducationListItem;
+  content: EducationMaterialsListItem;
 }
 
 function EditContent({ content }: Props) {
   const queryClient = useQueryClient();
 
   const { mutateAsync } = useMutation({
-    mutationFn: (data: CreateEducationPayload) => {
-      return window.electronAPI.updateEducation(data);
+    mutationFn: (data: CreateEducationMaterialsPayload) => {
+      return window.electronAPI.updateEducationMaterial(data);
     },
     onSuccess: response => {
       if (response.success) {
-        queryClient.invalidateQueries({ queryKey: ['education-contents'] });
+        queryClient.invalidateQueries({ queryKey: ['education-materials'] });
       } else {
         toast.error(response.error, { dismissible: false });
       }

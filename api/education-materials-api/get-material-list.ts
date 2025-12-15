@@ -5,12 +5,12 @@ import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
-import { educations, type EducationListItem } from '@db/schema';
+import { educationMaterials, type EducationMaterialsListItem } from '@db/schema';
 import { mediaFiles } from '@db/schema';
 import { users } from '@db/schema';
 
-function getEducationList() {
-  ipcMain.handle('get-education-list', async (): ApiResponseProps<EducationListItem[]> => {
+function getMaterialList() {
+  ipcMain.handle('get-material-list', async (): ApiResponseProps<EducationMaterialsListItem[]> => {
     try {
       const db = getDb();
 
@@ -33,33 +33,33 @@ function getEducationList() {
       const coverImage = alias(mediaFiles, 'cover_image');
       const contentFile = alias(mediaFiles, 'content_file');
 
-      const educationList = await db
+      const materialList = await db
         .select({
-          id: educations.id,
-          name: educations.name,
-          description: educations.description,
-          contentType: educations.contentType,
+          id: educationMaterials.id,
+          name: educationMaterials.name,
+          description: educationMaterials.description,
+          contentType: educationMaterials.contentType,
           coverImage: getTableColumns(coverImage),
           contentFile: getTableColumns(contentFile),
           createdBy: getTableColumns(users),
-          createdAt: educations.createdAt,
-          updatedAt: educations.updatedAt,
+          createdAt: educationMaterials.createdAt,
+          updatedAt: educationMaterials.updatedAt,
         })
-        .from(educations)
-        .innerJoin(coverImage, eq(educations.coverImageId, coverImage.id))
-        .innerJoin(contentFile, eq(educations.contentFileId, contentFile.id))
-        .innerJoin(users, eq(educations.createdBy, users.id))
-        .orderBy(desc(educations.createdAt));
+        .from(educationMaterials)
+        .innerJoin(coverImage, eq(educationMaterials.coverImageId, coverImage.id))
+        .innerJoin(contentFile, eq(educationMaterials.contentFileId, contentFile.id))
+        .innerJoin(users, eq(educationMaterials.createdBy, users.id))
+        .orderBy(desc(educationMaterials.createdAt));
 
       return {
         success: true,
-        data: educationList,
+        data: materialList,
       };
     } catch (error) {
-      console.error('get education list error', error);
+      console.error('get material list error', error);
       throw error;
     }
   });
 }
 
-export default getEducationList;
+export default getMaterialList;

@@ -4,8 +4,8 @@ import { integer, sqliteTable, text, index, foreignKey } from 'drizzle-orm/sqlit
 import { mediaFiles, type MediaFile, mediaTypeEnum } from './media-files';
 import { users, type User } from './users';
 
-export const educations = sqliteTable(
-  'educations',
+export const educationMaterials = sqliteTable(
+  'education_materials',
   {
     id: integer('id').primaryKey({ autoIncrement: true }),
     name: text('name').notNull(),
@@ -41,10 +41,10 @@ export const educations = sqliteTable(
   ]
 );
 
-export type Educations = typeof educations.$inferSelect;
-export type NewEducationsPayload = typeof educations.$inferInsert;
-export type CreateEducationPayload = Omit<NewEducationsPayload, 'createdBy' | 'createdAt' | 'updatedAt'>;
-export type EducationListItem = Omit<Educations, 'coverImageId' | 'contentFileId' | 'createdBy'> & {
+export type EducationMaterials = typeof educationMaterials.$inferSelect;
+export type NewEducationMaterialsPayload = typeof educationMaterials.$inferInsert;
+export type CreateEducationMaterialsPayload = Omit<NewEducationMaterialsPayload, 'createdBy' | 'createdAt' | 'updatedAt'>;
+export type EducationMaterialsListItem = Omit<EducationMaterials, 'coverImageId' | 'contentFileId' | 'createdBy'> & {
   coverImage: MediaFile;
   contentFile: MediaFile;
   createdBy: User;

@@ -3,10 +3,10 @@ import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
-import { educations, type CreateEducationPayload } from '@db/schema';
+import { educationMaterials, type CreateEducationMaterialsPayload } from '@db/schema';
 
-function createEducation() {
-  ipcMain.handle('create-education', async (_, data: CreateEducationPayload): ApiResponseProps<string> => {
+function createMaterial() {
+  ipcMain.handle('create-material', async (_, data: CreateEducationMaterialsPayload): ApiResponseProps<string> => {
     try {
       const db = getDb();
       const currentUser = getCurrentUser();
@@ -24,20 +24,20 @@ function createEducation() {
         };
       }
 
-      await db.insert(educations).values({
+      await db.insert(educationMaterials).values({
         ...data,
         createdBy: currentUser.id,
       });
 
       return {
         success: true,
-        data: 'Eğitim oluşturuldu.',
+        data: 'Eğitim materyali oluşturuldu.',
       };
     } catch (error) {
-      console.error('create education error', error);
+      console.error('create material error', error);
       throw error;
     }
   });
 }
 
-export default createEducation;
+export default createMaterial;

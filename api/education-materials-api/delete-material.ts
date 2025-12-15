@@ -2,13 +2,13 @@ import { eq } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
 import { getDb } from '@db/client';
-import { educations, type EducationListItem } from '@db/schema';
+import { educationMaterials, type EducationMaterialsListItem } from '@db/schema';
 
 import type { ApiResponseProps } from '../../types/api-response-types';
 import { getCurrentUser } from '../user-session';
 
-function deleteEducation() {
-  ipcMain.handle('delete-education', async (_, educationId: EducationListItem['id']): ApiResponseProps<string> => {
+function deleteMaterial() {
+  ipcMain.handle('delete-material', async (_, materialId: EducationMaterialsListItem['id']): ApiResponseProps<string> => {
     try {
       const db = getDb();
 
@@ -28,17 +28,17 @@ function deleteEducation() {
         };
       }
 
-      await db.delete(educations).where(eq(educations.id, educationId));
+      await db.delete(educationMaterials).where(eq(educationMaterials.id, materialId));
 
       return {
         success: true,
-        data: 'Eğitim silindi.',
+        data: 'Eğitim materyali silindi.',
       };
     } catch (error) {
-      console.error('delete education error', error);
+      console.error('delete material error', error);
       throw error;
     }
   });
 }
 
-export default deleteEducation;
+export default deleteMaterial;

@@ -6,15 +6,15 @@ import DataTable from '@app/components/data-table';
 import useColumns from './hooks/use-columns';
 import useTableActions from './hooks/use-table-actions';
 
-export const Route = createFileRoute('/_main/education-contents/')({
+export const Route = createFileRoute('/_main/education-materials/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const { data, isLoading } = useQuery({
-    queryKey: ['education-contents'],
+    queryKey: ['education-materials'],
     queryFn: async () => {
-      const response = await window.electronAPI.getEducationList();
+      const response = await window.electronAPI.getEducationMaterialList();
       if (!response.success) {
         throw response.error;
       }

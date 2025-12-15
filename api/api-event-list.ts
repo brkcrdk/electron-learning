@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron';
 
-import type { Category, CreateEducationPayload, EducationListItem, NewCategoryPayload, NewUserPayload, User } from '@db/schema';
+import type { Category, CreateEducationMaterialsPayload, EducationMaterialsListItem, NewCategoryPayload, NewUserPayload, User } from '@db/schema';
 
 import type { LoginPayload } from './session-api/login';
 import type { UploadFilePayload } from './upload-file-api';
@@ -39,11 +39,11 @@ const apiEventList = {
   cleanupUpload: (uploadId: string) => ipcRenderer.invoke('cleanup-upload', uploadId),
   deleteFile: (fileId: number): ApiResponseProps<string> => ipcRenderer.invoke('delete-file', fileId),
 
-  // Education services
-  getEducationList: (): ApiResponseProps<EducationListItem[]> => ipcRenderer.invoke('get-education-list'),
-  createEducation: (data: CreateEducationPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-education', data),
-  updateEducation: (data: CreateEducationPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-education', data),
-  deleteEducation: (data: EducationListItem['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-education', data),
+  // Education material services
+  getEducationMaterialList: (): ApiResponseProps<EducationMaterialsListItem[]> => ipcRenderer.invoke('get-material-list'),
+  createEducationMaterial: (data: CreateEducationMaterialsPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-material', data),
+  updateEducationMaterial: (data: CreateEducationMaterialsPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-material', data),
+  deleteEducationMaterial: (data: EducationMaterialsListItem['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-material', data),
 } as const;
 
 export default apiEventList;

@@ -13,11 +13,11 @@ function DeleteContent({ contentId }: Props) {
   const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: () => {
-      return window.electronAPI.deleteEducation(contentId);
+      return window.electronAPI.deleteEducationMaterial(contentId);
     },
     onSuccess: response => {
       if (response.success) {
-        queryClient.invalidateQueries({ queryKey: ['education-contents'] });
+        queryClient.invalidateQueries({ queryKey: ['education-materials'] });
       } else {
         toast.error(response.error);
       }

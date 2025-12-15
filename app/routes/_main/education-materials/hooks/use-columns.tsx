@@ -5,7 +5,7 @@ import UserCell from '@app/components/table-cells/user-cell';
 import Icon from '@app/components/ui/icon';
 import type { IconListProps } from '@app/components/ui/icon/icon-list';
 import getContentPath from '@app/utils/get-content-path';
-import type { EducationListItem, MediaFileTypes } from '@db/schema';
+import type { EducationMaterialsListItem, MediaFileTypes } from '@db/schema';
 
 import ContentActions from '../modules/content-actions';
 
@@ -33,7 +33,7 @@ const contentTypeLabels: Record<MediaFileTypes, ContentTypeOption> = {
   },
 };
 
-function useColumns(): ColumnDef<EducationListItem>[] {
+function useColumns(): ColumnDef<EducationMaterialsListItem>[] {
   return [
     {
       header: 'İçerik Başlığı',

@@ -3,12 +3,12 @@ import { ipcMain } from 'electron';
 import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getDb } from '@db/client';
-import { educations, type CreateEducationPayload } from '@db/schema';
+import { educationMaterials, type CreateEducationMaterialsPayload } from '@db/schema';
 
 import { getCurrentUser } from '../user-session';
 
-function updateEducation() {
-  ipcMain.handle('update-education', async (_, data: CreateEducationPayload): ApiResponseProps<string> => {
+function updateMaterial() {
+  ipcMain.handle('update-material', async (_, data: CreateEducationMaterialsPayload): ApiResponseProps<string> => {
     try {
       const db = getDb();
 
@@ -31,27 +31,27 @@ function updateEducation() {
       if (!data.id) {
         return {
           success: false,
-          error: 'Eğitim ID bulunamadı.',
+          error: 'Eğitim materyali ID bulunamadı.',
         };
       }
 
       await db
-        .update(educations)
+        .update(educationMaterials)
         .set({
           ...data,
           updatedAt: sql`(unixepoch())`,
         })
-        .where(eq(educations.id, data.id));
+        .where(eq(educationMaterials.id, data.id));
 
       return {
         success: true,
-        data: 'Eğitim güncellendi.',
+        data: 'Eğitim materyali güncellendi.',
       };
     } catch (error) {
-      console.error('update education error', error);
+      console.error('update material error', error);
       throw error;
     }
   });
 }
 
-export default updateEducation;
+export default updateMaterial;
