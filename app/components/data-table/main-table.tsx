@@ -1,5 +1,6 @@
 import {
   getCoreRowModel,
+  getExpandedRowModel,
   useReactTable,
   type ColumnDef,
   type OnChangeFn,
@@ -64,7 +65,7 @@ export interface TableProps<T> {
    * TableOptions ile default tablo ayarlarını güncelleyebiliriz.
    * @see https://tanstack.com/table/latest/docs/api/core/TableOptions
    */
-  tableOptions?: TableOptions<T>;
+  tableOptions?: Omit<TableOptions<T>, 'data' | 'columns' | 'getCoreRowModel'>;
 }
 
 function MainTable<T>({
@@ -107,10 +108,12 @@ function MainTable<T>({
     enableSorting: true,
     enableMultiSort: true,
     manualSorting: true,
+    enableExpanding: true,
     enableRowSelection: rowSelectionProps.enableRowSelection,
     getRowId: rowSelectionProps.enableRowSelection ? rowSelectionProps.getRowId : undefined,
     onRowSelectionChange: rowSelectionProps.enableRowSelection ? rowSelectionProps.onRowSelectionChange : undefined,
     getCoreRowModel: getCoreRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
     debugTable: import.meta.env.DEV,
     debugHeaders: import.meta.env.DEV,
     debugColumns: import.meta.env.DEV,

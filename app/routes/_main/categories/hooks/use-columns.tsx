@@ -1,11 +1,11 @@
 import type { ColumnDef } from '@tanstack/react-table';
 
 import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
-import type { Category } from '@db/schema';
+import type { CategoryWithChildren } from '@db/schema';
 
 import CategoryActions from '../modules/category-actions';
 
-function useColumns(): ColumnDef<Category>[] {
+function useColumns(): ColumnDef<CategoryWithChildren>[] {
   return [
     {
       header: 'Adı',

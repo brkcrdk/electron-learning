@@ -32,6 +32,12 @@ function RouteComponent() {
       data={data ? data : []}
       isLoading={isLoading}
       tableActions={tableActions}
+      rowSelectionProps={{
+        enableRowSelection: false,
+      }}
+      tableOptions={{
+        getSubRows: row => row.children,
+      }}
     />
   );
 }

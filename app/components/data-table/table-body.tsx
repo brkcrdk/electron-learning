@@ -1,8 +1,13 @@
+import { Fragment } from 'react';
+
 import { type Table as TableType, flexRender } from '@tanstack/react-table';
 
 import Table from '@app/components/ui/table';
 import cd from '@app/utils/cd';
 import cn from '@app/utils/cn';
+
+import Button from '../ui/button';
+import Icon from '../ui/icon';
 
 interface Props<T> {
   table: TableType<T>;
@@ -19,35 +24,45 @@ function TableBody<T>({ table }: Props<T>) {
   return (
     <Table.Body>
       {table.getRowModel().rows.map(row => (
-        <Table.Row
-          key={row.id}
-          data-selected={cd(row.getIsSelected())}
-          className="group/tr"
-        >
-          {row.getVisibleCells().map((cell, index) => {
-            const { meta } = table._getColumnDefs()[index];
+        <Fragment key={row.id}>
+          <Table.Row
+            data-selected={cd(row.getIsSelected())}
+            className="group/tr"
+          >
+            {row.getVisibleCells().map((cell, index) => {
+              const { meta } = table._getColumnDefs()[index];
 
-            return (
-              <Table.Cell
-                /**
-                 * NOTE: align propertysi bir süre sonra geçersizleşecek bu nedenle ilerleyen
-                 * zamanlarda bu davranışı stillendirme ile yapmak zorundayız.
-                 *
-                 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/td
-                 */
-                align={meta?.centeredColumn ? 'center' : 'justify'}
-                key={cell.id}
-                style={{
-                  left: cell.column.getIsPinned() === 'left' ? cell.column.getStart() : undefined,
-                  width: cell.column.getSize(),
-                }}
-                className={cn(meta?.className)}
-              >
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              return (
+                <Table.Cell
+                  /**
+                   * NOTE: align propertysi bir süre sonra geçersizleşecek bu nedenle ilerleyen
+                   * zamanlarda bu davranışı stillendirme ile yapmak zorundayız.
+                   *
+                   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/td
+                   */
+                  align={meta?.centeredColumn ? 'center' : 'justify'}
+                  key={cell.id}
+                  style={{
+                    left: cell.column.getIsPinned() === 'left' ? cell.column.getStart() : undefined,
+                    width: cell.column.getSize(),
+                  }}
+                  className={cn(meta?.className)}
+                >
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </Table.Cell>
+              );
+            })}
+          </Table.Row>
+          {row.getCanExpand() && (
+            <Table.Row>
+              <Table.Cell colSpan={row.getVisibleCells().length}>
+                <Button>
+                  <Icon name="chevron-down" />
+                </Button>
               </Table.Cell>
-            );
-          })}
-        </Table.Row>
+            </Table.Row>
+          )}
+        </Fragment>
       ))}
     </Table.Body>
   );
