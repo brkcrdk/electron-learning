@@ -37,7 +37,10 @@ function createCategory() {
         };
       }
 
-      await db.insert(categories).values(data);
+      await db.insert(categories).values({
+        ...data,
+        createdBy: currentUser.id,
+      });
 
       return {
         success: true,
