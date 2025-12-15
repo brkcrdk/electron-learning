@@ -1,4 +1,4 @@
-import type { CSSProperties, PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 import Sidebar from '@app/components/ui/sidebar';
 
@@ -12,14 +12,11 @@ import TitleBar from './title-bar';
  */
 function Layout({ children }: PropsWithChildren) {
   return (
-    <div
-      className="h-svh overflow-hidden"
-      style={{ '--available-height': 'calc(100svh - var(--spacing(12)))' } as CSSProperties}
-    >
+    <div className="h-svh overflow-hidden">
       <TitleBar />
       <Sidebar.Provider>
         <LayoutSidebar />
-        <Sidebar.Inset className="h-(--available-height)">
+        <Sidebar.Inset className="h-[calc(100svh-4rem)]">
           <Header />
           <section className="flex flex-col gap-4 p-6">{children}</section>
         </Sidebar.Inset>
