@@ -18,7 +18,7 @@ function MyEducationsHeader() {
           variant="outline"
         >
           <ToggleGroup.Item value="all">Tümü</ToggleGroup.Item>
-          <ToggleGroup.Item value="completed">Tamamlandı</ToggleGroup.Item>
+          <ToggleGroup.Item value="completed">Tamamlananlar</ToggleGroup.Item>
           <ToggleGroup.Item value="in-progress">Devam Edenler</ToggleGroup.Item>
         </ToggleGroup>
       </div>
