@@ -43,6 +43,7 @@ const apiEventList = {
   createCategory: (data: MutateCategoryPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-category', data),
   updateCategory: (data: MutateCategoryPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-category', data),
   deleteCategory: (data: Category['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-category', data),
+  getCategoryDetail: (data: Category['id']): ApiResponseProps<Category> => ipcRenderer.invoke('get-category-detail', data),
 
   // File Upload services
   uploadFile: (data: UploadFilePayload): FileUploadResponseType => ipcRenderer.invoke('upload-file', data),
