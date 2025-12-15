@@ -45,23 +45,27 @@ function TableBody<T>({ table }: Props<T>) {
                   style={{
                     left: cell.column.getIsPinned() === 'left' ? cell.column.getStart() : undefined,
                     width: cell.column.getSize(),
+                    paddingLeft: index === 0 ? `${row.depth * 2}rem` : undefined,
                   }}
                   className={cn(meta?.className)}
                 >
+                  {row.getCanExpand() && index === 0 && (
+                    <Button
+                      size="icon-sm"
+                      variant="ghost"
+                      onClick={row.getToggleExpandedHandler()}
+                    >
+                      <Icon
+                        name="chevron-right"
+                        className="size-3.5"
+                      />
+                    </Button>
+                  )}
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </Table.Cell>
               );
             })}
           </Table.Row>
-          {row.getCanExpand() && (
-            <Table.Row>
-              <Table.Cell colSpan={row.getVisibleCells().length}>
-                <Button>
-                  <Icon name="chevron-down" />
-                </Button>
-              </Table.Cell>
-            </Table.Row>
-          )}
         </Fragment>
       ))}
     </Table.Body>
