@@ -4,6 +4,7 @@ import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
 import UserCell from '@app/components/table-cells/user-cell';
 import Icon from '@app/components/ui/icon';
 import type { IconListProps } from '@app/components/ui/icon/icon-list';
+import ImageFallback from '@app/components/ui/image-fallback';
 import getContentPath from '@app/utils/get-content-path';
 import type { EducationMaterialsListItem, MediaFileTypes } from '@db/schema';
 
@@ -42,7 +43,7 @@ function useColumns(): ColumnDef<EducationMaterialsListItem>[] {
       accessorFn: ({ name, coverImage }) => {
         return (
           <div className="flex items-center gap-2">
-            <img
+            <ImageFallback
               src={getContentPath(coverImage.filePath)}
               alt={name}
               className="relative aspect-video w-20 overflow-hidden rounded-sm object-cover"
@@ -55,6 +56,7 @@ function useColumns(): ColumnDef<EducationMaterialsListItem>[] {
     {
       header: 'İçerik Tipi',
       accessorKey: 'contentType',
+      size: 50,
       meta: {
         centeredColumn: true,
       },
@@ -75,6 +77,7 @@ function useColumns(): ColumnDef<EducationMaterialsListItem>[] {
       accessorFn: ({ createdBy }) => {
         return <UserCell user={createdBy} />;
       },
+      size: 50,
       meta: {
         centeredColumn: true,
       },
@@ -86,6 +89,7 @@ function useColumns(): ColumnDef<EducationMaterialsListItem>[] {
       accessorFn: ({ createdAt }) => {
         return <RelativeDateCell date={createdAt} />;
       },
+      size: 50,
       meta: {
         centeredColumn: true,
       },
@@ -98,6 +102,7 @@ function useColumns(): ColumnDef<EducationMaterialsListItem>[] {
         return <ContentActions content={content} />;
       },
       enableSorting: false,
+      size: 50,
       meta: {
         centeredColumn: true,
       },
