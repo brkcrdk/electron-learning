@@ -12,3 +12,13 @@
 - İçerikleri clickuptaki gibi göstermeyi düşünüyorum. Bir materyal açıldığı zaman bir modalı fullscreen açıp, modala sığacak şekilde göstereceğim.
   - Böylece html, video, pdf aynı şekilde gösterilebilir.
   - Kullanıcılar html materyalini zip olarak mı atarlar, yoksa direk html ne varsa o şekilde mi eklerler
+
+
+//
+- [ ] User giriş yaptığı zaman, sidebarı ona göre güncelleyelim.
+- [ ] Sidebarda nested yapıya izin vermeliyiz.
+- [ ] Kategorileri sidebarda listeleyelim, alt kategorileri de ona göre listeleyelim.
+- [ ] Tüm içerikleri listelerken kategoriye göre filtreleme yapmayacağız.
+- [ ] İçerikleri kartlar halinde göstereceğiz.
+- [ ] Kartlardan da içerik detayına geçiş yapacağız.
+- [ ] İçerik detayında kategori, açıklama vb gibi detayları göstereceğiz.

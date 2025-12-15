@@ -3,10 +3,14 @@ import { Controller, useFormContext } from 'react-hook-form';
 import InputField from '@app/components/form-fields/input-field';
 import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
+import type { Category } from '@db/schema';
+
+import ParentCategorySelector from './parent-category-selector';
 
 export interface CategoryFormInputs {
   name: string;
   description: string;
+  parentId: Category | null;
 }
 
 function CategoryForm() {
@@ -42,6 +46,7 @@ function CategoryForm() {
           />
         )}
       />
+      <ParentCategorySelector />
     </Field.Group>
   );
 }

@@ -38,6 +38,7 @@ function EditCategory({ category }: Props) {
       return {
         name: category.name,
         description: category.description,
+        parentId: null,
       };
     },
   });

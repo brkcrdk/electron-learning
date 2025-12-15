@@ -8,7 +8,8 @@ import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
 import slugify from '@app/utils/slugify';
 
-import CategoryForm, { type CategoryFormInputs } from './category-form';
+import type { CategoryFormInputs } from './category-form';
+import CategoryForm from './category-form';
 
 function NewCategory() {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,6 +41,7 @@ function NewCategory() {
     defaultValues: {
       name: '',
       description: '',
+      parentId: null,
     },
   });
 
