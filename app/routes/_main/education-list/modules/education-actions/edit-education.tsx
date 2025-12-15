@@ -32,8 +32,8 @@ function EditEducation({ education }: Props) {
     defaultValues: async () => ({
       name: education.name,
       description: education.description,
-      category: { label: education.category.name, value: education.category.id },
-      educationMaterial: { label: education.educationMaterial.name, value: education.educationMaterial.id },
+      category: education.category,
+      educationMaterial: education.educationMaterial,
       coverImage: education.coverImage
         ? {
             id: education.coverImage.id,
@@ -43,21 +43,23 @@ function EditEducation({ education }: Props) {
             fileSize: education.coverImage.fileSize,
           }
         : null,
-      assigneeIds: education.assignees.map(assignee => ({ label: assignee.name, value: assignee.id })),
+      assignees: education.assignees,
     }),
   });
 
   const onSubmit = (data: EducationFormInputs) => {
-    if (!data.category || !data.educationMaterial) return;
+    if (!data.category || !data.educationMaterial || !data.assignees) return;
+
+    const assigneeIds = data.assignees.flatMap(val => (val ? val.id : []));
 
     mutateAsync({
       id: education.id,
       name: data.name,
       description: data.description,
-      categoryId: data.category.value,
-      educationMaterial: data.educationMaterial.value,
+      categoryId: data.category.id,
+      educationMaterial: data.educationMaterial.id,
       coverImageId: data.coverImage?.id ?? null,
-      assigneeIds: [],
+      assigneeIds,
     });
   };
 

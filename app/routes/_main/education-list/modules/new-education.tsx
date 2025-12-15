@@ -39,15 +39,15 @@ function NewEducation() {
   });
 
   const onSubmit = (data: EducationFormInputs) => {
-    if (!data.category || !data.educationMaterial || !data.assigneeIds.length) return;
+    if (!data.category || !data.educationMaterial || !data.assignees) return;
 
-    const assigneeIds = data.assigneeIds.flatMap(val => (val ? val.value : []));
+    const assigneeIds = data.assignees.flatMap(val => (val ? val.id : []));
 
     mutateAsync({
       name: data.name,
       description: data.description,
-      categoryId: data.category.value,
-      educationMaterial: data.educationMaterial.value,
+      categoryId: data.category.id,
+      educationMaterial: data.educationMaterial.id,
       coverImageId: data.coverImage ? data.coverImage.id : null,
       assigneeIds,
     });

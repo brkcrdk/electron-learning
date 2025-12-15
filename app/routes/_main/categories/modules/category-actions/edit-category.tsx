@@ -46,6 +46,7 @@ function EditCategory({ category }: Props) {
   function onSubmit(data: CategoryFormInputs) {
     mutateAsync(data);
   }
+
   return (
     <FormProvider {...form}>
       <form

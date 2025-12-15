@@ -18,7 +18,7 @@ export interface EducationFormInputs {
   category: Category | null;
   educationMaterial: EducationMaterialsListItem | null;
   coverImage: FileUploadResponse | null;
-  assigneeIds: User[] | null;
+  assignees: User[] | null;
 }
 
 function EducationForm() {

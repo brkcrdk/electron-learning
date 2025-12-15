@@ -6,8 +6,6 @@ import Select from '@app/components/ui/select';
 import type { CategoryFormInputs } from '.';
 
 function ParentCategorySelector() {
-  const { control } = useFormContext<CategoryFormInputs>();
-
   const { data: categoryData, isLoading } = useQuery({
     queryKey: ['category-list'],
     queryFn: async () => {
@@ -19,6 +17,8 @@ function ParentCategorySelector() {
     },
   });
 
+  const { control } = useFormContext<CategoryFormInputs>();
+
   return (
     <Controller
       control={control}
@@ -26,8 +26,9 @@ function ParentCategorySelector() {
       render={({ field, fieldState }) => (
         <Select
           label="Üst Kategori:"
-          options={categoryData}
+          // options={categoryData}
           isLoading={isLoading}
+          options={[]}
           errorMessage={fieldState.error?.message}
           getOptionLabel={option => option.name}
           getOptionValue={option => String(option.id)}

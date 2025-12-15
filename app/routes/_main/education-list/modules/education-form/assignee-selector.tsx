@@ -21,7 +21,7 @@ function AssigneeSelector() {
   return (
     <Controller
       control={control}
-      name="assigneeIds"
+      name="assignees"
       rules={{ required: 'Eğitim atanacak kullanıcı seçimi zorunludur' }}
       render={({ field, fieldState }) => (
         <Select
