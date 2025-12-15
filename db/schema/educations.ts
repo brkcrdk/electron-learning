@@ -1,8 +1,8 @@
 import { sql } from 'drizzle-orm';
 import { integer, sqliteTable, text, index, foreignKey } from 'drizzle-orm/sqlite-core';
 
-import { categories } from './categories';
-import { educationMaterials } from './education-materials';
+import { type Category, categories } from './categories';
+import { type EducationMaterials, educationMaterials } from './education-materials';
 import { type MediaFile, mediaFiles } from './media-files';
 import { type User, users } from './users';
 
@@ -50,7 +50,9 @@ export const educations = sqliteTable(
 export type Education = typeof educations.$inferSelect;
 export type NewEducationPayload = typeof educations.$inferInsert;
 export type CreateEducationPayload = Omit<NewEducationPayload, 'createdBy' | 'createdAt' | 'updatedAt'>;
-export type EducationListItem = Omit<Education, 'coverImageId' | 'createdBy'> & {
+export type EducationListItem = Omit<Education, 'categoryId' | 'coverImageId' | 'educationMaterial' | 'createdBy'> & {
+  category: Category;
   coverImage: MediaFile;
+  educationMaterial: EducationMaterials;
   createdBy: User;
 };

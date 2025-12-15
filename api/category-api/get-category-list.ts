@@ -54,7 +54,6 @@ function getCategoryList() {
        * - mapWith(Boolean): SQLite boolean tipi desteklemediği için EXISTS sonucu integer (0/1)
        *   olarak döner. mapWith(Boolean) ile bu değeri JavaScript boolean'ına çeviriyoruz.
        */
-
       const categoryList = await db
         .select({
           // Tüm kategori kolonlarını getir (id, name, slug, description, parentId, createdAt, updatedAt)
