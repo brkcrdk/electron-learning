@@ -1,18 +1,15 @@
+import type { ComponentProps } from 'react';
+
 import Badge from './badge';
 import Icon from './icon';
 import Popover from './popover';
-import TreeView, { type TreeItem } from './tree-view';
+import TreeView from './tree-view';
 
-interface Props {
-  treeData: TreeItem[];
-  selectedValue: string | null;
-}
-
-function SelectTree({ treeData, selectedValue }: Props) {
+function SelectTree(props: ComponentProps<typeof TreeView>) {
   return (
     <Popover modal>
       <Popover.Trigger className="bg-input/50 hover:bg-input/80 flex items-center justify-between rounded-md p-2">
-        {selectedValue ? <Badge variant="secondary">{selectedValue}</Badge> : <span className="text-muted-foreground text-sm">Seçiniz...</span>}
+        {props.selectedValue ? <Badge variant="secondary">{props.selectedValue}</Badge> : <span className="text-muted-foreground text-sm">Seçiniz...</span>}
         <Icon
           name="chevron-down"
           className="size-4"
@@ -20,7 +17,7 @@ function SelectTree({ treeData, selectedValue }: Props) {
       </Popover.Trigger>
 
       <Popover.Content className="w-(--radix-popover-trigger-width) p-0">
-        <TreeView treeData={treeData} />
+        <TreeView {...props} />
       </Popover.Content>
     </Popover>
   );

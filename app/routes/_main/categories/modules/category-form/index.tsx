@@ -1,6 +1,7 @@
 import { Controller, useFormContext } from 'react-hook-form';
 
 import InputField from '@app/components/form-fields/input-field';
+import SelectTreeField from '@app/components/form-fields/select-tree-field';
 import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
 import TreeView, { type TreeItem } from '@app/components/ui/tree-view';
@@ -74,7 +75,15 @@ function CategoryForm() {
         )}
       />
       <ParentCategorySelector />
-      <TreeView treeData={treeData} />
+
+      <SelectTreeField
+        label="Üst Kategori"
+        inputId="parentId"
+        treeData={treeData}
+        selectedValue={null}
+        // error={fieldState.error?.message}
+        // {...field}
+      />
     </Field.Group>
   );
 }

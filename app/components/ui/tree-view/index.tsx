@@ -9,9 +9,11 @@ export interface TreeItem {
 
 interface Props {
   treeData: TreeItem[];
+  onSelect: (value: string) => void;
+  selectedValue: string | null;
 }
 
-function TreeView({ treeData }: Props) {
+function TreeView({ treeData, onSelect, selectedValue }: Props) {
   return (
     <Command>
       <Command.List>
@@ -22,6 +24,8 @@ function TreeView({ treeData }: Props) {
             <TreeNode
               key={item.id}
               item={item}
+              onSelect={onSelect}
+              selectedValue={selectedValue}
             />
           ))}
         </Command.Group>

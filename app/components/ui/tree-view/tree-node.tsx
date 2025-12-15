@@ -7,34 +7,36 @@ import type { TreeItem } from '.';
 
 interface Props {
   item: TreeItem;
+  onSelect: (value: string) => void;
+  selectedValue: string | null;
 }
 
-const TreeNode = ({ item }: Props) => {
+const TreeNode = ({ item, onSelect, selectedValue }: Props) => {
   return (
     <Collapsible>
-      <Command.Item
-        value={item.id}
-        className="data-[selected=true]:bg-accent/30 flex items-center justify-between"
-        onSelect={e => {
-          console.log('selected', e);
-        }}
-      >
-        <div className="flex items-center gap-2">
-          <Checkbox />
+      <div className="flex items-center justify-between">
+        <Command.Item
+          value={item.id}
+          className="data-[selected=true]:bg-accent/30 flex items-center justify-between"
+          onSelect={onSelect}
+        >
+          <Checkbox checked={selectedValue === item.id} />
           <span>{item.name}</span>
-        </div>
+        </Command.Item>
         {item.children && item.children.length > 0 && (
-          <Collapsible.Trigger className="data-[state=open]:rotate-90">
+          <Collapsible.Trigger className="z-10 data-[state=open]:rotate-90">
             <Icon name="chevron-right" />
           </Collapsible.Trigger>
         )}
-      </Command.Item>
+      </div>
       {item.children && (
         <Collapsible.Content className="border-accent ml-4 border-l pl-3">
           {item.children.map(child => (
             <TreeNode
               key={child.id}
               item={child}
+              onSelect={onSelect}
+              selectedValue={selectedValue}
             />
           ))}
         </Collapsible.Content>
