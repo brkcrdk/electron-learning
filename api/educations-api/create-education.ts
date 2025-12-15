@@ -3,10 +3,10 @@ import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
-import { educations, type CreateEducationPayload } from '@db/schema';
+import { educationAssignees, educations, type CreateEducationWithAssigneesPayload } from '@db/schema';
 
 function createEducation() {
-  ipcMain.handle('create-education', async (_, data: CreateEducationPayload): ApiResponseProps<string> => {
+  ipcMain.handle('create-education', async (_, data: CreateEducationWithAssigneesPayload): ApiResponseProps<string> => {
     try {
       const db = getDb();
       const currentUser = getCurrentUser();
@@ -25,9 +25,26 @@ function createEducation() {
         };
       }
 
-      await db.insert(educations).values({
-        ...data,
-        createdBy: currentUser.id,
+      const { assigneeIds, ...educationData } = data;
+      const uniqueAssigneeIds = Array.from(new Set(assigneeIds ?? [])).filter(Boolean);
+
+      await db.transaction(async tx => {
+        const [createdEducation] = await tx
+          .insert(educations)
+          .values({
+            ...educationData,
+            createdBy: currentUser.id,
+          })
+          .returning({ id: educations.id });
+
+        if (createdEducation?.id && uniqueAssigneeIds.length > 0) {
+          await tx.insert(educationAssignees).values(
+            uniqueAssigneeIds.map(userId => ({
+              educationId: createdEducation.id,
+              assigneeUserId: userId,
+            }))
+          );
+        }
       });
 
       return {

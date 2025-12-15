@@ -4,10 +4,10 @@ import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
-import { educations, type NewEducationPayload } from '@db/schema';
+import { educationAssignees, educations, type UpdateEducationWithAssigneesPayload } from '@db/schema';
 
 function updateEducation() {
-  ipcMain.handle('update-education', async (_, data: NewEducationPayload): ApiResponseProps<string> => {
+  ipcMain.handle('update-education', async (_, data: UpdateEducationWithAssigneesPayload): ApiResponseProps<string> => {
     try {
       const db = getDb();
 
@@ -34,13 +34,30 @@ function updateEducation() {
         };
       }
 
-      await db
-        .update(educations)
-        .set({
-          ...data,
-          updatedAt: sql`(unixepoch())`,
-        })
-        .where(eq(educations.id, data.id));
+      const { assigneeIds, id, ...educationData } = data;
+      // UI duplicate gönderirse FK/unique kısıta takılmamak için listeyi benzersizleştiriyoruz.
+      const uniqueAssigneeIds = Array.from(new Set(assigneeIds)).filter(Boolean);
+
+      await db.transaction(async tx => {
+        await tx
+          .update(educations)
+          .set({
+            ...educationData,
+            updatedAt: sql`(unixepoch())`,
+          })
+          .where(eq(educations.id, id));
+
+        await tx.delete(educationAssignees).where(eq(educationAssignees.educationId, id));
+
+        if (uniqueAssigneeIds.length > 0) {
+          await tx.insert(educationAssignees).values(
+            uniqueAssigneeIds.map(userId => ({
+              educationId: id,
+              assigneeUserId: userId,
+            }))
+          );
+        }
+      });
 
       return {
         success: true,
