@@ -48,7 +48,7 @@ function getEducationList() {
         })
         .from(educations)
         .innerJoin(categories, eq(educations.categoryId, categories.id))
-        .innerJoin(mediaFiles, eq(educations.coverImageId, mediaFiles.id))
+        .leftJoin(mediaFiles, eq(educations.coverImageId, mediaFiles.id))
         .innerJoin(educationMaterials, eq(educations.educationMaterial, educationMaterials.id))
         .innerJoin(users, eq(educations.createdBy, users.id))
         .leftJoin(educationAssignees, eq(educationAssignees.educationId, educations.id))
@@ -68,7 +68,7 @@ function getEducationList() {
             name: row.name,
             description: row.description,
             category: row.category,
-            coverImage: row.coverImage,
+            coverImage: row.coverImage ?? null,
             educationMaterial: row.educationMaterial,
             createdBy: row.createdBy,
             createdAt: row.createdAt,
