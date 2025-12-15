@@ -1,4 +1,4 @@
 export * from './users';
-export * from './category';
+export * from './categories';
 export * from './media-files';
 export * from './education-materials';

@@ -3,7 +3,7 @@ import { ipcMain } from 'electron';
 import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getDb } from '@db/client';
-import { category, type NewCategoryPayload } from '@db/schema';
+import { categories, type NewCategoryPayload } from '@db/schema';
 
 import { getCurrentUser } from '../user-session';
 
@@ -36,12 +36,12 @@ function updateCategory() {
       }
 
       await db
-        .update(category)
+        .update(categories)
         .set({
           ...data,
           updatedAt: sql`(unixepoch())`,
         })
-        .where(eq(category.id, data.id));
+        .where(eq(categories.id, data.id));
 
       return {
         success: true,

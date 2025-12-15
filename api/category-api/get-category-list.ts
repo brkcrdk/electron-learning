@@ -2,7 +2,7 @@ import { desc, getTableColumns, sql } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
 import { getDb } from '@db/client';
-import { category, type Category } from '@db/schema';
+import { categories, type Category } from '@db/schema';
 
 import type { ApiResponseProps } from '../../types/api-response-types';
 import { getCurrentUser } from '../user-session';
@@ -35,7 +35,9 @@ function getCategoryList() {
        * - EXISTS: parentId değeri bu kategorinin id'sine eşit olan bir kategori var mı sorusunu sorgular.
        * - mapWith(Boolean): SQLite'dan gelen integer (0/1) değerini boolean'a çevirir.
        */
-      const hasChildrenQuery = sql<boolean>`EXISTS(SELECT 1 FROM ${category} WHERE ${category.parentId} = ${category.id})`.mapWith(Boolean).as('hasChildren');
+      const hasChildrenQuery = sql<boolean>`EXISTS(SELECT 1 FROM ${categories} WHERE ${categories.parentId} = ${categories.id})`
+        .mapWith(Boolean)
+        .as('hasChildren');
 
       /**
        * Tüm kategorileri getirirken her bir kategorinin alt kategorisi (children) olup olmadığını
@@ -56,11 +58,11 @@ function getCategoryList() {
       const categoryList = await db
         .select({
           // Tüm kategori kolonlarını getir (id, name, slug, description, parentId, createdAt, updatedAt)
-          ...getTableColumns(category),
+          ...getTableColumns(categories),
           hasChildren: hasChildrenQuery,
         })
-        .from(category)
-        .orderBy(desc(category.createdAt));
+        .from(categories)
+        .orderBy(desc(categories.createdAt));
 
       return {
         success: true,

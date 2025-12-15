@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
 import { getDb } from '@db/client';
-import { category, type Category } from '@db/schema';
+import { categories, type Category } from '@db/schema';
 
 import type { ApiResponseProps } from '../../types/api-response-types';
 import { getCurrentUser } from '../user-session';
@@ -28,7 +28,7 @@ function deleteCategory() {
         };
       }
 
-      await db.delete(category).where(eq(category.id, categoryId));
+      await db.delete(categories).where(eq(categories.id, categoryId));
 
       return {
         success: true,

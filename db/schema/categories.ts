@@ -1,8 +1,8 @@
 import { sql } from 'drizzle-orm';
 import { integer, sqliteTable, text, index, foreignKey } from 'drizzle-orm/sqlite-core';
 
-export const category = sqliteTable(
-  'category',
+export const categories = sqliteTable(
+  'categories',
   {
     id: integer('id').primaryKey({ autoIncrement: true }),
     name: text('name').notNull(),
@@ -25,11 +25,11 @@ export const category = sqliteTable(
   ]
 );
 
-export type Category = typeof category.$inferSelect & {
+export type Category = typeof categories.$inferSelect & {
   /**
    * NOTE: Bu değer veri tabanında saklanmaz. Category listesini alırken hesaplanır ve o sırada
    * gönderilir.
    */
   hasChildren: boolean;
 };
-export type NewCategoryPayload = typeof category.$inferInsert;
+export type NewCategoryPayload = typeof categories.$inferInsert;

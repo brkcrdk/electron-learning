@@ -3,7 +3,7 @@ import { ipcMain } from 'electron';
 import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getDb } from '@db/client';
-import { category, type NewCategoryPayload } from '@db/schema';
+import { categories, type NewCategoryPayload } from '@db/schema';
 
 import { getCurrentUser } from '../user-session';
 
@@ -26,8 +26,8 @@ function createCategory() {
         };
       }
 
-      const hasCategoryWithSameSlug = await db.query.category.findFirst({
-        where: eq(category.slug, data.slug),
+      const hasCategoryWithSameSlug = await db.query.categories.findFirst({
+        where: eq(categories.slug, data.slug),
       });
 
       if (hasCategoryWithSameSlug) {
@@ -37,7 +37,7 @@ function createCategory() {
         };
       }
 
-      await db.insert(category).values(data);
+      await db.insert(categories).values(data);
 
       return {
         success: true,
