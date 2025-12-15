@@ -11,7 +11,7 @@ type SelectTreeProps = Omit<ComponentProps<typeof SelectTree>, 'treeData'>;
 
 interface Props extends SelectTreeProps {
   error?: string;
-  label: string;
+  label?: string;
   inputId: string;
   selectedValue: Category | null;
 }
@@ -29,11 +29,12 @@ function CategoryTreeSelect({ error, label, inputId, ...props }: Props) {
   });
 
   return (
-    <Field>
+    <Field className="min-w-60">
       <Field.Label htmlFor={inputId}>{label}</Field.Label>
       <SelectTree
         {...props}
         treeData={data ? data : []}
+        placeholder="Kategori seçiniz..."
         selectedValue={props.selectedValue ? { id: props.selectedValue.id, name: props.selectedValue.name } : null}
       />
       {error && <Field.Error>{error}</Field.Error>}
