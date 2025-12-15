@@ -39,4 +39,4 @@ export type Category = typeof categories.$inferSelect & {
    */
   hasChildren: boolean;
 };
-export type NewCategoryPayload = Omit<typeof categories.$inferInsert, 'createdBy' | 'createdAt' | 'updatedAt'>;
+export type MutateCategoryPayload = Omit<typeof categories.$inferInsert, 'createdBy' | 'createdAt' | 'updatedAt'>;

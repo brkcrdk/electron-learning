@@ -2,13 +2,13 @@ import { eq } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
 import { getDb } from '@db/client';
-import { users, type NewUserPayload } from '@db/schema';
+import { users, type MutateUserPayload } from '@db/schema';
 
 import type { ApiResponseProps } from '../../types/api-response-types';
 import { getCurrentUser } from '../user-session';
 
 function createUser() {
-  ipcMain.handle('create-user', async (_, data: NewUserPayload): ApiResponseProps<string> => {
+  ipcMain.handle('create-user', async (_, data: MutateUserPayload): ApiResponseProps<string> => {
     try {
       const db = getDb();
 

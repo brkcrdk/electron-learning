@@ -3,10 +3,10 @@ import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
-import { educationMaterials, type CreateEducationMaterialsPayload } from '@db/schema';
+import { educationMaterials, type MutateEducationMaterialsPayload } from '@db/schema';
 
 function createMaterial() {
-  ipcMain.handle('create-material', async (_, data: CreateEducationMaterialsPayload): ApiResponseProps<string> => {
+  ipcMain.handle('create-material', async (_, data: MutateEducationMaterialsPayload): ApiResponseProps<string> => {
     try {
       const db = getDb();
       const currentUser = getCurrentUser();

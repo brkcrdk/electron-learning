@@ -3,12 +3,12 @@ import { ipcMain } from 'electron';
 import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getDb } from '@db/client';
-import { categories, type NewCategoryPayload } from '@db/schema';
+import { categories, type MutateCategoryPayload } from '@db/schema';
 
 import { getCurrentUser } from '../user-session';
 
 function updateCategory() {
-  ipcMain.handle('update-category', async (_, data: NewCategoryPayload): ApiResponseProps<string> => {
+  ipcMain.handle('update-category', async (_, data: MutateCategoryPayload): ApiResponseProps<string> => {
     try {
       const db = getDb();
 

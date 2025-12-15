@@ -33,4 +33,4 @@ export const educationAssignees = sqliteTable(
 );
 
 export type EducationAssignee = typeof educationAssignees.$inferSelect;
-export type NewEducationAssigneePayload = typeof educationAssignees.$inferInsert;
+export type MutateEducationAssigneePayload = typeof educationAssignees.$inferInsert;

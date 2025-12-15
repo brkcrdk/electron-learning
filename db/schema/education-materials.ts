@@ -36,8 +36,7 @@ export const educationMaterials = sqliteTable(
 );
 
 export type EducationMaterials = typeof educationMaterials.$inferSelect;
-export type NewEducationMaterialsPayload = typeof educationMaterials.$inferInsert;
-export type CreateEducationMaterialsPayload = Omit<NewEducationMaterialsPayload, 'createdBy' | 'createdAt' | 'updatedAt'>;
+export type MutateEducationMaterialsPayload = Omit<typeof educationMaterials.$inferInsert, 'createdBy' | 'createdAt' | 'updatedAt'>;
 export type EducationMaterialsListItem = Omit<EducationMaterials, 'contentFileId' | 'createdBy'> & {
   contentFile: MediaFile;
   createdBy: User;

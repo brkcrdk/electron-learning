@@ -32,5 +32,5 @@ export const mediaFiles = sqliteTable(
 );
 
 export type MediaFile = typeof mediaFiles.$inferSelect;
-export type NewMediaFilePayload = typeof mediaFiles.$inferInsert;
+export type MutateMediaFilePayload = typeof mediaFiles.$inferInsert;
 export type MediaFileTypes = MediaFile['mediaType'];

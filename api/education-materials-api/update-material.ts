@@ -3,12 +3,12 @@ import { ipcMain } from 'electron';
 import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getDb } from '@db/client';
-import { educationMaterials, type CreateEducationMaterialsPayload } from '@db/schema';
+import { educationMaterials, type MutateEducationMaterialsPayload } from '@db/schema';
 
 import { getCurrentUser } from '../user-session';
 
 function updateMaterial() {
-  ipcMain.handle('update-material', async (_, data: CreateEducationMaterialsPayload): ApiResponseProps<string> => {
+  ipcMain.handle('update-material', async (_, data: MutateEducationMaterialsPayload): ApiResponseProps<string> => {
     try {
       const db = getDb();
 

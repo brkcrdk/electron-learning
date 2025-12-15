@@ -2,13 +2,13 @@ import { sql } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
 import { getDb } from '@db/client';
-import { users, type NewUserPayload } from '@db/schema';
+import { users, type MutateUserPayload } from '@db/schema';
 
 import type { ApiResponseProps } from '../../types/api-response-types';
 import { setCurrentUser } from '../user-session';
 
 function createSuperAdmin() {
-  ipcMain.handle('create-super-admin', async (_, data: NewUserPayload): ApiResponseProps<string> => {
+  ipcMain.handle('create-super-admin', async (_, data: MutateUserPayload): ApiResponseProps<string> => {
     try {
       const db = getDb();
 

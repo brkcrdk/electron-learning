@@ -48,8 +48,8 @@ export const educations = sqliteTable(
 );
 
 export type Education = typeof educations.$inferSelect;
-export type NewEducationPayload = typeof educations.$inferInsert;
-export type MutateEducationPayload = Omit<NewEducationPayload, 'createdBy' | 'createdAt' | 'updatedAt'> & { assigneeIds: number[] };
+
+export type MutateEducationPayload = Omit<typeof educations.$inferInsert, 'createdBy' | 'createdAt' | 'updatedAt'> & { assigneeIds: number[] };
 
 export type EducationListItem = Omit<Education, 'categoryId' | 'coverImageId' | 'educationMaterial' | 'createdBy'> & {
   category: Category;

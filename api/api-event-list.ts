@@ -2,12 +2,12 @@ import { ipcRenderer } from 'electron';
 
 import type {
   Category,
-  CreateEducationMaterialsPayload,
   EducationListItem,
   EducationMaterialsListItem,
-  NewCategoryPayload,
-  NewUserPayload,
+  MutateCategoryPayload,
   MutateEducationPayload,
+  MutateEducationMaterialsPayload,
+  MutateUserPayload,
   User,
 } from '@db/schema';
 
@@ -25,22 +25,22 @@ const apiEventList = {
    * NOTE: Super admin veritabnında sadece bir tane olmalıdır.
    */
   checkSuperAdminExists: (): ApiResponseProps<boolean> => ipcRenderer.invoke('check-super-admin-exists'),
-  createSuperAdmin: (data: NewUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-super-admin', data),
+  createSuperAdmin: (data: MutateUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-super-admin', data),
 
   login: (data: LoginPayload): ApiResponseProps<User> => ipcRenderer.invoke('login', data),
   logout: (): ApiResponseProps<string> => ipcRenderer.invoke('logout'),
 
   // User services
-  createUser: (data: NewUserPayload) => ipcRenderer.invoke('create-user', data),
+  createUser: (data: MutateUserPayload) => ipcRenderer.invoke('create-user', data),
   getUserList: (): ApiResponseProps<User[]> => ipcRenderer.invoke('get-user-list'),
   getCurrentUser: (): ApiResponseProps<User> => ipcRenderer.invoke('current-user'),
-  updateUser: (data: NewUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-user', data),
+  updateUser: (data: MutateUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-user', data),
   deleteUser: (data: User['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-user', data),
 
   // Category services
   getCategoryList: (): ApiResponseProps<Category[]> => ipcRenderer.invoke('get-category-list'),
-  createCategory: (data: NewCategoryPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-category', data),
-  updateCategory: (data: NewCategoryPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-category', data),
+  createCategory: (data: MutateCategoryPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-category', data),
+  updateCategory: (data: MutateCategoryPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-category', data),
   deleteCategory: (data: Category['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-category', data),
 
   // File Upload services
@@ -50,8 +50,8 @@ const apiEventList = {
 
   // Education material services
   getEducationMaterialList: (): ApiResponseProps<EducationMaterialsListItem[]> => ipcRenderer.invoke('get-material-list'),
-  createEducationMaterial: (data: CreateEducationMaterialsPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-material', data),
-  updateEducationMaterial: (data: CreateEducationMaterialsPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-material', data),
+  createEducationMaterial: (data: MutateEducationMaterialsPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-material', data),
+  updateEducationMaterial: (data: MutateEducationMaterialsPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-material', data),
   deleteEducationMaterial: (data: EducationMaterialsListItem['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-material', data),
 
   // Education services

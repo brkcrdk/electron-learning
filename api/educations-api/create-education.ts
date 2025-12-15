@@ -3,10 +3,10 @@ import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
-import { educationAssignees, educations, type CreateEducationWithAssigneesPayload } from '@db/schema';
+import { educationAssignees, educations, type MutateEducationPayload } from '@db/schema';
 
 function createEducation() {
-  ipcMain.handle('create-education', async (_, data: CreateEducationWithAssigneesPayload): ApiResponseProps<string> => {
+  ipcMain.handle('create-education', async (_, data: MutateEducationPayload): ApiResponseProps<string> => {
     try {
       const db = getDb();
       const currentUser = getCurrentUser();
