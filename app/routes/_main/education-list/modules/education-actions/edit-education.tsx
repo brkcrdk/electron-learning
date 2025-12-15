@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useFormState } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import Skeleton from '@app/components/ui/skeleton';
 import type { MutateEducationPayload } from '@db/schema';
 import type { EducationListItem } from '@db/schema';
 
 import EducationForm, { type EducationFormInputs } from '../education-form';
-import mapCoverImageToUploadResponse from '../utils/map-cover-image';
 
 interface Props {
   education: EducationListItem;
@@ -34,7 +34,16 @@ function EditEducation({ education }: Props) {
       description: education.description,
       category: { label: education.category.name, value: education.category.id },
       educationMaterial: { label: education.educationMaterial.name, value: education.educationMaterial.id },
-      coverImage: mapCoverImageToUploadResponse(education.coverImage),
+      coverImage: education.coverImage
+        ? {
+            id: education.coverImage.id,
+            mediaType: education.coverImage.mediaType,
+            fileName: education.coverImage.fileName,
+            fileFullUrl: education.coverImage.filePath,
+            fileSize: education.coverImage.fileSize,
+          }
+        : null,
+      assigneeIds: education.assignees.map(assignee => ({ label: assignee.name, value: assignee.id })),
     }),
   });
 
@@ -51,6 +60,12 @@ function EditEducation({ education }: Props) {
       assigneeIds: [],
     });
   };
+
+  const { isLoading } = useFormState({ control: form.control });
+
+  if (isLoading) {
+    return <Skeleton />;
+  }
 
   return (
     <FormProvider {...form}>

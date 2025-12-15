@@ -1,5 +1,6 @@
 import type { ColumnDef } from '@tanstack/react-table';
 
+import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
 import UserCell from '@app/components/table-cells/user-cell';
 import Badge from '@app/components/ui/badge';
 import ImageFallback from '@app/components/ui/image-fallback';
@@ -24,14 +25,6 @@ function useColumns(): ColumnDef<EducationListItem>[] {
             <span className="line-clamp-1 max-w-80">{name}</span>
           </div>
         );
-      },
-    },
-    {
-      header: 'Açıklama',
-      accessorKey: 'description',
-      cell: info => info.getValue(),
-      accessorFn: ({ description }) => {
-        return <span className="line-clamp-1 max-w-80">{description}</span>;
       },
     },
     {
@@ -64,6 +57,17 @@ function useColumns(): ColumnDef<EducationListItem>[] {
       cell: info => info.getValue(),
       accessorFn: ({ createdBy }) => {
         return <UserCell user={createdBy} />;
+      },
+      meta: {
+        centeredColumn: true,
+      },
+    },
+    {
+      header: 'Oluşturulma Tarihi',
+      accessorKey: 'createdAt',
+      cell: info => info.getValue(),
+      accessorFn: ({ createdAt }) => {
+        return <RelativeDateCell date={createdAt} />;
       },
       meta: {
         centeredColumn: true,
