@@ -4,7 +4,7 @@ import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
-import { educations, type Education } from '@db/schema';
+import { educationAssignees, educations, type Education } from '@db/schema';
 
 function deleteEducation() {
   ipcMain.handle('delete-education', async (_, educationId: Education['id']): ApiResponseProps<string> => {
@@ -33,7 +33,10 @@ function deleteEducation() {
         };
       }
 
-      await db.delete(educations).where(eq(educations.id, educationId));
+      await db.transaction(async tx => {
+        await tx.delete(educationAssignees).where(eq(educationAssignees.educationId, educationId));
+        await tx.delete(educations).where(eq(educations.id, educationId));
+      });
 
       return {
         success: true,
