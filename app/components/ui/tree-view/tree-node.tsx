@@ -17,7 +17,7 @@ const TreeNode = ({ item, onSelect, selectedValue }: Props) => {
       <div className="flex items-center justify-between">
         <Command.Item
           value={String(item.id)}
-          className="data-[selected=true]:bg-accent/30 flex items-center justify-between"
+          className="data-[selected=true]:bg-accent/50 flex w-full items-center"
           onSelect={() => {
             if (onSelect) {
               onSelect(item);
