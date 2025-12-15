@@ -61,9 +61,9 @@ function useColumns(): ColumnDef<EducationMaterialsListItem>[] {
       cell: info => info.getValue(),
       accessorFn: ({ contentType }) => {
         return (
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-1">
             <Icon name={contentTypeLabels[contentType].icon} />
-            <span>{contentTypeLabels[contentType].label}</span>
+            <span className="text-sm">{contentTypeLabels[contentType].label}</span>
           </div>
         );
       },
