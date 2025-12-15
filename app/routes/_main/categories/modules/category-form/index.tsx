@@ -4,7 +4,7 @@ import InputField from '@app/components/form-fields/input-field';
 import SelectTreeField from '@app/components/form-fields/select-tree-field';
 import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
-import TreeView, { type TreeItem } from '@app/components/ui/tree-view';
+import { type TreeItem } from '@app/components/ui/tree-view';
 import type { Category } from '@db/schema';
 
 import ParentCategorySelector from './parent-category-selector';
@@ -81,6 +81,9 @@ function CategoryForm() {
         inputId="parentId"
         treeData={treeData}
         selectedValue={{ id: '7', name: 'Item 2.2.1' }}
+        onSelect={value => {
+          console.log(value);
+        }}
         // error={fieldState.error?.message}
         // {...field}
       />
