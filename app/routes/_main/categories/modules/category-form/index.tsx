@@ -3,7 +3,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import InputField from '@app/components/form-fields/input-field';
 import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
-import TreeView from '@app/components/ui/tree-view';
+import TreeView, { type TreeItem } from '@app/components/ui/tree-view';
 import type { Category } from '@db/schema';
 
 import ParentCategorySelector from './parent-category-selector';
@@ -13,6 +13,32 @@ export interface CategoryFormInputs {
   description: string;
   parentId: Category | null;
 }
+
+const treeData: TreeItem[] = [
+  {
+    id: '1',
+    name: 'Item 1',
+    children: [
+      { id: '2', name: 'Item 1.1' },
+      { id: '3', name: 'Item 1.2' },
+    ],
+  },
+  {
+    id: '4',
+    name: 'Item 2',
+    children: [
+      { id: '5', name: 'Item 2.1' },
+      {
+        id: '6',
+        name: 'Item 2.2',
+        children: [
+          { id: '7', name: 'Item 2.2.1' },
+          { id: '8', name: 'Item 2.2.2' },
+        ],
+      },
+    ],
+  },
+];
 
 function CategoryForm() {
   const { control } = useFormContext<CategoryFormInputs>();
@@ -48,7 +74,7 @@ function CategoryForm() {
         )}
       />
       <ParentCategorySelector />
-      <TreeView />
+      <TreeView treeData={treeData} />
     </Field.Group>
   );
 }
