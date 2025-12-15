@@ -94,6 +94,7 @@ export function initializeDatabase(app: App) {
     console.log('✓ Veritabanı başarıyla başlatıldı.');
   } catch (error) {
     console.error('Veritabanı başlatma hatası:', error);
+
     throw error;
   }
 }

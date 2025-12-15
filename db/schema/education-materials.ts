@@ -22,7 +22,7 @@ export const educationMaterials = sqliteTable(
   },
   table => [
     index('idx_educations_content_file_id').on(table.contentFileId),
-    index('idx_educations_created_by').on(table.createdBy),
+    index('idx_education_materials_created_by').on(table.createdBy),
     index('idx_educations_content_type').on(table.contentType),
     foreignKey({
       columns: [table.contentFileId],
