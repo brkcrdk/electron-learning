@@ -7,7 +7,9 @@ import type { Category } from '@db/schema';
 import Field from '../ui/field';
 import SelectTree from '../ui/select-tree';
 
-interface Props extends ComponentProps<typeof SelectTree> {
+type SelectTreeProps = Omit<ComponentProps<typeof SelectTree>, 'treeData'>;
+
+interface Props extends SelectTreeProps {
   error?: string;
   label: string;
   inputId: string;

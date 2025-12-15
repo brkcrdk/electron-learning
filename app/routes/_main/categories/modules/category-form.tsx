@@ -1,12 +1,10 @@
 import { Controller, useFormContext } from 'react-hook-form';
 
+import CategoryTreeSelect from '@app/components/form-fields/category-select-field';
 import InputField from '@app/components/form-fields/input-field';
-// import SelectTreeField from '@app/components/form-fields/select-tree-field';
 import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
 import type { Category } from '@db/schema';
-
-import ParentCategorySelector from './parent-category-selector';
 
 export interface CategoryFormInputs {
   name: string;
@@ -47,7 +45,21 @@ function CategoryForm() {
           />
         )}
       />
-      <ParentCategorySelector />
+      <Controller
+        control={control}
+        name="categoryParent"
+        render={({ field, fieldState }) => (
+          <CategoryTreeSelect
+            selectedValue={field.value}
+            error={fieldState.error?.message}
+            label="Üst Kategori"
+            inputId="categoryParent"
+            onSelect={value => {
+              field.onChange(value);
+            }}
+          />
+        )}
+      />
     </Field.Group>
   );
 }
