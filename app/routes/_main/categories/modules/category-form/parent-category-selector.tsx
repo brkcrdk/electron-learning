@@ -6,8 +6,8 @@ import Select from '@app/components/ui/select';
 import type { CategoryFormInputs } from '.';
 
 function ParentCategorySelector() {
-  const { data: categoryData, isLoading } = useQuery({
-    queryKey: ['category-list'],
+  const { data, isLoading } = useQuery({
+    queryKey: ['query-list-category-detail'],
     queryFn: async () => {
       const response = await window.electronAPI.getCategoryList();
       if (!response.success) {
@@ -26,9 +26,8 @@ function ParentCategorySelector() {
       render={({ field, fieldState }) => (
         <Select
           label="Üst Kategori:"
-          // options={categoryData}
+          options={data}
           isLoading={isLoading}
-          options={[]}
           errorMessage={fieldState.error?.message}
           getOptionLabel={option => option.name}
           getOptionValue={option => String(option.id)}

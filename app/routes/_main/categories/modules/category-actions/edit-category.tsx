@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useFormState } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import Skeleton from '@app/components/ui/skeleton';
 import slugify from '@app/utils/slugify';
 import type { Category } from '@db/schema';
 
@@ -45,6 +46,12 @@ function EditCategory({ category }: Props) {
 
   function onSubmit(data: CategoryFormInputs) {
     mutateAsync(data);
+  }
+
+  const { isLoading } = useFormState({ control: form.control });
+
+  if (isLoading) {
+    return <Skeleton />;
   }
 
   return (

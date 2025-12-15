@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { Controller, useFormContext, useFormState } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import InputField from '@app/components/form-fields/input-field';
 import PasswordField from '@app/components/form-fields/password-field';
@@ -40,24 +40,14 @@ interface Props {
 
 function UserForm({ isSelfUpdate }: Props) {
   const { control } = useFormContext<UserFormInputs>();
-  const { isLoading } = useFormState({ control });
   const { data: currentUser } = useCurrentUserQuery();
 
   const computedUserRoleOptions = useMemo(() => {
-    // return userRoleOptions.filter(role => role.value !== currentUser.data?.role);
     if (currentUser && currentUser.role === 'super-admin') {
       return userRoleOptions;
     }
     return userRoleOptions.filter(role => role.value !== 'super-admin');
   }, [currentUser]);
-
-  /**
-   * NOTE: Edit formunda formun başlangıç değerlerini promise ile render ediyoruz.
-   * Bu nedenle componentler render edildikten sonra verileri yükleneceği için bu sefer
-   * loglarda uncontrolled component warning'ı verir. Bu sorunu çözmek için bu şekilde
-   * kontrol ediyoruz.
-   */
-  if (isLoading) return null;
 
   return (
     <Field.Group>

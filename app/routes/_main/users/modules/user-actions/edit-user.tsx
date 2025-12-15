@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useFormState } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import Skeleton from '@app/components/ui/skeleton';
 import useCurrentUserQuery from '@app/hooks/use-current-user-query';
 import type { User } from '@db/schema';
 
@@ -52,6 +53,12 @@ function EditUser({ user }: Props) {
 
   function onSubmit(data: UserFormInputs) {
     mutateAsync(data);
+  }
+
+  const { isLoading } = useFormState({ control: form.control });
+
+  if (isLoading) {
+    return <Skeleton />;
   }
 
   return (
