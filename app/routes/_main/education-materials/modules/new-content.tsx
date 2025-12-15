@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
-import type { CreateEducationMaterialsPayload } from '@db/schema';
+import type { MutateEducationMaterialsPayload } from '@db/schema';
 
 import type { ContentFormInputs } from './content-form';
 import ContentForm, { mediaContentOptions } from './content-form';
@@ -17,7 +17,7 @@ function NewContent() {
   const queryClient = useQueryClient();
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: (data: CreateEducationMaterialsPayload) => {
+    mutationFn: (data: MutateEducationMaterialsPayload) => {
       return window.electronAPI.createEducationMaterial(data);
     },
     onSuccess: response => {

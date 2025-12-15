@@ -3,7 +3,7 @@ import { FormProvider, useForm, useFormState } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import Skeleton from '@app/components/ui/skeleton';
-import type { CreateEducationMaterialsPayload, EducationMaterialsListItem } from '@db/schema';
+import type { MutateEducationMaterialsPayload, EducationMaterialsListItem } from '@db/schema';
 
 import ContentForm, { mediaContentOptions, type ContentFormInputs } from '../content-form';
 
@@ -15,7 +15,7 @@ function EditContent({ content }: Props) {
   const queryClient = useQueryClient();
 
   const { mutateAsync } = useMutation({
-    mutationFn: (data: CreateEducationMaterialsPayload) => {
+    mutationFn: (data: MutateEducationMaterialsPayload) => {
       return window.electronAPI.updateEducationMaterial(data);
     },
     onSuccess: response => {
