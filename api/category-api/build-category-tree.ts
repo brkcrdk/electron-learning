@@ -1,6 +1,50 @@
 import type { CategoryWithChildren } from '@db/schema';
 import type { Category } from '@db/schema';
 
+/**
+ * Düz bir kategori dizisini, parent-child ilişkilerine göre ağaç (tree) yapısına dönüştürür.
+ *
+ * Her kategori kendi alt kategorilerini `children` alanında taşır.
+ * Ebeveyni (parentId) olmayan kategoriler "root" (üst seviye) olarak kabul edilir.
+ * Eğer bir kategori ebeveynine ulaşılamazsa, güvenlik amacıyla root olarak da eklenir.
+ *
+ * Örnek:
+ * Girdi:
+ * [
+ *   { id: 1, name: "Yazılım", parentId: null },
+ *   { id: 2, name: "Frontend", parentId: 1 },
+ *   { id: 3, name: "Backend", parentId: 1 },
+ *   { id: 4, name: "React", parentId: 2 }
+ * ]
+ *
+ * Çıktı:
+ * [
+ *   {
+ *     id: 1,
+ *     name: "Yazılım",
+ *     parentId: null,
+ *     children: [
+ *       {
+ *         id: 2,
+ *         name: "Frontend",
+ *         parentId: 1,
+ *         children: [
+ *           {
+ *             id: 4,
+ *             name: "React",
+ *             parentId: 2
+ *           }
+ *         ]
+ *       },
+ *       {
+ *         id: 3,
+ *         name: "Backend",
+ *         parentId: 1
+ *       }
+ *     ]
+ *   }
+ * ]
+ */
 function buildCategoryTree(rows: Category[]): CategoryWithChildren[] {
   const map = new Map<number, CategoryWithChildren>();
   const roots: CategoryWithChildren[] = [];
