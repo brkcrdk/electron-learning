@@ -1,8 +1,9 @@
-import { desc, eq, getTableColumns, sql } from 'drizzle-orm';
+import { desc, eq, getTableColumns } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
+import hasChildrenColumn from '@api/utils/hasChildrenColumn';
 import { getDb } from '@db/client';
 import { categories, educations, educationMaterials, mediaFiles, type EducationListItem, users } from '@db/schema';
 
@@ -33,7 +34,7 @@ function getEducationList() {
           description: educations.description,
           category: {
             ...getTableColumns(categories),
-            hasChildren: sql<boolean>`EXISTS(SELECT 1 FROM ${categories} WHERE ${categories.parentId} = ${categories.id})`.mapWith(Boolean),
+            hasChildren: hasChildrenColumn(categories),
           },
           coverImage: getTableColumns(mediaFiles),
           educationMaterial: getTableColumns(educationMaterials),
