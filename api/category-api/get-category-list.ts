@@ -22,13 +22,6 @@ function getCategoryList() {
         };
       }
 
-      if (currentUser.role === 'user') {
-        return {
-          success: false,
-          error: 'Bu işlemi yapmak için yetkiniz yok.',
-        };
-      }
-
       const categoryRows = await db.select().from(categories).orderBy(desc(categories.createdAt));
 
       const categoryTree = buildCategoryTree(categoryRows);
