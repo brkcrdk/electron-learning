@@ -72,13 +72,6 @@ function buildCategoryTree(rows: Category[]): CategoryWithChildren[] {
     }
   }
 
-  // Boş children dizilerini kaldır (opsiyonel)
-  for (const node of map.values()) {
-    if (node.children && node.children.length === 0) {
-      delete node.children;
-    }
-  }
-
   return roots;
 }
 

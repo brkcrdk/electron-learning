@@ -36,5 +36,5 @@ export type Category = typeof categories.$inferSelect;
 export type MutateCategoryPayload = Omit<typeof categories.$inferInsert, 'createdBy' | 'createdAt' | 'updatedAt'>;
 
 export type CategoryWithChildren = Category & {
-  children?: CategoryWithChildren[];
+  children: CategoryWithChildren[];
 };
