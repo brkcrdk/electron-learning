@@ -1,5 +1,6 @@
 import categoryApi from './category-api';
 import educationMaterialsApi from './education-materials-api';
+import educationsApi from './educations-api';
 import sessionApi from './session-api';
 import superAdminApi from './super-admin-api';
 import uploadFileApi from './upload-file-api';
@@ -12,6 +13,7 @@ function registerApiHandlers() {
   sessionApi();
   uploadFileApi();
   educationMaterialsApi();
+  educationsApi();
 }
 
 export default registerApiHandlers;
