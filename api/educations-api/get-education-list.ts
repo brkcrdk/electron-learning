@@ -4,7 +4,6 @@ import { ipcMain } from 'electron';
 import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
-import hasChildrenColumn from '@api/utils/hasChildrenColumn';
 import { getDb } from '@db/client';
 import { categories, educations, educationAssignees, educationMaterials, mediaFiles, type EducationListItem, type User, users } from '@db/schema';
 
@@ -37,7 +36,6 @@ function getEducationList() {
           description: educations.description,
           category: {
             ...getTableColumns(categories),
-            hasChildren: hasChildrenColumn(categories),
           },
           coverImage: getTableColumns(mediaFiles),
           educationMaterial: getTableColumns(educationMaterials),

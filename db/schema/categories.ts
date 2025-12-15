@@ -32,11 +32,9 @@ export const categories = sqliteTable(
   ]
 );
 
-export type Category = typeof categories.$inferSelect & {
-  /**
-   * NOTE: Bu değer veri tabanında saklanmaz. Category listesini alırken hesaplanır ve o sırada
-   * gönderilir.
-   */
-  hasChildren: boolean;
-};
+export type Category = typeof categories.$inferSelect;
 export type MutateCategoryPayload = Omit<typeof categories.$inferInsert, 'createdBy' | 'createdAt' | 'updatedAt'>;
+
+export type CategoryWithChildren = Category & {
+  children?: CategoryWithChildren[];
+};

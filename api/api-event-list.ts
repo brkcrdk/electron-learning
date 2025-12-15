@@ -9,6 +9,7 @@ import type {
   MutateEducationMaterialsPayload,
   MutateUserPayload,
   User,
+  CategoryWithChildren,
 } from '@db/schema';
 
 import type { LoginPayload } from './session-api/login';
@@ -38,7 +39,7 @@ const apiEventList = {
   deleteUser: (data: User['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-user', data),
 
   // Category services
-  getCategoryList: (): ApiResponseProps<Category[]> => ipcRenderer.invoke('get-category-list'),
+  getCategoryList: (): ApiResponseProps<CategoryWithChildren[]> => ipcRenderer.invoke('get-category-list'),
   createCategory: (data: MutateCategoryPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-category', data),
   updateCategory: (data: MutateCategoryPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-category', data),
   deleteCategory: (data: Category['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-category', data),
