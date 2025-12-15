@@ -45,7 +45,7 @@ function TableBody<T>({ table }: Props<T>) {
                   style={{
                     left: cell.column.getIsPinned() === 'left' ? cell.column.getStart() : undefined,
                     width: cell.column.getSize(),
-                    paddingLeft: index === 0 ? `${row.depth * 2}rem` : undefined,
+                    paddingLeft: index === 0 ? `calc(${row.depth * 1.5}rem + 0.5rem)` : '1rem',
                   }}
                   className={cn(meta?.className)}
                 >
