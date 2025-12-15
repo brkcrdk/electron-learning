@@ -18,13 +18,6 @@ function getCategoryDetail() {
         };
       }
 
-      if (currentUser.role === 'user') {
-        return {
-          success: false,
-          error: 'Bu işlemi yapmak için yetkiniz yok.',
-        };
-      }
-
       const db = getDb();
 
       const category = await db.query.categories.findFirst({
