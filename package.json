@@ -1,6 +1,6 @@
 {
-  "name": "electron-learning",
-  "productName": "electron-learning",
+  "name": "egitim-yonetim-sistemi",
+  "productName": "egitim-yonetim-sistemi",
   "version": "0.1.5",
   "description": "My Electron application description",
   "main": ".vite/build/main.js",
