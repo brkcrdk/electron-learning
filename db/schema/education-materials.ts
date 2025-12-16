@@ -27,7 +27,7 @@ export const educationMaterials = sqliteTable(
     foreignKey({
       columns: [table.contentFileId],
       foreignColumns: [mediaFiles.id],
-    }),
+    }).onDelete('cascade'),
     foreignKey({
       columns: [table.createdBy],
       foreignColumns: [users.id],

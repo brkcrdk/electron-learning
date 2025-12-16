@@ -24,7 +24,7 @@ export const educationAssignees = sqliteTable(
     foreignKey({
       columns: [table.educationId],
       foreignColumns: [educations.id],
-    }),
+    }).onDelete('cascade'),
     foreignKey({
       columns: [table.assigneeUserId],
       foreignColumns: [users.id],

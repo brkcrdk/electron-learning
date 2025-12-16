@@ -31,7 +31,7 @@ export const educations = sqliteTable(
     foreignKey({
       columns: [table.categoryId],
       foreignColumns: [categories.id],
-    }),
+    }).onDelete('cascade'),
     foreignKey({
       columns: [table.coverImageId],
       foreignColumns: [mediaFiles.id],
@@ -39,7 +39,7 @@ export const educations = sqliteTable(
     foreignKey({
       columns: [table.educationMaterial],
       foreignColumns: [educationMaterials.id],
-    }),
+    }).onDelete('cascade'),
     foreignKey({
       columns: [table.createdBy],
       foreignColumns: [users.id],

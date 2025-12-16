@@ -24,7 +24,7 @@ export const categories = sqliteTable(
     foreignKey({
       columns: [table.parentId],
       foreignColumns: [table.id],
-    }),
+    }).onDelete('cascade'),
     foreignKey({
       columns: [table.createdBy],
       foreignColumns: [users.id],
