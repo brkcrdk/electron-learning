@@ -2,17 +2,17 @@ import { Controller, useFormContext, useWatch } from 'react-hook-form';
 
 import InputField from '@app/components/form-fields/input-field';
 import PasswordField from '@app/components/form-fields/password-field';
-import { emailValidation, passwordValidation } from '@app/utils/form-validations';
+import { usernameValidation, passwordValidation } from '@app/utils/form-validations';
 
 import type { AuthLayoutMode } from './auth-layout';
 
 export interface LoginFormInputsProps {
-  email: string;
+  username: string;
   password: string;
 }
 
 export interface SignupFormInputsProps {
-  email: string;
+  username: string;
   password: string;
   confirmPassword: string;
   name: string;
@@ -51,14 +51,14 @@ function FormInputs({ mode }: Props) {
       )}
       <Controller
         control={control}
-        name="email"
-        rules={emailValidation}
+        name="username"
+        rules={usernameValidation}
         render={({ field, fieldState }) => (
           <InputField
             error={fieldState.error?.message}
-            label="E-posta"
-            id="email"
-            placeholder="example@example.com"
+            label="Kullanıcı Adı"
+            id="username"
+            placeholder="kullanici_adi"
             {...field}
           />
         )}

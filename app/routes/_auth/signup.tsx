@@ -29,7 +29,7 @@ function RouteComponent() {
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (data: SignupFormInputsProps) => {
       return window.electronAPI.createSuperAdmin({
-        email: data.email,
+        username: data.username,
         password: data.password,
         name: data.name,
       });
@@ -42,7 +42,7 @@ function RouteComponent() {
   const form = useForm<SignupFormInputsProps>({
     defaultValues: {
       name: 'Super Admin',
-      email: 'test@test.com',
+      username: 'super_admin',
       password: '12345678',
       confirmPassword: '12345678',
     },

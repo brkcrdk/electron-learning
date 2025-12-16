@@ -1,4 +1,4 @@
-import { eq, sql } from 'drizzle-orm';
+import { and, eq, ne, sql } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
 import { getDb } from '@db/client';
@@ -32,6 +32,20 @@ function updateUser() {
           success: false,
           error: 'Super admin rolünü değiştiremezsiniz.',
         };
+      }
+
+      // Username duplicate kontrolü (kendi username'i hariç)
+      if (data.username && data.id) {
+        const hasUserWithSameUsername = await db.query.users.findFirst({
+          where: and(eq(users.username, data.username), ne(users.id, data.id)),
+        });
+
+        if (hasUserWithSameUsername) {
+          return {
+            success: false,
+            error: 'Bu kullanıcı adıyla zaten bir kullanıcı var.',
+          };
+        }
       }
 
       if (data.id) {

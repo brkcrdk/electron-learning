@@ -31,7 +31,7 @@ function RouteComponent() {
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (data: LoginFormInputsProps) => {
       return window.electronAPI.login({
-        email: data.email,
+        username: data.username,
         password: data.password,
       });
     },
@@ -48,7 +48,7 @@ function RouteComponent() {
 
   const form = useForm<LoginFormInputsProps>({
     defaultValues: {
-      email: 'test@test.com',
+      username: 'test_user',
       password: '12345678',
     },
     mode: 'onSubmit',

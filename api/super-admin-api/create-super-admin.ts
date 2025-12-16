@@ -15,7 +15,7 @@ function createSuperAdmin() {
       const [user] = await db
         .insert(users)
         .values({
-          email: data.email,
+          username: data.username,
           name: data.name,
           password: data.password,
           role: 'super-admin',

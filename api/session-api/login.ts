@@ -8,7 +8,7 @@ import type { ApiResponseProps } from '../../types/api-response-types';
 import { setCurrentUser } from '../user-session';
 
 export interface LoginPayload {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -18,7 +18,7 @@ function login() {
       const db = getDb();
 
       const user = await db.query.users.findFirst({
-        where: eq(users.email, data.email),
+        where: eq(users.username, data.username),
       });
 
       if (!user) {

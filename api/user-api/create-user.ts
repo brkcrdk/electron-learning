@@ -27,14 +27,14 @@ function createUser() {
         };
       }
 
-      const hasUserWithSameEmail = await db.query.users.findFirst({
-        where: eq(users.email, data.email),
+      const hasUserWithSameUsername = await db.query.users.findFirst({
+        where: eq(users.username, data.username),
       });
 
-      if (hasUserWithSameEmail) {
+      if (hasUserWithSameUsername) {
         return {
           success: false,
-          error: 'Bu e-posta adresiyle zaten bir kullanıcı var.',
+          error: 'Bu kullanıcı adıyla zaten bir kullanıcı var.',
         };
       }
 

@@ -22,7 +22,7 @@ function EditUser({ user }: Props) {
       return window.electronAPI.updateUser({
         id: user.id,
         name: data.name,
-        email: data.email,
+        username: data.username,
         password: data.password,
         role: data.role.value,
         status: data.isActive ? 'active' : 'passive',
@@ -43,7 +43,7 @@ function EditUser({ user }: Props) {
 
       return {
         name: user.name,
-        email: user.email,
+        username: user.username,
         password: '12345678',
         role: selectedUserRole ? selectedUserRole : userRoleOptions[0],
         isActive: user.status === 'active',

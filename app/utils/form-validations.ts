@@ -1,8 +1,16 @@
-export const emailValidation = {
-  required: 'E-posta alanı zorunludur',
+export const usernameValidation = {
+  required: 'Kullanıcı adı alanı zorunludur',
+  minLength: {
+    value: 3,
+    message: 'Kullanıcı adı en az 3 karakter olmalıdır',
+  },
+  maxLength: {
+    value: 20,
+    message: 'Kullanıcı adı en fazla 20 karakter olabilir',
+  },
   pattern: {
-    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-    message: 'Geçerli bir e-posta adresi giriniz',
+    value: /^[a-zA-Z0-9_-]+$/,
+    message: 'Kullanıcı adı sadece harf, rakam, tire ve alt çizgi içerebilir',
   },
 };
 

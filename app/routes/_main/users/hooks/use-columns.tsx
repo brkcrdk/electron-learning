@@ -44,8 +44,8 @@ function useColumns(): ColumnDef<User>[] {
       accessorKey: 'name',
     },
     {
-      header: 'Email',
-      accessorKey: 'email',
+      header: 'Kullanıcı Adı',
+      accessorKey: 'username',
       meta: {
         centeredColumn: true,
       },

@@ -19,7 +19,7 @@ function NewUser() {
     mutationFn: (data: UserFormInputs) => {
       return window.electronAPI.createUser({
         name: data.name,
-        email: data.email,
+        username: data.username,
         password: data.password,
         role: data.role.value,
         status: data.isActive ? 'active' : 'passive',
@@ -39,7 +39,7 @@ function NewUser() {
   const form = useForm<UserFormInputs>({
     defaultValues: {
       name: 'John Doe',
-      email: 'john.doe@example.com',
+      username: 'john_doe',
       password: '12345678',
       role: { label: 'User', value: 'user' },
       isActive: true,

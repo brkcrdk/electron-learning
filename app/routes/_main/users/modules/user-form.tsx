@@ -8,12 +8,12 @@ import SwitchField from '@app/components/form-fields/switch-field';
 import Field from '@app/components/ui/field';
 import Select from '@app/components/ui/select';
 import useCurrentUserQuery from '@app/hooks/use-current-user-query';
-import { emailValidation, passwordValidation } from '@app/utils/form-validations';
+import { usernameValidation, passwordValidation } from '@app/utils/form-validations';
 import type { User } from '@db/schema';
 
 export interface UserFormInputs {
   name: string;
-  email: string;
+  username: string;
   password: string;
   role: { label: string; value: User['role'] };
   isActive: boolean;
@@ -66,12 +66,12 @@ function UserForm({ isSelfUpdate }: Props) {
       />
       <Controller
         control={control}
-        name="email"
-        rules={emailValidation}
+        name="username"
+        rules={usernameValidation}
         render={({ field, fieldState }) => (
           <InputField
-            label="Kullanıcı e-posta adresi:"
-            placeholder="test@example.com"
+            label="Kullanıcı adı:"
+            placeholder="kullanici_adi"
             error={fieldState.error?.message}
             {...field}
           />
