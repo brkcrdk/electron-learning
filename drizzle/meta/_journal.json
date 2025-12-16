@@ -15,6 +15,13 @@
       "when": 1765913857098,
       "tag": "0001_brown_mockingbird",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1765920329518,
+      "tag": "0002_yielding_the_twelve",
+      "breakpoints": true
     }
   ]
 }
