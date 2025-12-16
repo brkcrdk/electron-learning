@@ -43,7 +43,7 @@ function EducationCard({ education }: Props) {
     <Card className="hover:bg-accent/30 gap-0 p-0 transition-shadow hover:shadow-md">
       <Card.Header className="relative p-2">
         <ImageFallback
-          className="aspect-video size-full rounded-sm"
+          className="aspect-video size-full rounded-sm object-cover"
           src={getContentPath(education.coverImage?.filePath)}
         />
         <Badge className="absolute right-4 top-4">{education.category.name}</Badge>
