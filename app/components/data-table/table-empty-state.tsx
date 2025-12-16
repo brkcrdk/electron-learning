@@ -23,14 +23,10 @@ function TableEmptyState({ tableColumnsCount, onClearFilters, newItemProps }: Ta
                   className="mb-6 size-10"
                 />
                 <h1 className="text-3xl font-semibold">Sonuç Bulunamadı.</h1>
-                <p className="text-base-content/50 py-6 font-medium">Bu kriterlere uygun bir sonuç bulunamadı. Lütfen farklı bir kriter deneyiniz.</p>
+                <p className="text-base-content/50 wrap-break-word py-6 font-medium">
+                  Bu kriterlere uygun bir sonuç bulunamadı. Lütfen farklı bir kriter deneyiniz.
+                </p>
                 <div className="flex items-center justify-center gap-2">
-                  <button
-                    className="btn"
-                    onClick={onClearFilters}
-                  >
-                    Filtreleri Temizle
-                  </button>
                   {newItemProps && (
                     <button
                       className="btn btn-primary"
