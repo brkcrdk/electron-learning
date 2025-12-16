@@ -3,7 +3,7 @@ import ToggleGroup from '@app/components/ui/toggle-group';
 
 function MyEducationsHeader() {
   return (
-    <header className="flex items-center justify-between">
+    <header className="bg-background sticky top-0 z-50 flex items-center justify-between pb-2">
       <h1 className="text-2xl font-bold">Eğitimlerim</h1>
 
       <div className="flex items-end gap-2">

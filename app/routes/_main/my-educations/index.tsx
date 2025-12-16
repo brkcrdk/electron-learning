@@ -32,7 +32,7 @@ function RouteComponent() {
   if (!data) return null;
 
   return (
-    <section className="flex flex-col gap-6">
+    <section className="h-calc(100svh-16rem) flex flex-col gap-6 overflow-auto">
       <MyEducationsHeader />
       {data.length > 0 ? (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

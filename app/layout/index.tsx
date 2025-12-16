@@ -18,7 +18,7 @@ function Layout({ children }: PropsWithChildren) {
         <LayoutSidebar />
         <Sidebar.Inset className="h-[calc(100svh-4rem)]">
           <Header />
-          <section className="flex h-full flex-col gap-4 p-6">{children}</section>
+          <section className="flex h-full flex-col gap-4 overflow-hidden p-6">{children}</section>
         </Sidebar.Inset>
       </Sidebar.Provider>
     </div>
