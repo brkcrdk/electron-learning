@@ -66,6 +66,8 @@ function registerContentProtocol() {
         relativePath = relativePath.slice(1);
       }
 
+      relativePath = decodeURIComponent(relativePath);
+
       // userData path'ini al ve normalize et
       const userDataPath = resolve(app.getPath('userData'));
 
@@ -78,6 +80,9 @@ function registerContentProtocol() {
       // relative() kullanarak path traversal saldırılarını engelle
       // Eğer dosya userData dışındaysa, relative path ".." ile başlar
       const relativeToUserData = relative(userDataPath, resolvedFilePath);
+
+      const fileExists = existsSync(resolvedFilePath);
+
       if (relativeToUserData.startsWith('..')) {
         return new Response('Access denied', { status: 403 });
       }
@@ -85,7 +90,7 @@ function registerContentProtocol() {
       const filePath = resolvedFilePath;
 
       // Dosyanın varlığını kontrol et
-      if (!existsSync(filePath)) {
+      if (!fileExists) {
         return new Response('File not found', { status: 404 });
       }
 
