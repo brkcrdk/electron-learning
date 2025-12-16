@@ -30,7 +30,7 @@ function EditUser({ user }: Props) {
     },
     onSuccess: response => {
       if (response.success) {
-        queryClient.invalidateQueries({ queryKey: ['user-list'] });
+        queryClient.invalidateQueries({ queryKey: ['paginated-user-list'] });
       } else {
         toast.error(response.error, { dismissible: false });
       }

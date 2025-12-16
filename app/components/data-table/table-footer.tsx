@@ -20,44 +20,40 @@ interface Props {
 function TableFooter({ paginationProps }: Props) {
   const { page, pageCount, onPaginationChange, limit, onItemsPerPageChange } = paginationProps;
 
-  if (pageCount > 1) {
-    return (
-      <nav className="flex w-full items-center justify-between">
-        {limit && (
-          <Dropdown>
-            <Dropdown.Trigger asChild>
-              <Button
-                variant="secondary"
-                className="px-2"
+  return (
+    <nav className="flex w-full items-center justify-between">
+      {limit && (
+        <Dropdown>
+          <Dropdown.Trigger asChild>
+            <Button
+              variant="secondary"
+              className="px-2"
+            >
+              {limit}
+              <Icon
+                name="chevron-down"
+                className="size-4"
+              />
+            </Button>
+          </Dropdown.Trigger>
+          <Dropdown.Content>
+            {limitOptions.map(limitOption => (
+              <Dropdown.Item
+                key={limitOption}
+                onClick={() => onItemsPerPageChange(limitOption)}
               >
-                {limit}
-                <Icon
-                  name="chevron-down"
-                  className="size-4"
-                />
-              </Button>
-            </Dropdown.Trigger>
-            <Dropdown.Content>
-              {limitOptions.map(limitOption => (
-                <Dropdown.Item
-                  key={limitOption}
-                  onClick={() => onItemsPerPageChange(limitOption)}
-                >
-                  {limitOption}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Content>
-          </Dropdown>
-        )}
-        <Pagination
-          totalPages={pageCount}
-          currentPage={page}
-          onPageChange={selectedPage => onPaginationChange(selectedPage)}
-        />
-      </nav>
-    );
-  }
-
-  return null;
+                {limitOption}
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Content>
+        </Dropdown>
+      )}
+      <Pagination
+        totalPages={pageCount}
+        currentPage={page}
+        onPageChange={selectedPage => onPaginationChange(selectedPage)}
+      />
+    </nav>
+  );
 }
 export default TableFooter;

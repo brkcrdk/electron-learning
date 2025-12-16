@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
 
 import DataTable from '@app/components/data-table';
@@ -17,6 +17,8 @@ export const Route = createFileRoute('/_main/users/')({
 
 function RouteComponent() {
   const { page, limit } = Route.useSearch();
+  const navigate = useNavigate({ from: Route.fullPath });
+
   const { data, isLoading } = useQuery({
     queryKey: ['paginated-user-list', page, limit],
     queryFn: async () => {
@@ -41,17 +43,21 @@ function RouteComponent() {
       rowSelectionProps={{
         enableRowSelection: false,
       }}
-      paginationProps={{
-        limit: 10,
-        onItemsPerPageChange: limit => {
-          console.log(limit);
-        },
-        onPaginationChange: page => {
-          console.log(page);
-        },
-        page: 1,
-        pageCount: 10,
-      }}
+      paginationProps={
+        data
+          ? {
+              limit,
+              onItemsPerPageChange: limit => {
+                navigate({ search: { limit } });
+              },
+              onPaginationChange: page => {
+                navigate({ search: { page } });
+              },
+              page,
+              pageCount: data.pagination.totalPages,
+            }
+          : undefined
+      }
     />
   );
 }

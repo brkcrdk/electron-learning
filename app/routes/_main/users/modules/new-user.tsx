@@ -28,7 +28,7 @@ function NewUser() {
     onSuccess: response => {
       if (response.success) {
         setIsOpen(false);
-        queryClient.invalidateQueries({ queryKey: ['user-list'] });
+        queryClient.invalidateQueries({ queryKey: ['paginated-user-list'] });
       } else {
         toast.error(response.error, {
           dismissible: false,
