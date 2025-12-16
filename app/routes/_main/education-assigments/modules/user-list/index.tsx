@@ -5,20 +5,22 @@ import type { RowSelectionState } from '@tanstack/react-table';
 
 import DataTable from '@app/components/data-table';
 
-import useTableActions from './use-table-actions';
-import useUserListColumns from './user-list-columns';
+import useActions from './use-actions';
+import useColumns from './use-columns';
 
 function UserList() {
   const [page, setPage] = useState(1);
   const [searchUser, setSearchUser] = useState('');
+  const [limit, setLimit] = useState(10);
   const [selectedUsers, setSelectedUsers] = useState<RowSelectionState>({});
 
   const { data } = useQuery({
-    queryKey: ['assigment-user-list', page, searchUser],
+    queryKey: ['assigment-user-list', page, searchUser, limit],
     queryFn: async () => {
       const response = await window.electronAPI.getPaginatedUserList({
         page,
         search: searchUser,
+        limit,
       });
       if (!response.success) {
         throw response.error;
@@ -27,8 +29,8 @@ function UserList() {
     },
   });
 
-  const columns = useUserListColumns();
-  const tableActions = useTableActions();
+  const columns = useColumns();
+  const tableActions = useActions();
 
   return (
     <DataTable
@@ -47,14 +49,20 @@ function UserList() {
               page,
               onPaginationChange: setPage,
               limit: data.pagination.limit,
-              onItemsPerPageChange: () => {},
+              onItemsPerPageChange: limit => {
+                setLimit(limit);
+                setPage(1);
+              },
               pageCount: data.pagination.totalPages,
             }
           : undefined
       }
       searchProps={{
         value: searchUser,
-        onSearch: setSearchUser,
+        onSearch: search => {
+          setSearchUser(search);
+          setPage(1);
+        },
         placeholder: 'Kişi ara..',
       }}
     />

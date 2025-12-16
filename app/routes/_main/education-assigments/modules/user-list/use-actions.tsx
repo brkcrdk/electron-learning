@@ -1,7 +1,7 @@
 import type { TableActionsProps } from '@app/components/data-table';
 import Button from '@app/components/ui/button';
 
-function useTableActions(): TableActionsProps[] {
+function useActions(): TableActionsProps[] {
   return [
     {
       actionId: 'assign-with-excel',
@@ -10,4 +10,4 @@ function useTableActions(): TableActionsProps[] {
   ];
 }
 
-export default useTableActions;
+export default useActions;

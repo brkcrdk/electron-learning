@@ -2,7 +2,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 
 import type { User } from '@db/schema';
 
-function useUserListColumns(): ColumnDef<User>[] {
+function useColumns(): ColumnDef<User>[] {
   return [
     {
       header: 'Adı',
@@ -15,4 +15,4 @@ function useUserListColumns(): ColumnDef<User>[] {
   ];
 }
 
-export default useUserListColumns;
+export default useColumns;
