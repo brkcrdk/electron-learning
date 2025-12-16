@@ -11,18 +11,19 @@ export const Route = createFileRoute('/_main/users/')({
   validateSearch: z.object({
     page: z.number().default(1),
     limit: z.number().default(10),
+    search: z.string().default(''),
   }),
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { page, limit } = Route.useSearch();
+  const { page, limit, search } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['paginated-user-list', page, limit],
+  const { data } = useQuery({
+    queryKey: ['paginated-user-list', page, limit, search],
     queryFn: async () => {
-      const response = await window.electronAPI.getPaginatedUserList({ page, limit });
+      const response = await window.electronAPI.getPaginatedUserList({ page, limit, search });
       if (!response.success) {
         throw new Error(response.error);
       }
@@ -38,10 +39,16 @@ function RouteComponent() {
       tableTitle="Kullanıcı Listesi"
       columns={columns}
       data={data ? data.items : []}
-      isLoading={isLoading}
       tableActions={tableActions}
       rowSelectionProps={{
         enableRowSelection: false,
+      }}
+      searchProps={{
+        value: search,
+        onSearch: search => {
+          navigate({ search: { search, page: 1 } });
+        },
+        placeholder: 'Kişi ara..',
       }}
       paginationProps={
         data

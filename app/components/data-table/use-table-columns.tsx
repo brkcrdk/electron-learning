@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import type { ColumnDef, ColumnPinningState } from '@tanstack/react-table';
 
 import type { RowSelectionProps } from './main-table';
@@ -12,37 +14,39 @@ interface Props<T> {
 function useTableColumns<T>({ rowSelectionProps, columns, pinnedColumns }: Props<T>) {
   const { enableRowSelection } = rowSelectionProps;
 
-  const computedColumns: ColumnDef<T>[] = enableRowSelection
-    ? [
-        {
-          accessorKey: 'select',
-          id: 'select',
-          enableSorting: false,
-          size: 30,
-          enableResizing: false,
-          enablePinning: true,
-          meta: { centeredColumn: false },
-          header: ({ table }) => {
-            const computedCheckedState = table.getIsSomeRowsSelected() ? 'indeterminate' : table.getIsAllRowsSelected();
-            return (
+  const computedColumns = useMemo(() => {
+    return enableRowSelection
+      ? [
+          {
+            accessorKey: 'select',
+            id: 'select',
+            enableSorting: false,
+            size: 30,
+            enableResizing: false,
+            enablePinning: true,
+            meta: { centeredColumn: false },
+            header: ({ table }) => {
+              const computedCheckedState = table.getIsSomeRowsSelected() ? 'indeterminate' : table.getIsAllRowsSelected();
+              return (
+                <Checkbox
+                  className="border-accent-foreground/50"
+                  checked={computedCheckedState}
+                  onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+                />
+              );
+            },
+            cell: ({ row }) => (
               <Checkbox
-                className="border-accent-foreground/50"
-                checked={computedCheckedState}
-                onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+                checked={row.getIsSelected()}
+                disabled={!row.getCanSelect()}
+                onCheckedChange={row.getToggleSelectedHandler()}
               />
-            );
+            ),
           },
-          cell: ({ row }) => (
-            <Checkbox
-              checked={row.getIsSelected()}
-              disabled={!row.getCanSelect()}
-              onCheckedChange={row.getToggleSelectedHandler()}
-            />
-          ),
-        },
-        ...columns,
-      ]
-    : columns;
+          ...columns,
+        ]
+      : columns;
+  }, [enableRowSelection, columns]);
 
   const computedPinnedColumns: string[] = pinnedColumns ? ['select', ...pinnedColumns] : ['select'];
   const computedColumnPinning: ColumnPinningState['left'] = enableRowSelection ? computedPinnedColumns : pinnedColumns;

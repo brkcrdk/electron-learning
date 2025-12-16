@@ -1,6 +1,8 @@
-import Icon from '@app/components/ui/icon';
-import Input from '@app/components/ui/input';
+import { useState } from 'react';
 
+import { useDebounceCallback } from 'usehooks-ts';
+
+import Input from '@app/components/ui/input';
 export interface TableSearchProps {
   value: string;
   placeholder: string;
@@ -8,12 +10,19 @@ export interface TableSearchProps {
 }
 
 function TableSearchBar({ value, placeholder, onSearch }: TableSearchProps) {
+  const [searchValue, setSearchValue] = useState(value);
+
+  const debounced = useDebounceCallback(onSearch, 500);
+
   return (
     <Input
       className="max-w-sm"
       placeholder={placeholder}
-      value={value}
-      onChange={e => onSearch(e.target.value)}
+      defaultValue={searchValue}
+      onChange={e => {
+        setSearchValue(e.target.value);
+        debounced(e.target.value);
+      }}
     />
   );
 }
