@@ -17,7 +17,7 @@
     "db:generate": "yarn rebuild:system && drizzle-kit generate:sqlite && yarn rebuild:electron",
     "db:migrate": "yarn rebuild:system && drizzle-kit migrate:sqlite",
     "db:push": "yarn rebuild:system && drizzle-kit push:sqlite",
-    "db:studio": "yarn rebuild:system && drizzle-kit studio:sqlite",
+    "db:studio": "yarn rebuild:system && drizzle-kit studio",
     "postinstall": "yarn rebuild:electron"
   },
   "keywords": [],
