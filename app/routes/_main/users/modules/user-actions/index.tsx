@@ -1,6 +1,7 @@
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
 import Icon from '@app/components/ui/icon';
+import cn from '@app/utils/cn';
 import type { User } from '@db/schema';
 
 import DeleteUser from './delete-user';
@@ -25,8 +26,8 @@ function UserActions({ user }: Props) {
           <Drawer.Description>Kullanıcı bilgilerini düzenlemek için lütfen bilgilerinizi giriniz.</Drawer.Description>
         </Drawer.Header>
         <EditUser user={user} />
-        <Drawer.Footer className="grid grid-cols-2 gap-2">
-          <DeleteUser userId={user.id} />
+        <Drawer.Footer className={cn('grid grid-cols-2 gap-2', user.role === 'super-admin' && 'grid-cols-1')}>
+          {user.role !== 'super-admin' && <DeleteUser userId={user.id} />}
           <Button
             form="edit-user-form"
             type="submit"
