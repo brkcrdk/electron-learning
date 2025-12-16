@@ -1,4 +1,4 @@
-import { asc, desc, type SQL } from 'drizzle-orm';
+import { asc, desc, type SQL, or, like, sql } from 'drizzle-orm';
 import type { SQLiteColumn } from 'drizzle-orm/sqlite-core';
 
 import type { PaginatedData, PaginationParams, SortColumn } from '../../types/api-response-types';
@@ -98,6 +98,41 @@ export async function getCount<
   }
 
   throw new Error('Count query beklenen formatta sonuç döndürmedi');
+}
+
+/**
+ * Search terimini alıp, belirtilen kolonlarda arama yapan condition oluşturur
+ * SQLite'da case-insensitive arama için LOWER() fonksiyonu kullanılır
+ *
+ * @param searchTerm - Aranacak kelime/kelimeler
+ * @param columns - Arama yapılacak kolonlar
+ * @returns SQL condition (OR ile birleştirilmiş LIKE koşulları) veya undefined
+ *
+ * @example
+ * // Tek kolonda arama
+ * const condition = buildSearchCondition('john', [users.name]);
+ *
+ * @example
+ * // Birden fazla kolonda arama
+ * const condition = buildSearchCondition('john', [users.name, users.username]);
+ */
+export function buildSearchCondition<TColumn extends SQLiteColumn>(searchTerm: string | undefined, columns: TColumn[]): SQL | undefined {
+  // Boş veya sadece whitespace içeren search terimleri için undefined döndür
+  if (!searchTerm || !searchTerm.trim() || columns.length === 0) {
+    return undefined;
+  }
+
+  const trimmedSearch = searchTerm.trim();
+  const searchPattern = `%${trimmedSearch}%`;
+
+  // Her kolon için LIKE condition oluştur (case-insensitive)
+  const conditions = columns.map(column => {
+    // SQLite'da case-insensitive arama için LOWER() kullan
+    return like(sql`LOWER(${column})`, sql`LOWER(${searchPattern})`);
+  });
+
+  // Birden fazla condition varsa OR ile birleştir, tek condition varsa direkt döndür
+  return conditions.length === 1 ? conditions[0] : or(...conditions);
 }
 
 /**

@@ -1,4 +1,4 @@
-import { count, desc, ne } from 'drizzle-orm';
+import { and, count, desc, ne } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
 import { getDb } from '@db/client';
@@ -6,7 +6,7 @@ import { users, type User } from '@db/schema';
 
 import type { ApiResponseProps, PaginatedData, PaginationParams } from '../../types/api-response-types';
 import { getCurrentUser } from '../user-session';
-import { buildPaginatedResponse, getCount, normalizePaginationParams } from '../utils/pagination';
+import { buildPaginatedResponse, buildSearchCondition, getCount, normalizePaginationParams } from '../utils/pagination';
 
 function getPaginatedUserList() {
   ipcMain.handle('get-paginated-user-list', async (_, params: PaginationParams = {}): ApiResponseProps<PaginatedData<User>> => {
@@ -32,7 +32,13 @@ function getPaginatedUserList() {
       const { page, limit, offset } = normalizePaginationParams(params);
 
       // Where condition'ı role'e göre belirle
-      const whereCondition = currentUser.role !== 'super-admin' ? ne(users.role, 'super-admin') : undefined;
+      const roleCondition = currentUser.role !== 'super-admin' ? ne(users.role, 'super-admin') : undefined;
+
+      // Search condition oluştur (name ve username kolonlarında ara)
+      const searchCondition = buildSearchCondition(params.search, [users.name, users.username]);
+
+      // Tüm condition'ları birleştir
+      const whereCondition = and(roleCondition, searchCondition);
 
       // Data query ve count query'yi paralel çalıştır
       const dataQuery = db.select().from(users).orderBy(desc(users.createdAt)).limit(limit).offset(offset);
