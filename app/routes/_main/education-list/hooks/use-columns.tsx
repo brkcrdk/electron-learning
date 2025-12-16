@@ -1,5 +1,6 @@
 import type { ColumnDef } from '@tanstack/react-table';
 
+import MediaViewerCell from '@app/components/table-cells/media-viewer-cell';
 import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
 import UserCell from '@app/components/table-cells/user-cell';
 import Badge from '@app/components/ui/badge';
@@ -15,15 +16,27 @@ function useColumns(): ColumnDef<EducationListItem>[] {
       header: 'Eğitim Adı',
       accessorKey: 'name',
       cell: info => info.getValue(),
-      accessorFn: ({ name, coverImage }) => {
+      accessorFn: ({ name, educationMaterial, coverImage }) => {
         return (
-          <div className="flex items-center gap-2">
-            <ImageFallback
-              src={getContentPath(coverImage?.filePath)}
-              className="relative aspect-video w-20 overflow-hidden rounded-sm object-cover"
-            />
-            <span className="line-clamp-1 max-w-80">{name}</span>
-          </div>
+          <MediaViewerCell
+            mediaFile={{
+              fileName: name,
+              filePath: educationMaterial.contentFile.filePath,
+              mediaType: educationMaterial.contentType,
+            }}
+            triggerProps={{
+              className: 'flex items-center gap-2',
+              children: (
+                <>
+                  <ImageFallback
+                    src={getContentPath(coverImage?.filePath)}
+                    className="relative aspect-video w-20 overflow-hidden rounded-sm object-cover"
+                  />
+                  <span className="line-clamp-1 max-w-80">{name}</span>
+                </>
+              ),
+            }}
+          />
         );
       },
     },

@@ -1,10 +1,11 @@
 import type { ColumnDef } from '@tanstack/react-table';
 
+import MediaViewerCell from '@app/components/table-cells/media-viewer-cell';
 import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
 import UserCell from '@app/components/table-cells/user-cell';
+import Button from '@app/components/ui/button';
 import Icon from '@app/components/ui/icon';
 import type { IconListProps } from '@app/components/ui/icon/icon-list';
-import Tooltip from '@app/components/ui/tooltip';
 import type { EducationMaterialsListItem, MediaFileTypes } from '@db/schema';
 
 import ContentActions from '../modules/content-actions';
@@ -39,19 +40,20 @@ function useColumns(): ColumnDef<EducationMaterialsListItem>[] {
       header: 'İçerik Başlığı',
       accessorKey: 'contentType',
       cell: info => info.getValue(),
-      accessorFn: ({ contentType, name }) => {
+      accessorFn: ({ contentType, name, contentFile }) => {
         return (
-          <div className="flex items-center gap-1">
-            <Tooltip>
-              <Tooltip.Trigger>
-                <Icon name={contentTypeLabels[contentType].icon} />
-              </Tooltip.Trigger>
-              <Tooltip.Content>
-                <p>{contentTypeLabels[contentType].label}</p>
-              </Tooltip.Content>
-            </Tooltip>
-            <span className="text-sm">{name}</span>
-          </div>
+          <MediaViewerCell
+            mediaFile={contentFile}
+            triggerProps={{
+              asChild: true,
+              children: (
+                <Button variant="outline">
+                  <Icon name={contentTypeLabels[contentType].icon} />
+                  <span className="text-sm">{name}</span>
+                </Button>
+              ),
+            }}
+          />
         );
       },
     },

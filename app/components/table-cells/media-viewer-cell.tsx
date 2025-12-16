@@ -1,45 +1,47 @@
 import type { ComponentProps } from 'react';
 
 import getContentPath from '@app/utils/get-content-path';
-import type { EducationMaterialsListItem } from '@db/schema';
+import type { MediaFile } from '@db/schema';
 
 import PdfViewer from '../pdf-viewer';
 import StorylineViewer from '../storyline-viewer';
 import type Dialog from '../ui/dialog';
 import VideoViewer from '../video-viewer';
 
+type ContentProps = Pick<MediaFile, 'filePath' | 'fileName' | 'mediaType'>;
+
 interface Props {
-  educationMaterial: EducationMaterialsListItem;
+  mediaFile: ContentProps;
   triggerProps: ComponentProps<typeof Dialog.Trigger>;
 }
 
-function EducationalMaterialViewer({ educationMaterial, triggerProps }: Props) {
-  if (educationMaterial.contentType === 'pdfs') {
+function EducationalMaterialViewer({ mediaFile, triggerProps }: Props) {
+  if (mediaFile.mediaType === 'pdfs') {
     return (
       <PdfViewer
         triggerProps={triggerProps}
         documentProps={{
-          file: getContentPath(educationMaterial.contentFile.filePath),
+          file: getContentPath(mediaFile.filePath),
         }}
       />
     );
   }
 
-  if (educationMaterial.contentType === 'video') {
+  if (mediaFile.mediaType === 'video') {
     return (
       <VideoViewer
         triggerProps={triggerProps}
         videoProps={{
-          src: getContentPath(educationMaterial.contentFile.filePath),
-          title: educationMaterial.name,
+          src: getContentPath(mediaFile.filePath),
+          title: mediaFile.fileName,
         }}
       />
     );
   }
-  if (educationMaterial.contentType === 'stories') {
+  if (mediaFile.mediaType === 'stories') {
     return (
       <StorylineViewer
-        storyLink={getContentPath(educationMaterial.contentFile.filePath)}
+        storyLink={getContentPath(mediaFile.filePath)}
         triggerProps={triggerProps}
       />
     );
