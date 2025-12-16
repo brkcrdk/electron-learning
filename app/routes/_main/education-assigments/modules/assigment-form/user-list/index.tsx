@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
-import { useController, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
 import DataTable from '@app/components/data-table';
 
@@ -15,11 +15,6 @@ function UserList() {
   const [limit, setLimit] = useState(10);
 
   const { control } = useFormContext<AssigmentFormProps>();
-
-  const { field } = useController<AssigmentFormProps, 'selectedUsers'>({
-    control,
-    name: 'selectedUsers',
-  });
 
   const { data } = useQuery({
     queryKey: ['assigment-user-list', page, searchUser, limit],
@@ -40,38 +35,44 @@ function UserList() {
   const tableActions = useActions();
 
   return (
-    <DataTable
-      tableTitle="Eğitim Atanacak Kullanıcılar"
-      columns={columns}
-      data={data ? data.items : []}
-      tableActions={tableActions}
-      rowSelectionProps={{
-        enableRowSelection: true,
-        rowSelection: field.value,
-        onRowSelectionChange: field.onChange,
-      }}
-      paginationProps={
-        data
-          ? {
-              page,
-              onPaginationChange: setPage,
-              limit: data.pagination.limit,
-              onItemsPerPageChange: limit => {
-                setLimit(limit);
-                setPage(1);
-              },
-              pageCount: data.pagination.totalPages,
-            }
-          : undefined
-      }
-      searchProps={{
-        value: searchUser,
-        onSearch: search => {
-          setSearchUser(search);
-          setPage(1);
-        },
-        placeholder: 'Kişi ara..',
-      }}
+    <Controller
+      control={control}
+      name="selectedUsers"
+      render={({ field }) => (
+        <DataTable
+          tableTitle="Eğitim Atanacak Kullanıcılar"
+          columns={columns}
+          data={data ? data.items : []}
+          tableActions={tableActions}
+          rowSelectionProps={{
+            enableRowSelection: true,
+            rowSelection: field.value,
+            onRowSelectionChange: field.onChange,
+          }}
+          paginationProps={
+            data
+              ? {
+                  page,
+                  onPaginationChange: setPage,
+                  limit: data.pagination.limit,
+                  onItemsPerPageChange: limit => {
+                    setLimit(limit);
+                    setPage(1);
+                  },
+                  pageCount: data.pagination.totalPages,
+                }
+              : undefined
+          }
+          searchProps={{
+            value: searchUser,
+            onSearch: search => {
+              setSearchUser(search);
+              setPage(1);
+            },
+            placeholder: 'Kişi ara..',
+          }}
+        />
+      )}
     />
   );
 }
