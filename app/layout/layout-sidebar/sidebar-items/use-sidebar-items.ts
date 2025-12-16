@@ -1,6 +1,7 @@
 import { useLocation, type LinkProps } from '@tanstack/react-router';
 
 import type { IconListProps } from '@app/components/ui/icon/icon-list';
+import useCurrentUserQuery from '@app/hooks/use-current-user-query';
 
 export interface SidebarItem {
   label: string;
@@ -14,13 +15,15 @@ export interface SidebarItem {
 function useSidebarItems() {
   const { pathname } = useLocation();
 
+  const { data: currentUser } = useCurrentUserQuery();
+
   const sidebarItems: SidebarItem[] = [
     {
       label: 'Anasayfa',
       itemKey: 'home',
       icon: 'home',
       isActive: pathname.startsWith('/dashboard'),
-      isProtected: false,
+      isProtected: currentUser?.role === 'user',
       routeProps: {
         to: '/dashboard',
       },
@@ -30,7 +33,7 @@ function useSidebarItems() {
       itemKey: 'education-list',
       icon: 'book',
       isActive: pathname.startsWith('/education-list'),
-      isProtected: false,
+      isProtected: currentUser?.role === 'user',
       routeProps: {
         to: '/education-list',
       },
@@ -40,7 +43,7 @@ function useSidebarItems() {
       itemKey: 'user-list',
       icon: 'users',
       isActive: pathname.startsWith('/users'),
-      isProtected: false,
+      isProtected: currentUser?.role === 'user',
       routeProps: {
         to: '/users',
       },
@@ -50,7 +53,7 @@ function useSidebarItems() {
       itemKey: 'category-list',
       icon: 'folder',
       isActive: pathname.startsWith('/categories'),
-      isProtected: false,
+      isProtected: currentUser?.role === 'user',
       routeProps: {
         to: '/categories',
       },
@@ -60,7 +63,7 @@ function useSidebarItems() {
       itemKey: 'education-materials',
       icon: 'easel',
       isActive: pathname.startsWith('/education-materials'),
-      isProtected: false,
+      isProtected: currentUser?.role === 'user',
       routeProps: {
         to: '/education-materials',
       },
@@ -77,7 +80,7 @@ function useSidebarItems() {
     },
   ];
 
-  return sidebarItems;
+  return sidebarItems.filter(item => !item.isProtected);
 }
 
 export default useSidebarItems;
