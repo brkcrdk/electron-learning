@@ -1,4 +1,5 @@
 import { desc, eq, getTableColumns } from 'drizzle-orm';
+import { alias } from 'drizzle-orm/sqlite-core';
 import { ipcMain } from 'electron';
 import type { ApiResponseProps } from 'types/api-response-types';
 
@@ -20,6 +21,9 @@ function getUsersEducation() {
         };
       }
 
+      const materialContentFile = alias(mediaFiles, 'material_content_file');
+      const materialCreatedBy = alias(users, 'material_created_by');
+
       const rows = await db
         .select({
           id: educations.id,
@@ -28,6 +32,8 @@ function getUsersEducation() {
           category: getTableColumns(categories),
           coverImage: getTableColumns(mediaFiles),
           educationMaterial: getTableColumns(educationMaterials),
+          educationMaterialContentFile: getTableColumns(materialContentFile),
+          educationMaterialCreatedBy: getTableColumns(materialCreatedBy),
           createdBy: getTableColumns(users),
           createdAt: educations.createdAt,
           updatedAt: educations.updatedAt,
@@ -37,6 +43,8 @@ function getUsersEducation() {
         .innerJoin(categories, eq(educations.categoryId, categories.id))
         .leftJoin(mediaFiles, eq(educations.coverImageId, mediaFiles.id))
         .innerJoin(educationMaterials, eq(educations.educationMaterial, educationMaterials.id))
+        .innerJoin(materialContentFile, eq(educationMaterials.contentFileId, materialContentFile.id))
+        .innerJoin(materialCreatedBy, eq(educationMaterials.createdBy, materialCreatedBy.id))
         .innerJoin(users, eq(educations.createdBy, users.id))
         .where(eq(educationAssignees.assigneeUserId, currentUser.id))
         .orderBy(desc(educations.createdAt));
@@ -47,7 +55,16 @@ function getUsersEducation() {
         description: row.description,
         category: row.category,
         coverImage: row.coverImage ?? null,
-        educationMaterial: row.educationMaterial,
+        educationMaterial: {
+          id: row.educationMaterial.id,
+          name: row.educationMaterial.name,
+          description: row.educationMaterial.description,
+          contentType: row.educationMaterial.contentType,
+          contentFile: row.educationMaterialContentFile,
+          createdBy: row.educationMaterialCreatedBy,
+          createdAt: row.educationMaterial.createdAt,
+          updatedAt: row.educationMaterial.updatedAt,
+        },
         createdBy: row.createdBy,
         createdAt: row.createdAt,
         updatedAt: row.updatedAt,

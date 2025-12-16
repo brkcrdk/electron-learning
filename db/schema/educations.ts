@@ -2,7 +2,7 @@ import { sql } from 'drizzle-orm';
 import { integer, sqliteTable, text, index, foreignKey } from 'drizzle-orm/sqlite-core';
 
 import { type Category, categories } from './categories';
-import { type EducationMaterials, educationMaterials } from './education-materials';
+import { type EducationMaterialsListItem, educationMaterials } from './education-materials';
 import { type MediaFile, mediaFiles } from './media-files';
 import { type User, users } from './users';
 
@@ -49,12 +49,14 @@ export const educations = sqliteTable(
 
 export type Education = typeof educations.$inferSelect;
 
-export type MutateEducationPayload = Omit<typeof educations.$inferInsert, 'createdBy' | 'createdAt' | 'updatedAt'> & { assigneeIds: number[] };
+export type MutateEducationPayload = Omit<typeof educations.$inferInsert, 'createdBy' | 'createdAt' | 'updatedAt'> & {
+  assigneeIds: number[];
+};
 
 export type EducationListItem = Omit<Education, 'categoryId' | 'coverImageId' | 'educationMaterial' | 'createdBy'> & {
   category: Category;
   coverImage: MediaFile | null;
-  educationMaterial: EducationMaterials;
+  educationMaterial: EducationMaterialsListItem;
   createdBy: User;
   assignees: User[];
 };
