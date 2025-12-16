@@ -1,4 +1,4 @@
-import { desc, ne } from 'drizzle-orm';
+import { count, desc, ne } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
 import { getDb } from '@db/client';
@@ -6,9 +6,10 @@ import { users, type User } from '@db/schema';
 
 import type { ApiResponseProps, PaginatedData, PaginationParams } from '../../types/api-response-types';
 import { getCurrentUser } from '../user-session';
+import { buildPaginatedResponse, getCount, normalizePaginationParams } from '../utils/pagination';
 
 function getPaginatedUserList() {
-  ipcMain.handle('get-paginated-user-list', async (_, params: PaginationParams = initialPaginationParams): ApiResponseProps<PaginatedData<User>> => {
+  ipcMain.handle('get-paginated-user-list', async (_, params: PaginationParams = {}): ApiResponseProps<PaginatedData<User>> => {
     try {
       const db = getDb();
 
@@ -28,25 +29,38 @@ function getPaginatedUserList() {
         };
       }
 
+      const { page, limit, offset } = normalizePaginationParams(params);
+
       // Eğer kullanıcı super-admin değilse, super-admin rolündeki kullanıcıları filtrele
-      if (currentUser.role === 'super-admin') {
-        const userList = await db
-          .select()
-          .from(users)
-          .orderBy(desc(users.createdAt))
-          .limit(params.limit)
-          .offset((params.page - 1) * params.limit);
+      if (currentUser.role !== 'super-admin') {
+        const whereCondition = ne(users.role, 'super-admin');
+
+        // Data query ve count query'yi paralel çalıştır
+        const [userList, countResult] = await Promise.all([
+          db.select().from(users).where(whereCondition).orderBy(desc(users.createdAt)).limit(limit).offset(offset),
+          getCount(db.select({ count: count() }).from(users).where(whereCondition)),
+        ]);
+
+        const paginatedResponse = buildPaginatedResponse(userList, countResult, page, limit);
+
         return {
           success: true,
-          data: userList,
-        };
-      } else {
-        const userList = await db.select().from(users).where(ne(users.role, 'super-admin')).orderBy(desc(users.createdAt));
-        return {
-          success: true,
-          data: userList,
+          data: paginatedResponse,
         };
       }
+
+      // Super-admin için tüm kullanıcıları getir
+      const [userList, countResult] = await Promise.all([
+        db.select().from(users).orderBy(desc(users.createdAt)).limit(limit).offset(offset),
+        getCount(db.select({ count: count() }).from(users)),
+      ]);
+
+      const paginatedResponse = buildPaginatedResponse(userList, countResult, page, limit);
+
+      return {
+        success: true,
+        data: paginatedResponse,
+      };
     } catch (error) {
       console.error('get user list error', error);
       throw error;
