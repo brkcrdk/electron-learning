@@ -40,9 +40,9 @@ function TableFooter({ paginationProps }: Props) {
           </Dropdown>
         )}
         <Pagination
-          totalPages={paginationProps.pageCount}
-          currentPage={paginationProps.page}
-          onPageChange={selectedPage => paginationProps.onPaginationChange(selectedPage)}
+          totalPages={pageCount}
+          currentPage={page}
+          onPageChange={selectedPage => onPaginationChange(selectedPage)}
         />
       </nav>
     );
