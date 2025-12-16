@@ -15,7 +15,7 @@
     "rebuild:electron": "electron-rebuild -f -w better-sqlite3",
     "rebuild": "yarn rebuild:electron",
     "db:generate": "yarn rebuild:system && drizzle-kit generate:sqlite && yarn rebuild:electron",
-    "db:migrate": "yarn rebuild:system && drizzle-kit migrate:sqlite",
+    "db:migrate": "yarn rebuild:system && drizzle-kit migrate",
     "db:push": "yarn rebuild:system && drizzle-kit push:sqlite",
     "db:studio": "yarn rebuild:system && drizzle-kit studio",
     "postinstall": "yarn rebuild:electron"
