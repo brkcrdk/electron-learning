@@ -19,13 +19,13 @@ function useSidebarItems() {
 
   const sidebarItems: SidebarItem[] = [
     {
-      label: 'Anasayfa',
-      itemKey: 'home',
-      icon: 'home',
-      isActive: pathname.startsWith('/dashboard'),
-      isProtected: currentUser?.role === 'user',
+      label: 'Eğitimlerim',
+      itemKey: 'my-educations',
+      icon: 'school-outline',
+      isActive: pathname.startsWith('/my-educations'),
+      isProtected: false,
       routeProps: {
-        to: '/dashboard',
+        to: '/my-educations',
       },
     },
     {
@@ -66,16 +66,6 @@ function useSidebarItems() {
       isProtected: currentUser?.role === 'user',
       routeProps: {
         to: '/education-materials',
-      },
-    },
-    {
-      label: 'Eğitimlerim',
-      itemKey: 'my-educations',
-      icon: 'school-outline',
-      isActive: pathname.startsWith('/my-educations'),
-      isProtected: false,
-      routeProps: {
-        to: '/my-educations',
       },
     },
   ];
