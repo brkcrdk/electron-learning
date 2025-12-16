@@ -5,12 +5,13 @@ import { pathToFileURL } from 'url';
 import { app, net, protocol } from 'electron';
 
 /**
- * Custom protocol'ü privileged olarak kaydet
+ * Custom protocol'ü privileged olarak kaydeder.
  * Bu işlem app.whenReady() ÖNCESİNDE yapılmalı!
  *
- * standard: true - Protocol'ü standard scheme olarak kaydeder (relative URL'ler çalışır)
- * secure: true - Güvenli scheme olarak işaretler
- * supportFetchAPI: true - fetch API'nin çalışması için gerekli
+ * - standard: relative URL'lerin çalışması için gerekli
+ * - secure: güvenli scheme olarak işaretler
+ * - supportFetchAPI: fetch API'nin çalışması için gerekli
+ * - stream: video/audio stream'lerinin düzgün çalışması için gerekli
  */
 export function registerContentProtocolPrivileges() {
   protocol.registerSchemesAsPrivileged([
@@ -20,26 +21,25 @@ export function registerContentProtocolPrivileges() {
         standard: true,
         secure: true,
         supportFetchAPI: true,
+        stream: true,
       },
     },
   ]);
 }
 
 /**
- * Custom protocol handler'ı kaydeder
+ * Custom protocol handler'ı kaydeder.
  *
  * Bu handler, renderer process'te kullanılmak üzere userData içindeki dosyaları
- * serve etmek için "content://" custom protocol'ünü oluşturur.
+ * "content://" scheme'i ile serve eder.
  *
- * Örnek kullanım:
- * - Relative path (veritabanından): "content/videos/file.mp4"
- * - Custom protocol URL: "content://content/videos/file.mp4"
- * - Handler bu URL'yi userData + relativePath'e çevirir ve dosyayı serve eder
+ * Örnek:
+ * - Veritabanındaki relative path: "content/videos/file.mp4"
+ * - Renderer'da kullanılacak URL: "content://content/videos/file.mp4"
  *
  * Güvenlik:
  * - Yalnızca userData dizini altındaki dosyalara erişim sağlar
- * - Dosya yoksa 404 döner
- * - Path traversal saldırılarına karşı korumalıdır (relative() kullanarak "../" kontrolü yapılır)
+ * - Path traversal saldırılarına karşı relative() ile kontrol yapılır
  */
 function registerContentProtocol() {
   protocol.handle('content', request => {
@@ -87,14 +87,14 @@ function registerContentProtocol() {
         return new Response('Access denied', { status: 403 });
       }
 
-      const filePath = resolvedFilePath;
-
       // Dosyanın varlığını kontrol et
       if (!fileExists) {
         return new Response('File not found', { status: 404 });
       }
 
-      // Dosyayı serve et (net.fetch ile file:// URL'sini kullan)
+      const filePath = resolvedFilePath;
+
+      // Dosyayı net.fetch ile file:// URL'si üzerinden serve et
       const fileUrl = pathToFileURL(filePath).toString();
       return net.fetch(fileUrl);
     } catch (error) {
