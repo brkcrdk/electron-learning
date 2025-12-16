@@ -14,7 +14,7 @@ import type {
 
 import type { LoginPayload } from './session-api/login';
 import type { UploadFilePayload } from './upload-file-api';
-import type { ApiResponseProps } from '../types/api-response-types';
+import type { ApiResponseProps, PaginatedData, PaginationParams } from '../types/api-response-types';
 import type { FileUploadResponseType } from './upload-file-api/types';
 
 const apiEventList = {
@@ -37,6 +37,7 @@ const apiEventList = {
   getCurrentUser: (): ApiResponseProps<User> => ipcRenderer.invoke('current-user'),
   updateUser: (data: MutateUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-user', data),
   deleteUser: (data: User['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-user', data),
+  getPaginatedUserList: (params: PaginationParams): ApiResponseProps<PaginatedData<User>> => ipcRenderer.invoke('get-paginated-user-list', params),
 
   // Category services
   getCategoryList: (): ApiResponseProps<CategoryWithChildren[]> => ipcRenderer.invoke('get-category-list'),
