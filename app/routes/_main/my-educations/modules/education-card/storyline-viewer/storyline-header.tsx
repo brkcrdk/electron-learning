@@ -1,7 +1,7 @@
-import Button from '../button';
-import Card from '../card';
-import Dialog from '../dialog';
-import Icon from '../icon';
+import Button from '@app/components/ui/button';
+import Card from '@app/components/ui/card';
+import Dialog from '@app/components/ui/dialog';
+import Icon from '@app/components/ui/icon';
 
 function StorylineHeader() {
   return (

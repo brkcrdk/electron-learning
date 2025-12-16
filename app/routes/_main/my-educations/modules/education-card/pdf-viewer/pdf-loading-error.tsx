@@ -1,5 +1,5 @@
-import Card from '../card';
-import Icon from '../icon';
+import Card from '@app/components/ui/card';
+import Icon from '@app/components/ui/icon';
 
 interface Props {
   errorReason?: string;

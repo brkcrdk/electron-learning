@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 
 import { Document, type DocumentProps } from 'react-pdf';
 
+import Card from '@app/components/ui/card';
+
 import PdfHeader from './pdf-header';
-import Card from '../../card';
 import PdfLoader from '../pdf-loader';
 import PdfLoadingError from '../pdf-loading-error';
 import PageList from './page-list';

@@ -8,6 +8,8 @@ import Tooltip from '@app/components/ui/tooltip';
 import getContentPath from '@app/utils/get-content-path';
 import type { EducationListItem, MediaFileTypes } from '@db/schema';
 
+import ViewEducation from './view-education';
+
 interface ContentTypeOption {
   label: string;
   icon: IconListProps;
@@ -62,7 +64,7 @@ function EducationCard({ education }: Props) {
           </Tooltip>
         </div>
         <Card.Description>{education.description}</Card.Description>
-        <Button>Eğitimi Görüntüle</Button>
+        <ViewEducation educationMaterial={education.educationMaterial} />
       </Card.Content>
     </Card>
   );

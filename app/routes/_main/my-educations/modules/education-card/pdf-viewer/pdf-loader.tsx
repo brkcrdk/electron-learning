@@ -1,5 +1,5 @@
-import Card from '../card';
-import Skeleton from '../skeleton';
+import Card from '@app/components/ui/card';
+import Skeleton from '@app/components/ui/skeleton';
 
 function PdfLoader() {
   return (
