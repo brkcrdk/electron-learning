@@ -10,11 +10,11 @@ import {
   type TableOptions,
 } from '@tanstack/react-table';
 
-// import TableFooter, { type TablePaginationProps } from './table-footer';
 import cn from '@app/utils/cn';
 
 import TableBody from './table-body';
 import TableEmptyState, { type TableEmptyStateProps } from './table-empty-state';
+import TableFooter, { type TablePaginationProps } from './table-footer';
 import TableHead from './table-head';
 import TableHeader from './table-header';
 import type { TableActionsProps } from './table-header/table-actions';
@@ -54,7 +54,7 @@ export interface TableProps<T> {
   tableTitle?: string;
   searchProps?: TableSearchProps;
   tableActions?: TableActionsProps[];
-  // paginationProps?: TablePaginationProps;
+  paginationProps?: TablePaginationProps;
   sortingProps?: SortingProps;
   rowSelectionProps?: RowSelectionProps<T>;
   pinnedColumns?: string[];
@@ -74,7 +74,7 @@ function MainTable<T>({
   tableTitle,
   searchProps,
   tableActions,
-  // paginationProps,
+  paginationProps,
   isDisabled,
   tableEmptyStateProps,
   pinnedColumns,
@@ -147,6 +147,7 @@ function MainTable<T>({
           )}
         </Table>
       </div>
+      {paginationProps && <TableFooter paginationProps={paginationProps} />}
     </div>
   );
 }
