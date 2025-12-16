@@ -27,6 +27,8 @@ import {
   LuZoomIn,
   LuZoomOut,
   LuCopy,
+  LuChevronLeft,
+  LuChevronUp,
 } from 'react-icons/lu';
 import { MdMoreHoriz } from 'react-icons/md';
 import { PiWarningCircleFill } from 'react-icons/pi';
@@ -46,6 +48,8 @@ export const iconList = [
   { label: 'arrow-down', icon: LuArrowDown },
   { label: 'chevron-down', icon: LuChevronDown },
   { label: 'chevron-right', icon: LuChevronRight },
+  { label: 'chevron-left', icon: LuChevronLeft },
+  { label: 'chevron-up', icon: LuChevronUp },
   { label: 'more-horizontal', icon: MdMoreHoriz },
   { label: 'close', icon: LuX },
   { label: 'sidebar-expand', icon: TbLayoutSidebarLeftExpand },
