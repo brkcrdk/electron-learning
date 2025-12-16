@@ -17,12 +17,8 @@ function Header() {
           <Breadcrumb.List>
             <Breadcrumb.Item>
               <Breadcrumb.Link asChild>
-                <Link to="/">Acme Inc</Link>
+                <Link to="/">Eğitim Platformu</Link>
               </Breadcrumb.Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Separator />
-            <Breadcrumb.Item>
-              <Breadcrumb.Page>Data Fetching</Breadcrumb.Page>
             </Breadcrumb.Item>
           </Breadcrumb.List>
         </Breadcrumb>

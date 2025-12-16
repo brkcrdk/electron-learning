@@ -20,8 +20,7 @@ function Header() {
                 />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">Acme Inc</span>
-                <span className="truncate text-xs">Enterprise</span>
+                <span className="truncate font-medium">Eğitim Platformu</span>
               </div>
             </Link>
           </Sidebar.MenuButton>
