@@ -1,4 +1,7 @@
 import type { WriteStream } from 'fs';
+import { join, parse } from 'path';
+
+import { ensureDir, remove } from 'fs-extra';
 
 import { getDb } from '@db/client';
 import { mediaFiles, type MediaFileTypes } from '@db/schema';
@@ -6,6 +9,7 @@ import { mediaFiles, type MediaFileTypes } from '@db/schema';
 import type { ApiResponseProps } from '../../../types/api-response-types';
 import { cleanupStream, deleteStream } from '../stream-manager';
 import type { FileUploadResponse } from '../types';
+import extractZip from './extract-zip';
 import { getRelativePathFromFull } from './get-file-path';
 
 interface Props {
@@ -38,12 +42,43 @@ async function finalizeAndSave({ writeStream, filePath, fileName, fileSize, medi
         // Full path'i relative path'e çevir (veritabanına kaydetmek için)
         const relativePath = getRelativePathFromFull(filePath);
 
+        // Varsayılan olarak dosyanın kendi path'i kaydedilecek
+        let pathToSaveInDb = relativePath;
+
+        // stories + zip özel durumu
+        const isStories = mediaType === 'stories';
+        const isZip = fileName.toLowerCase().endsWith('.zip');
+
+        if (isStories && isZip) {
+          // Örnek:
+          // filePath:  .../content/stories/story_abc123.zip
+          // dir:       .../content/stories
+          // name:      story_abc123
+          const { dir, name } = parse(filePath);
+          const targetDirFull = join(dir, name);
+
+          // Hedef klasörü oluştur
+          await ensureDir(targetDirFull);
+
+          // ZIP'i hedef klasöre aç
+          await extractZip(filePath, targetDirFull);
+
+          // ZIP dosyasını sil (sadece extract edilen dosyalar kalacak)
+          await remove(filePath);
+
+          // story.html path'ini oluştur ve relative path'e çevir
+          const storyHtmlFullPath = join(targetDirFull, 'story.html');
+          const storyHtmlRelativePath = getRelativePathFromFull(storyHtmlFullPath);
+
+          pathToSaveInDb = storyHtmlRelativePath;
+        }
+
         // Veritabanına kaydet
         const db = getDb();
         const [insertedFile] = await db
           .insert(mediaFiles)
           .values({
-            filePath: relativePath, // Relative path kaydediliyor
+            filePath: pathToSaveInDb, // Relative path kaydediliyor
             fileName,
             fileSize,
             mediaType,
@@ -57,7 +92,7 @@ async function finalizeAndSave({ writeStream, filePath, fileName, fileSize, medi
         }
 
         console.log('File saved to:', filePath);
-        console.log('Relative path saved to DB:', relativePath);
+        console.log('Relative path saved to DB:', pathToSaveInDb);
 
         resolve({
           success: true,
@@ -65,7 +100,7 @@ async function finalizeAndSave({ writeStream, filePath, fileName, fileSize, medi
             id: insertedFile.id,
             mediaType,
             fileName,
-            fileFullUrl: relativePath,
+            fileFullUrl: pathToSaveInDb,
             fileSize,
           },
         });

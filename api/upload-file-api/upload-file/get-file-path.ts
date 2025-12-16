@@ -38,16 +38,16 @@ function getContentRootPath(): string {
 }
 
 /**
- * Extension'ı koruyarak unique dosya adı oluşturur
- * uploadId (UUID) kullanarak her zaman unique isim garantiler
- * Örnek: document.pdf -> document_a1b2c3d4-e5f6-7890-abcd-ef1234567890.pdf
+ * Sadece uploadId ve extension kullanarak dosya adı oluşturur
+ * uploadId (UUID) kullanarak her zaman unique ve kısa isim garantiler
+ * Örnek: document.pdf -> a1b2c3d4-e5f6-7890-abcd-ef1234567890.pdf
  */
 function generateUniqueFileName(fileName: string, uploadId: string): string {
   const parsed = parse(fileName);
 
-  // Extension varsa: name + uploadId + ext
-  // Extension yoksa: name + uploadId
-  return parsed.ext ? `${parsed.name}_${uploadId}${parsed.ext}` : `${parsed.name}_${uploadId}`;
+  // Extension varsa: uploadId + ext
+  // Extension yoksa: sadece uploadId
+  return parsed.ext ? `${uploadId}${parsed.ext}` : uploadId;
 }
 
 /**
