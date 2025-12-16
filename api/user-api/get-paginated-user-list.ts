@@ -31,28 +31,18 @@ function getPaginatedUserList() {
 
       const { page, limit, offset } = normalizePaginationParams(params);
 
-      // Eğer kullanıcı super-admin değilse, super-admin rolündeki kullanıcıları filtrele
-      if (currentUser.role !== 'super-admin') {
-        const whereCondition = ne(users.role, 'super-admin');
+      // Where condition'ı role'e göre belirle
+      const whereCondition = currentUser.role !== 'super-admin' ? ne(users.role, 'super-admin') : undefined;
 
-        // Data query ve count query'yi paralel çalıştır
-        const [userList, countResult] = await Promise.all([
-          db.select().from(users).where(whereCondition).orderBy(desc(users.createdAt)).limit(limit).offset(offset),
-          getCount(db.select({ count: count() }).from(users).where(whereCondition)),
-        ]);
+      // Data query ve count query'yi paralel çalıştır
+      const dataQuery = db.select().from(users).orderBy(desc(users.createdAt)).limit(limit).offset(offset);
 
-        const paginatedResponse = buildPaginatedResponse(userList, countResult, page, limit);
+      const countQuery = db.select({ count: count() }).from(users);
 
-        return {
-          success: true,
-          data: paginatedResponse,
-        };
-      }
-
-      // Super-admin için tüm kullanıcıları getir
+      // Where condition varsa her iki query'ye de ekle
       const [userList, countResult] = await Promise.all([
-        db.select().from(users).orderBy(desc(users.createdAt)).limit(limit).offset(offset),
-        getCount(db.select({ count: count() }).from(users)),
+        whereCondition ? dataQuery.where(whereCondition) : dataQuery,
+        whereCondition ? getCount(countQuery.where(whereCondition)) : getCount(countQuery),
       ]);
 
       const paginatedResponse = buildPaginatedResponse(userList, countResult, page, limit);
@@ -62,8 +52,12 @@ function getPaginatedUserList() {
         data: paginatedResponse,
       };
     } catch (error) {
-      console.error('get user list error', error);
-      throw error;
+      console.error('get-paginated-user-list error:', error);
+      return {
+        success: false,
+        error:
+          error instanceof Error ? `Kullanıcı listesi alınırken bir hata oluştu: ${error.message}` : 'Kullanıcı listesi alınırken beklenmeyen bir hata oluştu.',
+      };
     }
   });
 }

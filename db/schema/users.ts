@@ -22,7 +22,7 @@ export const users = sqliteTable(
       .default(sql`(unixepoch())`),
     lastLoginAt: integer('last_login_at', { mode: 'timestamp' }),
   },
-  table => [index('roles_idx').on(table.role)]
+  table => [index('roles_idx').on(table.role), index('created_at_idx').on(table.createdAt)]
 );
 
 export type User = typeof users.$inferSelect;
