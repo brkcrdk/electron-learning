@@ -6,6 +6,7 @@ import { users, type MutateUserPayload } from '@db/schema';
 
 import type { ApiResponseProps } from '../../types/api-response-types';
 import { getCurrentUser } from '../user-session';
+import { hashPassword } from '../utils/password';
 
 function updateUser() {
   ipcMain.handle('update-user', async (_, data: MutateUserPayload): ApiResponseProps<string> => {
@@ -49,10 +50,16 @@ function updateUser() {
       }
 
       if (data.id) {
+        // Şifre güncelleniyorsa hash'le
+        const updateData = { ...data };
+        if (updateData.password) {
+          updateData.password = await hashPassword(updateData.password);
+        }
+
         await db
           .update(users)
           .set({
-            ...data,
+            ...updateData,
             updatedAt: sql`(unixepoch())`,
           })
           .where(eq(users.id, data.id));

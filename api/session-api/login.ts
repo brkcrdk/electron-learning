@@ -6,6 +6,7 @@ import { users, type User } from '@db/schema';
 
 import type { ApiResponseProps } from '../../types/api-response-types';
 import { setCurrentUser } from '../user-session';
+import { comparePassword } from '../utils/password';
 
 export interface LoginPayload {
   username: string;
@@ -28,7 +29,9 @@ function login() {
         };
       }
 
-      if (user.password !== data.password) {
+      // Şifreyi hash'lenmiş şifre ile karşılaştır
+      const isPasswordValid = await comparePassword(data.password, user.password);
+      if (!isPasswordValid) {
         return {
           success: false,
           error: 'Şifre yanlış.',
@@ -45,7 +48,7 @@ function login() {
 
       return {
         success: true,
-        data: user,
+        data: updatedUser,
       };
     } catch (error) {
       console.error('login error', error);

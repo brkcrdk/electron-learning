@@ -6,6 +6,7 @@ import { users, type MutateUserPayload } from '@db/schema';
 
 import type { ApiResponseProps } from '../../types/api-response-types';
 import { getCurrentUser } from '../user-session';
+import { hashPassword } from '../utils/password';
 
 function createUser() {
   ipcMain.handle('create-user', async (_, data: MutateUserPayload): ApiResponseProps<string> => {
@@ -38,7 +39,13 @@ function createUser() {
         };
       }
 
-      await db.insert(users).values(data);
+      // Şifreyi hash'le
+      const hashedPassword = await hashPassword(data.password);
+
+      await db.insert(users).values({
+        ...data,
+        password: hashedPassword,
+      });
 
       return {
         success: true,
