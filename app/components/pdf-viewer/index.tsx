@@ -1,0 +1,37 @@
+import type { ComponentProps } from 'react';
+
+import workerSrc from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+import { pdfjs, type DocumentProps } from 'react-pdf';
+
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
+import Dialog from '@app/components/ui/dialog';
+
+import PdfContent from './pdf-content';
+import { PdfContextProvider } from './pdf-context';
+
+// Vite ?url ile worker'ı build'e kopyalıyoruz; offline çalışır.
+pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
+
+interface Props {
+  documentProps: DocumentProps;
+  triggerProps: ComponentProps<typeof Dialog.Trigger>;
+}
+
+function PdfViewer({ documentProps, triggerProps }: Props) {
+  return (
+    <Dialog>
+      <Dialog.Trigger {...triggerProps} />
+      <Dialog.Content
+        className="min-w-screen min-h-screen p-0"
+        showCloseButton={false}
+      >
+        <PdfContextProvider>
+          <PdfContent documentProps={documentProps} />
+        </PdfContextProvider>
+      </Dialog.Content>
+    </Dialog>
+  );
+}
+
+export default PdfViewer;
