@@ -15,6 +15,13 @@
       "when": 1765913857098,
       "tag": "0001_brown_mockingbird",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1765918695368,
+      "tag": "0002_needy_dakota_north",
+      "breakpoints": true
     }
   ]
 }
