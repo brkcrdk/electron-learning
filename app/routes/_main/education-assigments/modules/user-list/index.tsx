@@ -5,6 +5,7 @@ import type { RowSelectionState } from '@tanstack/react-table';
 
 import DataTable from '@app/components/data-table';
 
+import ExampleFile from './example-file';
 import useActions from './use-actions';
 import useColumns from './use-columns';
 
@@ -33,39 +34,42 @@ function UserList() {
   const tableActions = useActions();
 
   return (
-    <DataTable
-      tableTitle="Eğitim Atanacak Kullanıcılar"
-      columns={columns}
-      data={data ? data.items : []}
-      tableActions={tableActions}
-      rowSelectionProps={{
-        enableRowSelection: true,
-        rowSelection: selectedUsers,
-        onRowSelectionChange: setSelectedUsers,
-      }}
-      paginationProps={
-        data
-          ? {
-              page,
-              onPaginationChange: setPage,
-              limit: data.pagination.limit,
-              onItemsPerPageChange: limit => {
-                setLimit(limit);
-                setPage(1);
-              },
-              pageCount: data.pagination.totalPages,
-            }
-          : undefined
-      }
-      searchProps={{
-        value: searchUser,
-        onSearch: search => {
-          setSearchUser(search);
-          setPage(1);
-        },
-        placeholder: 'Kişi ara..',
-      }}
-    />
+    <div className="flex flex-col gap-4">
+      <ExampleFile />
+      <DataTable
+        tableTitle="Eğitim Atanacak Kullanıcılar"
+        columns={columns}
+        data={data ? data.items : []}
+        tableActions={tableActions}
+        rowSelectionProps={{
+          enableRowSelection: true,
+          rowSelection: selectedUsers,
+          onRowSelectionChange: setSelectedUsers,
+        }}
+        paginationProps={
+          data
+            ? {
+                page,
+                onPaginationChange: setPage,
+                limit: data.pagination.limit,
+                onItemsPerPageChange: limit => {
+                  setLimit(limit);
+                  setPage(1);
+                },
+                pageCount: data.pagination.totalPages,
+              }
+            : undefined
+        }
+        searchProps={{
+          value: searchUser,
+          onSearch: search => {
+            setSearchUser(search);
+            setPage(1);
+          },
+          placeholder: 'Kişi ara..',
+        }}
+      />
+    </div>
   );
 }
 

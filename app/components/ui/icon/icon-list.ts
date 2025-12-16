@@ -29,9 +29,10 @@ import {
   LuCopy,
   LuChevronLeft,
   LuChevronUp,
+  LuDownload,
 } from 'react-icons/lu';
 import { MdMoreHoriz } from 'react-icons/md';
-import { PiWarningCircleFill } from 'react-icons/pi';
+import { PiMicrosoftExcelLogoThin, PiWarningCircleFill } from 'react-icons/pi';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
 import { TbLayoutSidebarLeftExpand, TbContrastFilled } from 'react-icons/tb';
 import { VscSettings } from 'react-icons/vsc';
@@ -78,8 +79,10 @@ export const iconList = [
   { label: 'file-easel', icon: BsFileEasel },
   { label: 'file-pdf', icon: BsFilePdf },
   { label: 'file-video', icon: BsFilePlay },
+  { label: 'file-excel', icon: PiMicrosoftExcelLogoThin },
   { label: 'school-outline', icon: IoSchoolOutline },
   { label: 'person-check', icon: BsPersonCheck },
+  { label: 'download', icon: LuDownload },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];
