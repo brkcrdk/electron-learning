@@ -1,15 +1,21 @@
-import type { EducationListItem, EducationMaterials } from '@db/schema';
+import getContentPath from '@app/utils/get-content-path';
+import type { EducationMaterialsListItem } from '@db/schema';
 
 import PdfViewer from './pdf-viewer';
 
 interface Props {
-  educationMaterial: EducationMaterials;
+  educationMaterial: EducationMaterialsListItem;
 }
 
 function ViewEducation({ educationMaterial }: Props) {
   if (educationMaterial.contentType === 'pdfs') {
-    // return <PdfViewer documentProps={educationMaterial.contentFileId} />;
-    return 'pdf';
+    return (
+      <PdfViewer
+        documentProps={{
+          file: getContentPath(educationMaterial.contentFile.filePath),
+        }}
+      />
+    );
   }
   return null;
 }

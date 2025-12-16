@@ -48,7 +48,7 @@ function RouteComponent() {
 
   const form = useForm<LoginFormInputsProps>({
     defaultValues: {
-      username: 'test_user',
+      username: 'super_admin',
       password: '12345678',
     },
     mode: 'onSubmit',
