@@ -4,8 +4,7 @@ import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
 import UserCell from '@app/components/table-cells/user-cell';
 import Icon from '@app/components/ui/icon';
 import type { IconListProps } from '@app/components/ui/icon/icon-list';
-// import ImageFallback from '@app/components/ui/image-fallback';
-// import getContentPath from '@app/utils/get-content-path';
+import Tooltip from '@app/components/ui/tooltip';
 import type { EducationMaterialsListItem, MediaFileTypes } from '@db/schema';
 
 import ContentActions from '../modules/content-actions';
@@ -37,17 +36,28 @@ const contentTypeLabels: Record<MediaFileTypes, ContentTypeOption> = {
 function useColumns(): ColumnDef<EducationMaterialsListItem>[] {
   return [
     {
-      header: 'İçerik Tipi',
+      header: 'İçerik Başlığı',
       accessorKey: 'contentType',
       cell: info => info.getValue(),
-      accessorFn: ({ contentType }) => {
+      accessorFn: ({ contentType, name }) => {
         return (
           <div className="flex items-center gap-1">
-            <Icon name={contentTypeLabels[contentType].icon} />
-            <span className="text-sm">{contentTypeLabels[contentType].label}</span>
+            <Tooltip>
+              <Tooltip.Trigger>
+                <Icon name={contentTypeLabels[contentType].icon} />
+              </Tooltip.Trigger>
+              <Tooltip.Content>
+                <p>{contentTypeLabels[contentType].label}</p>
+              </Tooltip.Content>
+            </Tooltip>
+            <span className="text-sm">{name}</span>
           </div>
         );
       },
+    },
+    {
+      header: 'Açıklama',
+      accessorKey: 'description',
     },
     {
       header: 'Oluşturan',
