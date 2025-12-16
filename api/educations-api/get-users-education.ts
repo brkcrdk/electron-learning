@@ -68,7 +68,6 @@ function getUsersEducation() {
         createdBy: row.createdBy,
         createdAt: row.createdAt,
         updatedAt: row.updatedAt,
-        assignees: [],
       }));
 
       return {

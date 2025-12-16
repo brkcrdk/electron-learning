@@ -39,9 +39,7 @@ function NewEducation() {
   });
 
   const onSubmit = (data: EducationFormInputs) => {
-    if (!data.category || !data.educationMaterial || !data.assignees) return;
-
-    const assigneeIds = data.assignees.flatMap(val => (val ? val.id : []));
+    if (!data.category || !data.educationMaterial) return;
 
     mutateAsync({
       name: data.name,
@@ -49,7 +47,6 @@ function NewEducation() {
       categoryId: data.category.id,
       educationMaterial: data.educationMaterial.value,
       coverImageId: data.coverImage ? data.coverImage.id : null,
-      assigneeIds,
     });
   };
 

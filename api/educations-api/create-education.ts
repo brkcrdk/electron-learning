@@ -3,7 +3,7 @@ import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
-import { educationAssignees, educations, type MutateEducationPayload } from '@db/schema';
+import { educations, type MutateEducationPayload } from '@db/schema';
 
 function createEducation() {
   ipcMain.handle('create-education', async (_, data: MutateEducationPayload): ApiResponseProps<string> => {
@@ -25,29 +25,9 @@ function createEducation() {
         };
       }
 
-      const { assigneeIds, ...educationData } = data;
-      const uniqueAssigneeIds = Array.from(new Set(assigneeIds ?? [])).filter(Boolean);
-
-      db.transaction(tx => {
-        const [createdEducation] = tx
-          .insert(educations)
-          .values({
-            ...educationData,
-            createdBy: currentUser.id,
-          })
-          .returning({ id: educations.id })
-          .all();
-
-        if (createdEducation?.id && uniqueAssigneeIds.length > 0) {
-          tx.insert(educationAssignees)
-            .values(
-              uniqueAssigneeIds.map(userId => ({
-                educationId: createdEducation.id,
-                assigneeUserId: userId,
-              }))
-            )
-            .run();
-        }
+      await db.insert(educations).values({
+        ...data,
+        createdBy: currentUser.id,
       });
 
       return {

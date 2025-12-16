@@ -49,14 +49,11 @@ export const educations = sqliteTable(
 
 export type Education = typeof educations.$inferSelect;
 
-export type MutateEducationPayload = Omit<typeof educations.$inferInsert, 'createdBy' | 'createdAt' | 'updatedAt'> & {
-  assigneeIds: number[];
-};
+export type MutateEducationPayload = Omit<typeof educations.$inferInsert, 'createdBy' | 'createdAt' | 'updatedAt'>;
 
 export type EducationListItem = Omit<Education, 'categoryId' | 'coverImageId' | 'educationMaterial' | 'createdBy'> & {
   category: Category;
   coverImage: MediaFile | null;
   educationMaterial: EducationMaterialsListItem;
   createdBy: User;
-  assignees: User[];
 };

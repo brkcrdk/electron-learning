@@ -46,14 +46,11 @@ function EditEducation({ education }: Props) {
             fileSize: education.coverImage.fileSize,
           }
         : null,
-      assignees: education.assignees,
     }),
   });
 
   const onSubmit = (data: EducationFormInputs) => {
-    if (!data.category || !data.educationMaterial || !data.assignees) return;
-
-    const assigneeIds = data.assignees.flatMap(val => (val ? val.id : []));
+    if (!data.category || !data.educationMaterial) return;
 
     mutateAsync({
       id: education.id,
@@ -62,7 +59,6 @@ function EditEducation({ education }: Props) {
       categoryId: data.category.id,
       educationMaterial: data.educationMaterial.value,
       coverImageId: data.coverImage?.id ?? null,
-      assigneeIds,
     });
   };
 

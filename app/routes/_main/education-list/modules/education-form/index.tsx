@@ -7,9 +7,8 @@ import TextareaField from '@app/components/form-fields/textarea-field';
 import Field from '@app/components/ui/field';
 import Skeleton from '@app/components/ui/skeleton';
 import useFileUpload from '@app/hooks/use-file-upload';
-import type { Category, User } from '@db/schema';
+import type { Category } from '@db/schema';
 
-import AssigneeSelector from './assignee-selector';
 import CategorySelector from './category-selector';
 import MaterialSelector from './material-selector';
 
@@ -24,7 +23,6 @@ export interface EducationFormInputs {
   category: Category | null;
   educationMaterial: MaterialSelectOption | null;
   coverImage: FileUploadResponse | null;
-  assignees: User[] | null;
 }
 
 function EducationForm() {
@@ -78,7 +76,6 @@ function EducationForm() {
           />
         )}
       />
-      <AssigneeSelector />
       <CategorySelector />
       <MaterialSelector />
 
