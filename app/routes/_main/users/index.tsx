@@ -12,9 +12,9 @@ export const Route = createFileRoute('/_main/users/')({
 
 function RouteComponent() {
   const { data, isLoading } = useQuery({
-    queryKey: ['user-list'],
+    queryKey: ['paginated-user-list'],
     queryFn: async () => {
-      const response = await window.electronAPI.getUserList();
+      const response = await window.electronAPI.getPaginatedUserList({ page: 1, limit: 10 });
       if (!response.success) {
         throw new Error(response.error);
       }
@@ -29,11 +29,22 @@ function RouteComponent() {
     <DataTable
       tableTitle="Kullanıcı Listesi"
       columns={columns}
-      data={data ? data : []}
+      data={data ? data.items : []}
       isLoading={isLoading}
       tableActions={tableActions}
       rowSelectionProps={{
         enableRowSelection: false,
+      }}
+      paginationProps={{
+        limit: 10,
+        onItemsPerPageChange: limit => {
+          console.log(limit);
+        },
+        onPaginationChange: page => {
+          console.log(page);
+        },
+        page: 1,
+        pageCount: 10,
       }}
     />
   );
