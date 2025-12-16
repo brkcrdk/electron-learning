@@ -6,7 +6,7 @@ import { users, type MutateUserPayload } from '@db/schema';
 
 import type { ApiResponseProps } from '../../types/api-response-types';
 import { getCurrentUser } from '../user-session';
-import { hashPassword } from '../utils/password';
+import { hashPassword } from '../utils/password-manager';
 
 function updateUser() {
   ipcMain.handle('update-user', async (_, data: MutateUserPayload): ApiResponseProps<string> => {

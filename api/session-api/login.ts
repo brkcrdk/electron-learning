@@ -6,7 +6,7 @@ import { users, type User } from '@db/schema';
 
 import type { ApiResponseProps } from '../../types/api-response-types';
 import { setCurrentUser } from '../user-session';
-import { comparePassword } from '../utils/password';
+import { comparePassword } from '../utils/password-manager';
 
 export interface LoginPayload {
   username: string;

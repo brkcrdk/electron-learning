@@ -6,7 +6,7 @@ import { users, type MutateUserPayload } from '@db/schema';
 
 import type { ApiResponseProps } from '../../types/api-response-types';
 import { setCurrentUser } from '../user-session';
-import { hashPassword } from '../utils/password';
+import { hashPassword } from '../utils/password-manager';
 
 function createSuperAdmin() {
   ipcMain.handle('create-super-admin', async (_, data: MutateUserPayload): ApiResponseProps<string> => {
