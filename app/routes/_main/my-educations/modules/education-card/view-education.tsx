@@ -2,6 +2,7 @@ import getContentPath from '@app/utils/get-content-path';
 import type { EducationMaterialsListItem } from '@db/schema';
 
 import PdfViewer from './pdf-viewer';
+import StorylineViewer from './storyline-viewer';
 import VideoViewer from './video-viewer';
 
 interface Props {
@@ -28,6 +29,9 @@ function ViewEducation({ educationMaterial }: Props) {
         }}
       />
     );
+  }
+  if (educationMaterial.contentType === 'stories') {
+    return <StorylineViewer storyLink={getContentPath(educationMaterial.contentFile.filePath)} />;
   }
 }
 
