@@ -3,9 +3,13 @@ import Card from '@app/components/ui/card';
 import Dialog from '@app/components/ui/dialog';
 
 import VideoHeader from './video-header';
-import VideoPlayer from './video-player';
+import VideoPlayer, { type VideoPlayerProps } from './video-player';
 
-function VideoViewer() {
+interface Props {
+  videoProps: VideoPlayerProps;
+}
+
+function VideoViewer({ videoProps }: Props) {
   return (
     <Dialog>
       <Dialog.Trigger asChild>
@@ -18,10 +22,7 @@ function VideoViewer() {
         <Card className="pointer-events-auto relative overflow-hidden border-none">
           <VideoHeader />
           <Card.Content>
-            <VideoPlayer
-              // src={videoSrc}
-              title="Video Viewer"
-            />
+            <VideoPlayer {...videoProps} />
           </Card.Content>
         </Card>
       </Dialog.Content>
