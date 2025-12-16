@@ -7,7 +7,7 @@ function LayoutSidebar() {
   return (
     <Sidebar
       variant="inset"
-      className="h-(--available-height) mt-12"
+      className="mt-12"
     >
       <Header />
       <SidebarItems />
