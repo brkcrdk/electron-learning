@@ -32,6 +32,9 @@ function RouteComponent() {
       data={data ? data : []}
       tableActions={tableActions}
       isLoading={isLoading}
+      rowSelectionProps={{
+        enableRowSelection: false,
+      }}
     />
   );
 }

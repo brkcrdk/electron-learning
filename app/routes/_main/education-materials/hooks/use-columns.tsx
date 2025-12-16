@@ -36,34 +36,13 @@ const contentTypeLabels: Record<MediaFileTypes, ContentTypeOption> = {
 
 function useColumns(): ColumnDef<EducationMaterialsListItem>[] {
   return [
-    // {
-    //   header: 'İçerik Başlığı',
-    //   accessorKey: 'name',
-    //   cell: info => info.getValue(),
-    //   accessorFn: ({ name, coverImage }) => {
-    //     return (
-    //       <div className="flex items-center gap-2">
-    //         <ImageFallback
-    //           src={getContentPath(coverImage.filePath)}
-    //           alt={name}
-    //           className="relative aspect-video w-20 overflow-hidden rounded-sm object-cover"
-    //         />
-    //         <span className="line-clamp-1 max-w-40">{name}</span>
-    //       </div>
-    //     );
-    //   },
-    // },
     {
       header: 'İçerik Tipi',
       accessorKey: 'contentType',
-      size: 50,
-      meta: {
-        centeredColumn: true,
-      },
       cell: info => info.getValue(),
       accessorFn: ({ contentType }) => {
         return (
-          <div className="flex items-center justify-center gap-1">
+          <div className="flex items-center gap-1">
             <Icon name={contentTypeLabels[contentType].icon} />
             <span className="text-sm">{contentTypeLabels[contentType].label}</span>
           </div>
