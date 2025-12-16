@@ -18,6 +18,7 @@ import { Route as MainUsersIndexRouteImport } from './routes/_main/users/index'
 import { Route as MainMyEducationsIndexRouteImport } from './routes/_main/my-educations/index'
 import { Route as MainEducationMaterialsIndexRouteImport } from './routes/_main/education-materials/index'
 import { Route as MainEducationListIndexRouteImport } from './routes/_main/education-list/index'
+import { Route as MainEducationAssigmentsIndexRouteImport } from './routes/_main/education-assigments/index'
 import { Route as MainCategoriesIndexRouteImport } from './routes/_main/categories/index'
 
 const LogoutRoute = LogoutRouteImport.update({
@@ -65,6 +66,12 @@ const MainEducationListIndexRoute = MainEducationListIndexRouteImport.update({
   path: '/education-list/',
   getParentRoute: () => MainRoute,
 } as any)
+const MainEducationAssigmentsIndexRoute =
+  MainEducationAssigmentsIndexRouteImport.update({
+    id: '/education-assigments/',
+    path: '/education-assigments/',
+    getParentRoute: () => MainRoute,
+  } as any)
 const MainCategoriesIndexRoute = MainCategoriesIndexRouteImport.update({
   id: '/categories/',
   path: '/categories/',
@@ -77,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
   '/categories': typeof MainCategoriesIndexRoute
+  '/education-assigments': typeof MainEducationAssigmentsIndexRoute
   '/education-list': typeof MainEducationListIndexRoute
   '/education-materials': typeof MainEducationMaterialsIndexRoute
   '/my-educations': typeof MainMyEducationsIndexRoute
@@ -88,6 +96,7 @@ export interface FileRoutesByTo {
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
   '/categories': typeof MainCategoriesIndexRoute
+  '/education-assigments': typeof MainEducationAssigmentsIndexRoute
   '/education-list': typeof MainEducationListIndexRoute
   '/education-materials': typeof MainEducationMaterialsIndexRoute
   '/my-educations': typeof MainMyEducationsIndexRoute
@@ -101,6 +110,7 @@ export interface FileRoutesById {
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/signup': typeof AuthSignupRoute
   '/_main/categories/': typeof MainCategoriesIndexRoute
+  '/_main/education-assigments/': typeof MainEducationAssigmentsIndexRoute
   '/_main/education-list/': typeof MainEducationListIndexRoute
   '/_main/education-materials/': typeof MainEducationMaterialsIndexRoute
   '/_main/my-educations/': typeof MainMyEducationsIndexRoute
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/categories'
+    | '/education-assigments'
     | '/education-list'
     | '/education-materials'
     | '/my-educations'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/categories'
+    | '/education-assigments'
     | '/education-list'
     | '/education-materials'
     | '/my-educations'
@@ -137,6 +149,7 @@ export interface FileRouteTypes {
     | '/_auth/login'
     | '/_auth/signup'
     | '/_main/categories/'
+    | '/_main/education-assigments/'
     | '/_main/education-list/'
     | '/_main/education-materials/'
     | '/_main/my-educations/'
@@ -216,6 +229,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainEducationListIndexRouteImport
       parentRoute: typeof MainRoute
     }
+    '/_main/education-assigments/': {
+      id: '/_main/education-assigments/'
+      path: '/education-assigments'
+      fullPath: '/education-assigments'
+      preLoaderRoute: typeof MainEducationAssigmentsIndexRouteImport
+      parentRoute: typeof MainRoute
+    }
     '/_main/categories/': {
       id: '/_main/categories/'
       path: '/categories'
@@ -228,6 +248,7 @@ declare module '@tanstack/react-router' {
 
 interface MainRouteChildren {
   MainCategoriesIndexRoute: typeof MainCategoriesIndexRoute
+  MainEducationAssigmentsIndexRoute: typeof MainEducationAssigmentsIndexRoute
   MainEducationListIndexRoute: typeof MainEducationListIndexRoute
   MainEducationMaterialsIndexRoute: typeof MainEducationMaterialsIndexRoute
   MainMyEducationsIndexRoute: typeof MainMyEducationsIndexRoute
@@ -236,6 +257,7 @@ interface MainRouteChildren {
 
 const MainRouteChildren: MainRouteChildren = {
   MainCategoriesIndexRoute: MainCategoriesIndexRoute,
+  MainEducationAssigmentsIndexRoute: MainEducationAssigmentsIndexRoute,
   MainEducationListIndexRoute: MainEducationListIndexRoute,
   MainEducationMaterialsIndexRoute: MainEducationMaterialsIndexRoute,
   MainMyEducationsIndexRoute: MainMyEducationsIndexRoute,

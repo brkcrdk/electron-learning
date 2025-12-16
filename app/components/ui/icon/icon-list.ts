@@ -1,5 +1,5 @@
 import { BiHomeAlt } from 'react-icons/bi';
-import { BsEasel2, BsFileEasel, BsFileImage, BsFilePdf, BsFilePlay } from 'react-icons/bs';
+import { BsEasel2, BsFileEasel, BsFileImage, BsFilePdf, BsFilePlay, BsPersonCheck } from 'react-icons/bs';
 import { GoFileDirectory } from 'react-icons/go';
 import { HiShieldCheck } from 'react-icons/hi2';
 import { IoFolderOpenOutline, IoSchoolOutline } from 'react-icons/io5';
@@ -79,6 +79,7 @@ export const iconList = [
   { label: 'file-pdf', icon: BsFilePdf },
   { label: 'file-video', icon: BsFilePlay },
   { label: 'school-outline', icon: IoSchoolOutline },
+  { label: 'person-check', icon: BsPersonCheck },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];

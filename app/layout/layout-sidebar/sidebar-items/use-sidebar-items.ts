@@ -68,6 +68,16 @@ function useSidebarItems() {
         to: '/education-materials',
       },
     },
+    {
+      label: 'Eğitim Atamaları',
+      itemKey: 'education-assigments',
+      icon: 'person-check',
+      isActive: pathname.startsWith('/education-assigments'),
+      isProtected: currentUser?.role === 'user',
+      routeProps: {
+        to: '/education-assigments',
+      },
+    },
   ];
 
   return sidebarItems.filter(item => !item.isProtected);
