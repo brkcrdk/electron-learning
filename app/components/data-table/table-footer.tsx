@@ -1,5 +1,6 @@
 import Button from '../ui/button';
 import Dropdown from '../ui/dropdown';
+import Icon from '../ui/icon';
 import Pagination from '../ui/pagination';
 
 export interface TablePaginationProps {
@@ -25,7 +26,16 @@ function TableFooter({ paginationProps }: Props) {
         {limit && (
           <Dropdown>
             <Dropdown.Trigger asChild>
-              <Button size="sm">{limit}</Button>
+              <Button
+                variant="secondary"
+                className="px-2"
+              >
+                {limit}
+                <Icon
+                  name="chevron-down"
+                  className="size-4"
+                />
+              </Button>
             </Dropdown.Trigger>
             <Dropdown.Content>
               {limitOptions.map(limitOption => (

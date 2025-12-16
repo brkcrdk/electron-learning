@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
+import { z } from 'zod';
 
 import DataTable from '@app/components/data-table';
 
@@ -7,14 +8,19 @@ import useColumns from './hooks/use-columns';
 import useTableActions from './hooks/use-table-actions';
 
 export const Route = createFileRoute('/_main/users/')({
+  validateSearch: z.object({
+    page: z.number().default(1),
+    limit: z.number().default(10),
+  }),
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { page, limit } = Route.useSearch();
   const { data, isLoading } = useQuery({
-    queryKey: ['paginated-user-list'],
+    queryKey: ['paginated-user-list', page, limit],
     queryFn: async () => {
-      const response = await window.electronAPI.getPaginatedUserList({ page: 1, limit: 10 });
+      const response = await window.electronAPI.getPaginatedUserList({ page, limit });
       if (!response.success) {
         throw new Error(response.error);
       }
