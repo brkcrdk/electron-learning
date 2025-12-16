@@ -16,8 +16,10 @@ import fs from 'fs-extra';
 async function copyDrizzleMigrations(buildPath: string) {
   try {
     const drizzleSourcePath = path.join(cwd(), 'drizzle');
-    // resources klasörüne kopyala (process.resourcesPath ile erişilebilir)
-    const drizzleDestPath = path.join(buildPath, 'resources', 'drizzle');
+    // buildPath: .../Electron.app/Contents/Resources/app
+    // asar DIŞINDAKİ gerçek resources klasörüne kopyala (process.resourcesPath ile aynı seviye)
+    const resourcesPath = path.dirname(buildPath); // .../Electron.app/Contents/Resources
+    const drizzleDestPath = path.join(resourcesPath, 'drizzle');
 
     // Drizzle klasörü kontrolü
     const drizzleExists = await fs.pathExists(drizzleSourcePath);

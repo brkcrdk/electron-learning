@@ -36,11 +36,9 @@ function getDatabasePath(app: App) {
  */
 function getMigrationsPath(app: App) {
   if (app.isPackaged) {
-    // Production: Migration dosyaları app/resources/drizzle içinde (asar dışında)
-    // app.getAppPath() asar durumunda "app.asar" içindeki path'i verir,
-    // bu yüzden "app.asar" kısmını "app" ile değiştiriyoruz
-    const appPath = app.getAppPath().replace('app.asar', 'app');
-    return path.join(appPath, 'resources', 'drizzle');
+    // Production: Migration dosyaları, asar DIŞINDAKİ resources klasöründe tutulur
+    // process.resourcesPath -> .../Electron.app/Contents/Resources
+    return path.join(process.resourcesPath, 'drizzle');
   }
   // Development: __dirname = db, migration dosyaları ../../drizzle içinde
   return path.join(__dirname, '../../drizzle');
