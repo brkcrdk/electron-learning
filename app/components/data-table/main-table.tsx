@@ -123,7 +123,7 @@ function MainTable<T>({
   return (
     <div
       aria-disabled={isDisabled}
-      className="group/table flex flex-col gap-4 overflow-x-auto"
+      className="group/table flex h-full flex-col gap-4 overflow-x-auto"
     >
       <TableHeader
         tableTitle={tableTitle}
@@ -131,8 +131,8 @@ function MainTable<T>({
         tableActions={tableActions}
       />
 
-      <div className={cn('overflow-hidden rounded-md border', isDisabled && 'pointer-events-none opacity-50')}>
-        <Table>
+      <div className={cn('overflow-auto rounded-md border', isDisabled && 'pointer-events-none opacity-50')}>
+        <Table containerClassName="h-full relative">
           <TableHead
             table={table}
             onSortingChange={sortingProps.onSortingChange}

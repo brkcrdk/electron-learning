@@ -12,7 +12,7 @@ interface Props<T> {
 
 function TableHead<T>({ table, onSortingChange }: Props<T>) {
   return (
-    <Table.Header className="bg-accent">
+    <Table.Header className="bg-accent sticky top-0">
       {table.getHeaderGroups().map(headerGroup => (
         <Table.Row key={headerGroup.id}>
           {headerGroup.headers.map(header => {

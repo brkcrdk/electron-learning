@@ -10,11 +10,14 @@ import TableHead from './table-head';
 import TableHeader from './table-header';
 import TableRow from './table-row';
 
-function Table({ className, ...props }: ComponentProps<'table'>) {
+interface TableProps extends ComponentProps<'table'> {
+  containerClassName?: string;
+}
+function Table({ className, containerClassName, ...props }: TableProps) {
   return (
     <div
       data-slot="table-container"
-      className="relative w-full overflow-x-auto"
+      className={cn('relative w-full overflow-x-auto', containerClassName)}
     >
       <table
         data-slot="table"
