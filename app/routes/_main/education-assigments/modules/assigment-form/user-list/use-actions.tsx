@@ -1,3 +1,4 @@
+import type { RowSelectionState } from '@tanstack/react-table';
 import { useFormContext } from 'react-hook-form';
 
 import type { TableActionsProps } from '@app/components/data-table';
@@ -7,7 +8,7 @@ import UploadProvider from '@app/components/ui/upload-provider';
 import type { AssigmentFormProps } from '..';
 
 function useActions(): TableActionsProps[] {
-  const { control } = useFormContext<AssigmentFormProps>();
+  const { setValue } = useFormContext<AssigmentFormProps>();
 
   return [
     {
@@ -22,7 +23,12 @@ function useActions(): TableActionsProps[] {
             if (!response.success) {
               throw response.error;
             }
-            console.log(response.data);
+            const selectedUsers: RowSelectionState = {};
+
+            for (const user of response.data) {
+              selectedUsers[user] = true;
+            }
+            setValue('selectedUsers', selectedUsers);
           }}
         >
           <Button type="button">Excel İle Atama Yap</Button>
