@@ -1,8 +1,8 @@
 {
-  "name": "egitim-yonetim-sistemi",
-  "productName": "egitim-yonetim-sistemi",
+  "name": "Bakım Eğitim İstasyonu",
+  "productName": "Bakım Eğitim İstasyonu",
   "version": "0.1.6",
-  "description": "My Electron application description",
+  "description": "Bakım Eğitim İstasyonu Uygulaması",
   "main": ".vite/build/main.js",
   "scripts": {
     "start": "yarn rebuild:electron && electron-forge start",
