@@ -6,6 +6,8 @@ import UserCell from '@app/components/table-cells/user-cell';
 import Badge from '@app/components/ui/badge';
 import type { EducationAssignmentListItem } from '@db/schema';
 
+import AssignmentActions from '../modules/assigment-actions';
+
 function useColumns(): ColumnDef<EducationAssignmentListItem>[] {
   return [
     {
@@ -65,9 +67,8 @@ function useColumns(): ColumnDef<EducationAssignmentListItem>[] {
       header: 'İşlemler',
       accessorKey: 'actions',
       cell: info => info.getValue(),
-      accessorFn: ({ id }) => {
-        // return <EducationAssignmentActions assignment={id} />;
-        return 'işlemler';
+      accessorFn: assignment => {
+        return <AssignmentActions assignment={assignment} />;
       },
     },
   ];
