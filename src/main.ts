@@ -1,58 +1,32 @@
-import path from 'node:path';
-
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 import started from 'electron-squirrel-startup';
 
 import registerApiHandlers from '@api/index';
 import { closeDatabase, initializeDatabase } from '@db/client';
 
 import protocolHandler, { registerContentProtocolPrivileges } from './protocol-handler';
-import registerStoreHandlers, { store } from '../store';
+import registerStoreHandlers from '../store';
+import createWindow from './create-window';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
   app.quit();
 }
 
-// Custom protocol'ü privileged olarak kaydet (app.whenReady() ÖNCESİNDE!)
+// APP when ready öncesi çağırılacak fonksiyonlar
+// ================================
+/**
+ * Custom protocol'ü privileged olarak kaydet (app.whenReady() ÖNCESİNDE!)
+ */
 registerContentProtocolPrivileges();
 
-const createWindow = () => {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
-    minWidth: 800,
-    minHeight: 600,
-    title: 'Electron Learning',
-    center: true,
-    show: true, // Window'u hemen göster
-    titleBarStyle: 'hidden',
-    trafficLightPosition: undefined,
-    kiosk: app.isPackaged,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-    },
-  });
+/**
+ * Varsayılan menüyü devre dışı bırak (performans optimizasyonu)
+ * app.whenReady() öncesinde çağrılmalı
+ */
+Menu.setApplicationMenu(null);
 
-  // and load the index.html of the app.
-  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-    mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
-  } else {
-    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
-  }
-
-  // Uygulama kioks moodunda olacağı için window butonlarını gizle
-  mainWindow.setWindowButtonVisibility(false);
-
-  // Open DevTools only in development
-  if (!app.isPackaged) {
-    mainWindow.webContents.openDevTools({ mode: 'detach' });
-  }
-
-  // Kaydedilmiş temayı uygula
-  mainWindow.setBackgroundColor(store.get('theme.backgroundColor'));
-};
+// ================================
 
 /**
  * Electron başlatıldığında çalışır
