@@ -1,3 +1,4 @@
+import bulkCreateUsersFromExcel from './bulk-create-users-from-excel';
 import createUser from './create-user';
 import currentUser from './current-user';
 import deleteUser from './delete-user';
@@ -14,6 +15,7 @@ function userApi() {
   currentUser();
   getPaginatedUserList();
   extractUserFromExcel();
+  bulkCreateUsersFromExcel();
 }
 
 export default userApi;
