@@ -17,8 +17,6 @@ function useCanGoForward() {
       setCanGoForward(canForward);
     };
 
-    console.log({ history, location });
-
     // // İlk kontrol
     checkCanGoForward();
 
