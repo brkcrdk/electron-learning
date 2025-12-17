@@ -1,14 +1,15 @@
-import { desc, eq, getTableColumns } from 'drizzle-orm';
+import { count, desc, eq, getTableColumns } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/sqlite-core';
 import { ipcMain } from 'electron';
-import type { ApiResponseProps } from 'types/api-response-types';
+import type { ApiResponseProps, PaginatedData, PaginationParams } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
+import { buildPaginatedResponse, getCount, normalizePaginationParams } from '@api/utils/pagination';
 import { getDb } from '@db/client';
 import { educationAssignments, educationAssignees, users, type EducationAssignmentListItem } from '@db/schema';
 
 function getAssigmentList() {
-  ipcMain.handle('get-education-assignment-list', async (): ApiResponseProps<EducationAssignmentListItem[]> => {
+  ipcMain.handle('get-education-assignment-list', async (_, params: PaginationParams = {}): ApiResponseProps<PaginatedData<EducationAssignmentListItem>> => {
     try {
       const db = getDb();
       const currentUser = getCurrentUser();
@@ -27,10 +28,12 @@ function getAssigmentList() {
         };
       }
 
+      const { page, limit, offset } = normalizePaginationParams(params);
+
       const createdByUser = alias(users, 'assignment_created_by_user');
       const assigneeUser = alias(users, 'assignment_assignee_user');
 
-      const rows = await db
+      const dataQuery = db
         .select({
           id: educationAssignments.id,
           educationId: educationAssignments.educationId,
@@ -43,7 +46,13 @@ function getAssigmentList() {
         .innerJoin(createdByUser, eq(educationAssignments.createdBy, createdByUser.id))
         .leftJoin(educationAssignees, eq(educationAssignments.id, educationAssignees.assignmentId))
         .leftJoin(assigneeUser, eq(educationAssignees.assigneeUserId, assigneeUser.id))
-        .orderBy(desc(educationAssignments.createdAt));
+        .orderBy(desc(educationAssignments.createdAt))
+        .limit(limit)
+        .offset(offset);
+
+      const countQuery = db.select({ count: count() }).from(educationAssignments);
+
+      const [rows, total] = await Promise.all([dataQuery, getCount(countQuery)]);
 
       const assignmentMap = new Map<number, EducationAssignmentListItem>();
 
@@ -66,10 +75,11 @@ function getAssigmentList() {
       }
 
       const assignmentList = Array.from(assignmentMap.values());
+      const paginatedResponse = buildPaginatedResponse(assignmentList, total, page, limit);
 
       return {
         success: true,
-        data: assignmentList,
+        data: paginatedResponse,
       };
     } catch (error) {
       console.error('get education assignment list error', error);
