@@ -8,7 +8,7 @@ import educationAssignmentListQuery from '@app/services/education-assignment-lis
 import useColumns from './hooks/use-columns';
 import useTableActions from './hooks/use-table-actions';
 
-export const Route = createFileRoute('/_main/education-assigments/')({
+export const Route = createFileRoute('/_main/education-assignments/')({
   validateSearch: z.object({
     page: z.number().default(1),
     limit: z.number().default(10),

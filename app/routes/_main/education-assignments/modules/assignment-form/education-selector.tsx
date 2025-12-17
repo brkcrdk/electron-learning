@@ -4,10 +4,10 @@ import { Controller, useFormContext } from 'react-hook-form';
 import Select from '@app/components/ui/select';
 import educationListQuery from '@app/services/education-list-query';
 
-import type { AssigmentFormProps } from '.';
+import type { AssignmentFormProps } from '.';
 
 function EducationSelector() {
-  const { control } = useFormContext<AssigmentFormProps>();
+  const { control } = useFormContext<AssignmentFormProps>();
 
   const { data } = useQuery(educationListQuery);
 

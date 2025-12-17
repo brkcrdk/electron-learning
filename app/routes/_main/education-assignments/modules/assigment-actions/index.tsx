@@ -1,5 +1,3 @@
-import { useForm } from 'react-hook-form';
-
 import Drawer from '@app/components/ui/drawer';
 import Icon from '@app/components/ui/icon';
 import type { EducationAssignmentListItem } from '@db/schema';
@@ -10,7 +8,7 @@ interface Props {
   assignment: EducationAssignmentListItem;
 }
 
-function AssigmentActions({ assignment }: Props) {
+function AssignmentActions({ assignment }: Props) {
   return (
     <Drawer>
       <Drawer.Trigger size="icon-sm">
@@ -40,4 +38,4 @@ function AssigmentActions({ assignment }: Props) {
   );
 }
 
-export default AssigmentActions;
+export default AssignmentActions;

@@ -10,15 +10,15 @@ import EducationSelector from './education-selector';
 import ExampleFile from './example-file';
 import UserList from './user-list';
 
-export interface AssigmentFormProps {
+export interface AssignmentFormProps {
   title: string;
   description: string;
   selectedUsers: RowSelectionState;
   selectedEducation: EducationListItem | null;
 }
 
-function AssigmentForm() {
-  const { control } = useFormContext<AssigmentFormProps>();
+function AssignmentForm() {
+  const { control } = useFormContext<AssignmentFormProps>();
   return (
     <Field.Group>
       <ExampleFile />
@@ -52,4 +52,4 @@ function AssigmentForm() {
   );
 }
 
-export default AssigmentForm;
+export default AssignmentForm;
