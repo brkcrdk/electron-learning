@@ -21,6 +21,7 @@ function Header() {
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">Bakım Eğitim İstasyonu</span>
+                <span className="text-muted-foreground text-xs">{process.env.APP_VERSION}</span>
               </div>
             </Link>
           </Sidebar.MenuButton>
