@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import type { RowSelectionState } from '@tanstack/react-table';
 import { FormProvider, useForm, useFormState } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -31,6 +32,24 @@ function EditAssignment({ assignment }: Props) {
 
   const form = useForm<AssignmentFormProps>({
     defaultValues: async () => {
+      const assignees = await window.electronAPI.getEducationAssignmentAssignees(assignment.id);
+
+      console.log('assignees', assignment.id);
+
+      if (assignees.success) {
+        const selectedUsers = assignees.data.reduce((acc, assignee) => {
+          acc[assignee.id] = true;
+          return acc;
+        }, {} as RowSelectionState);
+
+        return {
+          title: assignment.title,
+          description: assignment.description,
+          selectedUsers,
+          selectedEducation: assignment.education,
+        };
+      }
+
       return {
         title: assignment.title,
         description: assignment.description,
@@ -42,6 +61,7 @@ function EditAssignment({ assignment }: Props) {
 
   const onSubmit = (data: AssignmentFormProps) => {
     if (!data.selectedEducation) return;
+    console.log(data);
     // mutateAsync({
     //   id: education.id,
     //   name: data.name,
@@ -61,7 +81,7 @@ function EditAssignment({ assignment }: Props) {
   return (
     <FormProvider {...form}>
       <form
-        id="edit-education-form"
+        id="edit-assignment-form"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <AssignmentForm />
