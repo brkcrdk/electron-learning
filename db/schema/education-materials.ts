@@ -8,8 +8,8 @@ export const educationMaterials = sqliteTable(
   'education_materials',
   {
     id: integer('id').primaryKey({ autoIncrement: true }),
-    name: text('name').notNull(),
-    description: text('description').notNull(),
+    name: text('name').notNull().default(''),
+    description: text('description').notNull().default(''),
     contentType: text('content_type', { enum: mediaTypeEnum }).notNull(),
     contentFileId: integer('content_file_id').notNull(),
     createdBy: integer('created_by').notNull(),

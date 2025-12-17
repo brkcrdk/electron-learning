@@ -7,9 +7,9 @@ export const categories = sqliteTable(
   'categories',
   {
     id: integer('id').primaryKey({ autoIncrement: true }),
-    name: text('name').notNull(),
+    name: text('name').notNull().default(''),
     slug: text('slug').notNull().unique(),
-    description: text('description').notNull(),
+    description: text('description').notNull().default(''),
     parentId: integer('parent_id'),
     createdBy: integer('created_by').notNull(),
     createdAt: integer('created_at', { mode: 'timestamp' })

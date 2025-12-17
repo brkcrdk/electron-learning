@@ -10,8 +10,8 @@ export const educations = sqliteTable(
   'educations',
   {
     id: integer('id').primaryKey({ autoIncrement: true }),
-    name: text('name').notNull(),
-    description: text('description').notNull(),
+    name: text('name').notNull().default(''),
+    description: text('description').notNull().default(''),
     categoryId: integer('category_id').notNull(),
     coverImageId: integer('cover_image_id'),
     educationMaterial: integer('education_materials').notNull(),
