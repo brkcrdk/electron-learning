@@ -18,3 +18,5 @@ export const router = createRouter({
   routeTree,
   history: hashHistory,
 });
+
+export { hashHistory };

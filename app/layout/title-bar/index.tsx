@@ -4,10 +4,13 @@ import Button from '@app/components/ui/button';
 import Icon from '@app/components/ui/icon';
 
 import ThemeToggle from './theme-toggle';
+import useCanGoForward from './use-can-go-forward';
 import UserActions from './user-actions';
 
 function TitleBar() {
   const canGoBack = useCanGoBack();
+  const canGoForward = useCanGoForward();
+
   const { history } = useRouter();
 
   return (
@@ -25,6 +28,8 @@ function TitleBar() {
           <Button
             variant="ghost"
             size="icon"
+            disabled={!canGoForward}
+            onClick={() => history.forward()}
           >
             <Icon name="arrow-right" />
           </Button>
