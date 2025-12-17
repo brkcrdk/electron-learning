@@ -4,14 +4,10 @@ import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
-import { educationAssignees, users, type User } from '@db/schema';
-
-type GetAssignmentAssigneesParams = {
-  assignmentId: number;
-};
+import { educationAssignees, users, type EducationAssignmentListItem, type User } from '@db/schema';
 
 function getAssigmentAssignees() {
-  ipcMain.handle('get-education-assignment-assignees', async (_, params: GetAssignmentAssigneesParams): ApiResponseProps<User[]> => {
+  ipcMain.handle('get-education-assignment-assignees', async (_, assignmentId: EducationAssignmentListItem['id']): ApiResponseProps<User[]> => {
     try {
       const db = getDb();
       const currentUser = getCurrentUser();
@@ -36,7 +32,7 @@ function getAssigmentAssignees() {
         })
         .from(educationAssignees)
         .innerJoin(users, eq(educationAssignees.assigneeUserId, users.id))
-        .where(eq(educationAssignees.assignmentId, params.assignmentId));
+        .where(eq(educationAssignees.assignmentId, assignmentId));
 
       const assignees = rows.map(row => row.user);
 
