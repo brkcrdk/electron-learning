@@ -15,7 +15,7 @@ function TitleBar() {
 
   return (
     <div className="webkit-draggable bg-sidebar border-sidebar-border relative flex h-12 w-full items-center justify-between border px-4">
-      <nav className="webkit-no-draggable flex items-center gap-2 pl-20">
+      <nav className="webkit-no-draggable flex items-center gap-2">
         <div className="flex gap-1">
           <Button
             variant="ghost"
