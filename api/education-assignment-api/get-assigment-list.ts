@@ -39,6 +39,8 @@ function getAssigmentList() {
           educationId: educationAssignments.educationId,
           createdAt: educationAssignments.createdAt,
           updatedAt: educationAssignments.updatedAt,
+          title: educationAssignments.title,
+          description: educationAssignments.description,
           createdBy: getTableColumns(createdByUser),
           assignee: getTableColumns(assigneeUser),
         })
@@ -66,6 +68,8 @@ function getAssigmentList() {
             educationId: row.educationId,
             createdAt: row.createdAt,
             updatedAt: row.updatedAt,
+            title: row.title,
+            description: row.description,
             createdBy: row.createdBy,
             assignees: assignee ? [assignee] : [],
           });

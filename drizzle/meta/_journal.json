@@ -8,6 +8,13 @@
       "when": 1765957854677,
       "tag": "0000_typical_fabian_cortez",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1765963818350,
+      "tag": "0001_luxuriant_doctor_faustus",
+      "breakpoints": true
     }
   ]
 }

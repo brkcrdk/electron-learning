@@ -12,7 +12,6 @@ export const educationAssignments = sqliteTable(
     title: text('title').notNull().default(''),
     description: text('description').notNull().default(''),
     createdBy: integer('created_by').notNull(),
-
     createdAt: integer('created_at', { mode: 'timestamp' })
       .notNull()
       .default(sql`(unixepoch())`),
