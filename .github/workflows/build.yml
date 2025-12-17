@@ -43,46 +43,9 @@ jobs:
             out/make/**/*.nupkg
           retention-days: 30
 
-  build-macos:
-    name: Build macOS
-    runs-on: macos-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24.11.1'
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Rebuild native modules
-        run: yarn rebuild:electron
-
-      - name: Generate database migrations
-        run: yarn db:generate
-
-      - name: Build application
-        run: yarn make
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload macOS artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: macos-build
-          path: |
-            out/make/**/*.dmg
-            out/make/**/*.zip
-            out/make/**/*.app
-          retention-days: 30
-
   release:
     name: Create Release
-    needs: [build-windows, build-macos]
+    needs: [build-windows]
     runs-on: ubuntu-latest
     if: github.event_name != 'pull_request'
     steps:
@@ -94,12 +57,6 @@ jobs:
         with:
           name: windows-build
           path: artifacts/windows
-
-      - name: Download macOS artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: macos-build
-          path: artifacts/macos
 
       - name: Determine release type
         id: release-info
@@ -121,8 +78,6 @@ jobs:
         run: |
           echo "Windows artifacts:"
           find artifacts/windows -type f || echo "No Windows artifacts found"
-          echo "macOS artifacts:"
-          find artifacts/macos -type f || echo "No macOS artifacts found"
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -131,7 +86,6 @@ jobs:
           name: ${{ steps.release-info.outputs.release_name }}
           files: |
             artifacts/windows/**/*
-            artifacts/macos/**/*
           draft: ${{ steps.release-info.outputs.is_draft }}
           prerelease: false
           generate_release_notes: true
