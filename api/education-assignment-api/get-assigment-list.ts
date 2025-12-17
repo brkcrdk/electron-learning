@@ -6,7 +6,17 @@ import type { ApiResponseProps, PaginatedData, PaginationParams } from 'types/ap
 import { getCurrentUser } from '@api/user-session';
 import { buildPaginatedResponse, getCount, normalizePaginationParams } from '@api/utils/pagination';
 import { getDb } from '@db/client';
-import { educationAssignments, educationAssignees, educations, users, type EducationAssignmentListItem } from '@db/schema';
+import {
+  categories,
+  educationAssignments,
+  educationAssignees,
+  educationMaterials,
+  educations,
+  mediaFiles,
+  users,
+  type EducationAssignmentListItem,
+  type EducationListItem,
+} from '@db/schema';
 
 function getAssigmentList() {
   ipcMain.handle('get-education-assignment-list', async (_, params: PaginationParams = {}): ApiResponseProps<PaginatedData<EducationAssignmentListItem>> => {
@@ -32,6 +42,9 @@ function getAssigmentList() {
 
       const createdByUser = alias(users, 'assignment_created_by_user');
       const assigneeUser = alias(users, 'assignment_assignee_user');
+      const educationCreatedBy = alias(users, 'education_created_by');
+      const materialContentFile = alias(mediaFiles, 'material_content_file');
+      const materialCreatedBy = alias(users, 'material_created_by');
 
       const dataQuery = db
         .select({
@@ -43,11 +56,29 @@ function getAssigmentList() {
           description: educationAssignments.description,
           createdBy: getTableColumns(createdByUser),
           assignee: getTableColumns(assigneeUser),
-          education: getTableColumns(educations),
+          education: {
+            id: educations.id,
+            name: educations.name,
+            description: educations.description,
+            createdAt: educations.createdAt,
+            updatedAt: educations.updatedAt,
+          },
+          category: getTableColumns(categories),
+          coverImage: getTableColumns(mediaFiles),
+          educationMaterial: getTableColumns(educationMaterials),
+          educationMaterialContentFile: getTableColumns(materialContentFile),
+          educationMaterialCreatedBy: getTableColumns(materialCreatedBy),
+          educationCreatedBy: getTableColumns(educationCreatedBy),
         })
         .from(educationAssignments)
         .innerJoin(createdByUser, eq(educationAssignments.createdBy, createdByUser.id))
         .innerJoin(educations, eq(educationAssignments.educationId, educations.id))
+        .innerJoin(categories, eq(educations.categoryId, categories.id))
+        .leftJoin(mediaFiles, eq(educations.coverImageId, mediaFiles.id))
+        .innerJoin(educationMaterials, eq(educations.educationMaterial, educationMaterials.id))
+        .innerJoin(educationCreatedBy, eq(educations.createdBy, educationCreatedBy.id))
+        .innerJoin(materialContentFile, eq(educationMaterials.contentFileId, materialContentFile.id))
+        .innerJoin(materialCreatedBy, eq(educationMaterials.createdBy, materialCreatedBy.id))
         .leftJoin(educationAssignees, eq(educationAssignments.id, educationAssignees.assignmentId))
         .leftJoin(assigneeUser, eq(educationAssignees.assigneeUserId, assigneeUser.id))
         .orderBy(desc(educationAssignments.createdAt))
@@ -64,6 +95,27 @@ function getAssigmentList() {
         const assignee = row.assignee?.id ? row.assignee : null;
         const existing = assignmentMap.get(row.id);
 
+        const educationListItem: EducationListItem = {
+          id: row.education.id,
+          name: row.education.name,
+          description: row.education.description,
+          category: row.category,
+          coverImage: row.coverImage ?? null,
+          educationMaterial: {
+            id: row.educationMaterial.id,
+            name: row.educationMaterial.name,
+            description: row.educationMaterial.description,
+            contentType: row.educationMaterial.contentType,
+            contentFile: row.educationMaterialContentFile,
+            createdBy: row.educationMaterialCreatedBy,
+            createdAt: row.educationMaterial.createdAt,
+            updatedAt: row.educationMaterial.updatedAt,
+          },
+          createdBy: row.educationCreatedBy,
+          createdAt: row.education.createdAt,
+          updatedAt: row.education.updatedAt,
+        };
+
         if (!existing) {
           assignmentMap.set(row.id, {
             id: row.id,
@@ -73,7 +125,7 @@ function getAssigmentList() {
             description: row.description,
             createdBy: row.createdBy,
             assignees: assignee ? [assignee] : [],
-            education: row.education,
+            education: educationListItem,
           });
         } else if (assignee) {
           existing.assignees.push(assignee);

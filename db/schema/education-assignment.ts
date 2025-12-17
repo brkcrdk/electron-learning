@@ -1,7 +1,7 @@
 import { sql } from 'drizzle-orm';
 import { integer, sqliteTable, index, foreignKey, text } from 'drizzle-orm/sqlite-core';
 
-import { type Education, educations } from './educations';
+import { type EducationListItem, educations } from './educations';
 import { users, type User } from './users';
 
 export const educationAssignments = sqliteTable(
@@ -41,5 +41,5 @@ export type MutateEducationAssignmentPayload = Omit<typeof educationAssignments.
 export type EducationAssignmentListItem = Omit<EducationAssignment, 'createdBy' | 'educationId'> & {
   assignees: User[];
   createdBy: User;
-  education: Education;
+  education: EducationListItem;
 };
