@@ -4,9 +4,7 @@ import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
-import { educationAssignees } from '@db/schema/education-assignees';
-import { educationAssignments, type MutateEducationAssignmentPayload } from '@db/schema/education-assignment';
-import { educations } from '@db/schema/educations';
+import { educations, educationAssignments, educationAssignees, type MutateEducationAssignmentPayload } from '@db/schema';
 
 function createAssigment() {
   ipcMain.handle('create-education-assignment', async (_, payload: MutateEducationAssignmentPayload): ApiResponseProps<string> => {

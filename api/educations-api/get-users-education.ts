@@ -5,7 +5,7 @@ import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
-import { categories, educations, educationAssignees, educationMaterials, mediaFiles, type EducationListItem, users } from '@db/schema';
+import { categories, educations, educationAssignees, educationAssignments, educationMaterials, mediaFiles, type EducationListItem, users } from '@db/schema';
 
 function getUsersEducation() {
   ipcMain.handle('get-users-education', async (): ApiResponseProps<EducationListItem[]> => {
@@ -39,7 +39,8 @@ function getUsersEducation() {
           updatedAt: educations.updatedAt,
         })
         .from(educations)
-        .innerJoin(educationAssignees, eq(educationAssignees.educationId, educations.id))
+        .innerJoin(educationAssignments, eq(educationAssignments.educationId, educations.id))
+        .innerJoin(educationAssignees, eq(educationAssignees.assignmentId, educationAssignments.id))
         .innerJoin(categories, eq(educations.categoryId, categories.id))
         .leftJoin(mediaFiles, eq(educations.coverImageId, mediaFiles.id))
         .innerJoin(educationMaterials, eq(educations.educationMaterial, educationMaterials.id))

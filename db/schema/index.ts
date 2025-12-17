@@ -4,3 +4,4 @@ export * from './media-files';
 export * from './education-materials';
 export * from './educations';
 export * from './education-assignees';
+export * from './education-assignment';
