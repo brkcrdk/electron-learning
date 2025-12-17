@@ -8,13 +8,6 @@ import { users } from '@db/schema';
 
 import type { ApiResponseProps } from '../../types/api-response-types';
 
-interface ExcelUserRow {
-  'Ad Soyad'?: string;
-  'Kullanıcı Adı'?: string;
-  Adı?: string; // Alternatif kolon adı
-  Username?: string; // Alternatif kolon adı
-}
-
 function extractUserFromExcel() {
   ipcMain.handle('extract-user-from-excel', async (_, fileBuffer: ArrayBuffer): ApiResponseProps<number[]> => {
     try {
@@ -48,7 +41,7 @@ function extractUserFromExcel() {
       }
 
       const worksheet = workbook.Sheets[firstSheetName];
-      const rows = XLSX.utils.sheet_to_json<ExcelUserRow>(worksheet, {
+      const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(worksheet, {
         raw: false,
         defval: '',
       });
@@ -60,31 +53,37 @@ function extractUserFromExcel() {
         };
       }
 
-      // İlk satırı header olarak kabul et ve kolon adlarını normalize et
+      // İlk satırı header olarak kabul et ve kolon adlarını bul
       const firstRow = rows[0];
-      const nameColumnKey = Object.keys(firstRow).find(key => key.toLowerCase().trim() === 'ad soyad' || key.toLowerCase().trim() === 'adı');
-      const usernameColumnKey = Object.keys(firstRow).find(key => key.toLowerCase().trim() === 'kullanıcı adı' || key.toLowerCase().trim() === 'username');
+      const allKeys = Object.keys(firstRow);
 
-      if (!nameColumnKey || !usernameColumnKey) {
+      // Kolon adlarını bul (sadece "username" ve "name" kolonlarına odaklan)
+      const usernameColumnKey = allKeys.find(key => key.toLowerCase().trim() === 'username');
+      const nameColumnKey = allKeys.find(key => key.toLowerCase().trim() === 'name');
+
+      // En az bir kolon bulunmalı
+      if (!usernameColumnKey && !nameColumnKey) {
         return {
           success: false,
-          error: 'Excel dosyasında "Ad Soyad" ve "Kullanıcı Adı" kolonları bulunamadı.',
+          error: `Excel dosyasında "username" veya "name" kolonu bulunamadı. Mevcut kolonlar: ${allKeys.join(', ')}`,
         };
       }
 
       // Excel'den kullanıcı bilgilerini çıkar ve normalize et
-      const excelUsers: Array<{ username: string }> = [];
+      const excelUsers: Array<{ username?: string; name?: string }> = [];
 
-      rows.forEach((row: ExcelUserRow) => {
-        const username = String(row[usernameColumnKey as keyof ExcelUserRow] || '').trim();
+      rows.forEach((row: Record<string, unknown>) => {
+        const username = usernameColumnKey ? String(row[usernameColumnKey] || '').trim() : '';
+        const name = nameColumnKey ? String(row[nameColumnKey] || '').trim() : '';
 
-        // Boş satırları ve username'i olmayan satırları atla
-        if (!username) {
+        // Boş satırları atla (en az bir değer olmalı)
+        if (!username && !name) {
           return;
         }
 
         excelUsers.push({
-          username: username.toLowerCase(), // Username'i lowercase yap (case-insensitive eşleştirme için)
+          username: username ? username.toLowerCase() : undefined,
+          name: name ? name.toLowerCase() : undefined,
         });
       });
 
@@ -95,16 +94,42 @@ function extractUserFromExcel() {
         };
       }
 
-      // Tüm username'leri topla
-      const usernames = excelUsers.map(u => u.username);
+      // Veritabanında eşleşen kullanıcıları bul
+      let matchedUsers: Array<{ id: number }> = [];
 
-      // Veritabanında bu username'lere sahip kullanıcıları bul
-      const matchedUsers = await db
-        .select({
-          id: users.id,
-        })
-        .from(users)
-        .where(inArray(users.username, usernames));
+      if (usernameColumnKey) {
+        // Username ile eşleştirme (öncelikli)
+        const usernames = excelUsers.filter(u => u.username).map(u => u.username!);
+        if (usernames.length > 0) {
+          matchedUsers = await db
+            .select({
+              id: users.id,
+            })
+            .from(users)
+            .where(inArray(users.username, usernames));
+        }
+      }
+
+      if (nameColumnKey && (!usernameColumnKey || matchedUsers.length === 0)) {
+        // Name ile eşleştirme (username yoksa veya username ile eşleşme bulunamadıysa)
+        const names = excelUsers.filter(u => u.name).map(u => u.name!);
+        if (names.length > 0) {
+          const nameMatchedUsers = await db
+            .select({
+              id: users.id,
+            })
+            .from(users)
+            .where(inArray(users.name, names));
+
+          // Eğer username ile eşleşme varsa birleştir, yoksa sadece name sonuçlarını kullan
+          if (matchedUsers.length > 0) {
+            const existingIds = new Set(matchedUsers.map(u => u.id));
+            matchedUsers = [...matchedUsers, ...nameMatchedUsers.filter(u => !existingIds.has(u.id))];
+          } else {
+            matchedUsers = nameMatchedUsers;
+          }
+        }
+      }
 
       // Eşleşen kullanıcıların ID'lerini al
       const userIds = matchedUsers.map(u => u.id);

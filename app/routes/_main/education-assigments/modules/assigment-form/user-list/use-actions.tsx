@@ -15,11 +15,17 @@ function useActions(): TableActionsProps[] {
       actionElement: (
         <UploadProvider
           accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-          onChange={file => {
-            console.log(file);
+          onChange={async file => {
+            const fileBuffer = await file.arrayBuffer();
+            const response = await window.electronAPI.extractUserFromExcel(fileBuffer);
+
+            if (!response.success) {
+              throw response.error;
+            }
+            console.log(response.data);
           }}
         >
-          <Button>Excel İle Atama Yap</Button>
+          <Button type="button">Excel İle Atama Yap</Button>
         </UploadProvider>
       ),
     },

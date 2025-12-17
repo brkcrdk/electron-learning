@@ -22,7 +22,7 @@ function ExampleFile() {
         />
       </div>
       <span className="text-muted-foreground text-xs">
-        Dosyada sadece <strong>"Ad Soyad"</strong> ve <strong>"Kullanıcı Adı"</strong> alanları bulunmalıdır; her bir satır bir kişiyi ifade etmelidir.
+        Dosyada sadece <strong>"username"</strong> ve <strong>"name"</strong> alanları bulunmalıdır; her bir satır bir kişiyi ifade etmelidir.
       </span>
     </a>
   );
