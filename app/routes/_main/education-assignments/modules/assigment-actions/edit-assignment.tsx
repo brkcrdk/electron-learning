@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 
 import Skeleton from '@app/components/ui/skeleton';
 import queryKeys from '@app/services/query-keys';
-import type { EducationAssignmentListItem, MutateEducationPayload } from '@db/schema';
+import type { EducationAssignmentListItem, UpdateEducationAssignmentPayload } from '@db/schema';
 
 import type { AssignmentFormProps } from '../assignment-form';
 import AssignmentForm from '../assignment-form';
@@ -18,12 +18,12 @@ function EditAssignment({ assignment }: Props) {
   const queryClient = useQueryClient();
 
   const { mutateAsync } = useMutation({
-    mutationFn: (data: MutateEducationPayload) => {
-      return window.electronAPI.updateEducation(data);
+    mutationFn: (data: UpdateEducationAssignmentPayload) => {
+      return window.electronAPI.updateEducationAssignment(data);
     },
     onSuccess: response => {
       if (response.success) {
-        queryClient.invalidateQueries({ queryKey: [queryKeys.educationListQuery] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.educationAssignmentListQuery] });
       } else {
         toast.error(response.error, { dismissible: false });
       }
@@ -33,8 +33,6 @@ function EditAssignment({ assignment }: Props) {
   const form = useForm<AssignmentFormProps>({
     defaultValues: async () => {
       const assignees = await window.electronAPI.getEducationAssignmentAssignees(assignment.id);
-
-      console.log('assignees', assignment.id);
 
       if (assignees.success) {
         const selectedUsers = assignees.data.reduce((acc, assignee) => {
@@ -61,15 +59,15 @@ function EditAssignment({ assignment }: Props) {
 
   const onSubmit = (data: AssignmentFormProps) => {
     if (!data.selectedEducation) return;
-    console.log(data);
-    // mutateAsync({
-    //   id: education.id,
-    //   name: data.name,
-    //   description: data.description,
-    //   categoryId: data.category.id,
-    //   educationMaterial: data.educationMaterial.value,
-    //   coverImageId: data.coverImage?.id ?? null,
-    // });
+
+    const assigneeUserIds = Object.keys(data.selectedUsers).map(Number);
+    mutateAsync({
+      assignmentId: assignment.id,
+      assigneeUserIds,
+      educationId: data.selectedEducation.id,
+      title: data.title,
+      description: data.description,
+    });
   };
 
   const { isLoading } = useFormState({ control: form.control });
