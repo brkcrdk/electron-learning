@@ -17,7 +17,7 @@ function Header() {
           <Breadcrumb.List>
             <Breadcrumb.Item>
               <Breadcrumb.Link asChild>
-                <Link to="/my-educations">Eğitim Platformu</Link>
+                <Link to="/my-educations">Anasayfa</Link>
               </Breadcrumb.Link>
             </Breadcrumb.Item>
           </Breadcrumb.List>

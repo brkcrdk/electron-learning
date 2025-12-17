@@ -14,7 +14,7 @@ const actionModeTitles = {
   signup: {
     title: 'Hoş Geldiniz',
     description:
-      'Eğitim Platformu Uygulamasına Hoş Geldiniz! Sistem yöneticisi hesabınızı oluşturarak başlayın. Bu hesap ile diğer kullanıcıları yönetebilir, admin rollerini belirleyebilir ve tüm sistem ayarlarını kontrol edebilirsiniz. Lütfen güvenli bir e-posta adresi ve şifre belirleyin.',
+      'Bakım Eğitim İstasyonu Uygulamasına Hoş Geldiniz! Sistem yöneticisi hesabınızı oluşturarak başlayın. Bu hesap ile diğer kullanıcıları yönetebilir, admin rollerini belirleyebilir ve tüm sistem ayarlarını kontrol edebilirsiniz. Lütfen güvenli bir e-posta adresi ve şifre belirleyin.',
   },
   login: {
     title: 'Giriş Yap',
