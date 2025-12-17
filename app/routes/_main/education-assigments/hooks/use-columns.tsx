@@ -5,8 +5,12 @@ import type { EducationAssignmentListItem } from '@db/schema';
 function useColumns(): ColumnDef<EducationAssignmentListItem>[] {
   return [
     {
-      header: 'Eğitim Adı',
-      accessorKey: 'name',
+      header: 'Eğitim Ataması Başlığı',
+      accessorKey: 'title',
+    },
+    {
+      header: 'Açıklamasıı',
+      accessorKey: 'description',
     },
   ];
 }

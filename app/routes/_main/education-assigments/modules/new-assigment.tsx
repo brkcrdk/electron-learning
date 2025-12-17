@@ -30,6 +30,8 @@ function NewAssigment() {
 
   const form = useForm<AssigmentFormProps>({
     defaultValues: {
+      title: '',
+      description: '',
       selectedUsers: {},
       selectedEducation: null,
     },
@@ -39,6 +41,8 @@ function NewAssigment() {
     if (!data.selectedEducation) return;
 
     mutateAsync({
+      title: data.title,
+      description: data.description,
       educationId: data.selectedEducation.id,
       assigneeUserIds: Object.keys(data.selectedUsers).map(Number),
     });
