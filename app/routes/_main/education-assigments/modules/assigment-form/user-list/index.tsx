@@ -48,6 +48,7 @@ function UserList() {
             enableRowSelection: true,
             rowSelection: field.value,
             onRowSelectionChange: field.onChange,
+            getRowId: row => String(row.id),
           }}
           paginationProps={
             data
