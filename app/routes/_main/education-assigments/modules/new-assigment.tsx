@@ -1,14 +1,32 @@
 import { useState } from 'react';
 
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FormProvider, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
+import type { MutateEducationAssignmentPayload } from '@db/schema';
 
 import AssigmentForm, { type AssigmentFormProps } from './assigment-form';
 
 function NewAssigment() {
   const [isOpen, setIsOpen] = useState(false);
+  const queryClient = useQueryClient();
+
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: (data: MutateEducationAssignmentPayload) => {
+      return window.electronAPI.createEducationAssignment(data);
+    },
+    onSuccess: response => {
+      if (response.success) {
+        setIsOpen(false);
+        queryClient.invalidateQueries({ queryKey: ['education-assigments'] });
+      } else {
+        toast.error(response.error, { dismissible: false });
+      }
+    },
+  });
 
   const form = useForm<AssigmentFormProps>({
     defaultValues: {
@@ -18,7 +36,12 @@ function NewAssigment() {
   });
 
   function onSubmit(data: AssigmentFormProps) {
-    console.log(data);
+    if (!data.selectedEducation) return;
+
+    mutateAsync({
+      educationId: data.selectedEducation.id,
+      assigneeUserIds: Object.keys(data.selectedUsers).map(Number),
+    });
   }
 
   return (
@@ -47,6 +70,8 @@ function NewAssigment() {
           <Button
             form="new-assigment-form"
             type="submit"
+            disabled={isPending}
+            isLoading={isPending}
           >
             Eğitim Ataması Yap
           </Button>
