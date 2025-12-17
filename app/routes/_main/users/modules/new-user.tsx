@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
+import queryKeys from '@app/services/query-keys';
 
 import type { UserFormInputs } from './user-form';
 import UserForm from './user-form';
@@ -28,7 +29,7 @@ function NewUser() {
     onSuccess: response => {
       if (response.success) {
         setIsOpen(false);
-        queryClient.invalidateQueries({ queryKey: ['paginated-user-list'] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.paginatedUserListQuery] });
       } else {
         toast.error(response.error, {
           dismissible: false,

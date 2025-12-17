@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
+import queryKeys from '@app/services/query-keys';
 import type { MutateEducationPayload } from '@db/schema';
 
 import EducationForm, { type EducationFormInputs } from './education-form';
@@ -21,7 +22,7 @@ function NewEducation() {
     onSuccess: response => {
       if (response.success) {
         setIsOpen(false);
-        queryClient.invalidateQueries({ queryKey: ['education-list'] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.educationListQuery] });
       } else {
         toast.error(response.error, { dismissible: false });
       }

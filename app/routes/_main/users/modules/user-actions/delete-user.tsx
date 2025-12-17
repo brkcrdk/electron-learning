@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import ConfirmModal from '@app/components/confirm-modal';
 import Button from '@app/components/ui/button';
 import Icon from '@app/components/ui/icon';
+import queryKeys from '@app/services/query-keys';
 
 interface Props {
   userId: number;
@@ -17,7 +18,7 @@ function DeleteUser({ userId }: Props) {
     },
     onSuccess: response => {
       if (response.success) {
-        queryClient.invalidateQueries({ queryKey: ['user-list'] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.userListQuery] });
       } else {
         toast.error(response.error);
       }

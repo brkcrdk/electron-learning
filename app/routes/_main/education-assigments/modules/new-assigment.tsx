@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
+import queryKeys from '@app/services/query-keys';
 import type { MutateEducationAssignmentPayload } from '@db/schema';
 
 import AssigmentForm, { type AssigmentFormProps } from './assigment-form';
@@ -21,7 +22,7 @@ function NewAssigment() {
     onSuccess: response => {
       if (response.success) {
         setIsOpen(false);
-        queryClient.invalidateQueries({ queryKey: ['education-assigments'] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.educationAssignmentListQuery] });
       } else {
         toast.error(response.error, { dismissible: false });
       }

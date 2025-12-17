@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
+import queryKeys from '@app/services/query-keys';
 import slugify from '@app/utils/slugify';
 import type { MutateCategoryPayload } from '@db/schema';
 
@@ -24,7 +25,7 @@ function NewCategory() {
     onSuccess: response => {
       if (response.success) {
         setIsOpen(false);
-        queryClient.invalidateQueries({ queryKey: ['category-list'] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.categoryListQuery] });
       } else {
         toast.error(response.error, {
           dismissible: false,

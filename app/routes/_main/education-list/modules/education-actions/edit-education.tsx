@@ -3,6 +3,7 @@ import { FormProvider, useForm, useFormState } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import Skeleton from '@app/components/ui/skeleton';
+import queryKeys from '@app/services/query-keys';
 import type { MutateEducationPayload } from '@db/schema';
 import type { EducationListItem } from '@db/schema';
 
@@ -21,7 +22,7 @@ function EditEducation({ education }: Props) {
     },
     onSuccess: response => {
       if (response.success) {
-        queryClient.invalidateQueries({ queryKey: ['education-list'] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.educationListQuery] });
       } else {
         toast.error(response.error, { dismissible: false });
       }

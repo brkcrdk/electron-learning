@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
+import queryKeys from '@app/services/query-keys';
 import type { MutateEducationMaterialsPayload } from '@db/schema';
 
 import type { ContentFormInputs } from './content-form';
@@ -23,7 +24,7 @@ function NewContent() {
     onSuccess: response => {
       if (response.success) {
         setIsOpen(false);
-        queryClient.invalidateQueries({ queryKey: ['education-materials'] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.educationMaterialListQuery] });
       } else {
         toast.error(response.error, {
           dismissible: false,

@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import ConfirmModal from '@app/components/confirm-modal';
 import Button from '@app/components/ui/button';
 import Icon from '@app/components/ui/icon';
+import queryKeys from '@app/services/query-keys';
 
 interface Props {
   contentId: number;
@@ -17,7 +18,7 @@ function DeleteContent({ contentId }: Props) {
     },
     onSuccess: response => {
       if (response.success) {
-        queryClient.invalidateQueries({ queryKey: ['education-materials'] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.educationMaterialListQuery] });
       } else {
         toast.error(response.error);
       }

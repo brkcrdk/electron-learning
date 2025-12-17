@@ -3,6 +3,7 @@ import { FormProvider, useForm, useFormState } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import Skeleton from '@app/components/ui/skeleton';
+import queryKeys from '@app/services/query-keys';
 import type { MutateEducationMaterialsPayload, EducationMaterialsListItem } from '@db/schema';
 
 import ContentForm, { mediaContentOptions, type ContentFormInputs } from '../content-form';
@@ -20,7 +21,7 @@ function EditContent({ content }: Props) {
     },
     onSuccess: response => {
       if (response.success) {
-        queryClient.invalidateQueries({ queryKey: ['education-materials'] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.educationMaterialListQuery] });
       } else {
         toast.error(response.error, { dismissible: false });
       }

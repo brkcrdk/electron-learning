@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 
 import Skeleton from '@app/components/ui/skeleton';
 import currentUserQuery from '@app/services/current-user-query';
+import queryKeys from '@app/services/query-keys';
 import type { User } from '@db/schema';
 
 import type { UserFormInputs } from '../user-form';
@@ -30,7 +31,7 @@ function EditUser({ user }: Props) {
     },
     onSuccess: response => {
       if (response.success) {
-        queryClient.invalidateQueries({ queryKey: ['paginated-user-list'] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.paginatedUserListQuery] });
       } else {
         toast.error(response.error, { dismissible: false });
       }

@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import ConfirmModal from '@app/components/confirm-modal';
 import Button from '@app/components/ui/button';
 import Icon from '@app/components/ui/icon';
+import queryKeys from '@app/services/query-keys';
 
 interface Props {
   categoryId: number;
@@ -17,7 +18,7 @@ function DeleteCategory({ categoryId }: Props) {
     },
     onSuccess: response => {
       if (response.success) {
-        queryClient.invalidateQueries({ queryKey: ['category-list'] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.categoryListQuery] });
       } else {
         toast.error(response.error);
       }

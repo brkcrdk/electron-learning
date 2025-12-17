@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import ConfirmModal from '@app/components/confirm-modal';
 import Button from '@app/components/ui/button';
 import Icon from '@app/components/ui/icon';
+import queryKeys from '@app/services/query-keys';
 import type { EducationAssignmentListItem } from '@db/schema';
 
 interface Props {
@@ -17,7 +18,7 @@ function DeleteAssignment({ assignmentId }: Props) {
     mutationFn: () => window.electronAPI.deleteEducationAssignment(assignmentId),
     onSuccess: response => {
       if (response.success) {
-        queryClient.invalidateQueries({ queryKey: ['education-assigments'] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.educationAssignmentListQuery] });
       } else {
         toast.error(response.error);
       }

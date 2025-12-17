@@ -3,6 +3,7 @@ import { FormProvider, useForm, useFormState } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import Skeleton from '@app/components/ui/skeleton';
+import queryKeys from '@app/services/query-keys';
 import slugify from '@app/utils/slugify';
 import type { Category, MutateCategoryPayload } from '@db/schema';
 
@@ -22,7 +23,7 @@ function EditCategory({ category }: Props) {
     },
     onSuccess: response => {
       if (response.success) {
-        queryClient.invalidateQueries({ queryKey: ['category-list'] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.categoryListQuery] });
       } else {
         toast.error(response.error, { dismissible: false });
       }
