@@ -9,7 +9,7 @@ import Drawer from '@app/components/ui/drawer';
 import queryKeys from '@app/services/query-keys';
 import type { MutateEducationAssignmentPayload } from '@db/schema';
 
-import AssigmentForm, { type AssigmentFormProps } from './assigment-form';
+import AssignmentForm, { type AssignmentFormProps } from './assignment-form';
 
 function NewAssigment() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +29,7 @@ function NewAssigment() {
     },
   });
 
-  const form = useForm<AssigmentFormProps>({
+  const form = useForm<AssignmentFormProps>({
     defaultValues: {
       title: '',
       description: '',
@@ -38,7 +38,7 @@ function NewAssigment() {
     },
   });
 
-  function onSubmit(data: AssigmentFormProps) {
+  function onSubmit(data: AssignmentFormProps) {
     if (!data.selectedEducation) return;
 
     mutateAsync({
@@ -65,15 +65,15 @@ function NewAssigment() {
         </Drawer.Header>
         <FormProvider {...form}>
           <form
-            id="new-assigment-form"
+            id="new-assignment-form"
             onSubmit={form.handleSubmit(onSubmit)}
           >
-            <AssigmentForm />
+            <AssignmentForm />
           </form>
         </FormProvider>
         <Drawer.Footer>
           <Button
-            form="new-assigment-form"
+            form="new-assignment-form"
             type="submit"
             disabled={isPending}
             isLoading={isPending}

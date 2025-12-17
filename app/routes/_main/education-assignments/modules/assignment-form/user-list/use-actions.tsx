@@ -5,10 +5,10 @@ import type { TableActionsProps } from '@app/components/data-table';
 import Button from '@app/components/ui/button';
 import UploadProvider from '@app/components/ui/upload-provider';
 
-import type { AssigmentFormProps } from '..';
+import type { AssignmentFormProps } from '..';
 
 function useActions(): TableActionsProps[] {
-  const { setValue } = useFormContext<AssigmentFormProps>();
+  const { setValue } = useFormContext<AssignmentFormProps>();
 
   return [
     {

@@ -4,11 +4,11 @@ const queryKeys = {
   categoryListQuery: 'category-list-query',
   educationAssignmentListQuery: 'education-assignment-list-query',
   educationListQuery: 'education-list-query',
-  assignmentUserListQuery: 'assignment-user-list-query',
   educationMaterialListQuery: 'education-material-list-query',
   userEducationListQuery: 'user-education-list-query',
   paginatedUserListQuery: 'paginated-user-list-query',
   userListQuery: 'user-list-query',
+  assignmentUserListQuery: 'assignment-user-list-query',
 } as const;
 
 export default queryKeys;

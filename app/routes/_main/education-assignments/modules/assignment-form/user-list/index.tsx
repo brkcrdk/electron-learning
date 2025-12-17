@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import DataTable from '@app/components/data-table';
-import assignmentUserListQuery from '@app/services/assignment-user-list-query';
+import paginatedUserListQuery from '@app/services/paginated-user-list-query';
 
 import type { AssignmentFormProps } from '..';
 import useActions from './use-actions';
@@ -17,7 +17,7 @@ function UserList() {
 
   const { control } = useFormContext<AssignmentFormProps>();
 
-  const { data } = useQuery(assignmentUserListQuery({ page, limit, search: searchUser }));
+  const { data } = useQuery(paginatedUserListQuery({ page, limit, search: searchUser }));
 
   const columns = useColumns();
   const tableActions = useActions();

@@ -71,12 +71,12 @@ function useSidebarItems() {
     },
     {
       label: 'Eğitim Atamaları',
-      itemKey: 'education-assigments',
+      itemKey: 'education-assignments',
       icon: 'person-check',
       isActive: pathname.startsWith('/education-assigments'),
       isProtected: currentUser?.role === 'user',
       routeProps: {
-        to: '/education-assigments',
+        to: '/education-assignments',
       },
     },
   ];
