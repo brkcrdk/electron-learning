@@ -4,8 +4,6 @@ import MediaViewerCell from '@app/components/table-cells/media-viewer-cell';
 import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
 import UserCell from '@app/components/table-cells/user-cell';
 import Badge from '@app/components/ui/badge';
-import ImageFallback from '@app/components/ui/image-fallback';
-import getContentPath from '@app/utils/get-content-path';
 import type { EducationListItem } from '@db/schema';
 
 import EducationActions from '../modules/education-actions';
@@ -16,7 +14,7 @@ function useColumns(): ColumnDef<EducationListItem>[] {
       header: 'Eğitim Adı',
       accessorKey: 'name',
       cell: info => info.getValue(),
-      accessorFn: ({ name, educationMaterial, coverImage }) => {
+      accessorFn: ({ name, educationMaterial }) => {
         return (
           <MediaViewerCell
             mediaFile={{
@@ -24,20 +22,21 @@ function useColumns(): ColumnDef<EducationListItem>[] {
               filePath: educationMaterial.contentFile.filePath,
               mediaType: educationMaterial.contentType,
             }}
-            triggerProps={{
-              className: 'flex items-center gap-2',
-              children: (
-                <>
-                  <ImageFallback
-                    src={getContentPath(coverImage?.filePath)}
-                    className="relative aspect-video w-20 overflow-hidden rounded-sm object-cover"
-                  />
-                  <span className="line-clamp-1 max-w-80">{name}</span>
-                </>
-              ),
-            }}
+            title={name}
           />
         );
+      },
+    },
+    {
+      header: 'İçerik Adı',
+      accessorKey: 'educationMaterial',
+      cell: info => info.getValue(),
+      accessorFn: ({ educationMaterial }) => {
+        return <Badge>{educationMaterial.name}</Badge>;
+      },
+      size: 50,
+      meta: {
+        centeredColumn: true,
       },
     },
     {
@@ -52,18 +51,7 @@ function useColumns(): ColumnDef<EducationListItem>[] {
         centeredColumn: true,
       },
     },
-    {
-      header: 'İçerik',
-      accessorKey: 'educationMaterial',
-      cell: info => info.getValue(),
-      accessorFn: ({ educationMaterial }) => {
-        return <Badge>{educationMaterial.name}</Badge>;
-      },
-      size: 50,
-      meta: {
-        centeredColumn: true,
-      },
-    },
+
     {
       header: 'Oluşturan',
       accessorKey: 'createdBy',
