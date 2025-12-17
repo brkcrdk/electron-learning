@@ -28,10 +28,7 @@ const createWindow = () => {
     center: true,
     show: true, // Window'u hemen göster
     titleBarStyle: 'hidden',
-    trafficLightPosition: {
-      x: 18,
-      y: 18,
-    },
+    trafficLightPosition: undefined,
     kiosk: app.isPackaged,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -44,6 +41,9 @@ const createWindow = () => {
   } else {
     mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   }
+
+  // Uygulama kioks moodunda olacağı için window butonlarını gizle
+  mainWindow.setWindowButtonVisibility(false);
 
   // Open DevTools only in development
   if (!app.isPackaged) {
