@@ -20,7 +20,7 @@ const dropdownItems: DropdownItem[] = [
     dropdownItemId: 'profile',
     label: 'Profilim',
     icon: 'user',
-    route: '/profile',
+    route: '/',
   },
   {
     dropdownItemId: 'logout',
@@ -60,17 +60,19 @@ function UserActions() {
         </Button>
       </Dropdown.Trigger>
       <Dropdown.Content>
-        {dropdownItems.map(item => (
-          <Dropdown.Item
-            key={item.dropdownItemId}
-            asChild
-          >
-            <Link to={item.route}>
-              <Icon name={item.icon} />
-              {item.label}
-            </Link>
-          </Dropdown.Item>
-        ))}
+        {dropdownItems.map(item => {
+          return (
+            <Dropdown.Item
+              key={item.dropdownItemId}
+              asChild
+            >
+              <Link to={item.route}>
+                <Icon name={item.icon} />
+                {item.label}
+              </Link>
+            </Dropdown.Item>
+          );
+        })}
       </Dropdown.Content>
     </Dropdown>
   );

@@ -23,7 +23,6 @@ function Header() {
               if (!match.staticData.breadcrumb) return null;
               const isLast = index === matches.length - 1;
 
-              console.log(match);
               return (
                 <Fragment key={match.id}>
                   <Breadcrumb.Item>
