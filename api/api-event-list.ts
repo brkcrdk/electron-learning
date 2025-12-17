@@ -71,6 +71,7 @@ const apiEventList = {
     ipcRenderer.invoke('get-education-assignment-list', params),
   getEducationAssignmentAssignees: (data: EducationAssignmentListItem['id']): ApiResponseProps<User[]> =>
     ipcRenderer.invoke('get-education-assignment-assignees', data),
+  deleteEducationAssignment: (data: EducationAssignmentListItem['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-education-assignment', data),
 } as const;
 
 export default apiEventList;
