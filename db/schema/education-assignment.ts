@@ -39,7 +39,7 @@ export type MutateEducationAssignmentPayload = Omit<typeof educationAssignments.
   assigneeUserIds: number[];
 };
 export type EducationAssignmentListItem = Omit<EducationAssignment, 'createdBy' | 'educationId'> & {
-  assignees: User[];
+  assigneeCount: number;
   createdBy: User;
   education: EducationListItem;
 };

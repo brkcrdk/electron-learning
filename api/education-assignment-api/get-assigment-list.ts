@@ -42,12 +42,20 @@ function getAssigmentList() {
 
       // User aliases for assignments
       const createdByUser = alias(users, 'assignment_created_by_user');
-      const assigneeUser = alias(users, 'assignment_assignee_user');
 
       // User and file aliases for education relations
       const educationCreatedBy = alias(users, 'education_created_by');
       const materialContentFile = alias(mediaFiles, 'material_content_file');
       const materialCreatedBy = alias(users, 'material_created_by');
+
+      const assigneeCounts = db
+        .select({
+          assignmentId: educationAssignees.assignmentId,
+          assigneeCount: count(educationAssignees.id).as('assigneeCount'),
+        })
+        .from(educationAssignees)
+        .groupBy(educationAssignees.assignmentId)
+        .as('assignee_counts');
 
       const dataQuery = db
         .select({
@@ -58,7 +66,7 @@ function getAssigmentList() {
           createdAt: educationAssignments.createdAt,
           updatedAt: educationAssignments.updatedAt,
           createdBy: getTableColumns(createdByUser),
-          assignee: getTableColumns(assigneeUser),
+          assigneeCount: assigneeCounts.assigneeCount,
           // Education fields
           education: {
             id: educations.id,
@@ -77,8 +85,6 @@ function getAssigmentList() {
         .from(educationAssignments)
         // Assignment joins
         .innerJoin(createdByUser, eq(educationAssignments.createdBy, createdByUser.id))
-        .leftJoin(educationAssignees, eq(educationAssignments.id, educationAssignees.assignmentId))
-        .leftJoin(assigneeUser, eq(educationAssignees.assigneeUserId, assigneeUser.id))
         // Education joins
         .innerJoin(educations, eq(educationAssignments.educationId, educations.id))
         .innerJoin(categories, eq(educations.categoryId, categories.id))
@@ -96,29 +102,16 @@ function getAssigmentList() {
 
       const [rows, total] = await Promise.all([dataQuery, getCount(countQuery)]);
 
-      const assignmentMap = new Map<number, EducationAssignmentListItem>();
-
-      for (const row of rows) {
-        const assignee = row.assignee?.id ? row.assignee : null;
-        const existing = assignmentMap.get(row.id);
-
-        if (!existing) {
-          assignmentMap.set(row.id, {
-            id: row.id,
-            createdAt: row.createdAt,
-            updatedAt: row.updatedAt,
-            title: row.title,
-            description: row.description,
-            createdBy: row.createdBy,
-            assignees: assignee ? [assignee] : [],
-            education: mapAssignmentRowToEducationListItem(row),
-          });
-        } else if (assignee) {
-          existing.assignees.push(assignee);
-        }
-      }
-
-      const assignmentList = Array.from(assignmentMap.values());
+      const assignmentList = rows.map(row => ({
+        id: row.id,
+        createdAt: row.createdAt,
+        updatedAt: row.updatedAt,
+        title: row.title,
+        description: row.description,
+        createdBy: row.createdBy,
+        assigneeCount: row.assigneeCount ?? 0,
+        education: mapAssignmentRowToEducationListItem(row),
+      }));
       const paginatedResponse = buildPaginatedResponse(assignmentList, total, page, limit);
 
       return {
