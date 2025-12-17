@@ -26,9 +26,7 @@ function createAssigment() {
         };
       }
 
-      const { educationId, assigneeUserIds } = payload;
-
-      const [education] = await db.select().from(educations).where(eq(educations.id, educationId)).limit(1);
+      const [education] = await db.select().from(educations).where(eq(educations.id, payload.educationId)).limit(1);
 
       if (!education) {
         return {
@@ -40,13 +38,13 @@ function createAssigment() {
       const [assignment] = await db
         .insert(educationAssignments)
         .values({
-          educationId,
+          ...payload,
           createdBy: currentUser.id,
         })
         .returning();
 
-      if (assigneeUserIds.length > 0) {
-        const assigneeValues = assigneeUserIds.map(userId => ({
+      if (payload.assigneeUserIds.length > 0) {
+        const assigneeValues = payload.assigneeUserIds.map(userId => ({
           assignmentId: assignment.id,
           assigneeUserId: userId,
         }));
