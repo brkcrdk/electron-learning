@@ -4,6 +4,7 @@ import { ipcMain } from 'electron';
 import type { ApiResponseProps } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
+import { mapStandardRowToEducationListItem } from '@api/utils/education-list-item-mapper';
 import { getDb } from '@db/client';
 import { categories, educations, educationAssignees, educationAssignments, educationMaterials, mediaFiles, type EducationListItem, users } from '@db/schema';
 
@@ -50,26 +51,7 @@ function getUsersEducation() {
         .where(eq(educationAssignees.assigneeUserId, currentUser.id))
         .orderBy(desc(educations.createdAt));
 
-      const educationList: EducationListItem[] = rows.map(row => ({
-        id: row.id,
-        name: row.name,
-        description: row.description,
-        category: row.category,
-        coverImage: row.coverImage ?? null,
-        educationMaterial: {
-          id: row.educationMaterial.id,
-          name: row.educationMaterial.name,
-          description: row.educationMaterial.description,
-          contentType: row.educationMaterial.contentType,
-          contentFile: row.educationMaterialContentFile,
-          createdBy: row.educationMaterialCreatedBy,
-          createdAt: row.educationMaterial.createdAt,
-          updatedAt: row.educationMaterial.updatedAt,
-        },
-        createdBy: row.createdBy,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
-      }));
+      const educationList: EducationListItem[] = rows.map(mapStandardRowToEducationListItem);
 
       return {
         success: true,

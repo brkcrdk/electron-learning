@@ -4,6 +4,7 @@ import { ipcMain } from 'electron';
 import type { ApiResponseProps, PaginatedData, PaginationParams } from 'types/api-response-types';
 
 import { getCurrentUser } from '@api/user-session';
+import { mapAssignmentRowToEducationListItem } from '@api/utils/education-list-item-mapper';
 import { buildPaginatedResponse, getCount, normalizePaginationParams } from '@api/utils/pagination';
 import { getDb } from '@db/client';
 import {
@@ -15,7 +16,6 @@ import {
   mediaFiles,
   users,
   type EducationAssignmentListItem,
-  type EducationListItem,
 } from '@db/schema';
 
 function getAssigmentList() {
@@ -40,22 +40,26 @@ function getAssigmentList() {
 
       const { page, limit, offset } = normalizePaginationParams(params);
 
+      // User aliases for assignments
       const createdByUser = alias(users, 'assignment_created_by_user');
       const assigneeUser = alias(users, 'assignment_assignee_user');
+
+      // User and file aliases for education relations
       const educationCreatedBy = alias(users, 'education_created_by');
       const materialContentFile = alias(mediaFiles, 'material_content_file');
       const materialCreatedBy = alias(users, 'material_created_by');
 
       const dataQuery = db
         .select({
+          // Assignment fields
           id: educationAssignments.id,
-          educationId: educationAssignments.educationId,
-          createdAt: educationAssignments.createdAt,
-          updatedAt: educationAssignments.updatedAt,
           title: educationAssignments.title,
           description: educationAssignments.description,
+          createdAt: educationAssignments.createdAt,
+          updatedAt: educationAssignments.updatedAt,
           createdBy: getTableColumns(createdByUser),
           assignee: getTableColumns(assigneeUser),
+          // Education fields
           education: {
             id: educations.id,
             name: educations.name,
@@ -71,16 +75,19 @@ function getAssigmentList() {
           educationCreatedBy: getTableColumns(educationCreatedBy),
         })
         .from(educationAssignments)
+        // Assignment joins
         .innerJoin(createdByUser, eq(educationAssignments.createdBy, createdByUser.id))
+        .leftJoin(educationAssignees, eq(educationAssignments.id, educationAssignees.assignmentId))
+        .leftJoin(assigneeUser, eq(educationAssignees.assigneeUserId, assigneeUser.id))
+        // Education joins
         .innerJoin(educations, eq(educationAssignments.educationId, educations.id))
         .innerJoin(categories, eq(educations.categoryId, categories.id))
         .leftJoin(mediaFiles, eq(educations.coverImageId, mediaFiles.id))
-        .innerJoin(educationMaterials, eq(educations.educationMaterial, educationMaterials.id))
         .innerJoin(educationCreatedBy, eq(educations.createdBy, educationCreatedBy.id))
+        // Education material joins
+        .innerJoin(educationMaterials, eq(educations.educationMaterial, educationMaterials.id))
         .innerJoin(materialContentFile, eq(educationMaterials.contentFileId, materialContentFile.id))
         .innerJoin(materialCreatedBy, eq(educationMaterials.createdBy, materialCreatedBy.id))
-        .leftJoin(educationAssignees, eq(educationAssignments.id, educationAssignees.assignmentId))
-        .leftJoin(assigneeUser, eq(educationAssignees.assigneeUserId, assigneeUser.id))
         .orderBy(desc(educationAssignments.createdAt))
         .limit(limit)
         .offset(offset);
@@ -95,27 +102,6 @@ function getAssigmentList() {
         const assignee = row.assignee?.id ? row.assignee : null;
         const existing = assignmentMap.get(row.id);
 
-        const educationListItem: EducationListItem = {
-          id: row.education.id,
-          name: row.education.name,
-          description: row.education.description,
-          category: row.category,
-          coverImage: row.coverImage ?? null,
-          educationMaterial: {
-            id: row.educationMaterial.id,
-            name: row.educationMaterial.name,
-            description: row.educationMaterial.description,
-            contentType: row.educationMaterial.contentType,
-            contentFile: row.educationMaterialContentFile,
-            createdBy: row.educationMaterialCreatedBy,
-            createdAt: row.educationMaterial.createdAt,
-            updatedAt: row.educationMaterial.updatedAt,
-          },
-          createdBy: row.educationCreatedBy,
-          createdAt: row.education.createdAt,
-          updatedAt: row.education.updatedAt,
-        };
-
         if (!existing) {
           assignmentMap.set(row.id, {
             id: row.id,
@@ -125,7 +111,7 @@ function getAssigmentList() {
             description: row.description,
             createdBy: row.createdBy,
             assignees: assignee ? [assignee] : [],
-            education: educationListItem,
+            education: mapAssignmentRowToEducationListItem(row),
           });
         } else if (assignee) {
           existing.assignees.push(assignee);
