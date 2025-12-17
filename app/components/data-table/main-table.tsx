@@ -1,9 +1,10 @@
+import { useState } from 'react';
+
 import {
   getCoreRowModel,
   getExpandedRowModel,
   useReactTable,
   type ColumnDef,
-  type OnChangeFn,
   type RowSelectionState,
   type SortDirection,
   type SortingState,
@@ -29,7 +30,7 @@ export type RowSelectionProps<T> =
   | {
       enableRowSelection: true;
       rowSelection: RowSelectionState;
-      onRowSelectionChange: OnChangeFn<RowSelectionState>;
+      onRowSelectionChange: (val: RowSelectionState) => void;
       /**
        * Eğer rowlar seçerken indexine göre değilde bizim belirteceğimiz row indexine göre
        * seçip ona göre saklarız
@@ -89,6 +90,8 @@ function MainTable<T>({
     onRowSelectionChange: () => {},
   },
 }: TableProps<T>) {
+  const [rowSelectionState, setRowSelectionState] = useState<RowSelectionState>(rowSelectionProps?.enableRowSelection ? rowSelectionProps.rowSelection : {});
+
   const { computedColumns, computedColumnPinning } = useTableColumns({
     columns,
     pinnedColumns,
@@ -100,7 +103,7 @@ function MainTable<T>({
     columns: computedColumns,
     state: {
       sorting: sortingProps.sorting,
-      rowSelection: rowSelectionProps.enableRowSelection ? rowSelectionProps.rowSelection : {},
+      rowSelection: rowSelectionProps.enableRowSelection ? rowSelectionState : {},
       columnPinning: {
         left: computedColumnPinning,
       },
@@ -111,7 +114,16 @@ function MainTable<T>({
     enableExpanding: true,
     enableRowSelection: rowSelectionProps.enableRowSelection,
     getRowId: rowSelectionProps.enableRowSelection ? rowSelectionProps.getRowId : undefined,
-    onRowSelectionChange: rowSelectionProps.enableRowSelection ? rowSelectionProps.onRowSelectionChange : undefined,
+    onRowSelectionChange: updater => {
+      if (!rowSelectionProps.enableRowSelection) return;
+      setRowSelectionState(old => {
+        const newState = typeof updater === 'function' ? updater(old) : updater;
+
+        rowSelectionProps.onRowSelectionChange(newState);
+
+        return newState;
+      });
+    },
     getCoreRowModel: getCoreRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
     debugTable: import.meta.env.DEV,
