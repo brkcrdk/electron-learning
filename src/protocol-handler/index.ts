@@ -25,7 +25,7 @@ import nodeStreamToWebStream from './stream-converter';
  * - HTTP Range Request (206 Partial Content) desteği eklendi
  * - Video player'ların seek işlemlerini düzgün çalıştırması için gerekli
  */
-function registerContentProtocol() {
+function protocolHandler() {
   protocol.handle('content', request => {
     try {
       // URL'den relative path'i al
@@ -134,5 +134,5 @@ function registerContentProtocol() {
   });
 }
 
-export default registerContentProtocol;
+export default protocolHandler;
 export { registerContentProtocolPrivileges };

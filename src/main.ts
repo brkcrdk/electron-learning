@@ -6,8 +6,8 @@ import started from 'electron-squirrel-startup';
 import registerApiHandlers from '@api/index';
 import { closeDatabase, initializeDatabase } from '@db/client';
 
+import protocolHandler, { registerContentProtocolPrivileges } from './protocol-handler';
 import registerStoreHandlers, { store } from '../store';
-import registerContentProtocol, { registerContentProtocolPrivileges } from './protocol-handler';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -61,7 +61,7 @@ const createWindow = () => {
 app.whenReady().then(async () => {
   try {
     // Custom protocol handler'ı kaydet (userData içindeki dosyaları serve etmek için)
-    registerContentProtocol();
+    protocolHandler();
 
     // Veritabanını başlat
     initializeDatabase(app);
