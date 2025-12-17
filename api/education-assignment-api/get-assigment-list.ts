@@ -6,7 +6,7 @@ import type { ApiResponseProps, PaginatedData, PaginationParams } from 'types/ap
 import { getCurrentUser } from '@api/user-session';
 import { buildPaginatedResponse, getCount, normalizePaginationParams } from '@api/utils/pagination';
 import { getDb } from '@db/client';
-import { educationAssignments, educationAssignees, users, type EducationAssignmentListItem } from '@db/schema';
+import { educationAssignments, educationAssignees, educations, users, type EducationAssignmentListItem } from '@db/schema';
 
 function getAssigmentList() {
   ipcMain.handle('get-education-assignment-list', async (_, params: PaginationParams = {}): ApiResponseProps<PaginatedData<EducationAssignmentListItem>> => {
@@ -43,9 +43,11 @@ function getAssigmentList() {
           description: educationAssignments.description,
           createdBy: getTableColumns(createdByUser),
           assignee: getTableColumns(assigneeUser),
+          education: getTableColumns(educations),
         })
         .from(educationAssignments)
         .innerJoin(createdByUser, eq(educationAssignments.createdBy, createdByUser.id))
+        .innerJoin(educations, eq(educationAssignments.educationId, educations.id))
         .leftJoin(educationAssignees, eq(educationAssignments.id, educationAssignees.assignmentId))
         .leftJoin(assigneeUser, eq(educationAssignees.assigneeUserId, assigneeUser.id))
         .orderBy(desc(educationAssignments.createdAt))
@@ -65,13 +67,13 @@ function getAssigmentList() {
         if (!existing) {
           assignmentMap.set(row.id, {
             id: row.id,
-            educationId: row.educationId,
             createdAt: row.createdAt,
             updatedAt: row.updatedAt,
             title: row.title,
             description: row.description,
             createdBy: row.createdBy,
             assignees: assignee ? [assignee] : [],
+            education: row.education,
           });
         } else if (assignee) {
           existing.assignees.push(assignee);

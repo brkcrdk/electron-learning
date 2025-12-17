@@ -1,7 +1,7 @@
 import { sql } from 'drizzle-orm';
 import { integer, sqliteTable, index, foreignKey, text } from 'drizzle-orm/sqlite-core';
 
-import { educations } from './educations';
+import { type Education, educations } from './educations';
 import { users, type User } from './users';
 
 export const educationAssignments = sqliteTable(
@@ -38,7 +38,8 @@ export type EducationAssignment = typeof educationAssignments.$inferSelect;
 export type MutateEducationAssignmentPayload = Omit<typeof educationAssignments.$inferInsert, 'createdBy' | 'createdAt' | 'updatedAt'> & {
   assigneeUserIds: number[];
 };
-export type EducationAssignmentListItem = Omit<EducationAssignment, 'createdBy'> & {
+export type EducationAssignmentListItem = Omit<EducationAssignment, 'createdBy' | 'educationId'> & {
   assignees: User[];
   createdBy: User;
+  education: Education;
 };
