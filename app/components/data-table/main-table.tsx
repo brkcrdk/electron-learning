@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import {
   getCoreRowModel,
   getExpandedRowModel,
@@ -20,6 +18,7 @@ import TableHead from './table-head';
 import TableHeader from './table-header';
 import type { TableActionsProps } from './table-header/table-actions';
 import { type TableSearchProps } from './table-header/table-search-bar';
+import useRowSelection from './use-row-selection';
 import useTableColumns from './use-table-columns';
 import Table from '../ui/table';
 
@@ -90,7 +89,7 @@ function MainTable<T>({
     onRowSelectionChange: () => {},
   },
 }: TableProps<T>) {
-  const [rowSelectionState, setRowSelectionState] = useState<RowSelectionState>(rowSelectionProps?.enableRowSelection ? rowSelectionProps.rowSelection : {});
+  const { rowSelectionState, setRowSelectionState } = useRowSelection(rowSelectionProps);
 
   const { computedColumns, computedColumnPinning } = useTableColumns({
     columns,
@@ -103,7 +102,7 @@ function MainTable<T>({
     columns: computedColumns,
     state: {
       sorting: sortingProps.sorting,
-      rowSelection: rowSelectionProps.enableRowSelection ? rowSelectionState : {},
+      rowSelection: rowSelectionState,
       columnPinning: {
         left: computedColumnPinning,
       },
