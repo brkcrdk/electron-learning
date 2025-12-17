@@ -3,11 +3,15 @@ import Card from '@app/components/ui/card';
 import Dialog from '@app/components/ui/dialog';
 import Icon from '@app/components/ui/icon';
 
-function StorylineHeader() {
+interface Props {
+  title?: string;
+}
+
+function StorylineHeader({ title = 'Storyline İçeriği' }: Props) {
   return (
     <Card.Header className="flex items-center justify-between border-b">
       {/* Title traffic light ışıklarının üstüne bindiği için soldan boşluk bırakıyoruz. */}
-      <Dialog.Title className="webkit-no-draggable ml-24 text-2xl font-medium">Storyline Viewer</Dialog.Title>
+      <Dialog.Title className="webkit-no-draggable ml-24 text-lg font-medium">{title}</Dialog.Title>
       <Dialog.Close asChild>
         <Button
           className="webkit-no-draggable"

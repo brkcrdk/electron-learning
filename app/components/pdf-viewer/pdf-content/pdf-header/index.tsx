@@ -5,11 +5,15 @@ import Icon from '@app/components/ui/icon';
 
 import PdfZoomControl from './pdf-zoom-control';
 
-function PdfHeader() {
+interface Props {
+  title?: string;
+}
+
+function PdfHeader({ title = 'PDF İçeriği' }: Props) {
   return (
     <Card.Header className="flex items-center justify-between border-b">
       {/* Title traffic light ışıklarının üstüne bindiği için soldan boşluk bırakıyoruz. */}
-      <Dialog.Title className="webkit-no-draggable ml-24 text-2xl font-medium">Test File</Dialog.Title>
+      <Dialog.Title className="webkit-no-draggable ml-24 text-lg font-medium">{title}</Dialog.Title>
       <PdfZoomControl />
       <Dialog.Close asChild>
         <Button

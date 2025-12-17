@@ -9,9 +9,10 @@ import VideoPlayer, { type VideoPlayerProps } from './video-player';
 interface Props {
   videoProps: VideoPlayerProps;
   triggerProps: ComponentProps<typeof Dialog.Trigger>;
+  title?: string;
 }
 
-function VideoViewer({ videoProps, triggerProps }: Props) {
+function VideoViewer({ videoProps, triggerProps, title }: Props) {
   return (
     <Dialog>
       <Dialog.Trigger {...triggerProps} />
@@ -20,7 +21,7 @@ function VideoViewer({ videoProps, triggerProps }: Props) {
         showCloseButton={false}
       >
         <Card className="pointer-events-auto relative overflow-hidden border-none">
-          <VideoHeader />
+          <VideoHeader videoName={title} />
           <Card.Content>
             <VideoPlayer {...videoProps} />
           </Card.Content>

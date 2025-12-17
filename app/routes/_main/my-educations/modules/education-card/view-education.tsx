@@ -13,6 +13,7 @@ function ViewEducation({ educationMaterial }: Props) {
   if (educationMaterial.contentType === 'pdfs') {
     return (
       <PdfViewer
+        title={educationMaterial.name}
         triggerProps={{
           asChild: true,
           children: <Button>Eğitimi Görüntüle</Button>,
@@ -27,6 +28,7 @@ function ViewEducation({ educationMaterial }: Props) {
   if (educationMaterial.contentType === 'video') {
     return (
       <VideoViewer
+        title={educationMaterial.name}
         triggerProps={{
           asChild: true,
           children: <Button>Eğitimi Görüntüle</Button>,
@@ -42,6 +44,7 @@ function ViewEducation({ educationMaterial }: Props) {
     return (
       <StorylineViewer
         storyLink={getContentPath(educationMaterial.contentFile.filePath)}
+        title={educationMaterial.name}
         triggerProps={{
           asChild: true,
           children: <Button>Eğitimi Görüntüle</Button>,

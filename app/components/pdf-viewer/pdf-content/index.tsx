@@ -11,9 +11,10 @@ import PageList from './page-list';
 
 export interface PdfContentProps {
   documentProps: DocumentProps;
+  title?: string;
 }
 
-function PdfContent({ documentProps }: PdfContentProps) {
+function PdfContent({ documentProps, title }: PdfContentProps) {
   const [errorStatus, setErrorStatus] = useState<string>('');
   const [pageCount, setPageCount] = useState<number>(0);
   const documentWrapperRef = useRef<HTMLDivElement | null>(null);
@@ -40,7 +41,7 @@ function PdfContent({ documentProps }: PdfContentProps) {
 
   return (
     <Card className="pointer-events-auto relative overflow-hidden border-none">
-      <PdfHeader />
+      <PdfHeader title={title} />
 
       <Document
         {...documentProps}

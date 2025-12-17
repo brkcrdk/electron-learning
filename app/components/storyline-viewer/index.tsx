@@ -8,9 +8,10 @@ import StorylineHeader from './storyline-header';
 interface Props {
   storyLink: string;
   triggerProps: ComponentProps<typeof Dialog.Trigger>;
+  title?: string;
 }
 
-function StorylineViewer({ storyLink, triggerProps }: Props) {
+function StorylineViewer({ storyLink, triggerProps, title }: Props) {
   return (
     <Dialog>
       <Dialog.Trigger {...triggerProps} />
@@ -19,7 +20,7 @@ function StorylineViewer({ storyLink, triggerProps }: Props) {
         showCloseButton={false}
       >
         <Card className="pointer-events-auto relative overflow-hidden border-none">
-          <StorylineHeader />
+          <StorylineHeader title={title} />
           <Card.Content>
             <iframe
               src={storyLink}

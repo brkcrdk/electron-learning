@@ -16,6 +16,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
 interface Props {
   documentProps: DocumentProps;
   triggerProps: ComponentProps<typeof Dialog.Trigger>;
+  title?: string;
 }
 
 function PdfViewer({ documentProps, triggerProps }: Props) {

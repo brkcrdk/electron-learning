@@ -18,6 +18,10 @@ function EducationalMaterialViewer({ mediaFile, title = '' }: Props) {
   if (mediaFile.mediaType === 'pdfs') {
     return (
       <PdfViewer
+        title={title}
+        documentProps={{
+          file: getContentPath(mediaFile.filePath),
+        }}
         triggerProps={{
           asChild: true,
           children: (
@@ -30,9 +34,6 @@ function EducationalMaterialViewer({ mediaFile, title = '' }: Props) {
             </Button>
           ),
         }}
-        documentProps={{
-          file: getContentPath(mediaFile.filePath),
-        }}
       />
     );
   }
@@ -40,6 +41,11 @@ function EducationalMaterialViewer({ mediaFile, title = '' }: Props) {
   if (mediaFile.mediaType === 'video') {
     return (
       <VideoViewer
+        title={title}
+        videoProps={{
+          src: getContentPath(mediaFile.filePath),
+          title: mediaFile.fileName,
+        }}
         triggerProps={{
           asChild: true,
           children: (
@@ -52,16 +58,13 @@ function EducationalMaterialViewer({ mediaFile, title = '' }: Props) {
             </Button>
           ),
         }}
-        videoProps={{
-          src: getContentPath(mediaFile.filePath),
-          title: mediaFile.fileName,
-        }}
       />
     );
   }
   if (mediaFile.mediaType === 'stories') {
     return (
       <StorylineViewer
+        title={title}
         storyLink={getContentPath(mediaFile.filePath)}
         triggerProps={{
           asChild: true,
