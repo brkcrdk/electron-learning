@@ -3,6 +3,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 import MediaViewerCell from '@app/components/table-cells/media-viewer-cell';
 import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
 import UserCell from '@app/components/table-cells/user-cell';
+import Badge from '@app/components/ui/badge';
 import type { EducationAssignmentListItem } from '@db/schema';
 
 function useColumns(): ColumnDef<EducationAssignmentListItem>[] {
@@ -43,7 +44,7 @@ function useColumns(): ColumnDef<EducationAssignmentListItem>[] {
       accessorKey: 'updatedAt',
       cell: info => info.getValue(),
       accessorFn: ({ assigneeCount }) => {
-        return assigneeCount;
+        return <Badge>{assigneeCount} Kişi</Badge>;
       },
       meta: {
         centeredColumn: true,
