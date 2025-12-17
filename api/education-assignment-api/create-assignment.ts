@@ -6,7 +6,7 @@ import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
 import { educations, educationAssignments, educationAssignees, type MutateEducationAssignmentPayload } from '@db/schema';
 
-function createAssigment() {
+function createAssignment() {
   ipcMain.handle('create-education-assignment', async (_, payload: MutateEducationAssignmentPayload): ApiResponseProps<string> => {
     try {
       const db = getDb();
@@ -63,4 +63,4 @@ function createAssigment() {
   });
 }
 
-export default createAssigment;
+export default createAssignment;

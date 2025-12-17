@@ -1,13 +1,15 @@
-import createAssigment from './create-assigment';
-import deleteAssigment from './delete-assigment';
-import getAssigmentAssignees from './get-assigment-assignees';
-import getAssigmentList from './get-assigment-list';
+import createAssignment from './create-assignment';
+import deleteAssignment from './delete-assignment';
+import getAssignmentAssignees from './get-assignment-assignees';
+import getAssignmentList from './get-assignment-list';
+import updateAssignment from './update-assignment';
 
 function educationAssignmentApi() {
-  createAssigment();
-  deleteAssigment();
-  getAssigmentList();
-  getAssigmentAssignees();
+  createAssignment();
+  deleteAssignment();
+  getAssignmentList();
+  getAssignmentAssignees();
+  updateAssignment();
 }
 
 export default educationAssignmentApi;

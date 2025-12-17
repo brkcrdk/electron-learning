@@ -18,7 +18,7 @@ import {
   type EducationAssignmentListItem,
 } from '@db/schema';
 
-function getAssigmentList() {
+function getAssignmentList() {
   ipcMain.handle('get-education-assignment-list', async (_, params: PaginationParams = {}): ApiResponseProps<PaginatedData<EducationAssignmentListItem>> => {
     try {
       const db = getDb();
@@ -127,4 +127,4 @@ function getAssigmentList() {
   });
 }
 
-export default getAssigmentList;
+export default getAssignmentList;

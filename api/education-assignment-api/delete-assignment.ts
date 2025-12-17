@@ -6,7 +6,7 @@ import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
 import { educationAssignments, type EducationAssignment } from '@db/schema';
 
-function deleteAssigment() {
+function deleteAssignment() {
   ipcMain.handle('delete-education-assignment', async (_, assignmentId: EducationAssignment['id']): ApiResponseProps<string> => {
     try {
       const db = getDb();
@@ -46,4 +46,4 @@ function deleteAssigment() {
   });
 }
 
-export default deleteAssigment;
+export default deleteAssignment;

@@ -38,6 +38,11 @@ export type EducationAssignment = typeof educationAssignments.$inferSelect;
 export type MutateEducationAssignmentPayload = Omit<typeof educationAssignments.$inferInsert, 'createdBy' | 'createdAt' | 'updatedAt'> & {
   assigneeUserIds: number[];
 };
+
+export type UpdateEducationAssignmentPayload = Omit<MutateEducationAssignmentPayload, 'id'> & {
+  assignmentId: EducationAssignment['id'];
+};
+
 export type EducationAssignmentListItem = Omit<EducationAssignment, 'createdBy' | 'educationId'> & {
   assigneeCount: number;
   createdBy: User;

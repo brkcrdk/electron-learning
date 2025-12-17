@@ -6,7 +6,7 @@ import { getCurrentUser } from '@api/user-session';
 import { getDb } from '@db/client';
 import { educationAssignees, users, type EducationAssignmentListItem, type User } from '@db/schema';
 
-function getAssigmentAssignees() {
+function getAssignmentAssignees() {
   ipcMain.handle('get-education-assignment-assignees', async (_, assignmentId: EducationAssignmentListItem['id']): ApiResponseProps<User[]> => {
     try {
       const db = getDb();
@@ -47,4 +47,4 @@ function getAssigmentAssignees() {
   });
 }
 
-export default getAssigmentAssignees;
+export default getAssignmentAssignees;

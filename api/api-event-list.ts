@@ -11,7 +11,7 @@ import type {
   User,
   CategoryWithChildren,
 } from '@db/schema';
-import type { EducationAssignmentListItem, MutateEducationAssignmentPayload } from '@db/schema/education-assignment';
+import type { EducationAssignmentListItem, MutateEducationAssignmentPayload, UpdateEducationAssignmentPayload } from '@db/schema/education-assignment';
 
 import type { LoginPayload } from './session-api/login';
 import type { UploadFilePayload } from './upload-file-api';
@@ -72,6 +72,7 @@ const apiEventList = {
   getEducationAssignmentAssignees: (data: EducationAssignmentListItem['id']): ApiResponseProps<User[]> =>
     ipcRenderer.invoke('get-education-assignment-assignees', data),
   deleteEducationAssignment: (data: EducationAssignmentListItem['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-education-assignment', data),
+  updateEducationAssignment: (data: UpdateEducationAssignmentPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-education-assignment', data),
 } as const;
 
 export default apiEventList;
