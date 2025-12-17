@@ -94,6 +94,8 @@ function getAssigmentList() {
         .innerJoin(educationMaterials, eq(educations.educationMaterial, educationMaterials.id))
         .innerJoin(materialContentFile, eq(educationMaterials.contentFileId, materialContentFile.id))
         .innerJoin(materialCreatedBy, eq(educationMaterials.createdBy, materialCreatedBy.id))
+        // Assignee counts (aggregated) join
+        .leftJoin(assigneeCounts, eq(assigneeCounts.assignmentId, educationAssignments.id))
         .orderBy(desc(educationAssignments.createdAt))
         .limit(limit)
         .offset(offset);

@@ -42,8 +42,8 @@ function useColumns(): ColumnDef<EducationAssignmentListItem>[] {
       header: 'Atanan Kullanıcı Sayısı',
       accessorKey: 'updatedAt',
       cell: info => info.getValue(),
-      accessorFn: ({ assignees }) => {
-        return assignees.length;
+      accessorFn: ({ assigneeCount }) => {
+        return assigneeCount;
       },
       meta: {
         centeredColumn: true,
