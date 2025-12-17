@@ -39,6 +39,7 @@ function Pagination({ totalPages, currentPage, maxVisiblePages = 4, onPageChange
           disabled={currentPage === 1 || disabled}
           onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
           variant="secondary"
+          type="button"
         >
           <Icon
             name="chevron-left"
@@ -57,6 +58,7 @@ function Pagination({ totalPages, currentPage, maxVisiblePages = 4, onPageChange
                 disabled={disabled}
                 onClick={() => handlePageChange(item)}
                 variant={currentPage === item ? 'default' : 'secondary'}
+                type="button"
               >
                 {item}
               </Button>
@@ -71,6 +73,7 @@ function Pagination({ totalPages, currentPage, maxVisiblePages = 4, onPageChange
                   }
                 }}
                 variant="secondary"
+                type="button"
               >
                 ...
               </Button>
@@ -83,6 +86,7 @@ function Pagination({ totalPages, currentPage, maxVisiblePages = 4, onPageChange
           onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
           disabled={currentPage === totalPages || disabled}
           variant="secondary"
+          type="button"
         >
           <Icon
             name="chevron-right"

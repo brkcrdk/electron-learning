@@ -28,6 +28,7 @@ function TableFooter({ paginationProps }: Props) {
             <Button
               variant="secondary"
               className="px-2"
+              type="button"
             >
               {limit}
               <Icon
