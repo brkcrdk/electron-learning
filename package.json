@@ -1,7 +1,7 @@
 {
   "name": "bakim-egitim-istasyonu",
   "productName": "Bakım Eğitim İstasyonu",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Bakım Eğitim İstasyonu Uygulaması",
   "main": ".vite/build/main.js",
   "scripts": {
