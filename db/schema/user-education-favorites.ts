@@ -1,8 +1,8 @@
 import { sql } from 'drizzle-orm';
 import { integer, sqliteTable, index, foreignKey, unique } from 'drizzle-orm/sqlite-core';
 
-import { educations } from './educations';
-import { users } from './users';
+import { educations, type EducationListItem } from './educations';
+import { users, type User } from './users';
 
 export const userEducationFavorites = sqliteTable(
   'user_education_favorites',
@@ -31,3 +31,15 @@ export const userEducationFavorites = sqliteTable(
 
 export type UserEducationFavorite = typeof userEducationFavorites.$inferSelect;
 export type MutateUserEducationFavoritePayload = typeof userEducationFavorites.$inferInsert;
+
+export type UserEducationFavoriteListItem = Omit<UserEducationFavorite, 'userId' | 'educationId'> & {
+  education: EducationListItem;
+  user: User;
+};
+
+/**
+ * Mevcut kullanıcın kendi favorilerini listelemek için kullanılan tip
+ * `user` alanı mevcut kullanıcıya kendisine ait içerikler gönderileceği için
+ * listeye dahil edilmedi.
+ */
+export type CurrentUserFavoritesListItem = Omit<UserEducationFavoriteListItem, 'user'>;
