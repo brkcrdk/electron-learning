@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm';
-import { integer, sqliteTable, index, foreignKey, unique, text } from 'drizzle-orm/sqlite-core';
+import { integer, sqliteTable, index, foreignKey, unique } from 'drizzle-orm/sqlite-core';
 
 import { educationAssignments } from './education-assignment';
 import { users } from './users';
@@ -10,8 +10,6 @@ export const educationAssignees = sqliteTable(
     id: integer('id').primaryKey({ autoIncrement: true }),
     assignmentId: integer('assignment_id').notNull(),
     assigneeUserId: integer('assignee_user_id').notNull(),
-    title: text('title').notNull().default(''),
-    description: text('description').notNull().default(''),
     createdAt: integer('created_at', { mode: 'timestamp' })
       .notNull()
       .default(sql`(unixepoch())`),
