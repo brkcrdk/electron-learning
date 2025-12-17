@@ -1,25 +1,35 @@
-import type { ComponentProps } from 'react';
-
 import getContentPath from '@app/utils/get-content-path';
 import type { MediaFile } from '@db/schema';
 
 import PdfViewer from '../pdf-viewer';
 import StorylineViewer from '../storyline-viewer';
-import type Dialog from '../ui/dialog';
+import Button from '../ui/button';
+import Icon from '../ui/icon';
 import VideoViewer from '../video-viewer';
 
 type ContentProps = Pick<MediaFile, 'filePath' | 'fileName' | 'mediaType'>;
 
 interface Props {
   mediaFile: ContentProps;
-  triggerProps: ComponentProps<typeof Dialog.Trigger>;
+  title?: string;
 }
 
-function EducationalMaterialViewer({ mediaFile, triggerProps }: Props) {
+function EducationalMaterialViewer({ mediaFile, title = '' }: Props) {
   if (mediaFile.mediaType === 'pdfs') {
     return (
       <PdfViewer
-        triggerProps={triggerProps}
+        triggerProps={{
+          asChild: true,
+          children: (
+            <Button variant="outline">
+              <Icon
+                name="file-pdf"
+                className="size-5"
+              />
+              {title}
+            </Button>
+          ),
+        }}
         documentProps={{
           file: getContentPath(mediaFile.filePath),
         }}
@@ -30,7 +40,18 @@ function EducationalMaterialViewer({ mediaFile, triggerProps }: Props) {
   if (mediaFile.mediaType === 'video') {
     return (
       <VideoViewer
-        triggerProps={triggerProps}
+        triggerProps={{
+          asChild: true,
+          children: (
+            <Button variant="outline">
+              <Icon
+                name="file-image"
+                className="size-5"
+              />
+              {title}
+            </Button>
+          ),
+        }}
         videoProps={{
           src: getContentPath(mediaFile.filePath),
           title: mediaFile.fileName,
@@ -42,7 +63,18 @@ function EducationalMaterialViewer({ mediaFile, triggerProps }: Props) {
     return (
       <StorylineViewer
         storyLink={getContentPath(mediaFile.filePath)}
-        triggerProps={triggerProps}
+        triggerProps={{
+          asChild: true,
+          children: (
+            <Button variant="outline">
+              <Icon
+                name="file-easel"
+                className="size-5"
+              />
+              {title}
+            </Button>
+          ),
+        }}
       />
     );
   }

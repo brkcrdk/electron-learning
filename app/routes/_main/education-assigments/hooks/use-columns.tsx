@@ -1,8 +1,8 @@
 import type { ColumnDef } from '@tanstack/react-table';
 
+import MediaViewerCell from '@app/components/table-cells/media-viewer-cell';
 import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
 import UserCell from '@app/components/table-cells/user-cell';
-import Badge from '@app/components/ui/badge';
 import type { EducationAssignmentListItem } from '@db/schema';
 
 function useColumns(): ColumnDef<EducationAssignmentListItem>[] {
@@ -16,7 +16,12 @@ function useColumns(): ColumnDef<EducationAssignmentListItem>[] {
       accessorKey: 'education',
       cell: info => info.getValue(),
       accessorFn: ({ education }) => {
-        return <Badge>{education.name}</Badge>;
+        return (
+          <MediaViewerCell
+            mediaFile={education.educationMaterial.contentFile}
+            title={education.name}
+          />
+        );
       },
       meta: {
         centeredColumn: true,
