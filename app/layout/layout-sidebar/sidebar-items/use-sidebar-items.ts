@@ -73,7 +73,7 @@ function useSidebarItems() {
       label: 'Eğitim Atamaları',
       itemKey: 'education-assignments',
       icon: 'person-check',
-      isActive: pathname.startsWith('/education-assigments'),
+      isActive: pathname.startsWith('/education-assignments'),
       isProtected: currentUser?.role === 'user',
       routeProps: {
         to: '/education-assignments',
