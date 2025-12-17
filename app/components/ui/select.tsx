@@ -7,8 +7,7 @@ import cn from '@app/utils/cn';
 
 import Field from './field';
 
-export interface SelectProps<TOption, TIsMulti extends boolean = false, TGroup extends GroupBase<TOption> = GroupBase<TOption>>
-  extends Props<TOption, TIsMulti, TGroup> {
+export interface SelectProps<TOption, TIsMulti extends boolean = false, TGroup extends GroupBase<TOption> = GroupBase<TOption>> extends Props<TOption, TIsMulti, TGroup> {
   ref?: Ref<SelectInstance<TOption, TIsMulti, TGroup>>;
   label?: string;
   errorMessage?: string;
