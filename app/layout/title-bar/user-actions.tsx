@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 
 import Avatar from '@app/components/ui/avatar';
@@ -5,7 +6,7 @@ import Button from '@app/components/ui/button';
 import Dropdown from '@app/components/ui/dropdown';
 import Icon from '@app/components/ui/icon';
 import type { IconListProps } from '@app/components/ui/icon/icon-list';
-import useCurrentUserQuery from '@app/hooks/use-current-user-query';
+import currentUserQuery from '@app/services/current-user-query';
 
 interface DropdownItem {
   dropdownItemId: string;
@@ -30,7 +31,7 @@ const dropdownItems: DropdownItem[] = [
 ];
 
 function UserActions() {
-  const { data, isLoading } = useCurrentUserQuery();
+  const { data, isLoading } = useQuery(currentUserQuery);
 
   if (isLoading) {
     return <div className="skeleton size-6 rounded-sm" />;

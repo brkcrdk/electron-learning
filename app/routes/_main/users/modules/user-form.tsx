@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { useQuery } from '@tanstack/react-query';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import InputField from '@app/components/form-fields/input-field';
@@ -7,7 +8,7 @@ import PasswordField from '@app/components/form-fields/password-field';
 import SwitchField from '@app/components/form-fields/switch-field';
 import Field from '@app/components/ui/field';
 import Select from '@app/components/ui/select';
-import useCurrentUserQuery from '@app/hooks/use-current-user-query';
+import currentUserQuery from '@app/services/current-user-query';
 import { usernameValidation, passwordValidation } from '@app/utils/form-validations';
 import type { User } from '@db/schema';
 
@@ -40,7 +41,7 @@ interface Props {
 
 function UserForm({ isSelfUpdate }: Props) {
   const { control } = useFormContext<UserFormInputs>();
-  const { data: currentUser } = useCurrentUserQuery();
+  const { data: currentUser } = useQuery(currentUserQuery);
 
   const computedUserRoleOptions = useMemo(() => {
     if (currentUser && currentUser.role === 'super-admin') {

@@ -1,7 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
 import { useLocation, type LinkProps } from '@tanstack/react-router';
 
 import type { IconListProps } from '@app/components/ui/icon/icon-list';
-import useCurrentUserQuery from '@app/hooks/use-current-user-query';
+import currentUserQuery from '@app/services/current-user-query';
 
 export interface SidebarItem {
   label: string;
@@ -15,7 +16,7 @@ export interface SidebarItem {
 function useSidebarItems() {
   const { pathname } = useLocation();
 
-  const { data: currentUser } = useCurrentUserQuery();
+  const { data: currentUser } = useQuery(currentUserQuery);
 
   const sidebarItems: SidebarItem[] = [
     {

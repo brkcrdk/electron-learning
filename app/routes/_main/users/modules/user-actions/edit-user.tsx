@@ -1,9 +1,9 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FormProvider, useForm, useFormState } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import Skeleton from '@app/components/ui/skeleton';
-import useCurrentUserQuery from '@app/hooks/use-current-user-query';
+import currentUserQuery from '@app/services/current-user-query';
 import type { User } from '@db/schema';
 
 import type { UserFormInputs } from '../user-form';
@@ -15,7 +15,7 @@ interface Props {
 
 function EditUser({ user }: Props) {
   const queryClient = useQueryClient();
-  const { data: currentUser } = useCurrentUserQuery();
+  const { data: currentUser } = useQuery(currentUserQuery);
 
   const { mutateAsync } = useMutation({
     mutationFn: (data: UserFormInputs) => {
