@@ -2,6 +2,7 @@ import type { ComponentProps } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 
+import categoryListQuery from '@app/services/category-list-query';
 import type { Category } from '@db/schema';
 
 import Field from '../ui/field';
@@ -17,16 +18,7 @@ interface Props extends SelectTreeProps {
 }
 
 function CategoryTreeSelect({ error, label, inputId, ...props }: Props) {
-  const { data } = useQuery({
-    queryKey: ['query-list-category-detail'],
-    queryFn: async () => {
-      const response = await window.electronAPI.getCategoryList();
-      if (!response.success) {
-        throw response.error;
-      }
-      return response.data;
-    },
-  });
+  const { data } = useQuery(categoryListQuery);
 
   return (
     <Field className="min-w-60">
