@@ -1,31 +1,11 @@
-import { existsSync } from 'fs';
+import { existsSync, statSync, createReadStream } from 'fs';
 import { resolve, relative } from 'path';
-import { pathToFileURL } from 'url';
 
-import { app, net, protocol } from 'electron';
+import { app, protocol } from 'electron';
 
-/**
- * Custom protocol'ü privileged olarak kaydeder.
- * Bu işlem app.whenReady() ÖNCESİNDE yapılmalı!
- *
- * - standard: relative URL'lerin çalışması için gerekli
- * - secure: güvenli scheme olarak işaretler
- * - supportFetchAPI: fetch API'nin çalışması için gerekli
- * - stream: video/audio stream'lerinin düzgün çalışması için gerekli
- */
-export function registerContentProtocolPrivileges() {
-  protocol.registerSchemesAsPrivileged([
-    {
-      scheme: 'content',
-      privileges: {
-        standard: true,
-        secure: true,
-        supportFetchAPI: true,
-        stream: true,
-      },
-    },
-  ]);
-}
+import getContentType from './get-content-type';
+import registerContentProtocolPrivileges from './register-privileges';
+import nodeStreamToWebStream from './stream-converter';
 
 /**
  * Custom protocol handler'ı kaydeder.
@@ -40,6 +20,10 @@ export function registerContentProtocolPrivileges() {
  * Güvenlik:
  * - Yalnızca userData dizini altındaki dosyalara erişim sağlar
  * - Path traversal saldırılarına karşı relative() ile kontrol yapılır
+ *
+ * Video Seek Desteği:
+ * - HTTP Range Request (206 Partial Content) desteği eklendi
+ * - Video player'ların seek işlemlerini düzgün çalıştırması için gerekli
  */
 function registerContentProtocol() {
   protocol.handle('content', request => {
@@ -81,22 +65,68 @@ function registerContentProtocol() {
       // Eğer dosya userData dışındaysa, relative path ".." ile başlar
       const relativeToUserData = relative(userDataPath, resolvedFilePath);
 
-      const fileExists = existsSync(resolvedFilePath);
-
       if (relativeToUserData.startsWith('..')) {
         return new Response('Access denied', { status: 403 });
       }
 
       // Dosyanın varlığını kontrol et
-      if (!fileExists) {
+      if (!existsSync(resolvedFilePath)) {
         return new Response('File not found', { status: 404 });
       }
 
-      const filePath = resolvedFilePath;
+      // Dosya istatistiklerini al
+      const stats = statSync(resolvedFilePath);
+      const fileSize = stats.size;
+      const contentType = getContentType(resolvedFilePath);
 
-      // Dosyayı net.fetch ile file:// URL'si üzerinden serve et
-      const fileUrl = pathToFileURL(filePath).toString();
-      return net.fetch(fileUrl);
+      // Range header'ını kontrol et (video seek için gerekli)
+      const rangeHeader = request.headers.get('range');
+
+      if (rangeHeader) {
+        // Range request'i parse et
+        // Format: "bytes=start-end" veya "bytes=start-"
+        const parts = rangeHeader.replace(/bytes=/, '').split('-');
+        const start = parseInt(parts[0], 10);
+        const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+        const chunkSize = end - start + 1;
+
+        // Range validation
+        if (start >= fileSize || end >= fileSize || start > end || start < 0) {
+          return new Response('Range Not Satisfiable', {
+            status: 416,
+            headers: {
+              'Content-Range': `bytes */${fileSize}`,
+            },
+          });
+        }
+
+        // Dosyanın belirli bir bölümünü oku
+        const stream = createReadStream(resolvedFilePath, { start, end });
+        const webStream = nodeStreamToWebStream(stream);
+
+        return new Response(webStream, {
+          status: 206, // Partial Content
+          headers: {
+            'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+            'Accept-Ranges': 'bytes',
+            'Content-Length': chunkSize.toString(),
+            'Content-Type': contentType,
+          },
+        });
+      } else {
+        // Range header yoksa, tüm dosyayı gönder
+        const stream = createReadStream(resolvedFilePath);
+        const webStream = nodeStreamToWebStream(stream);
+
+        return new Response(webStream, {
+          status: 200,
+          headers: {
+            'Accept-Ranges': 'bytes',
+            'Content-Length': fileSize.toString(),
+            'Content-Type': contentType,
+          },
+        });
+      }
     } catch (error) {
       console.error('Protocol handler error:', error);
       return new Response('Internal server error', { status: 500 });
@@ -105,3 +135,4 @@ function registerContentProtocol() {
 }
 
 export default registerContentProtocol;
+export { registerContentProtocolPrivileges };
