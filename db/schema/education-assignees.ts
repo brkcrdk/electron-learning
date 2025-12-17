@@ -1,14 +1,14 @@
 import { sql } from 'drizzle-orm';
 import { integer, sqliteTable, index, foreignKey, unique } from 'drizzle-orm/sqlite-core';
 
-import { educations } from './educations';
+import { educationAssignments } from './education-assignment';
 import { users } from './users';
 
 export const educationAssignees = sqliteTable(
   'education_assignees',
   {
     id: integer('id').primaryKey({ autoIncrement: true }),
-    educationId: integer('education_id').notNull(),
+    assignmentId: integer('assignment_id').notNull(),
     assigneeUserId: integer('assignee_user_id').notNull(),
     createdAt: integer('created_at', { mode: 'timestamp' })
       .notNull()
@@ -18,12 +18,12 @@ export const educationAssignees = sqliteTable(
       .default(sql`(unixepoch())`),
   },
   table => [
-    index('idx_education_assignees_education_id').on(table.educationId),
+    index('idx_education_assignees_assignment_id').on(table.assignmentId),
     index('idx_education_assignees_assignee_user_id').on(table.assigneeUserId),
-    unique('unique_education_user').on(table.educationId, table.assigneeUserId),
+    unique('unique_assignment_user').on(table.assignmentId, table.assigneeUserId),
     foreignKey({
-      columns: [table.educationId],
-      foreignColumns: [educations.id],
+      columns: [table.assignmentId],
+      foreignColumns: [educationAssignments.id],
     }).onDelete('cascade'),
     foreignKey({
       columns: [table.assigneeUserId],

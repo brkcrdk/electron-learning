@@ -7,7 +7,7 @@ CREATE TABLE `categories` (
 	`created_by` integer NOT NULL,
 	`created_at` integer DEFAULT (unixepoch()) NOT NULL,
 	`updated_at` integer DEFAULT (unixepoch()) NOT NULL,
-	FOREIGN KEY (`parent_id`) REFERENCES `categories`(`id`) ON UPDATE no action ON DELETE no action,
+	FOREIGN KEY (`parent_id`) REFERENCES `categories`(`id`) ON UPDATE no action ON DELETE cascade,
 	FOREIGN KEY (`created_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
@@ -15,17 +15,29 @@ CREATE UNIQUE INDEX `categories_slug_unique` ON `categories` (`slug`);--> statem
 CREATE INDEX `idx_category_parent_id` ON `categories` (`parent_id`);--> statement-breakpoint
 CREATE TABLE `education_assignees` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`education_id` integer NOT NULL,
+	`assignment_id` integer NOT NULL,
 	`assignee_user_id` integer NOT NULL,
 	`created_at` integer DEFAULT (unixepoch()) NOT NULL,
 	`updated_at` integer DEFAULT (unixepoch()) NOT NULL,
-	FOREIGN KEY (`education_id`) REFERENCES `educations`(`id`) ON UPDATE no action ON DELETE no action,
+	FOREIGN KEY (`assignment_id`) REFERENCES `education_assignments`(`id`) ON UPDATE no action ON DELETE cascade,
 	FOREIGN KEY (`assignee_user_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
-CREATE INDEX `idx_education_assignees_education_id` ON `education_assignees` (`education_id`);--> statement-breakpoint
+CREATE INDEX `idx_education_assignees_assignment_id` ON `education_assignees` (`assignment_id`);--> statement-breakpoint
 CREATE INDEX `idx_education_assignees_assignee_user_id` ON `education_assignees` (`assignee_user_id`);--> statement-breakpoint
-CREATE UNIQUE INDEX `unique_education_user` ON `education_assignees` (`education_id`,`assignee_user_id`);--> statement-breakpoint
+CREATE UNIQUE INDEX `unique_assignment_user` ON `education_assignees` (`assignment_id`,`assignee_user_id`);--> statement-breakpoint
+CREATE TABLE `education_assignments` (
+	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`education_id` integer NOT NULL,
+	`created_by` integer NOT NULL,
+	`created_at` integer DEFAULT (unixepoch()) NOT NULL,
+	`updated_at` integer DEFAULT (unixepoch()) NOT NULL,
+	FOREIGN KEY (`education_id`) REFERENCES `educations`(`id`) ON UPDATE no action ON DELETE cascade,
+	FOREIGN KEY (`created_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
+CREATE INDEX `idx_education_assignments_education_id` ON `education_assignments` (`education_id`);--> statement-breakpoint
+CREATE INDEX `idx_education_assignments_created_by` ON `education_assignments` (`created_by`);--> statement-breakpoint
 CREATE TABLE `education_materials` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`name` text NOT NULL,
@@ -35,7 +47,7 @@ CREATE TABLE `education_materials` (
 	`created_by` integer NOT NULL,
 	`created_at` integer DEFAULT (unixepoch()) NOT NULL,
 	`updated_at` integer DEFAULT (unixepoch()) NOT NULL,
-	FOREIGN KEY (`content_file_id`) REFERENCES `media_files`(`id`) ON UPDATE no action ON DELETE no action,
+	FOREIGN KEY (`content_file_id`) REFERENCES `media_files`(`id`) ON UPDATE no action ON DELETE cascade,
 	FOREIGN KEY (`created_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
@@ -52,9 +64,9 @@ CREATE TABLE `educations` (
 	`created_by` integer NOT NULL,
 	`created_at` integer DEFAULT (unixepoch()) NOT NULL,
 	`updated_at` integer DEFAULT (unixepoch()) NOT NULL,
-	FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON UPDATE no action ON DELETE no action,
+	FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON UPDATE no action ON DELETE cascade,
 	FOREIGN KEY (`cover_image_id`) REFERENCES `media_files`(`id`) ON UPDATE no action ON DELETE no action,
-	FOREIGN KEY (`education_materials`) REFERENCES `education_materials`(`id`) ON UPDATE no action ON DELETE no action,
+	FOREIGN KEY (`education_materials`) REFERENCES `education_materials`(`id`) ON UPDATE no action ON DELETE cascade,
 	FOREIGN KEY (`created_by`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
@@ -76,6 +88,7 @@ CREATE TABLE `users` (
 --> statement-breakpoint
 CREATE UNIQUE INDEX `users_username_unique` ON `users` (`username`);--> statement-breakpoint
 CREATE INDEX `roles_idx` ON `users` (`role`);--> statement-breakpoint
+CREATE INDEX `created_at_idx` ON `users` (`created_at`);--> statement-breakpoint
 CREATE TABLE `media_files` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`file_path` text NOT NULL,

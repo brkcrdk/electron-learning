@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "ac978fd5-5a9d-4f25-a140-00090f8118a0",
+  "id": "6aa2164b-30c8-46d7-b35d-43d5c25b2da6",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "categories": {
@@ -93,7 +93,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "categories_created_by_users_id_fk": {
@@ -124,8 +124,8 @@
           "notNull": true,
           "autoincrement": true
         },
-        "education_id": {
-          "name": "education_id",
+        "assignment_id": {
+          "name": "assignment_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
@@ -156,10 +156,10 @@
         }
       },
       "indexes": {
-        "idx_education_assignees_education_id": {
-          "name": "idx_education_assignees_education_id",
+        "idx_education_assignees_assignment_id": {
+          "name": "idx_education_assignees_assignment_id",
           "columns": [
-            "education_id"
+            "assignment_id"
           ],
           "isUnique": false
         },
@@ -170,27 +170,27 @@
           ],
           "isUnique": false
         },
-        "unique_education_user": {
-          "name": "unique_education_user",
+        "unique_assignment_user": {
+          "name": "unique_assignment_user",
           "columns": [
-            "education_id",
+            "assignment_id",
             "assignee_user_id"
           ],
           "isUnique": true
         }
       },
       "foreignKeys": {
-        "education_assignees_education_id_educations_id_fk": {
-          "name": "education_assignees_education_id_educations_id_fk",
+        "education_assignees_assignment_id_education_assignments_id_fk": {
+          "name": "education_assignees_assignment_id_education_assignments_id_fk",
           "tableFrom": "education_assignees",
-          "tableTo": "educations",
+          "tableTo": "education_assignments",
           "columnsFrom": [
-            "education_id"
+            "assignment_id"
           ],
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "education_assignees_assignee_user_id_users_id_fk": {
@@ -199,6 +199,95 @@
           "tableTo": "users",
           "columnsFrom": [
             "assignee_user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "education_assignments": {
+      "name": "education_assignments",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "education_id": {
+          "name": "education_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_by": {
+          "name": "created_by",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch())"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(unixepoch())"
+        }
+      },
+      "indexes": {
+        "idx_education_assignments_education_id": {
+          "name": "idx_education_assignments_education_id",
+          "columns": [
+            "education_id"
+          ],
+          "isUnique": false
+        },
+        "idx_education_assignments_created_by": {
+          "name": "idx_education_assignments_created_by",
+          "columns": [
+            "created_by"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "education_assignments_education_id_educations_id_fk": {
+          "name": "education_assignments_education_id_educations_id_fk",
+          "tableFrom": "education_assignments",
+          "tableTo": "educations",
+          "columnsFrom": [
+            "education_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "education_assignments_created_by_users_id_fk": {
+          "name": "education_assignments_created_by_users_id_fk",
+          "tableFrom": "education_assignments",
+          "tableTo": "users",
+          "columnsFrom": [
+            "created_by"
           ],
           "columnsTo": [
             "id"
@@ -307,7 +396,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "education_materials_created_by_users_id_fk": {
@@ -438,7 +527,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "educations_cover_image_id_media_files_id_fk": {
@@ -464,7 +553,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "educations_created_by_users_id_fk": {
@@ -568,6 +657,13 @@
           "name": "roles_idx",
           "columns": [
             "role"
+          ],
+          "isUnique": false
+        },
+        "created_at_idx": {
+          "name": "created_at_idx",
+          "columns": [
+            "created_at"
           ],
           "isUnique": false
         }
