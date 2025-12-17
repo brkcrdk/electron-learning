@@ -2,10 +2,10 @@ import { queryOptions } from '@tanstack/react-query';
 
 import queryKeys from './query-keys';
 
-const currentUserQuery = queryOptions({
-  queryKey: [queryKeys.currentUserQuery],
+const usersEducationListQuery = queryOptions({
+  queryKey: [queryKeys.userEducationListQuery],
   queryFn: async () => {
-    const response = await window.electronAPI.getCurrentUser();
+    const response = await window.electronAPI.getUsersEducation();
     if (!response.success) {
       throw response.error;
     }
@@ -13,4 +13,4 @@ const currentUserQuery = queryOptions({
   },
 });
 
-export default currentUserQuery;
+export default usersEducationListQuery;

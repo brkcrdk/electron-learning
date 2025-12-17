@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import Select from '@app/components/ui/select';
+import educationMaterialsQuery from '@app/services/education-materials-query';
 
 import type { EducationFormInputs } from '.';
 
@@ -9,14 +10,7 @@ function MaterialSelector() {
   const { control } = useFormContext<EducationFormInputs>();
 
   const { data: materialData, isLoading } = useQuery({
-    queryKey: ['education-materials'],
-    queryFn: async () => {
-      const response = await window.electronAPI.getEducationMaterialList();
-      if (!response.success) {
-        throw response.error;
-      }
-      return response.data;
-    },
+    ...educationMaterialsQuery,
     select: data => data.map(item => ({ label: item.name, value: item.id })),
   });
 

@@ -3,6 +3,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
 
 import DataTable from '@app/components/data-table';
+import paginatedUserListQuery from '@app/services/paginated-user-list-query';
 
 import useColumns from './hooks/use-columns';
 import useTableActions from './hooks/use-table-actions';
@@ -20,16 +21,7 @@ function RouteComponent() {
   const { page, limit, search } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
 
-  const { data } = useQuery({
-    queryKey: ['paginated-user-list', page, limit, search],
-    queryFn: async () => {
-      const response = await window.electronAPI.getPaginatedUserList({ page, limit, search });
-      if (!response.success) {
-        throw new Error(response.error);
-      }
-      return response.data;
-    },
-  });
+  const { data } = useQuery(paginatedUserListQuery({ page, limit, search }));
 
   const columns = useColumns();
   const tableActions = useTableActions();

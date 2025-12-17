@@ -2,20 +2,12 @@ import { useQuery } from '@tanstack/react-query';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import Select from '@app/components/ui/select';
+import userListQuery from '@app/services/user-list-query';
 
 import type { EducationFormInputs } from '.';
 
 function AssigneeSelector() {
-  const { data, isLoading } = useQuery({
-    queryKey: ['user-list'],
-    queryFn: async () => {
-      const response = await window.electronAPI.getUserList();
-      if (!response.success) {
-        throw response.error;
-      }
-      return response.data;
-    },
-  });
+  const { data, isLoading } = useQuery(userListQuery);
 
   const { control } = useFormContext<EducationFormInputs>();
   return (

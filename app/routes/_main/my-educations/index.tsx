@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
+import usersEducationListQuery from '@app/services/users-education-list-query';
+
 import EducationCard from './modules/education-card';
 import EducationsEmptyState from './modules/educations-empty-state';
 import MyEducationsHeader from './modules/my-educations-header';
@@ -10,16 +12,7 @@ export const Route = createFileRoute('/_main/my-educations/')({
 });
 
 function RouteComponent() {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['users-education'],
-    queryFn: async () => {
-      const response = await window.electronAPI.getUsersEducation();
-      if (!response.success) {
-        throw response.error;
-      }
-      return response.data;
-    },
-  });
+  const { data, isLoading, error } = useQuery(usersEducationListQuery);
 
   if (isLoading) {
     return <div>Loading...</div>;

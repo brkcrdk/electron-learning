@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
 import DataTable from '@app/components/data-table';
+import categoryListQuery from '@app/services/category-list-query';
 
 import useColumns from './hooks/use-columns';
 import useTableActions from './hooks/use-table-actions';
@@ -11,16 +12,7 @@ export const Route = createFileRoute('/_main/categories/')({
 });
 
 function RouteComponent() {
-  const { data, isLoading } = useQuery({
-    queryKey: ['category-list'],
-    queryFn: async () => {
-      const response = await window.electronAPI.getCategoryList();
-      if (!response.success) {
-        throw response.error;
-      }
-      return response.data;
-    },
-  });
+  const { data, isLoading } = useQuery(categoryListQuery);
 
   const columns = useColumns();
   const tableActions = useTableActions();

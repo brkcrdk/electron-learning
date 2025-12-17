@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import DataTable from '@app/components/data-table';
+import assignmentUserListQuery from '@app/services/assigment-user-list-query';
 
 import type { AssigmentFormProps } from '..';
 import useActions from './use-actions';
@@ -16,20 +17,7 @@ function UserList() {
 
   const { control } = useFormContext<AssigmentFormProps>();
 
-  const { data } = useQuery({
-    queryKey: ['assigment-user-list', page, searchUser, limit],
-    queryFn: async () => {
-      const response = await window.electronAPI.getPaginatedUserList({
-        page,
-        search: searchUser,
-        limit,
-      });
-      if (!response.success) {
-        throw response.error;
-      }
-      return response.data;
-    },
-  });
+  const { data } = useQuery(assignmentUserListQuery({ page, limit, search: searchUser }));
 
   const columns = useColumns();
   const tableActions = useActions();

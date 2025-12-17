@@ -1,9 +1,9 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import queryKeys from './query.keys';
+import queryKeys from './query-keys';
 
-const currentUserQuery = queryOptions({
-  queryKey: [queryKeys.categoryListQuery],
+const categoryListQuery = queryOptions({
+  queryKey: [queryKeys.categoryList],
   queryFn: async () => {
     const response = await window.electronAPI.getCategoryList();
     if (!response.success) {
@@ -13,4 +13,4 @@ const currentUserQuery = queryOptions({
   },
 });
 
-export default currentUserQuery;
+export default categoryListQuery;

@@ -2,22 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import Select from '@app/components/ui/select';
+import educationListQuery from '@app/services/education-list-query';
 
 import type { AssigmentFormProps } from '.';
 
 function EducationSelector() {
   const { control } = useFormContext<AssigmentFormProps>();
 
-  const { data } = useQuery({
-    queryKey: ['education-list'],
-    queryFn: async () => {
-      const response = await window.electronAPI.getEducationList();
-      if (!response.success) {
-        throw response.error;
-      }
-      return response.data;
-    },
-  });
+  const { data } = useQuery(educationListQuery);
 
   return (
     <Controller
