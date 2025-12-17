@@ -4,7 +4,8 @@ import { z } from 'zod';
 
 import DataTable from '@app/components/data-table';
 
-import useTableActions from './hooks/useTableActions';
+import useColumns from './hooks/use-columns';
+import useTableActions from './hooks/use-table-actions';
 
 export const Route = createFileRoute('/_main/education-assigments/')({
   validateSearch: z.object({
@@ -27,14 +28,15 @@ function RouteComponent() {
       return response.data;
     },
   });
-  // const columns = useColumns();
+
+  const columns = useColumns();
   const tableActions = useTableActions();
 
   return (
     <DataTable
       tableTitle="Eğitim Atamaları"
-      columns={[]}
-      data={[]}
+      columns={columns}
+      data={data ? data.items : []}
       tableActions={tableActions}
       isLoading={isLoading}
       rowSelectionProps={{
