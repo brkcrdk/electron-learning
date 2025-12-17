@@ -11,7 +11,7 @@ import type {
   User,
   CategoryWithChildren,
 } from '@db/schema';
-import type { MutateEducationAssignmentPayload } from '@db/schema/education-assignment';
+import type { EducationAssignmentListItem, MutateEducationAssignmentPayload } from '@db/schema/education-assignment';
 
 import type { LoginPayload } from './session-api/login';
 import type { UploadFilePayload } from './upload-file-api';
@@ -67,6 +67,7 @@ const apiEventList = {
 
   // Education assignment services
   createEducationAssignment: (data: MutateEducationAssignmentPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-education-assignment', data),
+  getEducationAssignmentList: (): ApiResponseProps<EducationAssignmentListItem[]> => ipcRenderer.invoke('get-education-assignment-list'),
 } as const;
 
 export default apiEventList;
