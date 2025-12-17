@@ -1,8 +1,8 @@
 CREATE TABLE `categories` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`name` text NOT NULL,
+	`name` text DEFAULT '' NOT NULL,
 	`slug` text NOT NULL,
-	`description` text NOT NULL,
+	`description` text DEFAULT '' NOT NULL,
 	`parent_id` integer,
 	`created_by` integer NOT NULL,
 	`created_at` integer DEFAULT (unixepoch()) NOT NULL,
@@ -29,6 +29,8 @@ CREATE UNIQUE INDEX `unique_assignment_user` ON `education_assignees` (`assignme
 CREATE TABLE `education_assignments` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`education_id` integer NOT NULL,
+	`title` text DEFAULT '' NOT NULL,
+	`description` text DEFAULT '' NOT NULL,
 	`created_by` integer NOT NULL,
 	`created_at` integer DEFAULT (unixepoch()) NOT NULL,
 	`updated_at` integer DEFAULT (unixepoch()) NOT NULL,
@@ -40,8 +42,8 @@ CREATE INDEX `idx_education_assignments_education_id` ON `education_assignments`
 CREATE INDEX `idx_education_assignments_created_by` ON `education_assignments` (`created_by`);--> statement-breakpoint
 CREATE TABLE `education_materials` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`name` text NOT NULL,
-	`description` text NOT NULL,
+	`name` text DEFAULT '' NOT NULL,
+	`description` text DEFAULT '' NOT NULL,
 	`content_type` text NOT NULL,
 	`content_file_id` integer NOT NULL,
 	`created_by` integer NOT NULL,
@@ -56,8 +58,8 @@ CREATE INDEX `idx_education_materials_created_by` ON `education_materials` (`cre
 CREATE INDEX `idx_educations_content_type` ON `education_materials` (`content_type`);--> statement-breakpoint
 CREATE TABLE `educations` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-	`name` text NOT NULL,
-	`description` text NOT NULL,
+	`name` text DEFAULT '' NOT NULL,
+	`description` text DEFAULT '' NOT NULL,
 	`category_id` integer NOT NULL,
 	`cover_image_id` integer,
 	`education_materials` integer NOT NULL,
