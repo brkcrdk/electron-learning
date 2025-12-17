@@ -14,6 +14,9 @@ export const Route = createFileRoute('/_main/education-assignments/')({
     limit: z.number().default(10),
   }),
   component: RouteComponent,
+  staticData: {
+    breadcrumb: 'Eğitim Atamaları',
+  },
 });
 
 function RouteComponent() {

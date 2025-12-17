@@ -14,6 +14,9 @@ export const Route = createFileRoute('/_main/users/')({
     limit: z.number().default(10),
     search: z.string().default(''),
   }),
+  staticData: {
+    breadcrumb: 'Kullanıcı Listesi',
+  },
   component: RouteComponent,
 });
 

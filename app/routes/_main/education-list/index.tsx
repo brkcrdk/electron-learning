@@ -9,6 +9,9 @@ import useTableActions from './hooks/use-table-actions';
 
 export const Route = createFileRoute('/_main/education-list/')({
   component: RouteComponent,
+  staticData: {
+    breadcrumb: 'Eğitim Listesi',
+  },
 });
 
 function RouteComponent() {

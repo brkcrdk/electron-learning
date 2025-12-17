@@ -9,6 +9,9 @@ import useTableActions from './hooks/use-table-actions';
 
 export const Route = createFileRoute('/_main/categories/')({
   component: RouteComponent,
+  staticData: {
+    breadcrumb: 'Kategoriler',
+  },
 });
 
 function RouteComponent() {
