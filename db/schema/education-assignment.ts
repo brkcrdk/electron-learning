@@ -33,4 +33,6 @@ export const educationAssignments = sqliteTable(
 
 export type EducationAssignment = typeof educationAssignments.$inferSelect;
 
-export type MutateEducationAssignmentPayload = Omit<typeof educationAssignments.$inferInsert, 'createdBy' | 'createdAt' | 'updatedAt'>;
+export type MutateEducationAssignmentPayload = Omit<typeof educationAssignments.$inferInsert, 'createdBy' | 'createdAt' | 'updatedAt'> & {
+  assigneeUserIds: number[];
+};
