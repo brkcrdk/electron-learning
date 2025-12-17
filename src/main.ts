@@ -32,6 +32,7 @@ const createWindow = () => {
       x: 18,
       y: 18,
     },
+    kiosk: app.isPackaged,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
