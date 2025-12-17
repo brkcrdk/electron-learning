@@ -67,7 +67,8 @@ const apiEventList = {
 
   // Education assignment services
   createEducationAssignment: (data: MutateEducationAssignmentPayload): ApiResponseProps<string> => ipcRenderer.invoke('create-education-assignment', data),
-  getEducationAssignmentList: (): ApiResponseProps<EducationAssignmentListItem[]> => ipcRenderer.invoke('get-education-assignment-list'),
+  getEducationAssignmentList: (params: PaginationParams): ApiResponseProps<PaginatedData<EducationAssignmentListItem>> =>
+    ipcRenderer.invoke('get-education-assignment-list', params),
 } as const;
 
 export default apiEventList;
