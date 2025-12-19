@@ -30,6 +30,7 @@ import {
   LuChevronLeft,
   LuChevronUp,
   LuDownload,
+  LuHeart,
 } from 'react-icons/lu';
 import { MdMoreHoriz } from 'react-icons/md';
 import { PiMicrosoftExcelLogoThin, PiWarningCircleFill } from 'react-icons/pi';
@@ -83,6 +84,7 @@ export const iconList = [
   { label: 'school-outline', icon: IoSchoolOutline },
   { label: 'person-check', icon: BsPersonCheck },
   { label: 'download', icon: LuDownload },
+  { label: 'heart', icon: LuHeart },
 ] as const;
 
 export type IconListProps = (typeof iconList)[number]['label'];
