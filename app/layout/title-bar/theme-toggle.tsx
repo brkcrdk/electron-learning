@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import Button from '@app/components/ui/button';
 import Icon from '@app/components/ui/icon';
+import Tooltip from '@app/components/ui/tooltip';
 
 import type { ThemeType } from '../../../store/theme';
 
@@ -33,13 +33,14 @@ function ThemeToggle() {
     }
   };
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={toggleTheme}
-    >
-      <Icon name="contrast-filled" />
-    </Button>
+    <Tooltip>
+      <Tooltip.Trigger onClick={toggleTheme}>
+        <Icon name="contrast-filled" />
+      </Tooltip.Trigger>
+      <Tooltip.Content>
+        <p>Tema Değiştir</p>
+      </Tooltip.Content>
+    </Tooltip>
   );
 }
 
