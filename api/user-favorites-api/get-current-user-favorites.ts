@@ -69,6 +69,7 @@ function getCurrentUserFavorites() {
           createdBy: row.createdBy,
           createdAt: row.createdAt,
           updatedAt: row.updatedAt,
+          isFavorite: true,
         }),
       }));
 

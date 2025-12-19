@@ -1,4 +1,4 @@
-import { desc, eq, getTableColumns } from 'drizzle-orm';
+import { and, desc, eq, getTableColumns } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/sqlite-core';
 import { ipcMain } from 'electron';
 import type { ApiResponseProps } from 'types/api-response-types';
@@ -6,7 +6,17 @@ import type { ApiResponseProps } from 'types/api-response-types';
 import { getCurrentUser } from '@api/user-session';
 import { mapStandardRowToEducationListItem } from '@api/utils/education-list-item-mapper';
 import { getDb } from '@db/client';
-import { categories, educations, educationAssignees, educationAssignments, educationMaterials, mediaFiles, type EducationListItem, users } from '@db/schema';
+import {
+  categories,
+  educations,
+  educationAssignees,
+  educationAssignments,
+  educationMaterials,
+  mediaFiles,
+  type EducationListItem,
+  userEducationFavorites,
+  users,
+} from '@db/schema';
 
 function getUsersEducation() {
   ipcMain.handle('get-users-education', async (): ApiResponseProps<EducationListItem[]> => {
@@ -48,10 +58,16 @@ function getUsersEducation() {
         .innerJoin(materialContentFile, eq(educationMaterials.contentFileId, materialContentFile.id))
         .innerJoin(materialCreatedBy, eq(educationMaterials.createdBy, materialCreatedBy.id))
         .innerJoin(users, eq(educations.createdBy, users.id))
-        .where(eq(educationAssignees.assigneeUserId, currentUser.id))
+        .innerJoin(userEducationFavorites, eq(userEducationFavorites.educationId, educations.id))
+        .where(and(eq(educationAssignees.assigneeUserId, currentUser.id), eq(userEducationFavorites.userId, currentUser.id)))
         .orderBy(desc(educations.createdAt));
 
-      const educationList: EducationListItem[] = rows.map(mapStandardRowToEducationListItem);
+      const educationList: EducationListItem[] = rows.map(row =>
+        mapStandardRowToEducationListItem({
+          ...row,
+          isFavorite: true,
+        })
+      );
 
       return {
         success: true,

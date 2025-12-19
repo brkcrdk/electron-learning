@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Icon } from '@vidstack/react';
 import { toast } from 'sonner';
 
@@ -7,7 +7,6 @@ import Button from '@app/components/ui/button';
 import Card from '@app/components/ui/card';
 import ImageFallback from '@app/components/ui/image-fallback';
 import Tooltip from '@app/components/ui/tooltip';
-import currentUserFavoritesQuery from '@app/services/current-user-favorites-query';
 import queryKeys from '@app/services/query-keys';
 import getContentPath from '@app/utils/get-content-path';
 import type { EducationListItem } from '@db/schema';
@@ -19,8 +18,7 @@ interface Props {
 function CardHeader({ education }: Props) {
   const queryClient = useQueryClient();
 
-  const { data: favorites } = useQuery(currentUserFavoritesQuery);
-  const isFavorite = favorites?.some(fav => fav.education.id === education.id) ?? false;
+  const isFavorite = education.isFavorite;
 
   const { mutateAsync: addToFavorites, isPending: isAdding } = useMutation({
     mutationFn: () => window.electronAPI.addToFavorites(education.id),

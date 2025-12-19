@@ -6,7 +6,7 @@ import type { ApiResponseProps } from 'types/api-response-types';
 import { getCurrentUser } from '@api/user-session';
 import { mapStandardRowToEducationListItem } from '@api/utils/education-list-item-mapper';
 import { getDb } from '@db/client';
-import { categories, educations, educationMaterials, mediaFiles, type EducationListItem, users } from '@db/schema';
+import { categories, educations, educationMaterials, mediaFiles, type EducationListItem, userEducationFavorites, users } from '@db/schema';
 
 function getEducationList() {
   ipcMain.handle('get-education-list', async (): ApiResponseProps<EducationListItem[]> => {
@@ -30,6 +30,14 @@ function getEducationList() {
 
       const materialContentFile = alias(mediaFiles, 'material_content_file');
       const materialCreatedBy = alias(users, 'material_created_by');
+
+      // Get user's favorite education IDs
+      const userFavorites = await db
+        .select({ educationId: userEducationFavorites.educationId })
+        .from(userEducationFavorites)
+        .where(eq(userEducationFavorites.userId, currentUser.id));
+
+      const favoriteEducationIds = new Set(userFavorites.map(fav => fav.educationId));
 
       const educationList = await db
         .select({
@@ -56,7 +64,12 @@ function getEducationList() {
         .innerJoin(materialCreatedBy, eq(educationMaterials.createdBy, materialCreatedBy.id))
         .orderBy(desc(educations.createdAt));
 
-      const mappedEducationList: EducationListItem[] = educationList.map(mapStandardRowToEducationListItem);
+      const mappedEducationList: EducationListItem[] = educationList.map(row =>
+        mapStandardRowToEducationListItem({
+          ...row,
+          isFavorite: favoriteEducationIds.has(row.id),
+        })
+      );
 
       return {
         success: true,

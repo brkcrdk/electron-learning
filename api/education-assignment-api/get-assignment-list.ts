@@ -14,6 +14,7 @@ import {
   educationMaterials,
   educations,
   mediaFiles,
+  userEducationFavorites,
   users,
   type EducationAssignmentListItem,
 } from '@db/schema';
@@ -39,6 +40,14 @@ function getAssignmentList() {
       }
 
       const { page, limit, offset } = normalizePaginationParams(params);
+
+      // Get user's favorite education IDs
+      const userFavorites = await db
+        .select({ educationId: userEducationFavorites.educationId })
+        .from(userEducationFavorites)
+        .where(eq(userEducationFavorites.userId, currentUser.id));
+
+      const favoriteEducationIds = new Set(userFavorites.map(fav => fav.educationId));
 
       // User aliases for assignments
       const createdByUser = alias(users, 'assignment_created_by_user');
@@ -112,7 +121,7 @@ function getAssignmentList() {
         description: row.description,
         createdBy: row.createdBy,
         assigneeCount: row.assigneeCount ?? 0,
-        education: mapAssignmentRowToEducationListItem(row),
+        education: mapAssignmentRowToEducationListItem(row, favoriteEducationIds.has(row.education.id)),
       }));
       const paginatedResponse = buildPaginatedResponse(assignmentList, total, page, limit);
 

@@ -44,10 +44,14 @@ type AssignmentEducationRow = {
   educationCreatedBy: User;
 };
 
+interface Props extends StandardEducationRow {
+  isFavorite: boolean;
+}
+
 /**
  * Maps a standard education row (from get-education-list or get-users-education) to EducationListItem
  */
-export function mapStandardRowToEducationListItem(row: StandardEducationRow): EducationListItem {
+export function mapStandardRowToEducationListItem(row: Props): EducationListItem {
   return {
     id: row.id,
     name: row.name,
@@ -67,13 +71,14 @@ export function mapStandardRowToEducationListItem(row: StandardEducationRow): Ed
     createdBy: row.createdBy,
     createdAt: row.createdAt,
     updatedAt: row.updatedAt,
+    isFavorite: row.isFavorite,
   };
 }
 
 /**
  * Maps an assignment education row (from get-assigment-list) to EducationListItem
  */
-export function mapAssignmentRowToEducationListItem(row: AssignmentEducationRow): EducationListItem {
+export function mapAssignmentRowToEducationListItem(row: AssignmentEducationRow, isFavorite: boolean): EducationListItem {
   return {
     id: row.education.id,
     name: row.education.name,
@@ -93,5 +98,6 @@ export function mapAssignmentRowToEducationListItem(row: AssignmentEducationRow)
     createdBy: row.educationCreatedBy,
     createdAt: row.education.createdAt,
     updatedAt: row.education.updatedAt,
+    isFavorite,
   };
 }
