@@ -1,8 +1,6 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-import Icon from '@app/components/ui/icon';
 import Tabs from '@app/components/ui/tabs';
-import getUsersFavouriteEducationsQuery from '@app/services/get-users-favourite-educations-query';
 import queryKeys from '@app/services/query-keys';
 
 import EducationListItem from './education-list-item';
@@ -11,8 +9,6 @@ interface Props {
   userId: number;
 }
 function UsersFavouriteEducations({ userId }: Props) {
-  // const { data, isLoading } = useQuery(getUsersFavouriteEducationsQuery({ userId }));
-
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, error } = useInfiniteQuery({
     queryKey: [queryKeys.usersFavouriteEducationsListQuery, userId],
     queryFn: async ({ pageParam = 1 }) => {
