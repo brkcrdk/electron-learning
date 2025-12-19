@@ -5,8 +5,10 @@
 - [x] Kartlardan da içerik detayına geçiş yapacağız.
 - [x] İçerik detayında kategori, açıklama vb gibi detayları göstereceğiz.
 - [ ] Kullanıcıların favorilerini listelerken infinite scroll yapalım.
+- [ ] Eğitimleri infinite scroll halinde listeleyelim.
 - [ ] Favorilerim sayfası oluşturalım ve kullanıcıya favori içeriklerini orada gösterelim.
 - [ ] UDEMY tarzı detay sayfası oluşturalım.
 - [ ] İçerikleri udemy tarzında kategorize edip, içeriklerin de sıralanabilmesini ve array halinde eklenebilmesini sağlayalım.
 - [ ] Kullanıcıların dersleri nasıl tamamladıklarını anlayacak bir yapı yapalım.
 - [ ] Arama sonuç sayfası oluştralım ve arama sonuçlarını orada gösterelim.
+- [ ] Kategoriler tablosu hariç diğer tüm tablolara pagination ekleyelim.
