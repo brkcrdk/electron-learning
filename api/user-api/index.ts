@@ -6,6 +6,7 @@ import extractUserFromExcel from './extract-user-from-excel';
 import getPaginatedUserList from './get-paginated-user-list';
 import getUserList from './get-user-list';
 import updateUser from './update-user';
+import getUsersFavouriteEducationsList from './users-favourite-educations-list';
 
 function userApi() {
   createUser();
@@ -16,6 +17,7 @@ function userApi() {
   getPaginatedUserList();
   extractUserFromExcel();
   bulkCreateUsersFromExcel();
+  getUsersFavouriteEducationsList();
 }
 
 export default userApi;
