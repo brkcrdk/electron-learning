@@ -1,15 +1,15 @@
-import { and, count, desc, ne } from 'drizzle-orm';
+import { and, count, desc, eq, getTableColumns, ne } from 'drizzle-orm';
 import { ipcMain } from 'electron';
 
 import { getDb } from '@db/client';
-import { users, type User } from '@db/schema';
+import { userEducationFavorites, users, type UserListItem } from '@db/schema';
 
 import type { ApiResponseProps, PaginatedData, PaginationParams } from '../../types/api-response-types';
 import { getCurrentUser } from '../user-session';
 import { buildPaginatedResponse, buildSearchCondition, getCount, normalizePaginationParams } from '../utils/pagination';
 
 function getPaginatedUserList() {
-  ipcMain.handle('get-paginated-user-list', async (_, params: PaginationParams = {}): ApiResponseProps<PaginatedData<User>> => {
+  ipcMain.handle('get-paginated-user-list', async (_, params: PaginationParams = {}): ApiResponseProps<PaginatedData<UserListItem>> => {
     try {
       const db = getDb();
 
@@ -40,8 +40,27 @@ function getPaginatedUserList() {
       // Tüm condition'ları birleştir
       const whereCondition = and(roleCondition, searchCondition);
 
-      // Data query ve count query'yi paralel çalıştır
-      const dataQuery = db.select().from(users).orderBy(desc(users.createdAt)).limit(limit).offset(offset);
+      // Favori sayılarını hesaplayan subquery
+      const favoriteCounts = db
+        .select({
+          userId: userEducationFavorites.userId,
+          favoriteCount: count(userEducationFavorites.id).as('favoriteCount'),
+        })
+        .from(userEducationFavorites)
+        .groupBy(userEducationFavorites.userId)
+        .as('favorite_counts');
+
+      // Data query - favori sayıları ile birlikte
+      const dataQuery = db
+        .select({
+          ...getTableColumns(users),
+          favoriteCount: favoriteCounts.favoriteCount,
+        })
+        .from(users)
+        .leftJoin(favoriteCounts, eq(users.id, favoriteCounts.userId))
+        .orderBy(desc(users.createdAt))
+        .limit(limit)
+        .offset(offset);
 
       const countQuery = db.select({ count: count() }).from(users);
 
@@ -51,7 +70,13 @@ function getPaginatedUserList() {
         whereCondition ? getCount(countQuery.where(whereCondition)) : getCount(countQuery),
       ]);
 
-      const paginatedResponse = buildPaginatedResponse(userList, countResult, page, limit);
+      // Favori sayısını number'a çevir (null ise 0)
+      const userListWithFavoriteCount: UserListItem[] = userList.map(user => ({
+        ...user,
+        favoriteCount: user.favoriteCount ?? 0,
+      }));
+
+      const paginatedResponse = buildPaginatedResponse(userListWithFavoriteCount, countResult, page, limit);
 
       return {
         success: true,

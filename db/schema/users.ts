@@ -27,3 +27,5 @@ export const users = sqliteTable(
 
 export type User = typeof users.$inferSelect;
 export type MutateUserPayload = typeof users.$inferInsert;
+
+export type UserListItem = User & { favoriteCount: number };
