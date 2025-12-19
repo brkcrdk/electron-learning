@@ -29,7 +29,7 @@ function UserActions({ user, triggerProps, initialAction }: Props) {
             <Tabs.Trigger value="user-favorite-educations">Favori Eğitimler</Tabs.Trigger>
           </Tabs.List>
           <UserInformations user={user} />
-          <UsersFavouriteEducations />
+          <UsersFavouriteEducations userId={user.id} />
         </Tabs>
       </Drawer.Content>
     </Drawer>
