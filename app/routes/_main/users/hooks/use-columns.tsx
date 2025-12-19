@@ -2,7 +2,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 
 import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
 import Badge, { type BadgeVariantTypes } from '@app/components/ui/badge';
-import type { User } from '@db/schema';
+import type { User, UserListItem } from '@db/schema';
 
 import UserActions from '../modules/user-actions';
 
@@ -37,18 +37,11 @@ const userStatus: Record<User['status'], ColumnBadgeProps> = {
   },
 };
 
-function useColumns(): ColumnDef<User>[] {
+function useColumns(): ColumnDef<UserListItem>[] {
   return [
     {
       header: 'Adı',
       accessorKey: 'name',
-    },
-    {
-      header: 'Kullanıcı Adı',
-      accessorKey: 'username',
-      meta: {
-        centeredColumn: true,
-      },
     },
     {
       header: 'Rol',
@@ -73,11 +66,11 @@ function useColumns(): ColumnDef<User>[] {
       },
     },
     {
-      header: 'Oluşturulma Tarihi',
-      accessorKey: 'createdAt',
+      header: 'Favori İçerik Sayısı',
+      accessorKey: 'favoriteCount',
       cell: info => info.getValue(),
-      accessorFn: ({ createdAt }) => {
-        return <RelativeDateCell date={createdAt} />;
+      accessorFn: ({ favoriteCount }) => {
+        return <Badge>{favoriteCount}</Badge>;
       },
       meta: {
         centeredColumn: true,
