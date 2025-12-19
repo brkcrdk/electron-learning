@@ -24,7 +24,8 @@ function CardHeader({ education }: Props) {
     mutationFn: () => window.electronAPI.addToFavorites(education.id),
     onSuccess: response => {
       if (response.success) {
-        queryClient.invalidateQueries({ queryKey: [queryKeys.userEducationListQuery, queryKeys.currentUserFavoritesQuery] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.userEducationListQuery] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.currentUserFavoritesQuery] });
         toast.success(response.data);
       } else {
         toast.error(response.error, { dismissible: false });
@@ -36,7 +37,8 @@ function CardHeader({ education }: Props) {
     mutationFn: () => window.electronAPI.removeFromFavorites(education.id),
     onSuccess: response => {
       if (response.success) {
-        queryClient.invalidateQueries({ queryKey: [queryKeys.userEducationListQuery, queryKeys.currentUserFavoritesQuery] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.userEducationListQuery] });
+        queryClient.invalidateQueries({ queryKey: [queryKeys.currentUserFavoritesQuery] });
         toast.success(response.data);
       } else {
         toast.error(response.error, { dismissible: false });
