@@ -69,15 +69,13 @@ function getUsersEducation() {
         .where(eq(educationAssignees.assigneeUserId, currentUser.id))
         .orderBy(desc(educations.createdAt));
 
-      // Filter only favorite educations and map them
-      const educationList: EducationListItem[] = rows
-        .filter(row => favoriteEducationIds.has(row.id))
-        .map(row =>
-          mapStandardRowToEducationListItem({
-            ...row,
-            isFavorite: true,
-          })
-        );
+      // Map all assigned educations and set isFavorite based on user favorites
+      const educationList: EducationListItem[] = rows.map(row =>
+        mapStandardRowToEducationListItem({
+          ...row,
+          isFavorite: favoriteEducationIds.has(row.id),
+        })
+      );
 
       return {
         success: true,
