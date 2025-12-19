@@ -10,6 +10,7 @@ const queryKeys = {
   userListQuery: 'user-list-query',
   assignmentUserListQuery: 'assignment-user-list-query',
   currentUserFavoritesQuery: 'current-user-favorites-query',
+  usersFavouriteEducationsListQuery: 'users-favourite-educations-list-query',
 } as const;
 
 export default queryKeys;

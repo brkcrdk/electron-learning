@@ -43,8 +43,8 @@ const apiEventList = {
   getPaginatedUserList: (params: PaginationParams): ApiResponseProps<PaginatedData<UserListItem>> => ipcRenderer.invoke('get-paginated-user-list', params),
   extractUserFromExcel: (fileBuffer: ArrayBuffer): ApiResponseProps<number[]> => ipcRenderer.invoke('extract-user-from-excel', fileBuffer),
   bulkCreateUsersFromExcel: (fileBuffer: ArrayBuffer): ApiResponseProps<string> => ipcRenderer.invoke('bulk-create-users-from-excel', fileBuffer),
-  getUsersFavouriteEducationsList: (userId: User['id']): ApiResponseProps<UserEducationFavoriteListItem[]> =>
-    ipcRenderer.invoke('get-users-favourite-educations-list', userId),
+  getUsersFavouriteEducationsList: (userId: User['id'], params: PaginationParams): ApiResponseProps<PaginatedData<UserEducationFavoriteListItem>> =>
+    ipcRenderer.invoke('get-users-favourite-educations-list', userId, params),
 
   // Category services
   getCategoryList: (): ApiResponseProps<CategoryWithChildren[]> => ipcRenderer.invoke('get-category-list'),
