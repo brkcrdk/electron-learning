@@ -3,6 +3,7 @@ import { useCanGoBack, useRouter } from '@tanstack/react-router';
 import Button from '@app/components/ui/button';
 import Icon from '@app/components/ui/icon';
 
+import MyFavourites from './my-favourites';
 import ThemeToggle from './theme-toggle';
 import useCanGoForward from './use-can-go-forward';
 import UserActions from './user-actions';
@@ -36,6 +37,7 @@ function TitleBar() {
         </div>
       </nav>
       <div className="webkit-no-draggable flex items-center gap-2">
+        <MyFavourites />
         <ThemeToggle />
         <UserActions />
       </div>

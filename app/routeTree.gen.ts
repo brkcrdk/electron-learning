@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as MainUsersIndexRouteImport } from './routes/_main/users/index'
+import { Route as MainMyFavouritesIndexRouteImport } from './routes/_main/my-favourites/index'
 import { Route as MainMyEducationsIndexRouteImport } from './routes/_main/my-educations/index'
 import { Route as MainEducationMaterialsIndexRouteImport } from './routes/_main/education-materials/index'
 import { Route as MainEducationListIndexRouteImport } from './routes/_main/education-list/index'
@@ -48,6 +49,11 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
 const MainUsersIndexRoute = MainUsersIndexRouteImport.update({
   id: '/users/',
   path: '/users/',
+  getParentRoute: () => MainRoute,
+} as any)
+const MainMyFavouritesIndexRoute = MainMyFavouritesIndexRouteImport.update({
+  id: '/my-favourites/',
+  path: '/my-favourites/',
   getParentRoute: () => MainRoute,
 } as any)
 const MainMyEducationsIndexRoute = MainMyEducationsIndexRouteImport.update({
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/education-list': typeof MainEducationListIndexRoute
   '/education-materials': typeof MainEducationMaterialsIndexRoute
   '/my-educations': typeof MainMyEducationsIndexRoute
+  '/my-favourites': typeof MainMyFavouritesIndexRoute
   '/users': typeof MainUsersIndexRoute
 }
 export interface FileRoutesByTo {
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/education-list': typeof MainEducationListIndexRoute
   '/education-materials': typeof MainEducationMaterialsIndexRoute
   '/my-educations': typeof MainMyEducationsIndexRoute
+  '/my-favourites': typeof MainMyFavouritesIndexRoute
   '/users': typeof MainUsersIndexRoute
 }
 export interface FileRoutesById {
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/_main/education-list/': typeof MainEducationListIndexRoute
   '/_main/education-materials/': typeof MainEducationMaterialsIndexRoute
   '/_main/my-educations/': typeof MainMyEducationsIndexRoute
+  '/_main/my-favourites/': typeof MainMyFavouritesIndexRoute
   '/_main/users/': typeof MainUsersIndexRoute
 }
 export interface FileRouteTypes {
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/education-list'
     | '/education-materials'
     | '/my-educations'
+    | '/my-favourites'
     | '/users'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -140,6 +150,7 @@ export interface FileRouteTypes {
     | '/education-list'
     | '/education-materials'
     | '/my-educations'
+    | '/my-favourites'
     | '/users'
   id:
     | '__root__'
@@ -153,6 +164,7 @@ export interface FileRouteTypes {
     | '/_main/education-list/'
     | '/_main/education-materials/'
     | '/_main/my-educations/'
+    | '/_main/my-favourites/'
     | '/_main/users/'
   fileRoutesById: FileRoutesById
 }
@@ -208,6 +220,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainUsersIndexRouteImport
       parentRoute: typeof MainRoute
     }
+    '/_main/my-favourites/': {
+      id: '/_main/my-favourites/'
+      path: '/my-favourites'
+      fullPath: '/my-favourites'
+      preLoaderRoute: typeof MainMyFavouritesIndexRouteImport
+      parentRoute: typeof MainRoute
+    }
     '/_main/my-educations/': {
       id: '/_main/my-educations/'
       path: '/my-educations'
@@ -252,6 +271,7 @@ interface MainRouteChildren {
   MainEducationListIndexRoute: typeof MainEducationListIndexRoute
   MainEducationMaterialsIndexRoute: typeof MainEducationMaterialsIndexRoute
   MainMyEducationsIndexRoute: typeof MainMyEducationsIndexRoute
+  MainMyFavouritesIndexRoute: typeof MainMyFavouritesIndexRoute
   MainUsersIndexRoute: typeof MainUsersIndexRoute
 }
 
@@ -261,6 +281,7 @@ const MainRouteChildren: MainRouteChildren = {
   MainEducationListIndexRoute: MainEducationListIndexRoute,
   MainEducationMaterialsIndexRoute: MainEducationMaterialsIndexRoute,
   MainMyEducationsIndexRoute: MainMyEducationsIndexRoute,
+  MainMyFavouritesIndexRoute: MainMyFavouritesIndexRoute,
   MainUsersIndexRoute: MainUsersIndexRoute,
 }
 
