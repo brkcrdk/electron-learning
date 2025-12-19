@@ -9,6 +9,7 @@ const queryKeys = {
   paginatedUserListQuery: 'paginated-user-list-query',
   userListQuery: 'user-list-query',
   assignmentUserListQuery: 'assignment-user-list-query',
+  currentUserFavoritesQuery: 'current-user-favorites-query',
 } as const;
 
 export default queryKeys;

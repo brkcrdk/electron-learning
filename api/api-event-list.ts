@@ -12,6 +12,7 @@ import type {
   CategoryWithChildren,
 } from '@db/schema';
 import type { EducationAssignmentListItem, MutateEducationAssignmentPayload, UpdateEducationAssignmentPayload } from '@db/schema/education-assignment';
+import type { CurrentUserFavoritesListItem } from '@db/schema/user-education-favorites';
 
 import type { LoginPayload } from './session-api/login';
 import type { UploadFilePayload } from './upload-file-api';
@@ -75,6 +76,11 @@ const apiEventList = {
     ipcRenderer.invoke('get-education-assignment-assignees', data),
   deleteEducationAssignment: (data: EducationAssignmentListItem['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-education-assignment', data),
   updateEducationAssignment: (data: UpdateEducationAssignmentPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-education-assignment', data),
+
+  // User favorites services
+  addToFavorites: (educationId: EducationListItem['id']): ApiResponseProps<string> => ipcRenderer.invoke('add-to-favorites', educationId),
+  removeFromFavorites: (educationId: EducationListItem['id']): ApiResponseProps<string> => ipcRenderer.invoke('remove-from-favorites', educationId),
+  getCurrentUserFavorites: (): ApiResponseProps<CurrentUserFavoritesListItem[]> => ipcRenderer.invoke('get-current-user-favorites'),
 } as const;
 
 export default apiEventList;

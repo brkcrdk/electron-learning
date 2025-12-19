@@ -6,6 +6,7 @@ import sessionApi from './session-api';
 import superAdminApi from './super-admin-api';
 import uploadFileApi from './upload-file-api';
 import userApi from './user-api';
+import userFavoritesApi from './user-favorites-api';
 
 function registerApiHandlers() {
   superAdminApi();
@@ -16,6 +17,7 @@ function registerApiHandlers() {
   educationMaterialsApi();
   educationsApi();
   educationAssignmentApi();
+  userFavoritesApi();
 }
 
 export default registerApiHandlers;
