@@ -1,7 +1,7 @@
 {
   "name": "bakim-egitim-istasyonu",
   "productName": "Bakım Egitim İstasyonu",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Bakım Egitim İstasyonu Uygulaması",
   "main": ".vite/build/main.js",
   "scripts": {
