@@ -17,10 +17,10 @@ interface DropdownItem {
 
 const dropdownItems: DropdownItem[] = [
   {
-    dropdownItemId: 'profile',
-    label: 'Profilim',
-    icon: 'user',
-    route: '/',
+    dropdownItemId: 'my-favourites',
+    label: 'Favorilerim',
+    icon: 'heart',
+    route: '/my-favourites',
   },
   {
     dropdownItemId: 'logout',
