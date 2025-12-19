@@ -6,6 +6,7 @@ import type { User } from '@db/schema';
 
 import UserCard from './user-card';
 import UserInformations from './user-informations';
+import UsersFavouriteEducations from './users-favourite-educations';
 
 interface Props {
   user: User;
@@ -28,7 +29,7 @@ function UserActions({ user, triggerProps, initialAction }: Props) {
             <Tabs.Trigger value="user-favorite-educations">Favori Eğitimler</Tabs.Trigger>
           </Tabs.List>
           <UserInformations user={user} />
-          <Tabs.Content value="user-favorite-educations">content2</Tabs.Content>
+          <UsersFavouriteEducations />
         </Tabs>
       </Drawer.Content>
     </Drawer>
