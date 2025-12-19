@@ -10,6 +10,7 @@ import type {
   MutateUserPayload,
   User,
   CategoryWithChildren,
+  UserListItem,
 } from '@db/schema';
 import type { EducationAssignmentListItem, MutateEducationAssignmentPayload, UpdateEducationAssignmentPayload } from '@db/schema/education-assignment';
 import type { CurrentUserFavoritesListItem } from '@db/schema/user-education-favorites';
@@ -39,7 +40,7 @@ const apiEventList = {
   getCurrentUser: (): ApiResponseProps<User> => ipcRenderer.invoke('current-user'),
   updateUser: (data: MutateUserPayload): ApiResponseProps<string> => ipcRenderer.invoke('update-user', data),
   deleteUser: (data: User['id']): ApiResponseProps<string> => ipcRenderer.invoke('delete-user', data),
-  getPaginatedUserList: (params: PaginationParams): ApiResponseProps<PaginatedData<User>> => ipcRenderer.invoke('get-paginated-user-list', params),
+  getPaginatedUserList: (params: PaginationParams): ApiResponseProps<PaginatedData<UserListItem>> => ipcRenderer.invoke('get-paginated-user-list', params),
   extractUserFromExcel: (fileBuffer: ArrayBuffer): ApiResponseProps<number[]> => ipcRenderer.invoke('extract-user-from-excel', fileBuffer),
   bulkCreateUsersFromExcel: (fileBuffer: ArrayBuffer): ApiResponseProps<string> => ipcRenderer.invoke('bulk-create-users-from-excel', fileBuffer),
 

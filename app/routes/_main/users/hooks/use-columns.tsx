@@ -2,6 +2,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 
 import RelativeDateCell from '@app/components/table-cells/relative-date-cell';
 import Badge, { type BadgeVariantTypes } from '@app/components/ui/badge';
+import Icon from '@app/components/ui/icon';
 import type { User, UserListItem } from '@db/schema';
 
 import UserActions from '../modules/user-actions';
@@ -69,8 +70,17 @@ function useColumns(): ColumnDef<UserListItem>[] {
       header: 'Favori İçerik Sayısı',
       accessorKey: 'favoriteCount',
       cell: info => info.getValue(),
-      accessorFn: ({ favoriteCount }) => {
-        return <Badge>{favoriteCount}</Badge>;
+      accessorFn: user => {
+        return (
+          <UserActions
+            user={user}
+            initialAction="user-favorite-educations"
+            triggerProps={{
+              size: 'icon-sm',
+              children: <Badge>{user.favoriteCount}</Badge>,
+            }}
+          />
+        );
       },
       meta: {
         centeredColumn: true,
@@ -93,7 +103,21 @@ function useColumns(): ColumnDef<UserListItem>[] {
       accessorKey: 'actions',
       cell: info => info.getValue(),
       accessorFn: user => {
-        return <UserActions user={user} />;
+        return (
+          <UserActions
+            user={user}
+            initialAction="user-informations"
+            triggerProps={{
+              size: 'icon-sm',
+              children: (
+                <Icon
+                  name="pencil"
+                  className="size-4"
+                />
+              ),
+            }}
+          />
+        );
       },
       enableSorting: false,
       meta: {

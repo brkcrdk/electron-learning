@@ -1,5 +1,6 @@
+import type { ComponentProps } from 'react';
+
 import Drawer from '@app/components/ui/drawer';
-import Icon from '@app/components/ui/icon';
 import Tabs from '@app/components/ui/tabs';
 import type { User } from '@db/schema';
 
@@ -8,21 +9,18 @@ import UserInformations from './user-informations';
 
 interface Props {
   user: User;
+  triggerProps: ComponentProps<typeof Drawer.Trigger>;
+  initialAction: 'user-informations' | 'user-favorite-educations';
 }
 
-function UserActions({ user }: Props) {
+function UserActions({ user, triggerProps, initialAction }: Props) {
   return (
     <Drawer>
-      <Drawer.Trigger size="icon-sm">
-        <Icon
-          name="pencil"
-          className="size-4"
-        />
-      </Drawer.Trigger>
+      <Drawer.Trigger {...triggerProps} />
       <Drawer.Content className="flex flex-col gap-4">
         <UserCard user={user} />
         <Tabs
-          defaultValue="user-informations"
+          defaultValue={initialAction}
           className="size-full"
         >
           <Tabs.List>
