@@ -1,4 +1,4 @@
-import { and, desc, eq, getTableColumns } from 'drizzle-orm';
+import { desc, eq, getTableColumns } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/sqlite-core';
 import { ipcMain } from 'electron';
 import type { ApiResponseProps } from 'types/api-response-types';
@@ -35,6 +35,14 @@ function getUsersEducation() {
       const materialContentFile = alias(mediaFiles, 'material_content_file');
       const materialCreatedBy = alias(users, 'material_created_by');
 
+      // Get user's favorite education IDs
+      const userFavorites = await db
+        .select({ educationId: userEducationFavorites.educationId })
+        .from(userEducationFavorites)
+        .where(eq(userEducationFavorites.userId, currentUser.id));
+
+      const favoriteEducationIds = new Set(userFavorites.map(fav => fav.educationId));
+
       const rows = await db
         .select({
           id: educations.id,
@@ -58,16 +66,18 @@ function getUsersEducation() {
         .innerJoin(materialContentFile, eq(educationMaterials.contentFileId, materialContentFile.id))
         .innerJoin(materialCreatedBy, eq(educationMaterials.createdBy, materialCreatedBy.id))
         .innerJoin(users, eq(educations.createdBy, users.id))
-        .innerJoin(userEducationFavorites, eq(userEducationFavorites.educationId, educations.id))
-        .where(and(eq(educationAssignees.assigneeUserId, currentUser.id), eq(userEducationFavorites.userId, currentUser.id)))
+        .where(eq(educationAssignees.assigneeUserId, currentUser.id))
         .orderBy(desc(educations.createdAt));
 
-      const educationList: EducationListItem[] = rows.map(row =>
-        mapStandardRowToEducationListItem({
-          ...row,
-          isFavorite: true,
-        })
-      );
+      // Filter only favorite educations and map them
+      const educationList: EducationListItem[] = rows
+        .filter(row => favoriteEducationIds.has(row.id))
+        .map(row =>
+          mapStandardRowToEducationListItem({
+            ...row,
+            isFavorite: true,
+          })
+        );
 
       return {
         success: true,
