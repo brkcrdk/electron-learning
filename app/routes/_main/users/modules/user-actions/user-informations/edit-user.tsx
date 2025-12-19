@@ -7,8 +7,7 @@ import currentUserQuery from '@app/services/current-user-query';
 import queryKeys from '@app/services/query-keys';
 import type { User } from '@db/schema';
 
-import type { UserFormInputs } from '../user-form';
-import UserForm, { userRoleOptions } from '../user-form';
+import UserForm, { userRoleOptions, type UserFormInputs } from '../../user-form';
 
 interface Props {
   user: User;
