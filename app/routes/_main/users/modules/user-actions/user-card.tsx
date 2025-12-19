@@ -13,10 +13,10 @@ function UserCard({ user }: Props) {
       <Card.Header className="flex items-center gap-2">
         <Avatar
           name={user.name}
-          avatarRootProps={{ className: 'size-12' }}
+          avatarRootProps={{ className: 'size-16' }}
         />
-        <div>
-          <Dialog.Title>{user.name}</Dialog.Title>
+        <div className="grid gap-0.5">
+          <Dialog.Title className="text-md">{user.name}</Dialog.Title>
           <Dialog.Description className="text-sm">{user.username}</Dialog.Description>
           <Dialog.Description className="text-sm">
             Kayıt Tarihi: <RelativeDateCell date={user.createdAt} />
