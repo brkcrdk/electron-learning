@@ -1,11 +1,13 @@
 import Button from '@app/components/ui/button';
 import Drawer from '@app/components/ui/drawer';
 import Icon from '@app/components/ui/icon';
+import Tabs from '@app/components/ui/tabs';
 import cn from '@app/utils/cn';
 import type { User } from '@db/schema';
 
 import DeleteUser from './delete-user';
 import EditUser from './edit-user';
+import UserCard from './user-card';
 
 interface Props {
   user: User;
@@ -20,21 +22,16 @@ function UserActions({ user }: Props) {
           className="size-4"
         />
       </Drawer.Trigger>
-      <Drawer.Content>
-        <Drawer.Header>
-          <Drawer.Title>Kullanıcı Bilgilerini Düzenle</Drawer.Title>
-          <Drawer.Description>Kullanıcı bilgilerini düzenlemek için lütfen bilgilerinizi giriniz.</Drawer.Description>
-        </Drawer.Header>
-        <EditUser user={user} />
-        <Drawer.Footer className={cn('grid grid-cols-2 gap-2', user.role === 'super-admin' && 'grid-cols-1')}>
-          {user.role !== 'super-admin' && <DeleteUser userId={user.id} />}
-          <Button
-            form="edit-user-form"
-            type="submit"
-          >
-            Kullanıcıyı Düzenle
-          </Button>
-        </Drawer.Footer>
+      <Drawer.Content className="flex flex-col gap-4">
+        <UserCard user={user} />
+        <Tabs defaultValue="user-info">
+          <Tabs.List>
+            <Tabs.Trigger value="user-info">Kullanıcı Bilgileri</Tabs.Trigger>
+            <Tabs.Trigger value="user-actions">Kullanıcı İşlemleri</Tabs.Trigger>
+          </Tabs.List>
+          <Tabs.Content value="user-info">content 1</Tabs.Content>
+          <Tabs.Content value="user-actions">content2</Tabs.Content>
+        </Tabs>
       </Drawer.Content>
     </Drawer>
   );
