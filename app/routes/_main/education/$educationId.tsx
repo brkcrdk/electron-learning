@@ -5,12 +5,6 @@ export const Route = createFileRoute('/_main/education/$educationId')({
   staticData: {
     breadcrumb: 'Eğitim',
   },
-  loader: async ({ params }) => {
-    // const education = await db.query.educations.findFirst({
-    //   where: eq(educations.id, params.educationId),
-    // });
-    // return { education };
-  },
 });
 
 function RouteComponent() {

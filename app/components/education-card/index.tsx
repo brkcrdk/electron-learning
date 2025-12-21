@@ -8,9 +8,8 @@ import cn from '@app/utils/cn';
 import type { EducationListItem, MediaFileTypes } from '@db/schema';
 
 import CardHeader from './card-header';
-import ViewEducation from './view-education';
-import Badge from '../ui/badge';
 import { buttonVariants } from '../ui/button';
+import { useSidebar } from '../ui/sidebar/sidebar-context';
 
 interface ContentTypeOption {
   label: string;
@@ -41,6 +40,7 @@ interface Props {
 }
 
 function EducationCard({ education }: Props) {
+  const { setOpen } = useSidebar();
   return (
     <Card className="hover:bg-accent/30 gap-0 p-0 transition-shadow hover:shadow-md">
       <CardHeader education={education} />
@@ -64,6 +64,7 @@ function EducationCard({ education }: Props) {
           to="/education/$educationId"
           params={{ educationId: String(education.id) }}
           className={cn(buttonVariants({ variant: 'default' }))}
+          onClick={() => setOpen(false)}
         >
           Eğitimi Görüntüle
         </Link>
