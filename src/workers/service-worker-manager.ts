@@ -1,6 +1,6 @@
 import { join } from 'path';
 
-import { utilityProcess } from 'electron';
+import { app, utilityProcess } from 'electron';
 
 // Utility Process Service Worker Manager
 let serviceWorker: ReturnType<typeof utilityProcess.fork> | null = null;
@@ -9,7 +9,7 @@ export function startServiceWorker() {
   try {
     // Service worker dosyasının yolunu belirle
     // Build çıktısı workers/ klasörüne yazılıyor
-    const workerPath = join(__dirname, 'service-worker.js');
+    const workerPath = join(__dirname, 'workers', 'service-worker.js');
 
     console.log('[Main Process] Service Worker başlatılıyor:', workerPath);
 
@@ -21,6 +21,15 @@ export function startServiceWorker() {
     // Worker başarıyla başlatıldığında
     serviceWorker.on('spawn', () => {
       console.log('[Main Process] Service Worker başlatıldı, PID:', serviceWorker?.pid);
+
+      // userData path'ini service worker'a gönder
+      const userDataPath = app.getPath('userData');
+      if (serviceWorker) {
+        serviceWorker.postMessage({
+          type: 'init',
+          userDataPath,
+        });
+      }
 
       // Test mesajı gönder
       setTimeout(() => {
