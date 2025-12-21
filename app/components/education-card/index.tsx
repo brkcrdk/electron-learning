@@ -1,11 +1,16 @@
+import { Link } from '@tanstack/react-router';
+
 import Card from '@app/components/ui/card';
 import Icon from '@app/components/ui/icon';
 import type { IconListProps } from '@app/components/ui/icon/icon-list';
 import Tooltip from '@app/components/ui/tooltip';
+import cn from '@app/utils/cn';
 import type { EducationListItem, MediaFileTypes } from '@db/schema';
 
 import CardHeader from './card-header';
 import ViewEducation from './view-education';
+import Badge from '../ui/badge';
+import { buttonVariants } from '../ui/button';
 
 interface ContentTypeOption {
   label: string;
@@ -55,7 +60,13 @@ function EducationCard({ education }: Props) {
           </Tooltip>
         </div>
         <Card.Description>{education.description}</Card.Description>
-        <ViewEducation educationMaterial={education.educationMaterial} />
+        <Link
+          to="/education/$educationId"
+          params={{ educationId: String(education.id) }}
+          className={cn(buttonVariants({ variant: 'default' }))}
+        >
+          Eğitimi Görüntüle
+        </Link>
       </Card.Content>
     </Card>
   );
