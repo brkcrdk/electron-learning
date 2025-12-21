@@ -92,8 +92,8 @@ function EducationForm() {
               accept: 'image/*',
               sizeLimit: 10,
             }}
-            onReset={existingId => {
-              resetUploadState(existingId);
+            onReset={() => {
+              resetUploadState();
               setValue('coverImage', null);
             }}
           />

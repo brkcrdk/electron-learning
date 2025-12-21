@@ -84,7 +84,7 @@ function ContentForm() {
               field.onChange(value);
               setValue('media', null);
               if (media) {
-                resetUploadState(media.id);
+                resetUploadState();
               }
             }}
           />

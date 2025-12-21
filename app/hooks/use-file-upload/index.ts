@@ -155,9 +155,8 @@ function useFileUpload({ uploadType, onComplete, onProgress, defaultUploadState 
     }
   }, [controller]);
 
-  const resetUploadState = useCallback(async (fileId: number) => {
+  const resetUploadState = useCallback(() => {
     setUploadState(null);
-    window.electronAPI.deleteFile(fileId);
   }, []);
 
   return { handleUpload, uploadState, handleCancel, resetUploadState };
