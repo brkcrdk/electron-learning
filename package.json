@@ -1,6 +1,6 @@
 {
   "name": "bakim-egitim-istasyonu",
-  "productName": "Bakım Egitim İstasyonu",
+  "productName": "BEI",
   "version": "0.1.12",
   "description": "Bakım Egitim İstasyonu Uygulaması",
   "main": ".vite/build/main.js",
