@@ -5,7 +5,7 @@ import EducationCard from '@app/components/education-card';
 import Icon from '@app/components/ui/icon';
 import currentUserFavoritesQuery from '@app/services/current-user-favorites-query';
 
-export const Route = createFileRoute('/_main/my-favourites/')({
+export const Route = createFileRoute('/_main/my-favourites')({
   component: RouteComponent,
   staticData: {
     breadcrumb: 'Favorilerim',

@@ -12,10 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as MainRouteImport } from './routes/_main'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MainMyFavouritesRouteImport } from './routes/_main/my-favourites'
 import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as MainUsersIndexRouteImport } from './routes/_main/users/index'
-import { Route as MainMyFavouritesIndexRouteImport } from './routes/_main/my-favourites/index'
 import { Route as MainMyEducationsIndexRouteImport } from './routes/_main/my-educations/index'
 import { Route as MainEducationMaterialsIndexRouteImport } from './routes/_main/education-materials/index'
 import { Route as MainEducationListIndexRouteImport } from './routes/_main/education-list/index'
@@ -37,6 +37,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MainMyFavouritesRoute = MainMyFavouritesRouteImport.update({
+  id: '/my-favourites',
+  path: '/my-favourites',
+  getParentRoute: () => MainRoute,
+} as any)
 const AuthSignupRoute = AuthSignupRouteImport.update({
   id: '/_auth/signup',
   path: '/signup',
@@ -50,11 +55,6 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
 const MainUsersIndexRoute = MainUsersIndexRouteImport.update({
   id: '/users/',
   path: '/users/',
-  getParentRoute: () => MainRoute,
-} as any)
-const MainMyFavouritesIndexRoute = MainMyFavouritesIndexRouteImport.update({
-  id: '/my-favourites/',
-  path: '/my-favourites/',
   getParentRoute: () => MainRoute,
 } as any)
 const MainMyEducationsIndexRoute = MainMyEducationsIndexRouteImport.update({
@@ -96,13 +96,13 @@ export interface FileRoutesByFullPath {
   '/logout': typeof LogoutRoute
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
+  '/my-favourites': typeof MainMyFavouritesRoute
   '/education/$educationId': typeof MainEducationEducationIdRoute
   '/categories': typeof MainCategoriesIndexRoute
   '/education-assignments': typeof MainEducationAssignmentsIndexRoute
   '/education-list': typeof MainEducationListIndexRoute
   '/education-materials': typeof MainEducationMaterialsIndexRoute
   '/my-educations': typeof MainMyEducationsIndexRoute
-  '/my-favourites': typeof MainMyFavouritesIndexRoute
   '/users': typeof MainUsersIndexRoute
 }
 export interface FileRoutesByTo {
@@ -110,13 +110,13 @@ export interface FileRoutesByTo {
   '/logout': typeof LogoutRoute
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
+  '/my-favourites': typeof MainMyFavouritesRoute
   '/education/$educationId': typeof MainEducationEducationIdRoute
   '/categories': typeof MainCategoriesIndexRoute
   '/education-assignments': typeof MainEducationAssignmentsIndexRoute
   '/education-list': typeof MainEducationListIndexRoute
   '/education-materials': typeof MainEducationMaterialsIndexRoute
   '/my-educations': typeof MainMyEducationsIndexRoute
-  '/my-favourites': typeof MainMyFavouritesIndexRoute
   '/users': typeof MainUsersIndexRoute
 }
 export interface FileRoutesById {
@@ -126,13 +126,13 @@ export interface FileRoutesById {
   '/logout': typeof LogoutRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/signup': typeof AuthSignupRoute
+  '/_main/my-favourites': typeof MainMyFavouritesRoute
   '/_main/education/$educationId': typeof MainEducationEducationIdRoute
   '/_main/categories/': typeof MainCategoriesIndexRoute
   '/_main/education-assignments/': typeof MainEducationAssignmentsIndexRoute
   '/_main/education-list/': typeof MainEducationListIndexRoute
   '/_main/education-materials/': typeof MainEducationMaterialsIndexRoute
   '/_main/my-educations/': typeof MainMyEducationsIndexRoute
-  '/_main/my-favourites/': typeof MainMyFavouritesIndexRoute
   '/_main/users/': typeof MainUsersIndexRoute
 }
 export interface FileRouteTypes {
@@ -142,13 +142,13 @@ export interface FileRouteTypes {
     | '/logout'
     | '/login'
     | '/signup'
+    | '/my-favourites'
     | '/education/$educationId'
     | '/categories'
     | '/education-assignments'
     | '/education-list'
     | '/education-materials'
     | '/my-educations'
-    | '/my-favourites'
     | '/users'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -156,13 +156,13 @@ export interface FileRouteTypes {
     | '/logout'
     | '/login'
     | '/signup'
+    | '/my-favourites'
     | '/education/$educationId'
     | '/categories'
     | '/education-assignments'
     | '/education-list'
     | '/education-materials'
     | '/my-educations'
-    | '/my-favourites'
     | '/users'
   id:
     | '__root__'
@@ -171,13 +171,13 @@ export interface FileRouteTypes {
     | '/logout'
     | '/_auth/login'
     | '/_auth/signup'
+    | '/_main/my-favourites'
     | '/_main/education/$educationId'
     | '/_main/categories/'
     | '/_main/education-assignments/'
     | '/_main/education-list/'
     | '/_main/education-materials/'
     | '/_main/my-educations/'
-    | '/_main/my-favourites/'
     | '/_main/users/'
   fileRoutesById: FileRoutesById
 }
@@ -212,6 +212,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_main/my-favourites': {
+      id: '/_main/my-favourites'
+      path: '/my-favourites'
+      fullPath: '/my-favourites'
+      preLoaderRoute: typeof MainMyFavouritesRouteImport
+      parentRoute: typeof MainRoute
+    }
     '/_auth/signup': {
       id: '/_auth/signup'
       path: '/signup'
@@ -231,13 +238,6 @@ declare module '@tanstack/react-router' {
       path: '/users'
       fullPath: '/users'
       preLoaderRoute: typeof MainUsersIndexRouteImport
-      parentRoute: typeof MainRoute
-    }
-    '/_main/my-favourites/': {
-      id: '/_main/my-favourites/'
-      path: '/my-favourites'
-      fullPath: '/my-favourites'
-      preLoaderRoute: typeof MainMyFavouritesIndexRouteImport
       parentRoute: typeof MainRoute
     }
     '/_main/my-educations/': {
@@ -286,24 +286,24 @@ declare module '@tanstack/react-router' {
 }
 
 interface MainRouteChildren {
+  MainMyFavouritesRoute: typeof MainMyFavouritesRoute
   MainEducationEducationIdRoute: typeof MainEducationEducationIdRoute
   MainCategoriesIndexRoute: typeof MainCategoriesIndexRoute
   MainEducationAssignmentsIndexRoute: typeof MainEducationAssignmentsIndexRoute
   MainEducationListIndexRoute: typeof MainEducationListIndexRoute
   MainEducationMaterialsIndexRoute: typeof MainEducationMaterialsIndexRoute
   MainMyEducationsIndexRoute: typeof MainMyEducationsIndexRoute
-  MainMyFavouritesIndexRoute: typeof MainMyFavouritesIndexRoute
   MainUsersIndexRoute: typeof MainUsersIndexRoute
 }
 
 const MainRouteChildren: MainRouteChildren = {
+  MainMyFavouritesRoute: MainMyFavouritesRoute,
   MainEducationEducationIdRoute: MainEducationEducationIdRoute,
   MainCategoriesIndexRoute: MainCategoriesIndexRoute,
   MainEducationAssignmentsIndexRoute: MainEducationAssignmentsIndexRoute,
   MainEducationListIndexRoute: MainEducationListIndexRoute,
   MainEducationMaterialsIndexRoute: MainEducationMaterialsIndexRoute,
   MainMyEducationsIndexRoute: MainMyEducationsIndexRoute,
-  MainMyFavouritesIndexRoute: MainMyFavouritesIndexRoute,
   MainUsersIndexRoute: MainUsersIndexRoute,
 }
 
