@@ -51,7 +51,7 @@ function EducationalMaterialViewer({ mediaFile, title = '' }: Props) {
           children: (
             <Button variant="outline">
               <Icon
-                name="file-image"
+                name="file-video"
                 className="size-5"
               />
               {title}
