@@ -7,6 +7,7 @@ import { closeDatabase, initializeDatabase } from '@db/client';
 import protocolHandler, { registerContentProtocolPrivileges } from './protocol-handler';
 import registerStoreHandlers from '../store';
 import createWindow from './create-window';
+import { startServiceWorker } from './workers/service-worker-manager';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -53,6 +54,9 @@ app.on('ready', () => {
 
   // // IPC handler'larını kaydet
   registerStoreHandlers();
+
+  // Utility Process Service Worker'ı başlat
+  startServiceWorker();
 });
 
 /**

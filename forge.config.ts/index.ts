@@ -45,6 +45,11 @@ const config: ForgeConfig = {
           config: 'vite.preload.config.ts',
           target: 'preload',
         },
+        {
+          entry: 'src/workers/service-worker.ts',
+          config: 'vite.worker.config.ts',
+          target: 'main',
+        },
       ],
       renderer: [
         {
