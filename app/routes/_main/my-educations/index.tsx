@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
+import EducationCard from '@app/components/education-card';
 import usersEducationListQuery from '@app/services/users-education-list-query';
 
-import EducationCard from './modules/education-card';
 import EducationsEmptyState from './modules/educations-empty-state';
 import MyEducationsHeader from './modules/my-educations-header';
 
