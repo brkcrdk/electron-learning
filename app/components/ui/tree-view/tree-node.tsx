@@ -11,7 +11,7 @@ interface Props {
   selectedValue: TreeItem | null;
 }
 
-const TreeNode = ({ item, onSelect, selectedValue }: Props) => {
+function TreeNode({ item, onSelect, selectedValue }: Props) {
   return (
     <Collapsible>
       <div className="flex items-center justify-between">
@@ -47,6 +47,6 @@ const TreeNode = ({ item, onSelect, selectedValue }: Props) => {
       )}
     </Collapsible>
   );
-};
+}
 
 export default TreeNode;
